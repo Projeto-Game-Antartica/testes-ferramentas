@@ -21,6 +21,7 @@ public class TolkUtil : MonoBehaviour {
         }
         else
         {
+            // caso não tenha SAPI
             Debug.Log("Nenhum leitor está rodando");
         }
     }

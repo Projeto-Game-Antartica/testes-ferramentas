@@ -40,7 +40,7 @@ public class LocalizationManager : MonoBehaviour
 
             for (int i = 0; i < loadedData.items.Length; i++)
             {
-                // arquivo json precisam ser salvos em UTF-8
+                // arquivos json precisam ser salvos em UTF-8
                 Debug.Log(loadedData.items[i].value);
                 localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
             }
