@@ -16,7 +16,7 @@ public class Game : MonoBehaviour {
         textField  = GameObject.Find("ExampleText").GetComponent<TextMeshProUGUI>();
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         
-        if(!Tolk.IsLoaded()) TolkUtil.Load();
+        TolkUtil.Load();
 
         //Tolk.Speak("Pressione Q para ouvir as instruções novamente." +
         //       "Pressione Control+E para a leitura do texto estático.");
@@ -26,12 +26,12 @@ public class Game : MonoBehaviour {
 	void Update () {
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.E)) {
-            Tolk.Speak(textField.text);
+            TolkUtil.Speak(textField.text);
         }
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            Tolk.Speak("Pressione Q para ouvir as instruções novamente." +
+            TolkUtil.Speak("Pressione Q para ouvir as instruções novamente." +
                 "Pressione Control+E para a leitura do texto estático.");
         }
 	}

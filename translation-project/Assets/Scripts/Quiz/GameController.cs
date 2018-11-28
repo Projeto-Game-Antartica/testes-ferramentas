@@ -3,17 +3,18 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using DavyKager;
 
 public class GameController : MonoBehaviour
 {
-
-
     public Text questionDisplayText;
     public Text scoreDisplayText;
+    public Text roundOverDisplayText;
     public SimpleObjectPool answerButtonObjectPool;
     public Transform answerButtonParent;
     public GameObject questionDisplay;
     public GameObject roundEndDisplay;
+    public Button returnToMenuButton;
 
     private DataController dataController;
     private RoundData currentRoundData;
@@ -28,6 +29,8 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        TolkUtil.Load();
+
         dataController = FindObjectOfType<DataController>();
         currentRoundData = dataController.GetCurrentRoundData();
         questionPool = currentRoundData.questions;
@@ -45,6 +48,8 @@ public class GameController : MonoBehaviour
         RemoveAnswerButtons();
         QuestionData questionData = questionPool[questionIndex];
         questionDisplayText.text = questionData.questionText;
+
+        TolkUtil.Speak(questionDisplayText.text);
 
         for (int i = 0; i < questionData.answers.Length; i++)
         {
@@ -92,6 +97,10 @@ public class GameController : MonoBehaviour
 
         questionDisplay.SetActive(false);
         roundEndDisplay.SetActive(true);
+
+        TolkUtil.Speak(roundOverDisplayText.text);
+
+        returnToMenuButton.Select();
     }
 
     public void ReturnToMenu()
@@ -99,8 +108,8 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReturnToMenuButtonSelectEvent()
     {
+        TolkUtil.Speak(returnToMenuButton.GetComponentInChildren<Text>().text);
     }
 }

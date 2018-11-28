@@ -17,11 +17,8 @@ public class OptionMenu : MonoBehaviour {
         volumeText = GameObject.Find("Volume").GetComponent<TextMeshProUGUI>();
         backButton = GameObject.Find("BackButton").GetComponent<Button>();
 
-        if (!Tolk.IsLoaded())
-        {
-            TolkUtil.Load();
-            Debug.Log("Tolk loaded");
-        }
+        
+        TolkUtil.Load();
 
         slider.Select();
     }
@@ -29,18 +26,18 @@ public class OptionMenu : MonoBehaviour {
     public void ButtonBackAudio()
     {
         Debug.Log("BackButton");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(backButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(backButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void SliderVolumeAudio()
     {
         Debug.Log("VolumeSlider");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(volumeText.text + slider.value);
+        TolkUtil.Speak(volumeText.text + slider.value);
     }
 
     public void TextVolumeAudio()
     {
         Debug.Log("TextVolume");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(volumeText.text);
+        TolkUtil.Speak(volumeText.text);
     }
 }

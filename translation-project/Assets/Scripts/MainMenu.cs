@@ -40,18 +40,18 @@ public class MainMenu : MonoBehaviour
     public void ButtonPlayAudio()
     {
         Debug.Log("PlayButton");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(playButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(playButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonOptionAudio()
     {
         Debug.Log("OptionButton");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(optionButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(optionButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonQuitAudio()
     {
         Debug.Log("QuitButton");
-        if (!Tolk.IsSpeaking()) Tolk.Speak(quitButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(quitButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 }

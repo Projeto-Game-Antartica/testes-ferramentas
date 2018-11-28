@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DavyKager;
 
 public class AnswerButton : MonoBehaviour
 {
 
     public Text answerText;
-
     private AnswerData answerData;
     private GameController gameController;
+    public Button answerButton;
 
     // Use this for initialization
     void Start()
     {
+        TolkUtil.Load();
+
         gameController = FindObjectOfType<GameController>();
+        answerButton = FindObjectOfType<Button>();
+
+        answerButton.Select();
     }
 
     public void Setup(AnswerData data)
@@ -26,5 +32,10 @@ public class AnswerButton : MonoBehaviour
     public void HandleClick()
     {
         gameController.AnswerButtonClicked(answerData.isCorrect);
+    }
+
+    public void OnSelectEvent()
+    {
+        TolkUtil.Speak(answerData.answerText);
     }
 }

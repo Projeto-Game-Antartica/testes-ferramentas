@@ -7,22 +7,25 @@ public class TolkUtil : MonoBehaviour {
 
     public static void Load()
     {
-        Debug.Log("Inicializando...");
-        Tolk.Load();
-        Debug.Log("Procurando por leitores de tela no dispositivo...");
-
-        string name = Tolk.DetectScreenReader();
-
-        if (name == null) Tolk.TrySAPI(true);
-
-        if (name != null)
+        if (!Tolk.IsLoaded())
         {
-            Debug.Log("O leitor ativo é: " + name);
-        }
-        else
-        {
-            // caso não tenha SAPI
-            Debug.Log("Nenhum leitor está rodando");
+            Debug.Log("Inicializando...");
+            Tolk.Load();
+            Debug.Log("Procurando por leitores de tela no dispositivo...");
+
+            string name = Tolk.DetectScreenReader();
+
+            if (name == null) Tolk.TrySAPI(true);
+
+            if (name != null)
+            {
+                Debug.Log("O leitor ativo é: " + name);
+            }
+            else
+            {
+                // caso não tenha SAPI
+                Debug.Log("Nenhum leitor está rodando");
+            }
         }
     }
 
@@ -37,5 +40,10 @@ public class TolkUtil : MonoBehaviour {
        {
             Debug.Log("Tolk isnt running.");
        }
+    }
+
+    public static void Speak(string text)
+    {
+        if (!Tolk.IsSpeaking()) Tolk.Speak(text);
     }
 }
