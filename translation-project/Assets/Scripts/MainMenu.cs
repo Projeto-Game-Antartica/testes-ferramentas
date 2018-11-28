@@ -22,6 +22,8 @@ public class MainMenu : MonoBehaviour
         TolkUtil.Load();
         Debug.Log("Tolk loaded");
 
+        TolkUtil.Speak("Menu principal do jogo. Utilize as setas direcionais para navegar" +
+            "a tecla enter para selecionar os itens.");
         playButton.Select();
     }
 

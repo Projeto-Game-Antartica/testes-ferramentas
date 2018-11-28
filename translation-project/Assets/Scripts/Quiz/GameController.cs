@@ -41,9 +41,13 @@ public class GameController : MonoBehaviour
         ShowQuestion();
         isRoundActive = true;
 
-        TolkUtil.Speak("Inicio do Jogo. Caso deseje ouvir a questão novamente, pressione a tecla F1. " +
+    }
+
+    private void Awake()
+    {
+        TolkUtil.SpeakAnyway("Inicio do Jogo. Caso deseje ouvir a questão novamente, pressione a tecla F1. " +
             "Utilize as setas direcionais" +
-            "para navegar entre as opções de resposta.");
+            "para navegar entre as opções de resposta e a tecla ENTER para selecioná-las.");
     }
 
     private void ShowQuestion()
@@ -52,7 +56,8 @@ public class GameController : MonoBehaviour
         QuestionData questionData = questionPool[questionIndex];
         questionDisplayText.text = questionData.questionText;
 
-        TolkUtil.Speak("Questão" + (questionIndex+1) + questionDisplayText.text);
+        TolkUtil.Speak("Questão" + (questionIndex + 1));
+        TolkUtil.Speak(questionDisplayText.text);
 
         for (int i = 0; i < questionData.answers.Length; i++)
         {
@@ -106,6 +111,8 @@ public class GameController : MonoBehaviour
         questionDisplay.SetActive(false);
         roundEndDisplay.SetActive(true);
 
+        roundOverDisplayText.text = "FIM DE JOGO! VOCÊ MARCOU " + (playerScore / 10) + " PONTOS";
+
         TolkUtil.Speak(roundOverDisplayText.text);
 
         returnToMenuButton.Select();
@@ -125,7 +132,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Tolk.Speak(questionDisplayText.text);
+            TolkUtil.Speak(questionDisplayText.text);
         }
     }
 }
