@@ -46,4 +46,9 @@ public class TolkUtil : MonoBehaviour {
     {
         if (!Tolk.IsSpeaking()) Tolk.Speak(text);
     }
+
+    public static void SpeakAnyway(string text)
+    {
+        Tolk.Speak(text);
+    }
 }

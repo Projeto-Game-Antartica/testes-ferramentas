@@ -75,8 +75,13 @@ public class GameController : MonoBehaviour
     {
         if (isCorrect)
         {
+            TolkUtil.SpeakAnyway("Resposta correta!");
             playerScore += currentRoundData.pointsAddedForCorrectAnswer;
             scoreDisplayText.text = "Score: " + playerScore.ToString();
+        }
+        else
+        {
+            TolkUtil.SpeakAnyway("Resposta incorreta!");
         }
 
         if (questionPool.Length > questionIndex + 1)
