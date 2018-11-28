@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
         ShowQuestion();
         isRoundActive = true;
 
+        TolkUtil.Speak("Inicio do Jogo. Caso deseje ouvir a questão novamente, pressione a tecla F1. " +
+            "Utilize as setas direcionais" +
+            "para navegar entre as opções de resposta.");
     }
 
     private void ShowQuestion()
@@ -49,7 +52,7 @@ public class GameController : MonoBehaviour
         QuestionData questionData = questionPool[questionIndex];
         questionDisplayText.text = questionData.questionText;
 
-        TolkUtil.Speak(questionDisplayText.text);
+        TolkUtil.Speak("Questão" + (questionIndex+1) + questionDisplayText.text);
 
         for (int i = 0; i < questionData.answers.Length; i++)
         {
@@ -116,5 +119,13 @@ public class GameController : MonoBehaviour
     public void ReturnToMenuButtonSelectEvent()
     {
         TolkUtil.Speak(returnToMenuButton.GetComponentInChildren<Text>().text);
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Tolk.Speak(questionDisplayText.text);
+        }
     }
 }
