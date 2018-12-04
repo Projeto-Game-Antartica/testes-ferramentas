@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using DavyKager;
@@ -20,11 +21,15 @@ public class GameController : MonoBehaviour
     private RoundData currentRoundData;
     private QuestionData[] questionPool;
 
+    private string gameText = "Inicio do Jogo. Utilize as setas cima ou baixo" +
+                              "para navegar entre as opções de resposta e a tecla ENTER para selecioná-las.";
+
     private bool isRoundActive;
     private float timeRemaining;
     private int questionIndex;
     private int playerScore;
     private List<GameObject> answerButtonGameObjects = new List<GameObject>();
+    private EventSystem system;
 
     // Use this for initialization
     void Start()
@@ -41,13 +46,13 @@ public class GameController : MonoBehaviour
         ShowQuestion();
         isRoundActive = true;
 
+        system = EventSystem.current;
     }
 
     private void Awake()
     {
-        TolkUtil.SpeakAnyway("Inicio do Jogo. Caso deseje ouvir a questão novamente, pressione a tecla F1. " +
-            "Utilize as setas direcionais" +
-            "para navegar entre as opções de resposta e a tecla ENTER para selecioná-las.");
+        TolkUtil.Instructions();
+        TolkUtil.SpeakAnyway(gameText);
     }
 
     private void ShowQuestion()
@@ -68,6 +73,7 @@ public class GameController : MonoBehaviour
             AnswerButton answerButton = answerButtonGameObject.GetComponent<AnswerButton>();
             answerButton.Setup(questionData.answers[i]);
         }
+        
     }
 
     private void RemoveAnswerButtons()
@@ -133,6 +139,27 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             TolkUtil.Speak(questionDisplayText.text);
+        }
+
+        // Navegação dos itens selecionáveis através do TAB
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
+
+            if (next != null)
+            {
+
+                InputField inputfield = next.GetComponent<InputField>();
+                if (inputfield != null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
+
+                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
+            }
+            else //Here is the navigating back part
+            {
+                next = Selectable.allSelectables[0];
+                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
+            }
+
         }
     }
 }

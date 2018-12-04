@@ -51,4 +51,15 @@ public class TolkUtil : MonoBehaviour {
     {
         Tolk.Speak(text);
     }
+
+    public static void ListScreenReaders()
+    {
+
+    }
+
+    public static void Instructions()
+    {
+        const string instructions = "Utilize a tecla F1 para repetir as instruções à qualquer momento.";
+        Tolk.Speak(instructions);
+    }
 }
