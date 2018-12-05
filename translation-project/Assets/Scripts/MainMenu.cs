@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     private Button optionButton;
     private EventSystem system;
 
-    private const string menuText = "Menu principal do jogo. Utilize as setas cima ou baixo para navegação" +
+    private const string menuText = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                     "a tecla enter para selecionar os itens.";
 
     void Start()

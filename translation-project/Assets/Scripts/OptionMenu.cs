@@ -14,7 +14,7 @@ public class OptionMenu : MonoBehaviour {
     public GameObject optionMenu;
     private EventSystem system;
 
-    private const string optionText = "Menu de opções do jogo. Utilize as setas cima ou baixo para navegação" +
+    private const string optionText = "Menu de opções do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                       "as teclas direita ou esquerda para mudança de opções" +
                                       "a tecla enter para selecionar os itens.";
 

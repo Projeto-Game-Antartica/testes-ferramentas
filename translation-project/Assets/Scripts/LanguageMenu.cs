@@ -10,21 +10,24 @@ public class LanguageMenu : MonoBehaviour {
     public Button enButton;
     private EventSystem system;
 
-    private const string initialText = "Selecione o idioma do jogo.Há dois botões, o primeiro com a bandeira do Brasil" +
+    private const string initialText = "Selecione o idioma do jogo. Há dois botões, o primeiro com a bandeira do Brasil" +
                                        "referindo-se ao idioma portugûes e o segundo uma bandeira do Reino Unido" +
-                                       "referindo-se ao idioma inglês. Utilize as setas direcionais para navegar pelos botões." +
-                                       "Utilize a tecla ENTER para selecioná-los.";
+                                       "referindo-se ao idioma inglês. Utilize as setas para cima ou baixo ou a tecla TAB" +
+                                       "para navegar pelos botões. Utilize a tecla ENTER para selecioná-los.";
 
     private void Start()
     {
         system = EventSystem.current;
+
+        brButton = GameObject.Find("locales-ptbr").GetComponent<Button>();
+        enButton = GameObject.Find("locales-en").GetComponent<Button>();
 
         TolkUtil.Load();
 
         TolkUtil.Instructions();
         TolkUtil.Speak(initialText);
 
-        brButton.Select();
+        brButton.Select();  
     }
 
     public void OnSelectBRButton()
