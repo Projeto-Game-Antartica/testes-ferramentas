@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class LanguageMenu : MonoBehaviour {
 
-    public Button brButton;
-    public Button enButton;
+    private Button brButton;
+    private Button enButton;
     private EventSystem system;
 
     private const string initialText = "Selecione o idioma do jogo. Há dois botões, o primeiro com a bandeira do Brasil" +

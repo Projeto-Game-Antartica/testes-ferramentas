@@ -7,6 +7,7 @@ public class TolkUtil : MonoBehaviour {
 
     public static void Load()
     {
+        
         if (!Tolk.IsLoaded())
         {
             Debug.Log("Inicializando...");
@@ -27,11 +28,13 @@ public class TolkUtil : MonoBehaviour {
                 Debug.Log("Nenhum leitor está rodando");
             }
         }
+        
     }
 
     public static void Unload()
     {
-       if (Tolk.IsLoaded())
+        
+        if (Tolk.IsLoaded())
        {
             Tolk.Unload();
             Debug.Log("Tolk unloaded.");
@@ -40,6 +43,7 @@ public class TolkUtil : MonoBehaviour {
        {
             Debug.Log("Tolk isnt running.");
        }
+       
     }
 
     public static void Speak(string text)

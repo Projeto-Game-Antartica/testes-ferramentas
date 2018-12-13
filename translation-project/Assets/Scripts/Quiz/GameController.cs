@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        TolkUtil.Load();
+        //TolkUtil.Load();
 
         dataController = FindObjectOfType<DataController>();
         currentRoundData = dataController.GetCurrentRoundData();

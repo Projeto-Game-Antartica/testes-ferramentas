@@ -10,6 +10,7 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     private Button playButton;
+    private Button glossaryButton;
     private Button quitButton;
     private Button optionButton;
     private EventSystem system;
@@ -20,12 +21,12 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
+        glossaryButton = GameObject.Find("GlossaryButton").GetComponent<Button>();
         quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
         system = EventSystem.current;
 
-        TolkUtil.Load();
-        Debug.Log("Tolk loaded");
+        //TolkUtil.Load();
 
         TolkUtil.Instructions();
         TolkUtil.Speak(menuText);
@@ -37,7 +38,6 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("QuizScene");
     }
-
     public void QuitGame()
     {
         Debug.Log("Quit");
@@ -49,6 +49,12 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("PlayButton");
         TolkUtil.Speak(playButton.GetComponentInChildren<TextMeshProUGUI>().text);
+    }
+
+    public void ButtonGlossaryAudio()
+    {
+        Debug.Log("GlossaryButton");
+        TolkUtil.Speak(glossaryButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonOptionAudio()

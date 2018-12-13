@@ -8,10 +8,10 @@ using UnityEngine.EventSystems;
 
 public class OptionMenu : MonoBehaviour {
 
-    public Slider slider;
-    public TextMeshProUGUI volumeText;
-    public Button backButton;
-    public GameObject optionMenu;
+    private Slider slider;
+    private TextMeshProUGUI volumeText;
+    private Button backButton;
+    private GameObject optionMenu;
     private EventSystem system;
 
     private const string optionText = "Menu de opções do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
@@ -29,7 +29,7 @@ public class OptionMenu : MonoBehaviour {
         TolkUtil.Instructions();
         TolkUtil.Speak(optionText);
 
-        TolkUtil.Load();
+        //TolkUtil.Load();
 
         slider.Select();
     }

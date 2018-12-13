@@ -14,7 +14,7 @@ public class AnswerButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        TolkUtil.Load();
+        //TolkUtil.Load();
 
         gameController = FindObjectOfType<GameController>();
         answerButton = FindObjectOfType<Button>();

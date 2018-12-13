@@ -16,7 +16,7 @@ public class Game : MonoBehaviour {
         textField  = GameObject.Find("ExampleText").GetComponent<TextMeshProUGUI>();
         inputField = GameObject.Find("InputField").GetComponent<InputField>();
         
-        TolkUtil.Load();
+        //TolkUtil.Load();
 
         //Tolk.Speak("Pressione Q para ouvir as instruções novamente." +
         //       "Pressione Control+E para a leitura do texto estático.");
