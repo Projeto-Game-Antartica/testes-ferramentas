@@ -4,7 +4,6 @@ using UnityEngine;
 using DavyKager;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
 
 public class OptionMenu : MonoBehaviour {
 
@@ -12,7 +11,6 @@ public class OptionMenu : MonoBehaviour {
     private TextMeshProUGUI volumeText;
     private Button backButton;
     private GameObject optionMenu;
-    private EventSystem system;
 
     private const string optionText = "Menu de opções do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                       "as teclas direita ou esquerda para mudança de opções" +
@@ -24,7 +22,6 @@ public class OptionMenu : MonoBehaviour {
         volumeText = GameObject.Find("Volume").GetComponent<TextMeshProUGUI>();
         backButton = GameObject.Find("BackButton").GetComponent<Button>();
         optionMenu = GameObject.Find("OptionMenu");
-        system = EventSystem.current;
 
         TolkUtil.Instructions();
         TolkUtil.Speak(optionText);
@@ -57,27 +54,6 @@ public class OptionMenu : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F1))
         {
             TolkUtil.Speak(optionText);
-        }
-
-        // Navegação dos itens selecionáveis através do TAB
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
-
-            if (next != null)
-            {
-
-                InputField inputfield = next.GetComponent<InputField>();
-                if (inputfield != null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
-
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-            else //Here is the navigating back part
-            {
-                next = Selectable.allSelectables[0];
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-
         }
     }
 }

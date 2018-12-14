@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class LanguageMenu : MonoBehaviour {
 
     private Button brButton;
     private Button enButton;
-    private EventSystem system;
 
     private const string initialText = "Selecione o idioma do jogo. Há dois botões, o primeiro com a bandeira do Brasil" +
                                        "referindo-se ao idioma portugûes e o segundo uma bandeira do Reino Unido" +
@@ -17,7 +15,6 @@ public class LanguageMenu : MonoBehaviour {
 
     private void Start()
     {
-        system = EventSystem.current;
 
         brButton = GameObject.Find("locales-ptbr").GetComponent<Button>();
         enButton = GameObject.Find("locales-en").GetComponent<Button>();
@@ -45,27 +42,6 @@ public class LanguageMenu : MonoBehaviour {
         if (Input.GetKey(KeyCode.F1))
         {
             TolkUtil.Speak(initialText);
-        }
-
-        // Navegação dos itens selecionáveis através do TAB
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
-
-            if (next != null)
-            {
-
-                InputField inputfield = next.GetComponent<InputField>();
-                if (inputfield != null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
-
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-            else //Here is the navigating back part
-            {
-                next = Selectable.allSelectables[0];
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-
         }
     }
 }

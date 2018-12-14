@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
 using DavyKager;
 using TMPro;
 
@@ -13,7 +12,6 @@ public class MainMenu : MonoBehaviour
     private Button glossaryButton;
     private Button quitButton;
     private Button optionButton;
-    private EventSystem system;
 
     private const string menuText = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                     "a tecla enter para selecionar os itens.";
@@ -24,7 +22,6 @@ public class MainMenu : MonoBehaviour
         glossaryButton = GameObject.Find("GlossaryButton").GetComponent<Button>();
         quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
         optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
-        system = EventSystem.current;
 
         //TolkUtil.Load();
 
@@ -74,27 +71,6 @@ public class MainMenu : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F1))
         {
             TolkUtil.Speak(menuText);
-        }
-
-        // Navegação dos itens selecionáveis através do TAB
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            Selectable next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnDown();
-
-            if (next != null)
-            {
-
-                InputField inputfield = next.GetComponent<InputField>();
-                if (inputfield != null) inputfield.OnPointerClick(new PointerEventData(system));  //if it's an input field, also set the text caret
-
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-            else //Here is the navigating back part
-            {
-                next = Selectable.allSelectables[0];
-                system.SetSelectedGameObject(next.gameObject, new BaseEventData(system));
-            }
-
         }
     }
 }
