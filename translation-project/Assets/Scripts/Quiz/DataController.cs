@@ -10,9 +10,17 @@ public class DataController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        TextAsset jsonTextFile = Resources.Load<TextAsset>("quizz"); //Carrega arquivo Resource/quizz.json
+        allRoundData = new RoundData[1];
+        allRoundData[0] = JsonUtility.FromJson<RoundData>(jsonTextFile.ToString());
         DontDestroyOnLoad(gameObject);
     }
-
+    /*
+    private void Awake()
+    {
+        Debug.Log(JsonUtility.ToJson(allRoundData[0], true));
+    }
+    */
     public RoundData GetCurrentRoundData()
     {
         return allRoundData[0];
