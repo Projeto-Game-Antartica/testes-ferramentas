@@ -1,7 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DictionaryData {
-    private string  text;
+[Serializable]
+public class DataArray {
+    public Data[] items;
+}
+
+[Serializable]
+public class Data
+{
+    public string key_ptbr;
+    public string key_en;
+    public string description_ptbr;
 }
