@@ -11,6 +11,7 @@ public class LocalizationManager : MonoBehaviour
     private Dictionary<string, string> localizedText;
     private bool isReady = false;
     private string missingTextString = "Localized text not found";
+    private string locales;
 
     // Use this for initialization
     void Awake()
@@ -29,6 +30,7 @@ public class LocalizationManager : MonoBehaviour
 
     public void LoadLocalizedText(string fileName)
     {
+        locales = fileName;
         localizedText = new Dictionary<string, string>();
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
@@ -52,6 +54,11 @@ public class LocalizationManager : MonoBehaviour
         }
 
         isReady = true;
+    }
+
+    public string GetLozalization()
+    {
+        return locales;
     }
 
     public string GetLocalizedValue(string key)
