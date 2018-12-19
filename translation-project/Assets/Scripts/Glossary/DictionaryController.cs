@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Video;
 
 public class DictionaryController : MonoBehaviour {
     
@@ -12,10 +13,13 @@ public class DictionaryController : MonoBehaviour {
 
     // Classe C# para mapear o JSON
     DataArray loadedData;
-        
-    public  Text textArea;
+
     public Transform contentPanel;
     public SimpleObjectPool buttonObjectPool;
+    public SimpleObjectPool textObjectPool;
+
+    public DescriptionContent descriptionContent = null;
+    private List<DictionaryButton> buttonList;
 
     // lista contendo as palavras em portugues
     private List<string> keys_ptbr;
@@ -26,6 +30,12 @@ public class DictionaryController : MonoBehaviour {
     // hashmap contendo a palavra em portugues que o leva a sua descrição em portugues
     private Dictionary<string, string> description_ptbr;
 
+    // hashmap contendo a palavra que o leva para a imagem
+    private Dictionary<string, string> description_image;
+
+    // hashmap contendo a palavra que o leva para o video em libras
+    private Dictionary<string, string> description_video;
+
     void Start()
     {
         LoadDictionary();
@@ -35,9 +45,12 @@ public class DictionaryController : MonoBehaviour {
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, dataFilename);
 
+        buttonList = new List<DictionaryButton>();
         keys_ptbr = new List<string>();
         keys_en = new List<string>();
         description_ptbr = new Dictionary<string, string>();
+        description_image = new Dictionary<string, string>();
+        description_video = new Dictionary<string, string>();
 
         if (File.Exists(filePath))
         {
@@ -51,9 +64,14 @@ public class DictionaryController : MonoBehaviour {
                 keys_ptbr.Add(loadedData.items[i].key_ptbr);
                 keys_en.Add(loadedData.items[i].key_en);
                 description_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].description_ptbr);
+                description_image.Add(loadedData.items[i].key_ptbr, loadedData.items[i].image_path);
+                description_video.Add(loadedData.items[i].key_ptbr, loadedData.items[i].video_path);
             }
 
-            AddButton(keys_ptbr);
+            //if(LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
+                AddButton(keys_ptbr);
+            //else if (LocalizationManager.instance.GetLozalization().Equals("locales_en.json"))
+                //AddButton(keys_en);
         }
         else
         {
@@ -68,27 +86,104 @@ public class DictionaryController : MonoBehaviour {
         foreach (string key in list)
         {
             GameObject newButton = buttonObjectPool.GetObject();
+            newButton.name = key + "Button";
             newButton.transform.SetParent(contentPanel);
+            Debug.Log(key + " " + newButton);
 
             DictionaryButton dictionaryButton = newButton.GetComponent<DictionaryButton>();
             dictionaryButton.keyLabel.text = key;
+
+            buttonList.Add(dictionaryButton);
         }
     }
 
-    public void PrintInTextArea(List<string> list)
+    public void ShowAllButtons()
     {
-        int i = 0;
-        list.Sort();
+        RemoveDescriptionComponent();
 
-        foreach(string s in list)
+        foreach (DictionaryButton b in buttonList)
         {
-            textArea.text += "(" + i + ") " + s + '\n';
-            i++;
+            b.gameObject.SetActive(true);
         }
-        
     }
 
-    public string getTextDescription(string key)
+    public void ShowButtonStartingWithLetter(string letter)
+    {
+        RemoveDescriptionComponent();
+
+        foreach(DictionaryButton b in buttonList)
+        {
+            if (b.keyLabel.text.ToLower().StartsWith(letter))
+            {
+                b.buttonComponent.gameObject.SetActive(true);
+            }
+            else
+            {
+                b.buttonComponent.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ShowDescriptionContent(string key)
+    {
+        RemoveAllButtons();
+
+        Sprite image = Resources.Load<Sprite>(description_image[key]);
+        VideoClip videoClip = Resources.Load<VideoClip>(description_video[key]);
+        GameObject description = textObjectPool.GetObject();
+        RawImage rawImage = gameObject.GetComponent<RawImage>();
+
+        description.name = key + "Description";
+        description.transform.SetParent(contentPanel);
+        
+        descriptionContent = description.GetComponent<DescriptionContent>();
+
+        descriptionContent.descriptionText.text = GetTextDescription(key);
+        descriptionContent.image.sprite = image;
+        descriptionContent.videoPlayer.clip = videoClip;
+        StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
+    }
+
+    public IEnumerator PlayVideo(VideoPlayer videoPlayer)
+    {
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+        {
+            Debug.Log("Not prepared");
+            yield return null;
+        }
+
+        Debug.Log("Prepared...");
+        videoPlayer.GetComponent<RawImage>().texture = videoPlayer.texture;
+        videoPlayer.Play();
+        Debug.Log(videoPlayer.isPlaying);
+    }
+
+    public void RemoveDescriptionComponent()
+    {
+        Debug.Log("RemoveDescriptionComponent");
+        if (descriptionContent != null)
+        {
+            Destroy(descriptionContent.gameObject);
+            Debug.Log("Object Destroyed");
+        }
+    }
+
+    public void RemoveAllButtons()
+    {
+        foreach (DictionaryButton b in buttonList)
+        {
+            b.buttonComponent.gameObject.SetActive(false);
+        }
+    }
+
+    public string GetTextDescription(string key)
+    {
+        return description_ptbr[key];
+    }
+
+    public string GetPortugueseDictionaryDescription(string key)
     {
         return description_ptbr[key];
     }
@@ -109,14 +204,14 @@ public class DictionaryController : MonoBehaviour {
         return result;
     }
 
-    public void ShowAllTextStartingWithLetter(string letter)
-    {
-        int i = 0;
-        textArea.text = "";
-        foreach (string s in keys_ptbr.Where(r => r.ToLower().StartsWith(letter)).ToList())
-        {
-            textArea.text += "(" + i +  ") "+ s + ": " + description_ptbr[s] + '\n';
-            i++;
-        }
-    }
+    //public void ShowAllTextStartingWithLetter(string letter)
+    //{
+    //    int i = 0;
+    //    descriptionText.text = "";
+    //    foreach (string s in keys_ptbr.Where(r => r.ToLower().StartsWith(letter)).ToList())
+    //    {
+    //        descriptionText.text += "(" + i +  ") "+ s + ": " + description_ptbr[s] + '\n';
+    //        i++;
+    //    }
+    //}
 }
