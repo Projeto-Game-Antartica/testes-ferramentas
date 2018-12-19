@@ -88,12 +88,12 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.config.locations = ["classpath:env.properties"]
-        grails.app.context = "/Antartica"
+        grails.app.context = "/antartica"
         grails.logging.jul.usebridge = true
 
         // in development, we can use the same credential/api keys that REMAR uses
         def path = new File('.').absoluteFile.parentFile // app root folder
-        def file = "${path.parent}/ProjetoREMAR/grails-app/conf/env.properties"
+        def file = "${path.parent}/antartica/grails-app/conf/env.properties"
 
         def remarProperties = new Properties()
         remarProperties.load(new FileInputStream(file))
@@ -117,7 +117,7 @@ environments {
     production {
         grails.config.locations = ["classpath:env.properties"]
         grails.logging.jul.usebridge = false
-        grails.app.context = "/Antartica"
+        grails.app.context = "/antartica"
     }
 }
 
