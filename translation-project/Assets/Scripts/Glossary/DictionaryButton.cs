@@ -21,4 +21,9 @@ public class DictionaryButton : MonoBehaviour
         Debug.Log(keyLabel.text);
         dictionaryController.ShowDescriptionContent(keyLabel.text);
     }
+
+    public void ReadButton()
+    {
+        TolkUtil.Speak(keyLabel.text);
+    }
 }

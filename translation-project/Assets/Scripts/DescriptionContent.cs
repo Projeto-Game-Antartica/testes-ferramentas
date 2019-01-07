@@ -9,9 +9,5 @@ public class DescriptionContent : MonoBehaviour {
     public Transform descriptionContent;
     public Text descriptionText;
     public VideoPlayer videoPlayer;
-    public Image image; 
-
-    // Use this for initialization
-    void Start () {
-    }
+    public Image image;
 }

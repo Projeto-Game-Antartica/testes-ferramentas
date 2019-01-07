@@ -7,7 +7,7 @@ using TMPro;
 
 public class GlossaryMenu : MonoBehaviour {
 
-    private Button ptlibrasButton;
+    public Button ptlibrasButton;
     private Button enButton;
     private Button soundButton;
     private Button backButton;
@@ -17,8 +17,8 @@ public class GlossaryMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        ptlibrasButton  = GameObject.Find("PtbrLibrasButton").GetComponent<Button>();
-        enButton        = GameObject.Find("EnButton").GetComponent<Button>();
+        ptlibrasButton  = GameObject.Find("LanguageButton").GetComponent<Button>();
+        //enButton        = GameObject.Find("EnButton").GetComponent<Button>();
         soundButton     = GameObject.Find("SoundButton").GetComponent<Button>();
         backButton      = GameObject.Find("BackButton").GetComponent<Button>();
         
@@ -45,7 +45,7 @@ public class GlossaryMenu : MonoBehaviour {
 
     public void ButtonEnAudio()
     {
-        TolkUtil.Speak(enButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        //TolkUtil.Speak(enButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonSoundAudio()

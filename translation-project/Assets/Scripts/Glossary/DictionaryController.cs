@@ -16,9 +16,9 @@ public class DictionaryController : MonoBehaviour {
 
     public Transform contentPanel;
     public SimpleObjectPool buttonObjectPool;
-    public SimpleObjectPool textObjectPool;
+    //public SimpleObjectPool textObjectPool;
 
-    public DescriptionContent descriptionContent = null;
+    public DescriptionContent descriptionContent;
     private List<DictionaryButton> buttonList;
 
     // lista contendo as palavras em portugues
@@ -36,9 +36,16 @@ public class DictionaryController : MonoBehaviour {
     // hashmap contendo a palavra que o leva para o video em libras
     private Dictionary<string, string> description_video;
 
+    private const string dictionaryText = "Glossário em Português-Brasil e Libras. As letras estão separadas em botões" +
+        "onde há três botões por linha em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
+        "irão aparecer em forma de botões.";
+
     void Start()
     {
         LoadDictionary();
+        Button button = GameObject.Find("ButtonA").GetComponent<Button>();
+        TolkUtil.Speak(dictionaryText);
+        button.Select();
     }
 
     public void LoadDictionary()
@@ -128,20 +135,25 @@ public class DictionaryController : MonoBehaviour {
     {
         RemoveAllButtons();
 
+        descriptionContent.gameObject.SetActive(true);
+
         Sprite image = Resources.Load<Sprite>(description_image[key]);
         VideoClip videoClip = Resources.Load<VideoClip>(description_video[key]);
-        GameObject description = textObjectPool.GetObject();
-        RawImage rawImage = gameObject.GetComponent<RawImage>();
 
-        description.name = key + "Description";
-        description.transform.SetParent(contentPanel);
-        
-        descriptionContent = description.GetComponent<DescriptionContent>();
+        Debug.Log("Image: " + image);
+        Debug.Log("Video: " + videoClip);
 
         descriptionContent.descriptionText.text = GetTextDescription(key);
         descriptionContent.image.sprite = image;
         descriptionContent.videoPlayer.clip = videoClip;
         StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
+
+        ReadContentText(descriptionContent.descriptionText.text);
+    }
+
+    public void ReadContentText(string content)
+    {
+        TolkUtil.Speak(content);
     }
 
     public IEnumerator PlayVideo(VideoPlayer videoPlayer)
@@ -162,12 +174,18 @@ public class DictionaryController : MonoBehaviour {
 
     public void RemoveDescriptionComponent()
     {
-        Debug.Log("RemoveDescriptionComponent");
-        if (descriptionContent != null)
-        {
-            Destroy(descriptionContent.gameObject);
-            Debug.Log("Object Destroyed");
-        }
+        //if (descriptionContent.gameObject != null)
+        //{
+        //    Debug.Log("RemoveDescriptionComponent");
+        //    Debug.Log(descriptionContent.gameObject);
+        //    if (descriptionContent.isActiveAndEnabled)
+        //    {
+        //        Destroy(descriptionContent.gameObject);
+        //        Debug.Log("Object Destroyed");
+        //    }
+        //}
+
+        descriptionContent.gameObject.SetActive(false);
     }
 
     public void RemoveAllButtons()
@@ -176,6 +194,11 @@ public class DictionaryController : MonoBehaviour {
         {
             b.buttonComponent.gameObject.SetActive(false);
         }
+    }
+
+    public void ReadLetterButtin(string letter)
+    {
+        TolkUtil.Speak(letter);
     }
 
     public string GetTextDescription(string key)
