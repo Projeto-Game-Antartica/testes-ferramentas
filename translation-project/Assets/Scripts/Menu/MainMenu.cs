@@ -37,32 +37,32 @@ public class MainMenu : MonoBehaviour
     }
     public void QuitGame()
     {
-        Debug.Log("Quit");
+        //Debug.Log("Quit");
         TolkUtil.Unload();
         Application.Quit();
     }
 
     public void ButtonPlayAudio()
     {
-        Debug.Log("PlayButton");
+        //Debug.Log("PlayButton");
         TolkUtil.Speak(playButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonGlossaryAudio()
     {
-        Debug.Log("GlossaryButton");
+        //Debug.Log("GlossaryButton");
         TolkUtil.Speak(glossaryButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonOptionAudio()
     {
-        Debug.Log("OptionButton");
+        //Debug.Log("OptionButton");
         TolkUtil.Speak(optionButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonQuitAudio()
     {
-        Debug.Log("QuitButton");
+        //Debug.Log("QuitButton");
         TolkUtil.Speak(quitButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
