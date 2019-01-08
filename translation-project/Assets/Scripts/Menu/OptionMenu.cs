@@ -33,19 +33,19 @@ public class OptionMenu : MonoBehaviour {
 
     public void ButtonBackAudio()
     {
-        Debug.Log("BackButton");
+        //Debug.Log("BackButton");
         TolkUtil.Speak(backButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void SliderVolumeAudio()
     {
-        Debug.Log("VolumeSlider");
+        //Debug.Log("VolumeSlider");
         TolkUtil.Speak(volumeText.text + slider.value);
     }
 
     public void TextVolumeAudio()
     {
-        Debug.Log("TextVolume");
+        //Debug.Log("TextVolume");
         TolkUtil.Speak(volumeText.text);
     }
 

@@ -7,7 +7,7 @@ using TMPro;
 
 public class GlossaryMenu : MonoBehaviour {
 
-    public Button ptlibrasButton;
+    private Button ptlibrasButton;
     private Button enButton;
     private Button soundButton;
     private Button backButton;
