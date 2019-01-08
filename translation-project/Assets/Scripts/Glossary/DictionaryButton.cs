@@ -18,7 +18,6 @@ public class DictionaryButton : MonoBehaviour
 
     public void HandleClick()
     {
-        Debug.Log(keyLabel.text);
         dictionaryController.ShowDescriptionContent(keyLabel.text);
     }
 

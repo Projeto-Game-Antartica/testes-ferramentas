@@ -31,13 +31,18 @@ public class DictionaryController : MonoBehaviour {
     private Dictionary<string, string> description_ptbr;
 
     // hashmap contendo a palavra que o leva para a imagem
-    private Dictionary<string, string> description_image;
+    private Dictionary<string, string> description_ptbrimage;
 
     // hashmap contendo a palavra que o leva para o video em libras
-    private Dictionary<string, string> description_video;
+    private Dictionary<string, string> description_ptbrvideo;
+
+    // hashmaps com keys em ingles
+    private Dictionary<string, string> description_en;
+    private Dictionary<string, string> description_enimage;
+    private Dictionary<string, string> description_envideo;
 
     private const string dictionaryText = "Glossário em Português-Brasil e Libras. As letras estão separadas em botões" +
-        "onde há três botões por linha em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
+        "onde há duas linhas contendo treze letras em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
         "irão aparecer em forma de botões.";
 
     void Start()
@@ -53,32 +58,50 @@ public class DictionaryController : MonoBehaviour {
         string filePath = Path.Combine(Application.streamingAssetsPath, dataFilename);
 
         buttonList = new List<DictionaryButton>();
+
         keys_ptbr = new List<string>();
         keys_en = new List<string>();
+
+        // pt-br information
         description_ptbr = new Dictionary<string, string>();
-        description_image = new Dictionary<string, string>();
-        description_video = new Dictionary<string, string>();
+        description_ptbrimage = new Dictionary<string, string>();
+        description_ptbrvideo = new Dictionary<string, string>();
+
+        // en information
+        description_en = new Dictionary<string, string>();
+        description_enimage = new Dictionary<string, string>();
+        description_envideo = new Dictionary<string, string>();
 
         if (File.Exists(filePath))
         {
             // leitura do JSON
             string dataAsJson = File.ReadAllText(filePath);
             loadedData = JsonUtility.FromJson<DataArray>(dataAsJson);
-
-            // carga das listas/dicionários com o conteúdo do JSON
-            for (int i = 0; i < loadedData.items.Length; i++)
+            
+            if (LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
             {
-                keys_ptbr.Add(loadedData.items[i].key_ptbr);
-                keys_en.Add(loadedData.items[i].key_en);
-                description_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].description_ptbr);
-                description_image.Add(loadedData.items[i].key_ptbr, loadedData.items[i].image_path);
-                description_video.Add(loadedData.items[i].key_ptbr, loadedData.items[i].video_path);
-            }
-
-            //if(LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
+                // carga das listas/dicionários com o conteúdo do JSON em portugues
+                for (int i = 0; i < loadedData.items.Length; i++)
+                {
+                    keys_ptbr.Add(loadedData.items[i].key_ptbr);
+                    description_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].description_ptbr);
+                    description_ptbrimage.Add(loadedData.items[i].key_ptbr, loadedData.items[i].image_path);
+                    description_ptbrvideo.Add(loadedData.items[i].key_ptbr, loadedData.items[i].video_path);
+                }
                 AddButton(keys_ptbr);
-            //else if (LocalizationManager.instance.GetLozalization().Equals("locales_en.json"))
-                //AddButton(keys_en);
+            }
+            else
+            {
+                // carga das listas/dicionários com o conteúdo do JSON em ingles
+                for (int i = 0; i < loadedData.items.Length; i++)
+                {
+                    keys_en.Add(loadedData.items[i].key_en);
+                    description_en.Add(loadedData.items[i].key_en, loadedData.items[i].description_en);
+                    description_enimage.Add(loadedData.items[i].key_en, loadedData.items[i].image_path);
+                    description_envideo.Add(loadedData.items[i].key_en, loadedData.items[i].video_path);
+                }
+                AddButton(keys_en);
+            }
         }
         else
         {
@@ -133,17 +156,31 @@ public class DictionaryController : MonoBehaviour {
 
     public void ShowDescriptionContent(string key)
     {
+        Sprite image;
+        VideoClip videoClip;
+
         RemoveAllButtons();
 
         descriptionContent.gameObject.SetActive(true);
 
-        Sprite image = Resources.Load<Sprite>(description_image[key]);
-        VideoClip videoClip = Resources.Load<VideoClip>(description_video[key]);
+        Debug.Log(key);
+
+        // descricao em portugues
+        if (LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
+        {
+            image = Resources.Load<Sprite>(description_ptbrimage[key]);
+            videoClip = Resources.Load<VideoClip>(description_ptbrvideo[key]);
+        }
+        else // descricao em ingles
+        {
+            image = Resources.Load<Sprite>(description_enimage[key]);
+            videoClip = Resources.Load<VideoClip>(description_envideo[key]);
+        }
 
         Debug.Log("Image: " + image);
         Debug.Log("Video: " + videoClip);
 
-        descriptionContent.descriptionText.text = GetTextDescription(key);
+        descriptionContent.descriptionText.text = GetTextDescription(key, LocalizationManager.instance.GetLozalization());
         descriptionContent.image.sprite = image;
         descriptionContent.videoPlayer.clip = videoClip;
         StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
@@ -201,14 +238,12 @@ public class DictionaryController : MonoBehaviour {
         TolkUtil.Speak(letter);
     }
 
-    public string GetTextDescription(string key)
+    public string GetTextDescription(string key, string localization)
     {
-        return description_ptbr[key];
-    }
-
-    public string GetPortugueseDictionaryDescription(string key)
-    {
-        return description_ptbr[key];
+        if (localization.Equals("locales_ptbr.json"))
+            return description_ptbr[key];
+        else
+            return description_en[key];
     }
 
     public List<string> GetAllTextStartingWithLetter(string letter)
