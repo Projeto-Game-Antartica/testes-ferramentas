@@ -170,21 +170,19 @@ public class DictionaryController : MonoBehaviour {
         {
             image = Resources.Load<Sprite>(description_ptbrimage[key]);
             videoClip = Resources.Load<VideoClip>(description_ptbrvideo[key]);
+
+            descriptionContent.videoPlayer.clip = videoClip;
+            StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
         }
         else // descricao em ingles
         {
             image = Resources.Load<Sprite>(description_enimage[key]);
-            videoClip = Resources.Load<VideoClip>(description_envideo[key]);
+            descriptionContent.videoPlayer.gameObject.SetActive(false);
         }
-
-        Debug.Log("Image: " + image);
-        Debug.Log("Video: " + videoClip);
 
         descriptionContent.descriptionText.text = GetTextDescription(key, LocalizationManager.instance.GetLozalization());
         descriptionContent.image.sprite = image;
-        descriptionContent.videoPlayer.clip = videoClip;
-        StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
-
+        
         ReadContentText(descriptionContent.descriptionText.text);
     }
 
