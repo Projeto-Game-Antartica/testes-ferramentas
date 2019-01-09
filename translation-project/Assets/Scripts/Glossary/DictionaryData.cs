@@ -17,4 +17,5 @@ public class Data
     public string description_en;
     public string image_path;
     public string video_path;
+    public string audio_path;
 }

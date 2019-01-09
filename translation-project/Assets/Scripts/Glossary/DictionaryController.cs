@@ -9,7 +9,11 @@ using UnityEngine.Video;
 public class DictionaryController : MonoBehaviour {
     
     // nome do arquivo JSON
-    private string dataFilename = "glossary.json";
+    private const string dataFilename = "glossary.json";
+
+    private const string dictionaryText = "Glossário em Português-Brasil e Libras. As letras estão separadas em botões" +
+    "onde há duas linhas contendo treze letras em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
+    "irão aparecer em forma de botões.";
 
     // Classe C# para mapear o JSON
     DataArray loadedData;
@@ -19,6 +23,7 @@ public class DictionaryController : MonoBehaviour {
     //public SimpleObjectPool textObjectPool;
 
     public DescriptionContent descriptionContent;
+
     private List<DictionaryButton> buttonList;
 
     // lista contendo as palavras em portugues
@@ -40,10 +45,6 @@ public class DictionaryController : MonoBehaviour {
     private Dictionary<string, string> description_en;
     private Dictionary<string, string> description_enimage;
     private Dictionary<string, string> description_envideo;
-
-    private const string dictionaryText = "Glossário em Português-Brasil e Libras. As letras estão separadas em botões" +
-        "onde há duas linhas contendo treze letras em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
-        "irão aparecer em forma de botões.";
 
     void Start()
     {
@@ -135,23 +136,31 @@ public class DictionaryController : MonoBehaviour {
         {
             b.gameObject.SetActive(true);
         }
+
+        buttonList[0].buttonComponent.Select();
     }
 
     public void ShowButtonStartingWithLetter(string letter)
     {
         RemoveDescriptionComponent();
-
+        bool first = true;
+        int index = 0;
+        
         foreach(DictionaryButton b in buttonList)
         {
             if (b.keyLabel.text.ToLower().StartsWith(letter))
             {
+                if (first) index = buttonList.IndexOf(b);
                 b.buttonComponent.gameObject.SetActive(true);
+                first = false;
             }
             else
             {
                 b.buttonComponent.gameObject.SetActive(false);
             }
         }
+
+        buttonList[index].buttonComponent.Select();
     }
 
     public void ShowDescriptionContent(string key)
@@ -174,7 +183,7 @@ public class DictionaryController : MonoBehaviour {
             descriptionContent.videoPlayer.clip = videoClip;
             StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
         }
-        else // descricao em ingles
+        else // descricao em ingles (nao ha videoplayer)
         {
             image = Resources.Load<Sprite>(description_enimage[key]);
             descriptionContent.videoPlayer.gameObject.SetActive(false);
@@ -238,10 +247,14 @@ public class DictionaryController : MonoBehaviour {
 
     public string GetTextDescription(string key, string localization)
     {
+        string result;
+
         if (localization.Equals("locales_ptbr.json"))
-            return description_ptbr[key];
+            result = description_ptbr[key];
         else
-            return description_en[key];
+            result = description_en[key];
+
+        return result;
     }
 
     public List<string> GetAllTextStartingWithLetter(string letter)
@@ -258,6 +271,19 @@ public class DictionaryController : MonoBehaviour {
         }
 
         return result;
+    }
+
+    public void BackButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MenuScene");
+    }
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            ReadContentText(descriptionContent.descriptionText.text);
+        }
     }
 
     //public void ShowAllTextStartingWithLetter(string letter)

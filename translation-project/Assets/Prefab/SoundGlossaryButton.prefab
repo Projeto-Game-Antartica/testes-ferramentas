@@ -23,10 +23,10 @@ GameObject:
   - component: {fileID: 114004771898920074}
   - component: {fileID: 114035235861954688}
   - component: {fileID: 114807817880353552}
-  - component: {fileID: 114905607631539104}
   - component: {fileID: 114097510676172174}
+  - component: {fileID: 114567503020808212}
   m_Layer: 0
-  m_Name: GlossaryButton
+  m_Name: SoundGlossaryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114905607631539104}
+        - m_Target: {fileID: 0}
           m_MethodName: ReadButton
           m_Mode: 1
           m_Arguments:
@@ -180,6 +180,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
+--- !u!114 &114567503020808212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1323680480822576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7494401da5ab54a994611b000d75ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonComponent: {fileID: 114035235861954688}
+  keyLabel: {fileID: 114350736514248224}
+  audioSource: {fileID: 0}
+  soundGlossaryController: {fileID: 0}
 --- !u!114 &114807817880353552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,20 +214,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &114905607631539104
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1323680480822576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f243559396245f4ea7c557482bbb883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonComponent: {fileID: 114035235861954688}
-  keyLabel: {fileID: 114350736514248224}
-  dictionaryController: {fileID: 0}
 --- !u!222 &222348780723776846
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -262,5 +263,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 45.6}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
