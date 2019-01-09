@@ -7,8 +7,7 @@ using TMPro;
 
 public class GlossaryMenu : MonoBehaviour {
 
-    private Button ptlibrasButton;
-    private Button enButton;
+    private Button glossaryButton;
     private Button soundButton;
     private Button backButton;
 
@@ -17,35 +16,31 @@ public class GlossaryMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        ptlibrasButton  = GameObject.Find("LanguageButton").GetComponent<Button>();
-        //enButton        = GameObject.Find("EnButton").GetComponent<Button>();
+        glossaryButton  = GameObject.Find("glossaryButton").GetComponent<Button>();
         soundButton     = GameObject.Find("SoundButton").GetComponent<Button>();
         backButton      = GameObject.Find("BackButton").GetComponent<Button>();
         
-
         TolkUtil.Instructions();
         TolkUtil.Speak(glossaryText);
 
         //TolkUtil.Load();
 
-        ptlibrasButton.Select();
+        glossaryButton.Select();
     }
-	
     
     public void LoadGlossary()
     {
         SceneManager.LoadScene("GlossaryScene");
     }
 
+    public void LoadSoundGlossary()
+    {
+        SceneManager.LoadScene("GlossarySoundScene");
+    }
 
     public void ButtonPtLibrasAudio()
     {
-        TolkUtil.Speak(ptlibrasButton.GetComponentInChildren<TextMeshProUGUI>().text);
-    }
-
-    public void ButtonEnAudio()
-    {
-        //TolkUtil.Speak(enButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(glossaryButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonSoundAudio()
