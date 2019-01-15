@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     private Button quitButton;
     private Button optionButton;
 
-    private const string menuText = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
+    private const string instructions = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                     "a tecla enter para selecionar os itens.";
 
     void Start()
@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(menuText);
+        TolkUtil.Speak(instructions);
 
         playButton.Select();
     }
@@ -70,7 +70,7 @@ public class MainMenu : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(menuText);
+            TolkUtil.Speak(instructions);
         }
     }
 }

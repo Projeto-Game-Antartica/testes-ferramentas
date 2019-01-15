@@ -5,53 +5,65 @@ using System.Linq;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Video;
+using UnityEngine.EventSystems;
 
 public class DictionaryController : MonoBehaviour {
     
-    // nome do arquivo JSON
+    /*
+     * nome do arquivo JSON
+     */
     private const string dataFilename = "glossary.json";
 
-    private const string dictionaryText = "Glossário em Português-Brasil e Libras. As letras estão separadas em botões" +
-    "onde há duas linhas contendo treze letras em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra" +
-    "irão aparecer em forma de botões.";
+    /*
+     * variável para instruções
+     */
+    private const string instructions = "Glossário em Português-Brasil e Libras. Para repetir as instruções, aperte " +
+    "a tecla F1 a qualquer momento. As letras estão separadas em botões onde há duas linhas contendo treze letras " +
+    "em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra irão aparecer em forma de botões." +
+    "Inicialmente, estará selecionado o primeiro item da lista de palavras, navegue utilizando as setas para cima ou para baixo." +
+    "Para ouvir as descrições novamente, aperte a tecla F3. Para selecionar o alfabeto aperte a tecla F2 e navegue " +
+    "utilizando a tecla TAB  ou as setas direcionais para direita ou esquerda.";
 
-    // Classe C# para mapear o JSON
+    /*
+     * Classe C# para mapear o JSON
+     */
     DataArray loadedData;
 
+    /*
+     * Variáveis para controle dos botões e sua navegação
+     */
+    [SerializeField]
+    private float m_lerpTime;
+    public ScrollRect m_scrollRect;
+    private List<Button> m_buttons;
+    private int m_index;
+    private float m_verticalPosition;
+    private bool m_up;
+    private bool m_down;
     public Transform contentPanel;
     public SimpleObjectPool buttonObjectPool;
-    //public SimpleObjectPool textObjectPool;
-
     public DescriptionContent descriptionContent;
-
     private List<DictionaryButton> buttonList;
+    private Button buttonA;
 
-    // lista contendo as palavras em portugues
-    private List<string> keys_ptbr;
-
-    // list contendo as palavras em inglês
-    private List<string> keys_en;
-
-    // hashmap contendo a palavra em portugues que o leva a sua descrição em portugues
-    private Dictionary<string, string> description_ptbr;
-
-    // hashmap contendo a palavra que o leva para a imagem
-    private Dictionary<string, string> description_ptbrimage;
-
-    // hashmap contendo a palavra que o leva para o video em libras
-    private Dictionary<string, string> description_ptbrvideo;
-
-    // hashmaps com keys em ingles
-    private Dictionary<string, string> description_en;
+    /*
+     * Variáveis para controle do glossário
+     */
+    private List<string> keys_ptbr; // lista contendo as palavras em portugues
+    private List<string> keys_en; // list contendo as palavras em inglês
+    private Dictionary<string, string> description_ptbr; // hashmap contendo a palavra em portugues que o leva a sua descrição em portugues   
+    private Dictionary<string, string> description_ptbrimage; // hashmap contendo a palavra que o leva para a imagem
+    private Dictionary<string, string> description_ptbrvideo; // hashmap contendo a palavra que o leva para o video em libras
+    private Dictionary<string, string> description_en; // idem itens anteriores, porem para ingles sem video
     private Dictionary<string, string> description_enimage;
-    private Dictionary<string, string> description_envideo;
 
     void Start()
     {
         LoadDictionary();
-        Button button = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(dictionaryText);
-        button.Select();
+        buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
+        TolkUtil.Speak(instructions);
+        m_buttons[m_index].Select();
+        m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
 
     public void LoadDictionary()
@@ -63,6 +75,8 @@ public class DictionaryController : MonoBehaviour {
         keys_ptbr = new List<string>();
         keys_en = new List<string>();
 
+        m_buttons = new List<Button>();
+
         // pt-br information
         description_ptbr = new Dictionary<string, string>();
         description_ptbrimage = new Dictionary<string, string>();
@@ -71,14 +85,13 @@ public class DictionaryController : MonoBehaviour {
         // en information
         description_en = new Dictionary<string, string>();
         description_enimage = new Dictionary<string, string>();
-        description_envideo = new Dictionary<string, string>();
 
         if (File.Exists(filePath))
         {
             // leitura do JSON
             string dataAsJson = File.ReadAllText(filePath);
             loadedData = JsonUtility.FromJson<DataArray>(dataAsJson);
-            
+
             if (LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
             {
                 // carga das listas/dicionários com o conteúdo do JSON em portugues
@@ -99,7 +112,6 @@ public class DictionaryController : MonoBehaviour {
                     keys_en.Add(loadedData.items[i].key_en);
                     description_en.Add(loadedData.items[i].key_en, loadedData.items[i].description_en);
                     description_enimage.Add(loadedData.items[i].key_en, loadedData.items[i].image_path);
-                    description_envideo.Add(loadedData.items[i].key_en, loadedData.items[i].video_path);
                 }
                 AddButton(keys_en);
             }
@@ -125,12 +137,14 @@ public class DictionaryController : MonoBehaviour {
             dictionaryButton.keyLabel.text = key;
 
             buttonList.Add(dictionaryButton);
+            m_buttons.Add(dictionaryButton.buttonComponent);
         }
     }
 
     public void ShowAllButtons()
     {
         RemoveDescriptionComponent();
+        ResetVerticalPositionScrollRect();
 
         foreach (DictionaryButton b in buttonList)
         {
@@ -143,6 +157,7 @@ public class DictionaryController : MonoBehaviour {
     public void ShowButtonStartingWithLetter(string letter)
     {
         RemoveDescriptionComponent();
+        ResetVerticalPositionScrollRect();
         bool first = true;
         int index = 0;
         
@@ -228,7 +243,6 @@ public class DictionaryController : MonoBehaviour {
         //        Debug.Log("Object Destroyed");
         //    }
         //}
-
         descriptionContent.gameObject.SetActive(false);
     }
 
@@ -268,8 +282,7 @@ public class DictionaryController : MonoBehaviour {
         else
         {
             result = keys_en.Where(r => r.ToLower().StartsWith(letter)).ToList<string>();
-        }
-
+        } 
         return result;
     }
 
@@ -278,9 +291,44 @@ public class DictionaryController : MonoBehaviour {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MenuScene");
     }
 
+    public void ResetVerticalPositionScrollRect()
+    {
+        m_verticalPosition = 1f;
+        m_index = 0;
+    }
+    
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
+        if (DictionaryButton.contentButton)
+        {
+            m_up = Input.GetKeyDown(KeyCode.UpArrow);
+            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+
+            if (m_up ^ m_down)
+            {
+                if (m_up)
+                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+                else
+                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+
+                m_buttons[m_index].Select();
+                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+            }
+
+            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReadContentText(instructions);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ResetVerticalPositionScrollRect();
+            buttonA.Select();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
         {
             ReadContentText(descriptionContent.descriptionText.text);
         }
