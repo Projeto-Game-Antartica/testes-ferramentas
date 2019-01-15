@@ -7,25 +7,25 @@ using TMPro;
 
 public class GlossaryMenu : MonoBehaviour {
 
-    private Button glossaryButton;
+    private Button languageButton;
     private Button soundButton;
     private Button backButton;
 
-    private const string glossaryText = "Glossário. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
+    private const string instructions = "Glossário. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
                                         "e a tecla enter para selecionar os itens.";
 
     // Use this for initialization
     void Start () {
-        glossaryButton  = GameObject.Find("glossaryButton").GetComponent<Button>();
+        languageButton  = GameObject.Find("LanguageButton").GetComponent<Button>();
         soundButton     = GameObject.Find("SoundButton").GetComponent<Button>();
         backButton      = GameObject.Find("BackButton").GetComponent<Button>();
         
         TolkUtil.Instructions();
-        TolkUtil.Speak(glossaryText);
+        TolkUtil.Speak(instructions);
 
         //TolkUtil.Load();
 
-        glossaryButton.Select();
+        languageButton.Select();
     }
     
     public void LoadGlossary()
@@ -38,9 +38,9 @@ public class GlossaryMenu : MonoBehaviour {
         SceneManager.LoadScene("GlossarySoundScene");
     }
 
-    public void ButtonPtLibrasAudio()
+    public void LanguageButtonAudio()
     {
-        TolkUtil.Speak(glossaryButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        TolkUtil.Speak(languageButton.GetComponentInChildren<TextMeshProUGUI>().text);
     }
 
     public void ButtonSoundAudio()
@@ -57,7 +57,7 @@ public class GlossaryMenu : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(glossaryText);
+            TolkUtil.Speak(instructions);
         }
     }
 }

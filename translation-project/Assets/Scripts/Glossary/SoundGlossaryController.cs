@@ -6,41 +6,61 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SoundGlossaryController : MonoBehaviour {
 
-
-    // nome do arquivo JSON
+    /*
+     * nome do arquivo JSON
+     */
     private const string dataFilename = "glossary.json";
-    private const string dictionaryText = "";
 
-    // Classe C# para mapear o JSON
+    /*
+     * variável para instruções
+     */
+    private const string instructions = "Glossário de Sons. Para repetir as instruções, aperte " +
+    "a tecla F1 a qualquer momento. As letras estão separadas em botões onde há duas linhas contendo treze letras " +
+    "em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra irão aparecer em forma de botões." +
+    "Inicialmente, estará selecionado o primeiro item da lista de palavras, navegue utilizando as setas para cima ou para baixo." +
+    "Selecione o botão através da tecla enter para ouvir o som característico. Pressione a tecla P para pausá-lo." +
+    "Para selecionar o alfabeto aperte a tecla F2 e navegue utilizando a tecla TAB ou as setas para direita ou esquerda.";
+
+    /*
+     * Classe C# para mapear o JSON
+     */
     DataArray loadedData;
 
+    /*
+    * Variáveis para controle dos botões e sua navegação
+    */
+    [SerializeField]
+    private float m_lerpTime;
+    public ScrollRect m_scrollRect;
+    private List<Button> m_buttons;
+    private int m_index;
+    private float m_verticalPosition;
+    private bool m_up;
+    private bool m_down;
     public Transform contentPanel;
     public SimpleObjectPool buttonObjectPool;
     private List<SoundButton> buttonList;
+    private Button buttonA;
 
-    // lista contendo as palavras em portugues
-    private List<string> keys_ptbr;
-
-    // list contendo as palavras em inglês
-    private List<string> keys_en;
-
-    // hashmap contendo a palavra em portugues que o leva ao seu audio
-    private Dictionary<string, string> audio_ptbr;
-
-    // hashmap com keys em ingles
-    private Dictionary<string, string> audio_en;
-
-    private AudioSource audioSource;
+    /*
+    * Variáveis para controle do glossário
+    */
+    private List<string> keys_ptbr; // lista contendo as palavras em portugues
+    private List<string> keys_en; // list contendo as palavras em inglês
+    private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
+    private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
     void Start()
     {
         LoadDictionary();
-        Button button = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(dictionaryText);
-        button.Select();
+        buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
+        TolkUtil.Speak(instructions);
+        m_buttons[m_index].Select();
+        m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
 
     public void LoadDictionary()
@@ -52,6 +72,7 @@ public class SoundGlossaryController : MonoBehaviour {
         buttonList  = new List<SoundButton>();
         audio_ptbr  = new Dictionary<string, string>();
         audio_en    = new Dictionary<string, string>();
+        m_buttons   = new List<Button>();
 
         if (File.Exists(filePath))
         {
@@ -66,6 +87,7 @@ public class SoundGlossaryController : MonoBehaviour {
                 {
                     keys_ptbr.Add(loadedData.items[i].key_ptbr);
                     audio_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].audio_path);
+
                 }
                 AddButton(keys_ptbr);
         }
@@ -101,11 +123,13 @@ public class SoundGlossaryController : MonoBehaviour {
             soundButton.keyLabel.text = key;
 
             buttonList.Add(soundButton);
+            m_buttons.Add(soundButton.buttonComponent);
         }
     }
 
     public void ShowAllButtons()
     {
+        ResetVerticalPositionScrollRect();
         foreach (SoundButton b in buttonList)
         {
             b.gameObject.SetActive(true);
@@ -166,7 +190,49 @@ public class SoundGlossaryController : MonoBehaviour {
         SceneManager.LoadScene("MenuScene");
     }
 
+    public void ResetVerticalPositionScrollRect()
+    {
+        m_verticalPosition = 1f;
+        m_index = 0;
+    }
+
     public void Update()
     {
+        if (SoundButton.contentButton)
+        {
+            m_up = Input.GetKeyDown(KeyCode.UpArrow);
+            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+
+            if (m_up ^ m_down)
+            {
+                if (m_up)
+                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+                else
+                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+
+                m_buttons[m_index].Select();
+                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+            }
+
+            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
+            m_verticalPosition, Time.deltaTime / m_lerpTime);
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            if (SoundButton.IsAudioPlaying())
+                SoundButton.audioSource.Stop();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            TolkUtil.Speak(instructions);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ResetVerticalPositionScrollRect();
+            buttonA.Select();
+        }
     }
 }

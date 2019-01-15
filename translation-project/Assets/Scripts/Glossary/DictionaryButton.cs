@@ -8,6 +8,7 @@ public class DictionaryButton : MonoBehaviour
     public Button buttonComponent;
     public Text keyLabel;
     public DictionaryController dictionaryController;
+    public static bool contentButton;
 
     // Use this for initialization
     void Start()
@@ -19,6 +20,11 @@ public class DictionaryButton : MonoBehaviour
     public void HandleClick()
     {
         dictionaryController.ShowDescriptionContent(keyLabel.text);
+    }
+
+    public void SetContentButton(bool content)
+    {
+        contentButton = content;
     }
 
     public void ReadButton()
