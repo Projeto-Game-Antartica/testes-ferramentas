@@ -15,6 +15,7 @@ public class SoundButton : MonoBehaviour
     void Start()
     {
         soundGlossaryController = buttonComponent.GetComponentInParent<SoundGlossaryController>();
+        buttonComponent.transform.localScale = Vector3.one;
         audioSource = buttonComponent.GetComponentInParent<AudioSource>();
         buttonComponent.onClick.AddListener(HandleClick);
     }

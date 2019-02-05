@@ -45,6 +45,7 @@ public class DictionaryController : MonoBehaviour {
     public DescriptionContent descriptionContent;
     private List<DictionaryButton> buttonList;
     private Button buttonA;
+    public Button audioButton;
 
     /*
      * Variáveis para controle do glossário
@@ -56,6 +57,8 @@ public class DictionaryController : MonoBehaviour {
     private Dictionary<string, string> description_ptbrvideo; // hashmap contendo a palavra que o leva para o video em libras
     private Dictionary<string, string> description_en; // idem itens anteriores, porem para ingles sem video
     private Dictionary<string, string> description_enimage;
+    private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
+    private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
     void Start()
     {
@@ -81,10 +84,12 @@ public class DictionaryController : MonoBehaviour {
         description_ptbr = new Dictionary<string, string>();
         description_ptbrimage = new Dictionary<string, string>();
         description_ptbrvideo = new Dictionary<string, string>();
+        audio_ptbr = new Dictionary<string, string>();
 
         // en information
         description_en = new Dictionary<string, string>();
         description_enimage = new Dictionary<string, string>();
+        audio_en = new Dictionary<string, string>();
 
         if (File.Exists(filePath))
         {
@@ -101,21 +106,23 @@ public class DictionaryController : MonoBehaviour {
                     description_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].description_ptbr);
                     description_ptbrimage.Add(loadedData.items[i].key_ptbr, loadedData.items[i].image_path);
                     description_ptbrvideo.Add(loadedData.items[i].key_ptbr, loadedData.items[i].video_path);
+                    audio_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].audio_path);
                 }
                 AddButton(keys_ptbr);
-            }
-            else
-            {
-                // carga das listas/dicionários com o conteúdo do JSON em ingles
-                for (int i = 0; i < loadedData.items.Length; i++)
-                {
-                    keys_en.Add(loadedData.items[i].key_en);
-                    description_en.Add(loadedData.items[i].key_en, loadedData.items[i].description_en);
-                    description_enimage.Add(loadedData.items[i].key_en, loadedData.items[i].image_path);
-                }
-                AddButton(keys_en);
-            }
         }
+        else
+        {
+            // carga das listas/dicionários com o conteúdo do JSON em ingles
+            for (int i = 0; i < loadedData.items.Length; i++)
+            {
+                keys_en.Add(loadedData.items[i].key_en);
+                description_en.Add(loadedData.items[i].key_en, loadedData.items[i].description_en);
+                description_enimage.Add(loadedData.items[i].key_en, loadedData.items[i].image_path);
+                audio_en.Add(loadedData.items[i].key_en, loadedData.items[i].audio_path);
+            }
+            AddButton(keys_en);
+        }
+    }
         else
         {
             Debug.LogError("Cannot find file!");
@@ -194,7 +201,7 @@ public class DictionaryController : MonoBehaviour {
         {
             image = Resources.Load<Sprite>(description_ptbrimage[key]);
             videoClip = Resources.Load<VideoClip>(description_ptbrvideo[key]);
-
+            
             descriptionContent.videoPlayer.clip = videoClip;
             StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
         }
@@ -206,7 +213,12 @@ public class DictionaryController : MonoBehaviour {
 
         descriptionContent.descriptionText.text = GetTextDescription(key, LocalizationManager.instance.GetLozalization());
         descriptionContent.image.sprite = image;
-        
+
+        // setting the key for audio button
+        DictionaryButton.keyAudio = key;
+
+        audioButton.Select();
+
         ReadContentText(descriptionContent.descriptionText.text);
     }
 
@@ -233,16 +245,6 @@ public class DictionaryController : MonoBehaviour {
 
     public void RemoveDescriptionComponent()
     {
-        //if (descriptionContent.gameObject != null)
-        //{
-        //    Debug.Log("RemoveDescriptionComponent");
-        //    Debug.Log(descriptionContent.gameObject);
-        //    if (descriptionContent.isActiveAndEnabled)
-        //    {
-        //        Destroy(descriptionContent.gameObject);
-        //        Debug.Log("Object Destroyed");
-        //    }
-        //}
         descriptionContent.gameObject.SetActive(false);
     }
 
@@ -296,7 +298,19 @@ public class DictionaryController : MonoBehaviour {
         m_verticalPosition = 1f;
         m_index = 0;
     }
-    
+
+    public AudioClip GetAudioClip(string key, string localization)
+    {
+        AudioClip audioClip;
+
+        if (localization.Equals("locales_ptbr.json"))
+            audioClip = Resources.Load<AudioClip>(audio_ptbr[key]);
+        else
+            audioClip = Resources.Load<AudioClip>(audio_en[key]);
+
+        return audioClip;
+    }
+
     public void Update()
     {
         if (DictionaryButton.contentButton)
@@ -333,15 +347,4 @@ public class DictionaryController : MonoBehaviour {
             ReadContentText(descriptionContent.descriptionText.text);
         }
     }
-
-    //public void ShowAllTextStartingWithLetter(string letter)
-    //{
-    //    int i = 0;
-    //    descriptionText.text = "";
-    //    foreach (string s in keys_ptbr.Where(r => r.ToLower().StartsWith(letter)).ToList())
-    //    {
-    //        descriptionText.text += "(" + i +  ") "+ s + ": " + description_ptbr[s] + '\n';
-    //        i++;
-    //    }
-    //}
 }
