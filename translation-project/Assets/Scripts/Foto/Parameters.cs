@@ -16,7 +16,7 @@ public class Parameters {
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;
 
-    // limits of the camera to check if got passed
+    // limits of the camera to check
     public static bool RIGHT_BORDER;
     public static bool LEFT_BORDER;
     public static bool UP_BORDER;

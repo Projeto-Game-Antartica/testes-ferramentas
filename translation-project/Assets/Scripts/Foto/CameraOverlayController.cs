@@ -7,12 +7,18 @@ using UnityEngine.UI;
 public class CameraOverlayController : MonoBehaviour {
 
     public SpriteRenderer spriteRenderer;
+
     public AudioSource audioSource;
+
     public AudioClip photoAudioClip;
     public AudioClip loadingAudioClip;
+    public AudioClip turningOffAudioClip;
+
     public GameObject panelContent;
     public GameObject panelImage;
-    public Camera camera;
+
+    new public Camera camera;
+
     public Button buttonPanelContent;
 
     private const float ZOOM_SPEED = 10f;
@@ -21,7 +27,11 @@ public class CameraOverlayController : MonoBehaviour {
     void Update () {
 		if(Input.GetKeyDown(KeyCode.F))
         {
-            audioSource.PlayOneShot(loadingAudioClip);
+            if (!spriteRenderer.enabled)
+                audioSource.PlayOneShot(loadingAudioClip);
+            else
+                audioSource.PlayOneShot(turningOffAudioClip);
+
             spriteRenderer.enabled = !spriteRenderer.enabled;
         }
 

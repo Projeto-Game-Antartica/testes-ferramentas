@@ -3,18 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleCameraController : MonoBehaviour {
-    
+
+    public GameObject panelInstruction;
     private const float SPEED = 70.0f;
 
-    void Start()
+    /*
+     * Startup Settings
+     */
+    private void Awake()
     {
-        Debug.Log(GetComponent<Camera>().orthographicSize);
-    }
-    // Update is called once per frame
-    void Update () {
-        HandleCameraMovement();
+        Parameters.ACCESSIBILITY = true;
+
+        // camera doesnt start at any border
+        Parameters.RIGHT_BORDER = false;
+        Parameters.LEFT_BORDER = false;
+        Parameters.UP_BORDER = false;
+        Parameters.DOWN_BORDER = false;
     }
 
+    // Update is called once per frame
+    void Update () {
+        if (!panelInstruction.activeSelf)
+        {
+            HandleCameraMovement();
+        }
+        ActivateInstructionPanel();
+    }
+
+    private void ActivateInstructionPanel()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!panelInstruction.activeSelf)
+            {
+                panelInstruction.SetActive(true);
+                GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
+            }
+        }
+    }
     private void HandleCameraMovement()
     {
         if (Input.GetKey(KeyCode.RightArrow))

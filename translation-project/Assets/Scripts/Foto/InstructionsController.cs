@@ -13,7 +13,7 @@ public class InstructionsController : MonoBehaviour {
     public void Start()
     {
         TolkUtil.Speak(ui_title.text);
-        ReadInstructions();
+        //ReadInstructions();
         first_button.Select();
     }
 

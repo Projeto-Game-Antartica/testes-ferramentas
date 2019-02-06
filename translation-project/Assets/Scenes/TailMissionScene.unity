@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 270921316}
   - component: {fileID: 270921315}
   - component: {fileID: 270921314}
+  - component: {fileID: 270921317}
   m_Layer: 0
   m_Name: Whales-far
   m_TagString: Untagged
@@ -365,7 +366,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 270921313}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -436,6 +437,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &270921317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 270921313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32263b633d0aba04d809b852a64c981d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 270921314}
+  rightDirection: 1
+  isWhale: 1
+  speed: 20
+  TIMER: 7
 --- !u!1 &309189374
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +507,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1396525257}
           m_MethodName: ReadButtonText
           m_Mode: 2
           m_Arguments:
@@ -1336,6 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718900256cc7ed64cbf63cd76a4cb513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelInstruction: {fileID: 1396525256}
 --- !u!82 &758898298
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1494,8 +1512,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 901161591}
-  speed: 70
   rightDirection: 0
+  isWhale: 0
+  speed: 70
+  TIMER: 0
 --- !u!95 &901161590
 Animator:
   serializedVersion: 3
@@ -2085,6 +2105,7 @@ MonoBehaviour:
   audioSource: {fileID: 1290877391}
   photoAudioClip: {fileID: 8300000, guid: cd7b8c98c6f1306429742b828e946077, type: 3}
   loadingAudioClip: {fileID: 8300000, guid: df2cf56494979984a9f2cc1604127afe, type: 3}
+  turningOffAudioClip: {fileID: 8300000, guid: f56480363d8b7364295ab246b8181125, type: 3}
   panelContent: {fileID: 2009441142}
   panelImage: {fileID: 1299786492}
   camera: {fileID: 758898295}
@@ -2746,7 +2767,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1396525257}
           m_MethodName: ReadButtonText
           m_Mode: 2
           m_Arguments:
@@ -2797,7 +2818,7 @@ GameObject:
   - component: {fileID: 1635034518}
   - component: {fileID: 1635034517}
   m_Layer: 5
-  m_Name: Jogar
+  m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2904,8 +2925,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1672404238}
-  speed: 50
   rightDirection: 1
+  isWhale: 0
+  speed: 50
+  TIMER: 0
 --- !u!95 &1672404237
 Animator:
   serializedVersion: 3
@@ -3842,7 +3865,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -3853,13 +3876,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Itens de acessibilidade est\xE3o nativamente ativos. Para repetir as instru\xE7\xF5es,
-    aperte a tecla F2. Para abrir o painel de instru\xE7\xF5es, aperte ESC. Para desativ\xE1-los,
-    aperte a tecla F1.\n\nA miss\xE3o constitui de tirar fotos de duas baleias e catalog\xE1-las
-    no projeto ci\xEAncia cidad\xE3.\n\nUtilize as teclas direcionais (setas para
-    cima, baixo, direita e esquerda) para navegar pelo cen\xE1rio e encontrar as baleias.
-    Para ativar a c\xE2mera, aperte a tecla F, use o scroll do mouse para dar zoom
-    e, para fotografar, quando a c\xE2mera estiver ativa, utilize a tecla ENTER."
+  m_Text: "Para repetir as instru\xE7\xF5es, aperte a tecla F2. Para abrir o painel
+    de instru\xE7\xF5es, aperte ESC.\n\nA miss\xE3o constitui de tirar fotos de duas
+    baleias e catalog\xE1-las no projeto ci\xEAncia cidad\xE3.\n\nUtilize as teclas
+    direcionais (setas para cima, baixo, direita e esquerda) para navegar pelo cen\xE1rio
+    e encontrar as baleias. Para ativar a c\xE2mera, aperte a tecla F, use o scroll
+    do mouse para dar zoom e, para fotografar, quando a c\xE2mera estiver ativa, utilize
+    a tecla ENTER."
 --- !u!222 &2109143249
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3895,6 +3918,7 @@ GameObject:
   - component: {fileID: 2110124161}
   - component: {fileID: 2110124160}
   - component: {fileID: 2110124159}
+  - component: {fileID: 2110124162}
   m_Layer: 0
   m_Name: Whale-near
   m_TagString: Untagged
@@ -3908,7 +3932,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2110124158}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3936,7 +3960,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 29974f63339d8c242b0035ed3f0cba45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3979,3 +4003,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110124162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2110124158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32263b633d0aba04d809b852a64c981d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 2110124159}
+  rightDirection: 0
+  isWhale: 1
+  speed: 30
+  TIMER: 5
