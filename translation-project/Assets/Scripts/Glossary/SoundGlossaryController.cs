@@ -90,18 +90,18 @@ public class SoundGlossaryController : MonoBehaviour {
 
                 }
                 AddButton(keys_ptbr);
-        }
-        else
-        {
-            // carga das listas/dicionários com o conteúdo do JSON em ingles
-            for (int i = 0; i < loadedData.items.Length; i++)
-            {
-                keys_en.Add(loadedData.items[i].key_en);
-                audio_en.Add(loadedData.items[i].key_en, loadedData.items[i].audio_path);
             }
-            AddButton(keys_en);
+            else
+            {
+                // carga das listas/dicionários com o conteúdo do JSON em ingles
+                for (int i = 0; i < loadedData.items.Length; i++)
+                {
+                    keys_en.Add(loadedData.items[i].key_en);
+                    audio_en.Add(loadedData.items[i].key_en, loadedData.items[i].audio_path);
+                }
+                AddButton(keys_en);
+            }
         }
-    }
         else
         {
             Debug.LogError("Cannot find file!");

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/*
+ * Taken from user kryzodoze on unity forum https://forum.unity.com/threads/tab-between-input-fields.263779/
+ */
 public class NavigationController : MonoBehaviour {
     
     private List<Selectable> m_orderedSelectables;

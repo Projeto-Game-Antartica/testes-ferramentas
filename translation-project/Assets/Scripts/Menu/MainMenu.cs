@@ -6,35 +6,22 @@ using UnityEngine.SceneManagement;
 using DavyKager;
 using TMPro;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : AbstractMenu
 {
     private Button playButton;
-    private Button glossaryButton;
-    private Button quitButton;
-    private Button optionButton;
-
-    private const string instructions = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
-                                    "a tecla enter para selecionar os itens.";
 
     void Start()
     {
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
-        glossaryButton = GameObject.Find("GlossaryButton").GetComponent<Button>();
-        quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
-        optionButton = GameObject.Find("OptionButton").GetComponent<Button>();
 
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(instructions);
+        TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
 
         playButton.Select();
     }
 
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("QuizScene");
-    }
     public void QuitGame()
     {
         //Debug.Log("Quit");
@@ -42,35 +29,16 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void ButtonPlayAudio()
+    public void LoadGlossary()
     {
-        //Debug.Log("PlayButton");
-        TolkUtil.Speak(playButton.GetComponentInChildren<TextMeshProUGUI>().text);
-    }
-
-    public void ButtonGlossaryAudio()
-    {
-        //Debug.Log("GlossaryButton");
-        TolkUtil.Speak(glossaryButton.GetComponentInChildren<TextMeshProUGUI>().text);
-    }
-
-    public void ButtonOptionAudio()
-    {
-        //Debug.Log("OptionButton");
-        TolkUtil.Speak(optionButton.GetComponentInChildren<TextMeshProUGUI>().text);
-    }
-
-    public void ButtonQuitAudio()
-    {
-        //Debug.Log("QuitButton");
-        TolkUtil.Speak(quitButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        SceneManager.LoadScene("GlossaryScene");
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(instructions);
+            TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
         }
     }
 }

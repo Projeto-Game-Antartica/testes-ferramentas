@@ -20,9 +20,6 @@ public class GameController : MonoBehaviour
     private RoundData currentRoundData;
     private QuestionData[] questionPool;
 
-    private const string instructions = "Inicio do Jogo. Utilize as setas cima ou baixo ou a tecla TAB" +
-                              "para navegar entre as opções de resposta e a tecla ENTER para selecioná-las.";
-
     private bool isRoundActive;
     private int questionIndex;
     private int playerScore;
@@ -47,7 +44,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         TolkUtil.Instructions();
-        TolkUtil.SpeakAnyway(instructions);
+        TolkUtil.SpeakAnyway(ReadableTexts.quiz_instructions);
     }
 
     private void ShowQuestion()

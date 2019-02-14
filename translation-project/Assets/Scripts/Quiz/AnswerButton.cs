@@ -10,6 +10,7 @@ public class AnswerButton : MonoBehaviour
     private AnswerData answerData;
     private GameController gameController;
     public Button answerButton;
+    public Transform transform;
 
     // Use this for initialization
     void Start()
@@ -18,6 +19,8 @@ public class AnswerButton : MonoBehaviour
 
         gameController = FindObjectOfType<GameController>();
         answerButton = FindObjectOfType<Button>();
+
+        transform.localScale = Vector3.one;
 
         answerButton.Select();
     }
