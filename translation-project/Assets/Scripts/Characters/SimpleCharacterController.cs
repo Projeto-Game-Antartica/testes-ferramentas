@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VIDE_Data;
 
 public class SimpleCharacterController : MonoBehaviour {
 
@@ -18,20 +19,28 @@ public class SimpleCharacterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
-            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (!VD.isActive)
         {
-            HandleCharacterMovement();
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
+            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                HandleCharacterMovement();
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    animator.SetBool("photographing", true);
+                }
+
+                animator.SetBool("walking", false);
+            }
         }
         else
         {
-            if(Input.GetKeyDown(KeyCode.F))
-            {
-                animator.SetBool("photographing", true);
-            }
-
             animator.SetBool("walking", false);
         }
+        
     }
 
     void WalkingSound()
