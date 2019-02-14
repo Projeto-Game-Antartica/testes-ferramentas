@@ -7,19 +7,16 @@ using UnityEngine.SceneManagement;
 
 public class PlayMenu : AbstractMenu {
 
-    private Button minigame1;
-
-    private const string instructions = "Escolhas de minigames do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
-                                        "a tecla enter para selecionar os itens.";
+    private Button minigame2;
 
     void Start()
     {
-        minigame1 = GameObject.Find("Minigame1").GetComponent<Button>();
+        minigame2 = GameObject.Find("Minigame2").GetComponent<Button>();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(instructions);
+        TolkUtil.Speak(ReadableTexts.playmenu_instructions);
 
-        minigame1.Select();
+        minigame2.Select();
     }
 
     public void QuitGame()
@@ -47,7 +44,7 @@ public class PlayMenu : AbstractMenu {
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(instructions);
+            TolkUtil.Speak(ReadableTexts.playmenu_instructions);
         }
     }
 }

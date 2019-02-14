@@ -34,7 +34,7 @@ public class LocalizationManager : MonoBehaviour
         localizedText = new Dictionary<string, string>();
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
-        Debug.Log(filePath);
+        //Debug.Log(filePath);
         if (File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath);

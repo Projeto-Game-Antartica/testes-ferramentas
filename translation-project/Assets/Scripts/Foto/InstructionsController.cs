@@ -9,11 +9,12 @@ public class InstructionsController : MonoBehaviour {
     public Text ui_title;
     public Text ui_instructions;
     public Button first_button;
-
+    
     public void Start()
     {
+        ui_instructions.text = ReadableTexts.foto_instructions;
         TolkUtil.Speak(ui_title.text);
-        //ReadInstructions();
+        ReadInstructions();
         first_button.Select();
     }
 
@@ -24,7 +25,7 @@ public class InstructionsController : MonoBehaviour {
 
     public void ReadInstructions()
     {
-        TolkUtil.Speak(ui_instructions.text);
+        TolkUtil.Speak(ReadableTexts.foto_instructions);
     }
 
     public void ReturnToMainMenu()
@@ -32,11 +33,9 @@ public class InstructionsController : MonoBehaviour {
         SceneManager.LoadScene("MenuScene"); 
     }
 
-    public void Update()
+    public void PlayGame()
     {
-        if(Input.GetKeyDown(KeyCode.F2))
-        {
-            ReadInstructions();
-        }
+        gameObject.SetActive(false);
+        TolkUtil.Speak("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
     }
 }

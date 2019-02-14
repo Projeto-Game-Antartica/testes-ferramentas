@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// not used
 public class ContentPanelController : MonoBehaviour {
 
     private const string instructions = "Painel de catalogo das baleias. Neste painel aparece a foto da baleia que" +

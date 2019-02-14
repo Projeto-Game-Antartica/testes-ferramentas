@@ -10,9 +10,6 @@ public class MainMenu : AbstractMenu
 {
     private Button playButton;
 
-    private const string instructions = "Menu principal do jogo. Utilize as setas cima ou baixo ou a tecla TAB para navegação" +
-                                        "a tecla enter para selecionar os itens.";
-
     void Start()
     {
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
@@ -20,7 +17,7 @@ public class MainMenu : AbstractMenu
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(instructions);
+        TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
 
         playButton.Select();
     }
@@ -41,7 +38,7 @@ public class MainMenu : AbstractMenu
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(instructions);
+            TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
         }
     }
 }

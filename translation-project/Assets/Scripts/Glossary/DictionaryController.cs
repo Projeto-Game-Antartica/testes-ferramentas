@@ -15,16 +15,6 @@ public class DictionaryController : MonoBehaviour {
     private const string dataFilename = "glossary.json";
 
     /*
-     * variável para instruções
-     */
-    private const string instructions = "Glossário em Português-Brasil e Libras. Para repetir as instruções, aperte " +
-    "a tecla F1 a qualquer momento. As letras estão separadas em botões onde há duas linhas contendo treze letras " +
-    "em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra irão aparecer em forma de botões." +
-    "Inicialmente, estará selecionado o primeiro item da lista de palavras, navegue utilizando as setas para cima ou para baixo." +
-    "Para ouvir as descrições novamente, aperte a tecla F3. Para selecionar o alfabeto aperte a tecla F2 e navegue " +
-    "utilizando a tecla TAB  ou as setas direcionais para direita ou esquerda.";
-
-    /*
      * Classe C# para mapear o JSON
      */
     DataArray loadedData;
@@ -34,18 +24,20 @@ public class DictionaryController : MonoBehaviour {
      */
     [SerializeField]
     private float m_lerpTime;
-    public ScrollRect m_scrollRect;
     private List<Button> m_buttons;
     private int m_index;
     private float m_verticalPosition;
     private bool m_up;
     private bool m_down;
+    private List<DictionaryButton> buttonList;
+    private Button buttonA;
+    public AudioSource contentAudioSource;
+    public ScrollRect m_scrollRect;
     public Transform contentPanel;
     public SimpleObjectPool buttonObjectPool;
     public DescriptionContent descriptionContent;
-    private List<DictionaryButton> buttonList;
-    private Button buttonA;
     public Button audioButton;
+    public Button backButton;
 
     /*
      * Variáveis para controle do glossário
@@ -64,9 +56,56 @@ public class DictionaryController : MonoBehaviour {
     {
         LoadDictionary();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(instructions);
+        TolkUtil.Speak(ReadableTexts.glossary_instructions);
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+    }
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            contentAudioSource.Stop();
+        }
+
+        if (DictionaryButton.contentButton)
+        {
+            m_up = Input.GetKeyDown(KeyCode.UpArrow);
+            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+
+            if (m_up ^ m_down)
+            {
+                if (m_up)
+                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+                else
+                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+
+                m_buttons[m_index].Select();
+                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+            }
+
+            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
+        }
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReadContentText(ReadableTexts.glossary_instructions);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ResetVerticalPositionScrollRect();
+            buttonA.Select();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            ReadContentText(descriptionContent.descriptionText.text);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            backButton.Select();
+        }
     }
 
     public void LoadDictionary()
@@ -251,6 +290,7 @@ public class DictionaryController : MonoBehaviour {
     public void RemoveAllButtons()
     {
         foreach (DictionaryButton b in buttonList)
+    
         {
             b.buttonComponent.gameObject.SetActive(false);
         }
@@ -311,40 +351,4 @@ public class DictionaryController : MonoBehaviour {
         return audioClip;
     }
 
-    public void Update()
-    {
-        if (DictionaryButton.contentButton)
-        {
-            m_up = Input.GetKeyDown(KeyCode.UpArrow);
-            m_down = Input.GetKeyDown(KeyCode.DownArrow);
-
-            if (m_up ^ m_down)
-            {
-                if (m_up)
-                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
-                else
-                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
-
-                m_buttons[m_index].Select();
-                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
-            }
-
-            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
-        }
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            ReadContentText(instructions);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ResetVerticalPositionScrollRect();
-            buttonA.Select();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            ReadContentText(descriptionContent.descriptionText.text);
-        }
-    }
 }

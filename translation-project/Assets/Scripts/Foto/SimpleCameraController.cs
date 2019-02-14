@@ -5,13 +5,21 @@ using UnityEngine;
 public class SimpleCameraController : MonoBehaviour {
 
     public GameObject panelInstruction;
-    private const float SPEED = 70.0f;
+    public GameObject panelImage;
+    public SpriteRenderer cameraOverlay;
 
+    public AudioClip cameraBeep;
+    public AudioSource audioSource;
+    
+    private const float SPEED = 70.0f;
+    
     /*
      * Startup Settings
      */
     private void Awake()
     {
+        TolkUtil.Load();
+
         Parameters.ACCESSIBILITY = true;
 
         // camera doesnt start at any border
@@ -23,28 +31,50 @@ public class SimpleCameraController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (!panelInstruction.activeSelf)
+
+        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelImage.activeSelf)
         {
-            HandleCameraMovement();
+            TolkUtil.Speak(ReadableTexts.foto_instructions);
         }
+
+        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelImage.activeSelf)
+        {
+            TolkUtil.Speak(ReadableTexts.foto_sceneDescription);
+        }
+
+        if (!panelInstruction.activeSelf && !panelImage.activeSelf && !cameraOverlay.enabled)
+        {
+            HandleCameraMovement(null);
+        }
+        else if(cameraOverlay.enabled)
+        {
+            HandleCameraMovement(cameraBeep);
+        }
+
         ActivateInstructionPanel();
     }
 
     private void ActivateInstructionPanel()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !panelImage.activeSelf)
         {
             if (!panelInstruction.activeSelf)
             {
                 panelInstruction.SetActive(true);
+                TolkUtil.Speak("Painel aberto.");
+                TolkUtil.Speak(ReadableTexts.foto_instructions);
                 GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
             }
         }
     }
-    private void HandleCameraMovement()
+
+    // when camera overlay is active plays the beep audio
+    private void HandleCameraMovement(AudioClip beep)
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+
             if (transform.position.x >= Parameters.RIGHT_LIMIT)
             {
                 transform.position = new Vector3(Parameters.RIGHT_LIMIT, transform.position.y, Parameters.Z_POSITION);
@@ -59,6 +89,8 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+
             if (transform.position.x <= Parameters.LEFT_LIMIT)
             {
                 transform.position = new Vector3(Parameters.LEFT_LIMIT, transform.position.y, Parameters.Z_POSITION);
@@ -73,6 +105,8 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
+            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+
             if (transform.position.y >= Parameters.UP_LIMIT)
             {
                 transform.position = new Vector3(transform.position.x, Parameters.UP_LIMIT, Parameters.Z_POSITION);
@@ -87,6 +121,8 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
+            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+
             if (transform.position.y <= Parameters.DOWN_LIMIT)
             {
                 transform.position = new Vector3(transform.position.x, Parameters.DOWN_LIMIT, Parameters.Z_POSITION);

@@ -25,7 +25,8 @@ public class CameraOverlayController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		if(Input.GetKeyDown(KeyCode.F))
+        // open the overlay
+		if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf)
         {
             if (!spriteRenderer.enabled)
                 audioSource.PlayOneShot(loadingAudioClip);
@@ -35,17 +36,26 @@ public class CameraOverlayController : MonoBehaviour {
             spriteRenderer.enabled = !spriteRenderer.enabled;
         }
 
-        if(Input.GetKeyDown(KeyCode.Return) && spriteRenderer.enabled && !panelContent.activeSelf)
+        // take the photo
+        if(Input.GetKeyDown(KeyCode.Space) && spriteRenderer.enabled && !panelContent.activeSelf)
         {
             audioSource.PlayOneShot(photoAudioClip);
             spriteRenderer.enabled = false;
             panelContent.SetActive(true);
+            TolkUtil.Speak(ReadableTexts.foto_catalogDescription);
             //StartCoroutine(captureScreenshot());
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && panelContent.activeSelf)
+        // close the catalog panel
+        if(Input.GetKeyDown(KeyCode.Escape) && panelContent.activeSelf)
         {
             panelContent.SetActive(false);
+        }
+
+        // repeat instructions
+        if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
+        {
+            TolkUtil.Speak(ReadableTexts.foto_catalogDescription);
         }
 
         if (spriteRenderer.enabled)

@@ -7,6 +7,8 @@ public class SimpleMovementController : MonoBehaviour {
     // determined via editor
     public SpriteRenderer spriteRenderer;
 
+    private AudioSource audioSource;
+
     public bool rightDirection;
     public bool isWhale;
 
@@ -20,6 +22,7 @@ public class SimpleMovementController : MonoBehaviour {
     {
         hidingTime  = TIMER;
         showingTime = TIMER;
+        if (isWhale)    audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -61,11 +64,15 @@ public class SimpleMovementController : MonoBehaviour {
             spriteRenderer.enabled = true;
             showingTime -= Time.deltaTime;
 
+            if (!audioSource.isPlaying) audioSource.Play();
+
             if (showingTime <= 0)
             {
                 spriteRenderer.enabled = false;
                 hidingTime = TIMER;
                 showingTime = TIMER;
+
+                if (audioSource.isPlaying) audioSource.Stop();
             }
         }
     }
