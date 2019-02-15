@@ -39,6 +39,6 @@ public class AnswerButton : MonoBehaviour
 
     public void OnSelectEvent()
     {
-        TolkUtil.Speak(answerData.answerText);
+        ReadableTexts.ReadText(answerData.answerText);
     }
 }

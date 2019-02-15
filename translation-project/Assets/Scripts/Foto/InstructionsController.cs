@@ -13,19 +13,19 @@ public class InstructionsController : MonoBehaviour {
     public void Start()
     {
         ui_instructions.text = ReadableTexts.foto_instructions;
-        TolkUtil.Speak(ui_title.text);
+        ReadableTexts.ReadText(ui_title.text);
         ReadInstructions();
         first_button.Select();
     }
 
     public void ReadButtonText(Text button_text)
     {
-        TolkUtil.Speak(button_text.text);
+        ReadableTexts.ReadText(button_text.text);
     }
 
     public void ReadInstructions()
     {
-        TolkUtil.Speak(ReadableTexts.foto_instructions);
+        ReadableTexts.ReadText(ReadableTexts.foto_instructions);
     }
 
     public void ReturnToMainMenu()
@@ -33,9 +33,15 @@ public class InstructionsController : MonoBehaviour {
         SceneManager.LoadScene("MenuScene"); 
     }
 
+    public void ReturnToAntarticaScene()
+    {
+        SceneManager.LoadScene("ShipScene");
+    }
+
     public void PlayGame()
     {
         gameObject.SetActive(false);
-        TolkUtil.Speak("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        ReadableTexts.ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        ReadableTexts.ReadText(ReadableTexts.foto_sceneDescription);
     }
 }

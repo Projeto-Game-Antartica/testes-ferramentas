@@ -17,7 +17,7 @@ public class MainMenu : AbstractMenu
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
+        ReadableTexts.ReadText(ReadableTexts.mainmenu_instructions);
 
         playButton.Select();
     }
@@ -34,11 +34,16 @@ public class MainMenu : AbstractMenu
         SceneManager.LoadScene("GlossaryScene");
     }
 
+    public void LoadAntarticaScene()
+    {
+        SceneManager.LoadScene("ShipScene");
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(ReadableTexts.mainmenu_instructions);
+            ReadableTexts.ReadText(ReadableTexts.mainmenu_instructions);
         }
     }
 }

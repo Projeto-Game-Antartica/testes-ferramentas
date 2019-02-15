@@ -42,7 +42,7 @@ public class CameraOverlayController : MonoBehaviour {
             audioSource.PlayOneShot(photoAudioClip);
             spriteRenderer.enabled = false;
             panelContent.SetActive(true);
-            TolkUtil.Speak(ReadableTexts.foto_catalogDescription);
+            ReadableTexts.ReadText(ReadableTexts.foto_catalogDescription);
             //StartCoroutine(captureScreenshot());
         }
 
@@ -55,7 +55,7 @@ public class CameraOverlayController : MonoBehaviour {
         // repeat instructions
         if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
         {
-            TolkUtil.Speak(ReadableTexts.foto_catalogDescription);
+            ReadableTexts.ReadText(ReadableTexts.foto_catalogDescription);
         }
 
         if (spriteRenderer.enabled)
@@ -105,7 +105,8 @@ public class CameraOverlayController : MonoBehaviour {
     {
         yield return new WaitForEndOfFrame();
         
-        string path = Application.persistentDataPath + "/whale-screenshot.png";
+        // just a simple way to not override any screenshot. System.DateTime.Now format = "MM/DD/YYYY HH:MM:SS AM/PM"
+        string path = Application.persistentDataPath + "/"+ System.DateTime.Now + "whale-screenshot.png";
 
         Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
 

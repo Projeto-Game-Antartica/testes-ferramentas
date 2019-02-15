@@ -18,15 +18,11 @@ public class SimpleCameraController : MonoBehaviour {
      */
     private void Awake()
     {
-        TolkUtil.Load();
-
-        Parameters.ACCESSIBILITY = true;
-
         // camera doesnt start at any border
         Parameters.RIGHT_BORDER = false;
-        Parameters.LEFT_BORDER = false;
-        Parameters.UP_BORDER = false;
-        Parameters.DOWN_BORDER = false;
+        Parameters.LEFT_BORDER  = false;
+        Parameters.UP_BORDER    = false;
+        Parameters.DOWN_BORDER  = false;
     }
 
     // Update is called once per frame
@@ -34,12 +30,12 @@ public class SimpleCameraController : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelImage.activeSelf)
         {
-            TolkUtil.Speak(ReadableTexts.foto_instructions);
+            ReadableTexts.ReadText(ReadableTexts.foto_instructions);
         }
 
         if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelImage.activeSelf)
         {
-            TolkUtil.Speak(ReadableTexts.foto_sceneDescription);
+            ReadableTexts.ReadText(ReadableTexts.foto_sceneDescription);
         }
 
         if (!panelInstruction.activeSelf && !panelImage.activeSelf && !cameraOverlay.enabled)
@@ -61,8 +57,8 @@ public class SimpleCameraController : MonoBehaviour {
             if (!panelInstruction.activeSelf)
             {
                 panelInstruction.SetActive(true);
-                TolkUtil.Speak("Painel aberto.");
-                TolkUtil.Speak(ReadableTexts.foto_instructions);
+                ReadableTexts.ReadText("Painel aberto.");
+                ReadableTexts.ReadText(ReadableTexts.foto_instructions);
                 GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
             }
         }
@@ -73,7 +69,7 @@ public class SimpleCameraController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+            if (beep != null && !audioSource.isPlaying && Parameters.ACCESSIBILITY) audioSource.PlayOneShot(beep);
 
             if (transform.position.x >= Parameters.RIGHT_LIMIT)
             {
@@ -89,7 +85,7 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+            if (beep != null && !audioSource.isPlaying && Parameters.ACCESSIBILITY) audioSource.PlayOneShot(beep);
 
             if (transform.position.x <= Parameters.LEFT_LIMIT)
             {
@@ -105,7 +101,7 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+            if (beep != null && !audioSource.isPlaying && Parameters.ACCESSIBILITY) audioSource.PlayOneShot(beep);
 
             if (transform.position.y >= Parameters.UP_LIMIT)
             {
@@ -121,7 +117,7 @@ public class SimpleCameraController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (beep != null && !audioSource.isPlaying) audioSource.PlayOneShot(beep);
+            if (beep != null && !audioSource.isPlaying && Parameters.ACCESSIBILITY) audioSource.PlayOneShot(beep);
 
             if (transform.position.y <= Parameters.DOWN_LIMIT)
             {

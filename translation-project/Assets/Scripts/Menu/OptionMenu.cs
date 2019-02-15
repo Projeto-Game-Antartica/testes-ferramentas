@@ -7,14 +7,13 @@ using TMPro;
 
 public class OptionMenu : AbstractMenu {
 
-    private Slider slider;
+    public Slider slider;
+    public Toggle toggle;
 
     void Start()
     {
-        slider = GameObject.Find("SliderVolume").GetComponent<Slider>();
-
         TolkUtil.Instructions();
-        TolkUtil.Speak(ReadableTexts.optionmenu_instructions);
+        ReadableTexts.ReadText(ReadableTexts.optionmenu_instructions);
 
         //TolkUtil.Load();
 
@@ -23,14 +22,25 @@ public class OptionMenu : AbstractMenu {
 
     public void ReadSliderTextMeshPro(Slider slider)
     {
-        TolkUtil.Speak("volume" + slider.value);
+        ReadableTexts.ReadText("volume" + slider.value);
+    }
+
+    public void ReadToggle(Toggle toggle)
+    {
+        ReadableTexts.ReadText(toggle.name + "" + toggle.isOn);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(ReadableTexts.optionmenu_instructions);
+            ReadableTexts.ReadText(ReadableTexts.optionmenu_instructions);
         }
+    }
+
+    public void SetAcessibilityParameter()
+    {
+        Parameters.ACCESSIBILITY = toggle.isOn;
+        Debug.Log(Parameters.ACCESSIBILITY);
     }
 }

@@ -58,7 +58,7 @@ public class SoundGlossaryController : MonoBehaviour {
     {
         LoadDictionary();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(instructions);
+        ReadableTexts.ReadText(instructions);
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -170,7 +170,7 @@ public class SoundGlossaryController : MonoBehaviour {
 
     public void ReadLetterButtin(string letter)
     {
-        TolkUtil.Speak(letter);
+        ReadableTexts.ReadText(letter);
     }
 
     public AudioClip GetAudioClip(string key, string localization)
@@ -226,7 +226,7 @@ public class SoundGlossaryController : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(instructions);
+            ReadableTexts.ReadText(instructions);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))

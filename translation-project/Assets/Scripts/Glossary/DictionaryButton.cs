@@ -51,11 +51,11 @@ public class DictionaryButton : MonoBehaviour
 
     public void ReadButton()
     {
-        TolkUtil.Speak(keyLabel.text);
+        ReadableTexts.ReadText(keyLabel.text);
     }
 
     public void ReadText(Text text)
     {
-        TolkUtil.Speak(text.text);
+        ReadableTexts.ReadText(text.text);
     }
 }

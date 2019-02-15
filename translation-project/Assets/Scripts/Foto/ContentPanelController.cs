@@ -23,6 +23,6 @@ public class ContentPanelController : MonoBehaviour {
 
     public static void SpeakInstructions()
     {
-        TolkUtil.Speak(instructions);
+        ReadableTexts.ReadText(instructions);
     }
 }

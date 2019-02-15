@@ -56,7 +56,7 @@ public class DictionaryController : MonoBehaviour {
     {
         LoadDictionary();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(ReadableTexts.glossary_instructions);
+        ReadableTexts.ReadText(ReadableTexts.glossary_instructions);
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -263,7 +263,7 @@ public class DictionaryController : MonoBehaviour {
 
     public void ReadContentText(string content)
     {
-        TolkUtil.Speak(content);
+        ReadableTexts.ReadText(content);
     }
 
     public IEnumerator PlayVideo(VideoPlayer videoPlayer)
@@ -298,7 +298,7 @@ public class DictionaryController : MonoBehaviour {
 
     public void ReadLetterButtin(string letter)
     {
-        TolkUtil.Speak(letter);
+        ReadableTexts.ReadText(letter);
     }
 
     public string GetTextDescription(string key, string localization)

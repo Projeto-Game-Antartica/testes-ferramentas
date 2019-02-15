@@ -8,6 +8,12 @@ using UnityEngine;
  */
 public class ReadableTexts {
 
+    // verify if the acessibility parameter is TRUE, is so read the text, if not do nothing.
+    public static void ReadText (string text)
+    {
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
+    }
+
     public static string languagemenu_instructions = "Selecione o idioma do jogo. Há dois botões, o primeiro com a bandeira do Brasil" +
                                     "referindo-se ao idioma portugûes e o segundo uma bandeira do Reino Unido" +
                                     "referindo-se ao idioma inglês. Utilize as setas para cima ou baixo ou a tecla TAB" +

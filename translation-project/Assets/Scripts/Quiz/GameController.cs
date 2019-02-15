@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         TolkUtil.Instructions();
-        TolkUtil.SpeakAnyway(ReadableTexts.quiz_instructions);
+        ReadableTexts.ReadText(ReadableTexts.quiz_instructions);
     }
 
     private void ShowQuestion()
@@ -53,8 +53,8 @@ public class GameController : MonoBehaviour
         QuestionData questionData = questionPool[questionIndex];
         questionDisplayText.text = questionData.questionText;
 
-        TolkUtil.Speak("Questão" + (questionIndex + 1));
-        TolkUtil.Speak(questionDisplayText.text);
+        ReadableTexts.ReadText("Questão" + (questionIndex + 1));
+        ReadableTexts.ReadText(questionDisplayText.text);
 
         for (int i = 0; i < questionData.answers.Length; i++)
         {
@@ -81,13 +81,13 @@ public class GameController : MonoBehaviour
     {
         if (isCorrect)
         {
-            TolkUtil.SpeakAnyway("Resposta correta!");
+            ReadableTexts.ReadText("Resposta correta!");
             playerScore += currentRoundData.pointsAddedForCorrectAnswer;
             scoreDisplayText.text = "Score: " + playerScore.ToString();
         }
         else
         {
-            TolkUtil.SpeakAnyway("Resposta incorreta!");
+            ReadableTexts.ReadText("Resposta incorreta!");
         }
 
         if (questionPool.Length > questionIndex + 1)
@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
 
         roundOverDisplayText.text = "FIM DE JOGO! VOCÊ MARCOU " + (playerScore / 10) + " PONTOS";
 
-        TolkUtil.Speak(roundOverDisplayText.text);
+        ReadableTexts.ReadText(roundOverDisplayText.text);
 
         returnToMenuButton.Select();
     }
@@ -123,14 +123,14 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMenuButtonSelectEvent()
     {
-        TolkUtil.Speak(returnToMenuButton.GetComponentInChildren<Text>().text);
+        ReadableTexts.ReadText(returnToMenuButton.GetComponentInChildren<Text>().text);
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(questionDisplayText.text);
+            ReadableTexts.ReadText(questionDisplayText.text);
         }
     }
 }

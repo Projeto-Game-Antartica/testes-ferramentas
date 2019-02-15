@@ -14,7 +14,7 @@ public class PlayMenu : AbstractMenu {
         minigame2 = GameObject.Find("Minigame2").GetComponent<Button>();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(ReadableTexts.playmenu_instructions);
+        ReadableTexts.ReadText(ReadableTexts.playmenu_instructions);
 
         minigame2.Select();
     }
@@ -44,7 +44,7 @@ public class PlayMenu : AbstractMenu {
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            TolkUtil.Speak(ReadableTexts.playmenu_instructions);
+            ReadableTexts.ReadText(ReadableTexts.playmenu_instructions);
         }
     }
 }

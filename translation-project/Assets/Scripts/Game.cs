@@ -26,12 +26,12 @@ public class Game : MonoBehaviour {
 	void Update () {
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.E)) {
-            TolkUtil.Speak(textField.text);
+            ReadableTexts.ReadText(textField.text);
         }
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            TolkUtil.Speak("Pressione Q para ouvir as instruções novamente." +
+            ReadableTexts.ReadText("Pressione Q para ouvir as instruções novamente." +
                 "Pressione Control+E para a leitura do texto estático.");
         }
 	}

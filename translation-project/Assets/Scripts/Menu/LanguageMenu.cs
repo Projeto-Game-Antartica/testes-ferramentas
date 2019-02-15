@@ -12,10 +12,13 @@ public class LanguageMenu : AbstractMenu {
 
         brButton = GameObject.Find("locales-ptbr").GetComponent<Button>();
 
+        // accessibility functions active
+        Parameters.ACCESSIBILITY = true;
+
         TolkUtil.Load();
 
         TolkUtil.Instructions();
-        TolkUtil.Speak(ReadableTexts.languagemenu_instructions);
+        ReadableTexts.ReadText(ReadableTexts.languagemenu_instructions);
 
         brButton.Select();  
     }
@@ -24,7 +27,7 @@ public class LanguageMenu : AbstractMenu {
     {
         if (Input.GetKey(KeyCode.F1))
         {
-            TolkUtil.Speak(ReadableTexts.languagemenu_instructions);
+            ReadableTexts.ReadText(ReadableTexts.languagemenu_instructions);
         }
     }
 }
