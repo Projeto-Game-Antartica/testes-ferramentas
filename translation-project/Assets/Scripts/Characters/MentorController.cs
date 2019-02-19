@@ -5,16 +5,15 @@ using UnityEngine;
 public class MentorController : MonoBehaviour {
 
     public SpriteRenderer dialogPanel;
-
-
-    private void OnTriggerStay(Collider other)
+    public AudioSource audioSource; // beep for localization
+    
+    private void Start()
     {
-        dialogPanel.enabled = true;
+        if (Parameters.ACCESSIBILITY)
+        {
+            audioSource.playOnAwake = true;
+            audioSource.Play();
+            audioSource.loop = true;
+        }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        dialogPanel.enabled = false;
-    }
-
 }

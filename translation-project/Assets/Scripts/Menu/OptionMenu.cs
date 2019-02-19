@@ -9,15 +9,30 @@ public class OptionMenu : AbstractMenu {
 
     public Slider slider;
     public Toggle toggle;
+    public LocalizationManager localization;
 
     void Start()
     {
         TolkUtil.Instructions();
         ReadableTexts.ReadText(ReadableTexts.optionmenu_instructions);
-
+        
         //TolkUtil.Load();
 
         slider.Select();
+    }
+
+    public void DropDownHandler(int index)
+    {
+        if (index == 0) // ptbr
+        {
+            localization.LoadLocalizedText("locales_ptbr.json");
+        }
+        else
+        {
+            localization.LoadLocalizedText("locales_en.json");
+        }
+
+        while (!localization.GetIsReady()) ;
     }
 
     public void ReadSliderTextMeshPro(Slider slider)

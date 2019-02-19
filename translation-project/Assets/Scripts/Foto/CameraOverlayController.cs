@@ -15,7 +15,6 @@ public class CameraOverlayController : MonoBehaviour {
     public AudioClip turningOffAudioClip;
 
     public GameObject panelContent;
-    public GameObject panelImage;
 
     new public Camera camera;
 
@@ -41,15 +40,15 @@ public class CameraOverlayController : MonoBehaviour {
         {
             audioSource.PlayOneShot(photoAudioClip);
             spriteRenderer.enabled = false;
-            panelContent.SetActive(true);
+            StartCoroutine(captureScreenshot());
             ReadableTexts.ReadText(ReadableTexts.foto_catalogDescription);
-            //StartCoroutine(captureScreenshot());
         }
 
         // close the catalog panel
         if(Input.GetKeyDown(KeyCode.Escape) && panelContent.activeSelf)
         {
             panelContent.SetActive(false);
+            ReadableTexts.ReadText("Catálogo fechado");
         }
 
         // repeat instructions
@@ -104,9 +103,10 @@ public class CameraOverlayController : MonoBehaviour {
     public IEnumerator captureScreenshot()
     {
         yield return new WaitForEndOfFrame();
-        
+
         // just a simple way to not override any screenshot. System.DateTime.Now format = "MM/DD/YYYY HH:MM:SS AM/PM"
-        string path = Application.persistentDataPath + "/"+ System.DateTime.Now + "whale-screenshot.png";
+        //string path = Application.persistentDataPath + "/"+ System.DateTime.Now + "whale-screenshot.png";
+        string path = Application.persistentDataPath + "/whale-screenshot.png";
 
         Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
 
@@ -155,7 +155,7 @@ public class CameraOverlayController : MonoBehaviour {
         buttonPanelContent.Select();
 
         // set the screenshot on panel image
-        Image image = panelImage.GetComponent<Image>();
+        Image image = panelContent.GetComponentInChildren<Image>();
         image.sprite = LoadPNG(path);
     }
 

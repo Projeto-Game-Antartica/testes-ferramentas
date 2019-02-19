@@ -21,9 +21,26 @@ public class VIDEPlayer : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("trigger");
         if (other.GetComponent<VIDE_Assign>() != null)
+        {
             inTrigger = other.GetComponent<VIDE_Assign>();
+        }
         TryInteract();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
+        {
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+        }
+        TryInteract();
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        inTrigger = null;
     }
 
     void OnTriggerExit()
