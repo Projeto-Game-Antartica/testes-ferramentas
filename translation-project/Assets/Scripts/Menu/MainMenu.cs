@@ -8,7 +8,13 @@ using TMPro;
 
 public class MainMenu : AbstractMenu
 {
+    public AudioSource audioSource;
     private Button playButton;
+
+    private void Awake()
+    {
+        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+    }
 
     void Start()
     {

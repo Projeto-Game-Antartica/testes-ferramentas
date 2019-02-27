@@ -23,19 +23,19 @@ public class OptionMenu : AbstractMenu {
 
     public void DropDownHandler(int index)
     {
-        if (index == 0) // ptbr
-        {
-            localization.LoadLocalizedText("locales_ptbr.json");
-        }
-        else
-        {
-            localization.LoadLocalizedText("locales_en.json");
-        }
+        //if (index == 0) // ptbr
+        //{
+        //    localization.LoadLocalizedText("locales_ptbr.json");
+        //}
+        //else
+        //{
+        //    localization.LoadLocalizedText("locales_en.json");
+        //}
 
-        while (!localization.GetIsReady()) ;
+        //while (!localization.GetIsReady()) ;
     }
 
-    public void ReadSliderTextMeshPro(Slider slider)
+    public void SliderSettings(Slider slider)
     {
         ReadableTexts.ReadText("volume" + slider.value);
     }

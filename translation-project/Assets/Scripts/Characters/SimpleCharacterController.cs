@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VIDE_Data;
 
 public class SimpleCharacterController : MonoBehaviour {
 
     public GameObject character;
-    public ImpactSoundsController impactSoundsController;
+    public SoundsController soundsController;
+    public GameObject inGameOption;
     AudioSource audioSource;
     Animator animator;
 
@@ -20,6 +22,15 @@ public class SimpleCharacterController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!inGameOption.activeSelf)
+                inGameOption.SetActive(true);
+            else
+                inGameOption.SetActive(false);
+        }
+
         if (!VD.isActive)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
@@ -48,11 +59,11 @@ public class SimpleCharacterController : MonoBehaviour {
     {
         if (collision.gameObject.tag.Equals("Metal"))
         {
-            impactSoundsController.PlayImpactAudio("Metal");
+            soundsController.PlayImpactAudio("Metal");
         }
         else if (collision.gameObject.tag.Equals("Glass"))
         {
-            impactSoundsController.PlayImpactAudio("Glass");
+            soundsController.PlayImpactAudio("Glass");
         }
     }
 
@@ -98,5 +109,26 @@ public class SimpleCharacterController : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(Vector2.right * SPEED);
             character.GetComponent<SpriteRenderer>().flipX = false; // turn true
         }
+    }
+
+    // Save the position in player prefs
+    public void SavePosition(Vector3 position)
+    {
+        PlayerPrefs.SetFloat("p_x", position.x);
+        PlayerPrefs.SetFloat("p_y", position.y);
+        PlayerPrefs.SetFloat("p_z", position.z);
+
+        PlayerPrefs.SetInt("Saved", 1);
+
+        PlayerPrefs.Save();
+    }
+
+    public Vector3 GetPosition()
+    {
+        // Reset, so that the save will be used only once
+        PlayerPrefs.SetInt("Saved", 0);
+        PlayerPrefs.Save();
+
+        return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"), PlayerPrefs.GetFloat("p_z"));
     }
 }

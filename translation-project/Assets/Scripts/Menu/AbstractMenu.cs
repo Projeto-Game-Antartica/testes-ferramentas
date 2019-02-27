@@ -13,4 +13,9 @@ public abstract class AbstractMenu : MonoBehaviour {
     {
         ReadableTexts.ReadText(button.GetComponentInChildren<UnityEngine.UI.Text>().text);
     }
+
+    public void ReadText(UnityEngine.UI.Text text)
+    {
+        ReadableTexts.ReadText(text.text);
+    }
 }

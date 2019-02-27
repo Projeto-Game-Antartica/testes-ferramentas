@@ -6,6 +6,7 @@ public class Parameters {
 
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;
+    
 
     /* ## PHOTOIDENTIFICATION MISSION ## */
     // readonly parameters for camera limits
