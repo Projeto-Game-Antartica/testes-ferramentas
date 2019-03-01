@@ -9,12 +9,15 @@ public class PlayMenu : AbstractMenu {
 
     private Button minigame2;
 
+    private ReadableTexts readableTexts;
+
     void Start()
     {
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         minigame2 = GameObject.Find("Minigame2").GetComponent<Button>();
 
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(ReadableTexts.playmenu_instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         minigame2.Select();
     }
@@ -44,7 +47,7 @@ public class PlayMenu : AbstractMenu {
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(ReadableTexts.playmenu_instructions);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
     }
 }

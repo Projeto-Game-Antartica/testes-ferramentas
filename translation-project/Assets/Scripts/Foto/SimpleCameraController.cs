@@ -12,6 +12,8 @@ public class SimpleCameraController : MonoBehaviour {
     public AudioSource audioSource;
     
     private const float SPEED = 70.0f;
+
+    private ReadableTexts readableTexts;
     
     /*
      * Startup Settings
@@ -30,12 +32,12 @@ public class SimpleCameraController : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelImage.activeSelf)
         {
-            ReadableTexts.ReadText(ReadableTexts.foto_instructions);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
         if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelImage.activeSelf)
         {
-            ReadableTexts.ReadText(ReadableTexts.foto_sceneDescription);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
         }
 
         if (!panelInstruction.activeSelf && !panelImage.activeSelf && !cameraOverlay.enabled)
@@ -58,7 +60,7 @@ public class SimpleCameraController : MonoBehaviour {
             {
                 panelInstruction.SetActive(true);
                 ReadableTexts.ReadText("Painel aberto.");
-                ReadableTexts.ReadText(ReadableTexts.foto_instructions);
+                ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
                 GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
             }
         }

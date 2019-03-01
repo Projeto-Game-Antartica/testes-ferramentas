@@ -16,4 +16,18 @@ public class MentorController : MonoBehaviour {
             audioSource.loop = true;
         }
     }
+
+    private void Update()
+    {
+        if (Parameters.ACCESSIBILITY)
+        {
+            audioSource.playOnAwake = true;
+            if (!audioSource.isPlaying) audioSource.Play();
+            audioSource.loop = true;
+        }
+        else
+        {
+            if (audioSource.isPlaying) audioSource.Stop();
+        }
+    }
 }

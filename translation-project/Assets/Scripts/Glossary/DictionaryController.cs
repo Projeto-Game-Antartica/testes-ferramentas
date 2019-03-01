@@ -52,11 +52,14 @@ public class DictionaryController : MonoBehaviour {
     private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
     private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
+    private ReadableTexts readableTexts;
+
     void Start()
     {
         LoadDictionary();
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        ReadableTexts.ReadText(ReadableTexts.glossary_instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -88,7 +91,7 @@ public class DictionaryController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadContentText(ReadableTexts.glossary_instructions);
+            ReadContentText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(KeyCode.F2))

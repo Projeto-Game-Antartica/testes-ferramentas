@@ -11,10 +11,13 @@ public class OptionMenu : AbstractMenu {
     public Toggle toggle;
     public LocalizationManager localization;
 
+    private ReadableTexts readableTexts;
+
     void Start()
     {
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(ReadableTexts.optionmenu_instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
         
         //TolkUtil.Load();
 
@@ -49,7 +52,7 @@ public class OptionMenu : AbstractMenu {
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(ReadableTexts.optionmenu_instructions);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
     }
 

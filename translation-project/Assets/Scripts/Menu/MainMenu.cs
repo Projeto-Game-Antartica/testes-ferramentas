@@ -5,25 +5,28 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DavyKager;
 using TMPro;
+using UnityEngine.Audio;
 
 public class MainMenu : AbstractMenu
 {
-    public AudioSource audioSource;
+    public Slider slider;
     private Button playButton;
 
-    private void Awake()
-    {
-        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-    }
+    private ReadableTexts readableTexts;
 
     void Start()
     {
+        // set the volume value as slider value
+        slider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
 
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(ReadableTexts.mainmenu_instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         playButton.Select();
     }
@@ -40,6 +43,11 @@ public class MainMenu : AbstractMenu
         SceneManager.LoadScene("GlossaryScene");
     }
 
+    public void LoadSoundGlossary()
+    {
+        SceneManager.LoadScene("GlossarySoundScene");
+    }
+
     public void LoadAntarticaScene()
     {
         SceneManager.LoadScene("ShipScene");
@@ -49,7 +57,7 @@ public class MainMenu : AbstractMenu
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(ReadableTexts.mainmenu_instructions);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
     }
 }

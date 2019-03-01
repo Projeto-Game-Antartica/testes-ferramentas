@@ -22,6 +22,13 @@ public class CameraOverlayController : MonoBehaviour {
 
     private const float ZOOM_SPEED = 10f;
 
+    private ReadableTexts readableTexts;
+
+    private void Start()
+    {
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+    }
+
     // Update is called once per frame
     void Update () {
         // open the overlay
@@ -41,7 +48,7 @@ public class CameraOverlayController : MonoBehaviour {
             audioSource.PlayOneShot(photoAudioClip);
             spriteRenderer.enabled = false;
             StartCoroutine(captureScreenshot());
-            ReadableTexts.ReadText(ReadableTexts.foto_catalogDescription);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
         }
 
         // close the catalog panel
@@ -54,7 +61,7 @@ public class CameraOverlayController : MonoBehaviour {
         // repeat instructions
         if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
         {
-            ReadableTexts.ReadText(ReadableTexts.foto_catalogDescription);
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
         }
 
         if (spriteRenderer.enabled)

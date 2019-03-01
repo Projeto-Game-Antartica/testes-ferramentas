@@ -25,10 +25,13 @@ public class GameController : MonoBehaviour
     private int playerScore;
     private List<GameObject> answerButtonGameObjects = new List<GameObject>();
 
+    private ReadableTexts readableTexts;
+
     // Use this for initialization
     void Start()
     {
         //TolkUtil.Load();
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
 
         dataController = FindObjectOfType<DataController>();
         currentRoundData = dataController.GetCurrentRoundData();
@@ -44,7 +47,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(ReadableTexts.quiz_instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_quiz_instructions, LocalizationManager.instance.GetLozalization()));
     }
 
     private void ShowQuestion()
