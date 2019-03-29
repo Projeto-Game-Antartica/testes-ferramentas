@@ -12,6 +12,7 @@ public class SimpleCharacterController : MonoBehaviour {
     AudioSource audioSource;
     Animator animator;
 
+    // cant be too high 
     public float SPEED;
 
     private void Start()
@@ -21,9 +22,11 @@ public class SimpleCharacterController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(!inGameOption.activeSelf)
                 inGameOption.SetActive(true);
@@ -33,24 +36,22 @@ public class SimpleCharacterController : MonoBehaviour {
 
         if (!VD.isActive)
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
-            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            // character movement
+            if (!inGameOption.activeSelf)
             {
-                if(!inGameOption.activeSelf) HandleCharacterMovement();
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    animator.SetBool("photographing", true);
-                }
+                if (movement.magnitude > 0) WalkingSound();
 
-                animator.SetBool("walking", false);
+                animator.SetFloat("Horizontal", movement.x);
+                animator.SetFloat("Vertical", movement.y);
+                animator.SetFloat("Magnitude", movement.magnitude);
+                //animator.SetBool("photographing", false);
+                transform.position = transform.position + movement * SPEED *  Time.deltaTime;
             }
-        }
-        else
-        {
-            animator.SetBool("walking", false);
+
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
+            //    animator.SetBool("photographing", true);
+            //}
         }
         
     }
@@ -77,46 +78,11 @@ public class SimpleCharacterController : MonoBehaviour {
         }
     }
 
-    void HandleCharacterMovement()
-    {
-        animator.SetBool("walking", true);
-        animator.SetBool("photographing", false);
-
-        WalkingSound();
-
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            //character.transform.position += new Vector3(0, SPEED * Time.deltaTime, 0);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * SPEED);
-        }
-
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            //character.transform.position += new Vector3(0, -SPEED * Time.deltaTime, 0);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.down * SPEED);
-        }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            //character.transform.position += new Vector3(-SPEED * Time.deltaTime, 0, 0);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * SPEED);
-            character.GetComponent<SpriteRenderer>().flipX = true; // turn left
-        }
-
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            //character.transform.position += new Vector3(SPEED * Time.deltaTime, 0, 0);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right * SPEED);
-            character.GetComponent<SpriteRenderer>().flipX = false; // turn true
-        }
-    }
-
     // Save the position in player prefs
-    public void SavePosition(Vector3 position)
+    public void SavePosition(Vector2 position)
     {
         PlayerPrefs.SetFloat("p_x", position.x);
         PlayerPrefs.SetFloat("p_y", position.y);
-        PlayerPrefs.SetFloat("p_z", position.z);
 
         PlayerPrefs.SetInt("Saved", 1);
 
@@ -129,6 +95,6 @@ public class SimpleCharacterController : MonoBehaviour {
         PlayerPrefs.SetInt("Saved", 0);
         PlayerPrefs.Save();
 
-        return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"), PlayerPrefs.GetFloat("p_z"));
+        return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"));
     }
 }

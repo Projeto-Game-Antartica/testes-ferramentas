@@ -23,4 +23,12 @@ public class ChasingCamera : MonoBehaviour {
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         transform.position = player.transform.position + offset;
     }
+    
+    // set only the x and y component
+    public void SetCameraPosition(Vector2 position)
+    {
+        transform.position = new Vector3(position.x, position.y, transform.position.z);
+
+        Debug.Log(transform.position);
+    }
 }

@@ -14,8 +14,8 @@ public class LanguageScene : AbstractMenu {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         brButton = GameObject.Find("locales-ptbr").GetComponent<Button>();
 
-        // accessibility functions active
-        Parameters.ACCESSIBILITY = true;
+        // accessibility functions inactive
+        Parameters.ACCESSIBILITY = false;
 
         TolkUtil.Load();
 

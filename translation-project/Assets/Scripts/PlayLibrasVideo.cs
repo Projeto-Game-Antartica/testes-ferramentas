@@ -8,12 +8,13 @@ public class PlayLibrasVideo : MonoBehaviour {
 
     public VideoPlayer videoPlayer;
     public RawImage rawImage;
+    public GameObject moldura;
 
     public void PlayVideo()
     {
         Debug.Log("PlayVideo");
         Application.runInBackground = true;
-        rawImage.gameObject.SetActive(true);
+        moldura.SetActive(true);
         StartCoroutine(StartVideo());
     }
 
@@ -37,6 +38,6 @@ public class PlayLibrasVideo : MonoBehaviour {
         }
 
         Debug.Log("Done Playing Video");
-        rawImage.gameObject.SetActive(false);
+        moldura.SetActive(false);
     }
 }

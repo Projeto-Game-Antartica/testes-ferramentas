@@ -6,22 +6,38 @@ using UnityEngine.UI;
 
 public class CameraOverlayController : MonoBehaviour {
 
-    public SpriteRenderer spriteRenderer;
+    // object containing all sprites for camera overlay
+    public GameObject cameraOverlaySprites;
 
+    // Audio components
     public AudioSource audioSource;
-
     public AudioClip photoAudioClip;
     public AudioClip loadingAudioClip;
     public AudioClip turningOffAudioClip;
-
+    
+    // content panel objects
     public GameObject panelContent;
+    public Image panelImage;
+    public Button buttonPanelContent;
+    public Text date;
+    public Text latitude;
+    public Text longitude;
 
+    // catalog panel objects
+    public Image catalogImage;
+
+    // whale controller script
+    public WhaleController whaleController;
+
+    // range for whales id according to json
+    private const int min_id = 1;
+    private const int max_id = 9;
+    public static int randomID;
+
+    // camera
     new public Camera camera;
 
-    public Button buttonPanelContent;
-
-    private const float ZOOM_SPEED = 10f;
-
+    // instructions texts
     private ReadableTexts readableTexts;
 
     private void Start()
@@ -31,23 +47,41 @@ public class CameraOverlayController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("pressed");
+            gameObject.SetActive(true);
+        }
         // open the overlay
 		if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf)
         {
-            if (!spriteRenderer.enabled)
+            if (!cameraOverlaySprites.activeSelf)
                 audioSource.PlayOneShot(loadingAudioClip);
             else
                 audioSource.PlayOneShot(turningOffAudioClip);
 
-            spriteRenderer.enabled = !spriteRenderer.enabled;
+            //spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            if (cameraOverlaySprites.activeSelf)
+                cameraOverlaySprites.SetActive(false);
+            else
+                cameraOverlaySprites.SetActive(true);
         }
 
         // take the photo
-        if(Input.GetKeyDown(KeyCode.Space) && spriteRenderer.enabled && !panelContent.activeSelf)
+        if(Input.GetKeyDown(KeyCode.Space) && cameraOverlaySprites.activeSelf && !panelContent.activeSelf)
         {
             audioSource.PlayOneShot(photoAudioClip);
-            spriteRenderer.enabled = false;
-            StartCoroutine(captureScreenshot());
+            cameraOverlaySprites.SetActive(false); ;
+            //StartCoroutine(captureScreenshot());
+
+            // open the content panel (without screenshot)
+            StartCoroutine(GetWhaleInfo());
+            panelContent.SetActive(true);
+            if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
+            buttonPanelContent.Select();
+
             ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
         }
 
@@ -64,7 +98,8 @@ public class CameraOverlayController : MonoBehaviour {
             ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
         }
 
-        if (spriteRenderer.enabled)
+        // zoom only when overlay is enabled
+        if (cameraOverlaySprites.activeSelf)
             HandleCameraZoom();
         else
             camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
@@ -78,7 +113,7 @@ public class CameraOverlayController : MonoBehaviour {
             if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
                 camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
             else
-                camera.orthographicSize += ZOOM_SPEED * Time.deltaTime;
+                camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
 
         }
 
@@ -87,7 +122,7 @@ public class CameraOverlayController : MonoBehaviour {
             if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
                 camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
             else
-                camera.orthographicSize -= ZOOM_SPEED * Time.deltaTime;
+                camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
         }
 
         if(Input.mouseScrollDelta.y > 0)
@@ -95,7 +130,7 @@ public class CameraOverlayController : MonoBehaviour {
             if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
                 camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
             else
-                camera.orthographicSize -= ZOOM_SPEED * Time.deltaTime;
+                camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
         }
 
         if (Input.mouseScrollDelta.y < 0)
@@ -103,10 +138,32 @@ public class CameraOverlayController : MonoBehaviour {
             if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
                 camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
             else
-                camera.orthographicSize += ZOOM_SPEED * Time.deltaTime;
+                camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
         }
     }
 
+    // retrieve whale info according to WhaleData class
+    public IEnumerator GetWhaleInfo()
+    {
+        yield return new WaitForEndOfFrame();
+
+        // get and random id
+        randomID = Random.Range(min_id, max_id);
+
+        // get the whale from random id
+        WhaleData whale = whaleController.getWhaleById(randomID);
+
+        // set the date, image, latitude and longitude to the content panel
+        panelImage.sprite = Resources.Load<Sprite>(whale.image_path);
+        date.text = System.DateTime.Now.ToString();
+        latitude.text = whale.latitude;
+        longitude.text = whale.longitude;
+
+        // set the image to the catalog panel
+        catalogImage.sprite = panelImage.sprite;
+    }
+
+    // screenshot coroutine
     public IEnumerator captureScreenshot()
     {
         yield return new WaitForEndOfFrame();
@@ -158,17 +215,15 @@ public class CameraOverlayController : MonoBehaviour {
 
         // activate the content panel and speak the instructions (accessibility only)
         panelContent.SetActive(true);
-        if (Parameters.ACCESSIBILITY) ContentPanelController.SpeakInstructions();
+        if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
         buttonPanelContent.Select();
 
         // set the screenshot on panel image
-        Image image = panelContent.GetComponentInChildren<Image>();
-        image.sprite = LoadPNG(path);
+        panelImage.sprite = LoadPNG(path);
     }
 
     public Sprite LoadPNG(string filePath)
     {
-
         Texture2D tex = null;
         byte[] fileData;
 

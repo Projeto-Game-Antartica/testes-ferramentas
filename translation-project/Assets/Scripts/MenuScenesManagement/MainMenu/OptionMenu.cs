@@ -22,6 +22,7 @@ public class OptionMenu : AbstractMenu {
         //TolkUtil.Load();
 
         slider.Select();
+        toggle.isOn = Parameters.ACCESSIBILITY;
     }
 
     public void DropDownHandler(int index)

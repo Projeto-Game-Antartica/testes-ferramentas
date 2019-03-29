@@ -6,23 +6,34 @@ using UnityEngine.UI;
 // not used
 public class ContentPanelController : MonoBehaviour {
 
-    private const string instructions = "Painel de catalogo das baleias. Neste painel aparece a foto da baleia que" +
-        "foi tirada agora, a data e hora, a organização e a sua localização com latitude, longitude e também um mapa." +
-        "Há dois botões ao final, um para catalogar esta foto e outra para descartá-la, caso deseje tirar outra.";
+    public Button first_button;
+    public GameObject panelCatalogo;
 
-    public Button firstButton;
-    
-	// Update is called once per frame
-	void Update () {
+    private ReadableTexts readableTexts;
 
-		if(Input.GetKeyDown(KeyCode.F2))
+    private void Start()
+    {
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        ReadInstructions();
+        first_button.Select();
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            SpeakInstructions();
+            ReadInstructions();
         }
 	}
 
-    public static void SpeakInstructions()
+    public void ReadInstructions()
     {
-        ReadableTexts.ReadText(instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+    }
+
+    public void Save()
+    {
+        this.gameObject.SetActive(false);
+        panelCatalogo.SetActive(true);
     }
 }

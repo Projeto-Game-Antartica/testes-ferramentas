@@ -20,10 +20,12 @@ public class LoginScene : AbstractMenu {
     public void LoginFacebook()
     {
         // TO DO
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void LoginEmail()
     {
         // TO DO
+        SceneManager.LoadScene("MenuScene");
     }
 }

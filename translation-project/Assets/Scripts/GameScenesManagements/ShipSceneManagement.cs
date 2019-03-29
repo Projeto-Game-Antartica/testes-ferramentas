@@ -9,12 +9,18 @@ public class ShipSceneManagement : MonoBehaviour {
     private bool isTrigger;
     public GameObject warningInterface;
     public SimpleCharacterController character;
+    public ChasingCamera chasingCamera;
 
-    private Vector3 positionSceneChange;
+    private Vector2 positionSceneChange;
     
     public void Start()
     {
-        if (PlayerPrefs.GetInt("Saved") == 1) transform.position = character.GetPosition();
+        if (PlayerPrefs.GetInt("Saved") == 1)
+        {
+            transform.position = character.GetPosition();
+            chasingCamera.SetCameraPosition(character.GetPosition());
+            Debug.Log(transform.position);
+        }
     }
 
     private void Update()
@@ -23,7 +29,7 @@ public class ShipSceneManagement : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                positionSceneChange = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                positionSceneChange = new Vector3(transform.position.x, transform.position.y);
 
                 // save the position when loading another scene
                 character.SavePosition(positionSceneChange);

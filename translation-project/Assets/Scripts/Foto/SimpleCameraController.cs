@@ -5,8 +5,9 @@ using UnityEngine;
 public class SimpleCameraController : MonoBehaviour {
 
     public GameObject panelInstruction;
-    public GameObject panelImage;
-    public SpriteRenderer cameraOverlay;
+    public GameObject panelCatalogo;
+    public GameObject panelContent;
+    public GameObject cameraOverlaySprites;
 
     public AudioClip cameraBeep;
     public AudioSource audioSource;
@@ -30,21 +31,21 @@ public class SimpleCameraController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelImage.activeSelf)
+        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelCatalogo.activeSelf)
         {
             ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
-        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelImage.activeSelf)
+        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelCatalogo.activeSelf)
         {
             ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
         }
 
-        if (!panelInstruction.activeSelf && !panelImage.activeSelf && !cameraOverlay.enabled)
+        if (!panelInstruction.activeSelf && !panelCatalogo.activeSelf && !cameraOverlaySprites.activeSelf)
         {
             HandleCameraMovement(null);
         }
-        else if(cameraOverlay.enabled)
+        else if(cameraOverlaySprites.activeSelf)
         {
             HandleCameraMovement(cameraBeep);
         }
@@ -54,7 +55,7 @@ public class SimpleCameraController : MonoBehaviour {
 
     private void ActivateInstructionPanel()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !panelImage.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && !panelCatalogo.activeSelf && !panelContent.activeSelf)
         {
             if (!panelInstruction.activeSelf)
             {
@@ -62,6 +63,10 @@ public class SimpleCameraController : MonoBehaviour {
                 ReadableTexts.ReadText("Painel aberto.");
                 ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
                 GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
+            }
+            else
+            {
+                panelInstruction.SetActive(false);
             }
         }
     }
