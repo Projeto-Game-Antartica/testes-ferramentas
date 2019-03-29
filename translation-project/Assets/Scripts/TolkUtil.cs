@@ -28,7 +28,6 @@ public class TolkUtil : MonoBehaviour {
                 Debug.Log("Nenhum leitor está rodando");
             }
         }
-        
     }
 
     public static void Unload()
@@ -55,15 +54,9 @@ public class TolkUtil : MonoBehaviour {
     {
         Tolk.Speak(text);
     }
-
-    public static void ListScreenReaders()
-    {
-
-    }
-
     public static void Instructions()
     {
         const string instructions = "Utilize a tecla F1 para repetir as instruções à qualquer momento.";
-        Tolk.Speak(instructions);
+        ReadableTexts.ReadText(instructions);
     }
 }

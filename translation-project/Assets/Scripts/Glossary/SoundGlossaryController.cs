@@ -16,16 +16,6 @@ public class SoundGlossaryController : MonoBehaviour {
     private const string dataFilename = "glossary.json";
 
     /*
-     * variável para instruções
-     */
-    private const string instructions = "Glossário de Sons. Para repetir as instruções, aperte " +
-    "a tecla F1 a qualquer momento. As letras estão separadas em botões onde há duas linhas contendo treze letras " +
-    "em ordem alfabética. Ao selecionar a letra, palavras iniciando com essa letra irão aparecer em forma de botões." +
-    "Inicialmente, estará selecionado o primeiro item da lista de palavras, navegue utilizando as setas para cima ou para baixo." +
-    "Selecione o botão através da tecla enter para ouvir o som característico. Pressione a tecla P para pausá-lo." +
-    "Para selecionar o alfabeto aperte a tecla F2 e navegue utilizando a tecla TAB ou as setas para direita ou esquerda.";
-
-    /*
      * Classe C# para mapear o JSON
      */
     DataArray loadedData;
@@ -35,16 +25,17 @@ public class SoundGlossaryController : MonoBehaviour {
     */
     [SerializeField]
     private float m_lerpTime;
-    public ScrollRect m_scrollRect;
     private List<Button> m_buttons;
     private int m_index;
     private float m_verticalPosition;
     private bool m_up;
     private bool m_down;
-    public Transform contentPanel;
-    public SimpleObjectPool buttonObjectPool;
     private List<SoundButton> buttonList;
     private Button buttonA;
+    public ScrollRect m_scrollRect;
+    public Transform contentPanel;
+    public SimpleObjectPool buttonObjectPool;
+    public Button backButton;
 
     /*
     * Variáveis para controle do glossário
@@ -54,13 +45,61 @@ public class SoundGlossaryController : MonoBehaviour {
     private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
     private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
+    private ReadableTexts readableTexts;
+
     void Start()
     {
         LoadDictionary();
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        TolkUtil.Speak(instructions);
+        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+    }
+
+    public void Update()
+    {
+        if (SoundButton.contentButton)
+        {
+            m_up = Input.GetKeyDown(KeyCode.UpArrow);
+            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+
+            if (m_up ^ m_down)
+            {
+                if (m_up)
+                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+                else
+                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+
+                m_buttons[m_index].Select();
+                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+            }
+
+            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
+            m_verticalPosition, Time.deltaTime / m_lerpTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (SoundButton.IsAudioPlaying())
+                SoundButton.audioSource.Stop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ResetVerticalPositionScrollRect();
+            buttonA.Select();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            backButton.Select();
+        }
     }
 
     public void LoadDictionary()
@@ -170,7 +209,7 @@ public class SoundGlossaryController : MonoBehaviour {
 
     public void ReadLetterButtin(string letter)
     {
-        TolkUtil.Speak(letter);
+        ReadableTexts.ReadText(letter);
     }
 
     public AudioClip GetAudioClip(string key, string localization)
@@ -194,45 +233,5 @@ public class SoundGlossaryController : MonoBehaviour {
     {
         m_verticalPosition = 1f;
         m_index = 0;
-    }
-
-    public void Update()
-    {
-        if (SoundButton.contentButton)
-        {
-            m_up = Input.GetKeyDown(KeyCode.UpArrow);
-            m_down = Input.GetKeyDown(KeyCode.DownArrow);
-
-            if (m_up ^ m_down)
-            {
-                if (m_up)
-                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
-                else
-                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
-
-                m_buttons[m_index].Select();
-                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
-            }
-
-            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
-            m_verticalPosition, Time.deltaTime / m_lerpTime);
-        }
-
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            if (SoundButton.IsAudioPlaying())
-                SoundButton.audioSource.Stop();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            TolkUtil.Speak(instructions);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ResetVerticalPositionScrollRect();
-            buttonA.Select();
-        }
     }
 }

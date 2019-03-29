@@ -44,6 +44,6 @@ public class SoundButton : MonoBehaviour
 
     public void ReadButton()
     {
-        TolkUtil.Speak(keyLabel.text);
+        ReadableTexts.ReadText(keyLabel.text);
     }
 }

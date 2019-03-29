@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VIDE_Data;
 
 public class SimpleCharacterController : MonoBehaviour {
 
     public GameObject character;
+    public SoundsController soundsController;
+    public GameObject inGameOption;
     AudioSource audioSource;
     Animator animator;
 
+    // cant be too high 
     public float SPEED;
 
     private void Start()
@@ -18,29 +22,50 @@ public class SimpleCharacterController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!inGameOption.activeSelf)
+                inGameOption.SetActive(true);
+            else
+                inGameOption.SetActive(false);
+        }
+
         if (!VD.isActive)
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
-            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            // character movement
+            if (!inGameOption.activeSelf)
             {
-                HandleCharacterMovement();
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    animator.SetBool("photographing", true);
-                }
+                if (movement.magnitude > 0) WalkingSound();
 
-                animator.SetBool("walking", false);
+                animator.SetFloat("Horizontal", movement.x);
+                animator.SetFloat("Vertical", movement.y);
+                animator.SetFloat("Magnitude", movement.magnitude);
+                //animator.SetBool("photographing", false);
+                transform.position = transform.position + movement * SPEED *  Time.deltaTime;
             }
-        }
-        else
-        {
-            animator.SetBool("walking", false);
+
+            //if (Input.GetKeyDown(KeyCode.F))
+            //{
+            //    animator.SetBool("photographing", true);
+            //}
         }
         
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Metal"))
+        {
+            soundsController.PlayImpactAudio("Metal");
+        }
+        else if (collision.gameObject.tag.Equals("Glass"))
+        {
+            soundsController.PlayImpactAudio("Glass");
+        }
     }
 
     void WalkingSound()
@@ -48,38 +73,28 @@ public class SimpleCharacterController : MonoBehaviour {
         if (!audioSource.isPlaying)
         {
             audioSource.volume = Random.Range(0.4f, 0.8f);
-            audioSource.pitch = Random.Range(0.8f, 1.2f);
+            audioSource.pitch = Random.Range(0.8f, 1.0f);
             audioSource.Play();
         }
     }
 
-    void HandleCharacterMovement()
+    // Save the position in player prefs
+    public void SavePosition(Vector2 position)
     {
-        animator.SetBool("walking", true);
-        animator.SetBool("photographing", false);
+        PlayerPrefs.SetFloat("p_x", position.x);
+        PlayerPrefs.SetFloat("p_y", position.y);
 
-        WalkingSound();
+        PlayerPrefs.SetInt("Saved", 1);
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            character.transform.position += new Vector3(0, SPEED * Time.deltaTime, 0);
-        }
+        PlayerPrefs.Save();
+    }
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            character.transform.position += new Vector3(0, -SPEED * Time.deltaTime, 0);
-        }
+    public Vector3 GetPosition()
+    {
+        // Reset, so that the save will be used only once
+        PlayerPrefs.SetInt("Saved", 0);
+        PlayerPrefs.Save();
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            character.transform.position += new Vector3(-SPEED * Time.deltaTime, 0, 0);
-            character.GetComponent<SpriteRenderer>().flipX = true; // turn left
-        }
-
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            character.transform.position += new Vector3(SPEED * Time.deltaTime, 0, 0);
-            character.GetComponent<SpriteRenderer>().flipX = false; // turn true
-        }
+        return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"));
     }
 }
