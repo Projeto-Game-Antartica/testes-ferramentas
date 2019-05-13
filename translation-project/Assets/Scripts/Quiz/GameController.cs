@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using DavyKager;
 
-public class GameController : MonoBehaviour
+public class GameController : AbstractScreenReader
 {
     public Text questionDisplayText;
     public Text scoreDisplayText;
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_quiz_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_quiz_instructions, LocalizationManager.instance.GetLozalization()));
     }
 
     private void ShowQuestion()
@@ -56,8 +56,8 @@ public class GameController : MonoBehaviour
         QuestionData questionData = questionPool[questionIndex];
         questionDisplayText.text = questionData.questionText;
 
-        ReadableTexts.ReadText("Questão" + (questionIndex + 1));
-        ReadableTexts.ReadText(questionDisplayText.text);
+        ReadText("Questão" + (questionIndex + 1));
+        ReadText(questionDisplayText.text);
 
         for (int i = 0; i < questionData.answers.Length; i++)
         {
@@ -84,13 +84,13 @@ public class GameController : MonoBehaviour
     {
         if (isCorrect)
         {
-            ReadableTexts.ReadText("Resposta correta!");
+            ReadText("Resposta correta!");
             playerScore += currentRoundData.pointsAddedForCorrectAnswer;
             scoreDisplayText.text = "Score: " + playerScore.ToString();
         }
         else
         {
-            ReadableTexts.ReadText("Resposta incorreta!");
+            ReadText("Resposta incorreta!");
         }
 
         if (questionPool.Length > questionIndex + 1)
@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour
 
         roundOverDisplayText.text = "FIM DE JOGO! VOCÊ MARCOU " + (playerScore / 10) + " PONTOS";
 
-        ReadableTexts.ReadText(roundOverDisplayText.text);
+        ReadText(roundOverDisplayText.text);
 
         returnToMenuButton.Select();
     }
@@ -126,14 +126,14 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMenuButtonSelectEvent()
     {
-        ReadableTexts.ReadText(returnToMenuButton.GetComponentInChildren<Text>().text);
+        ReadText(returnToMenuButton.GetComponentInChildren<Text>().text);
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(questionDisplayText.text);
+            ReadText(questionDisplayText.text);
         }
     }
 }

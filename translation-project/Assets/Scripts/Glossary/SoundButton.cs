@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundButton : MonoBehaviour
+public class SoundButton : AbstractScreenReader
 {
     public Button buttonComponent;
     public Text keyLabel;
@@ -44,6 +44,6 @@ public class SoundButton : MonoBehaviour
 
     public void ReadButton()
     {
-        ReadableTexts.ReadText(keyLabel.text);
+        ReadText(keyLabel.text);
     }
 }

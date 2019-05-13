@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LanguageScene : AbstractMenu {
+public class LanguageScene : AbstractScreenReader {
 
     private Button brButton;
 
@@ -14,13 +14,14 @@ public class LanguageScene : AbstractMenu {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         brButton = GameObject.Find("locales-ptbr").GetComponent<Button>();
 
-        // accessibility functions inactive
+        // accessibility and high contrast functions inactive
         Parameters.ACCESSIBILITY = false;
+        Parameters.HIGH_CONTRAST = false;
 
         TolkUtil.Load();
 
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
 
         brButton.Select();  
     }
@@ -29,7 +30,7 @@ public class LanguageScene : AbstractMenu {
     {
         if (Input.GetKey(KeyCode.F1))
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using System;
 
-public class SoundGlossaryController : MonoBehaviour {
+public class SoundGlossaryController : AbstractScreenReader {
 
     /*
      * nome do arquivo JSON
@@ -52,7 +52,7 @@ public class SoundGlossaryController : MonoBehaviour {
         LoadDictionary();
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -87,7 +87,7 @@ public class SoundGlossaryController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
@@ -209,7 +209,7 @@ public class SoundGlossaryController : MonoBehaviour {
 
     public void ReadLetterButtin(string letter)
     {
-        ReadableTexts.ReadText(letter);
+        ReadText(letter);
     }
 
     public AudioClip GetAudioClip(string key, string localization)

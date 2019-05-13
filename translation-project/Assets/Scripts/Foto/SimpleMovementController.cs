@@ -6,6 +6,7 @@ public class SimpleMovementController : MonoBehaviour {
 
     // determined via editor
     public SpriteRenderer spriteRenderer;
+    public SphereCollider sphereCollider;
 
     private AudioSource audioSource;
 
@@ -33,12 +34,17 @@ public class SimpleMovementController : MonoBehaviour {
             WhaleAnimation();
         }
 
+        SimpleMovement();
+    }
+
+    private void SimpleMovement()
+    {
         if (rightDirection) // go to right
         {
             if (transform.position.x >= Parameters.RIGHT_LIMIT)
             {
-                spriteRenderer.flipX = !spriteRenderer.flipX; // change direction
                 rightDirection = false;
+                spriteRenderer.flipX = !spriteRenderer.flipX; // change direction
             }
             else
                 transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
@@ -55,13 +61,15 @@ public class SimpleMovementController : MonoBehaviour {
         }
     }
 
-    void WhaleAnimation()
+    private void WhaleAnimation()
     {
         hidingTime -= Time.deltaTime;
 
         if (hidingTime <= 0)
         {
             spriteRenderer.enabled = true;
+            sphereCollider.enabled = true;
+
             showingTime -= Time.deltaTime;
 
             if (!audioSource.isPlaying) audioSource.Play();
@@ -69,6 +77,9 @@ public class SimpleMovementController : MonoBehaviour {
             if (showingTime <= 0)
             {
                 spriteRenderer.enabled = false;
+                sphereCollider.enabled = false;
+                Parameters.ISWHALEONCAMERA = false;
+
                 hidingTime = TIMER;
                 showingTime = TIMER;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using VIDE_Data;
 
-public class SimpleCharacterController : MonoBehaviour {
+public class SimpleCharacterController : AbstractScreenReader {
 
     public GameObject character;
     public SoundsController soundsController;
@@ -28,10 +28,16 @@ public class SimpleCharacterController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!inGameOption.activeSelf)
+            if (!inGameOption.activeSelf)
+            {
+                ReadText("Menu de opções aberto");
                 inGameOption.SetActive(true);
+            }
             else
+            {
+                ReadText("Menu de opções fechado");
                 inGameOption.SetActive(false);
+            }
         }
 
         if (!VD.isActive)
@@ -41,10 +47,17 @@ public class SimpleCharacterController : MonoBehaviour {
             {
                 if (movement.magnitude > 0) WalkingSound();
 
+                // check last direction for idle animation: true = right, false = left
+                if(movement.x > 0 || movement.y > 0)
+                    animator.SetBool("LastDirection", true);
+                if(movement.x < 0 || movement.y < 0)
+                    animator.SetBool("LastDirection", false);
+
+                // parameters for animator blend tree
                 animator.SetFloat("Horizontal", movement.x);
                 animator.SetFloat("Vertical", movement.y);
                 animator.SetFloat("Magnitude", movement.magnitude);
-                //animator.SetBool("photographing", false);
+
                 transform.position = transform.position + movement * SPEED *  Time.deltaTime;
             }
 
@@ -52,6 +65,11 @@ public class SimpleCharacterController : MonoBehaviour {
             //{
             //    animator.SetBool("photographing", true);
             //}
+        }
+        else
+        {
+            // runs idle animation when the dialogue is active
+            animator.SetFloat("Magnitude", 0);
         }
         
     }

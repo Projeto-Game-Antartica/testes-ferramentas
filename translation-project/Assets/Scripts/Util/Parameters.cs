@@ -1,0 +1,50 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Parameters {
+
+    // bool for enabling/disabling accessibility functions
+    public static bool ACCESSIBILITY;
+    public static bool HIGH_CONTRAST;
+    
+
+    /* ## PHOTOIDENTIFICATION MISSION ## */
+    // readonly parameters for camera limits
+    public const float RIGHT_LIMIT    = 494f;
+    public const float LEFT_LIMIT     = -494f;
+    public const float UP_LIMIT       = 228f;
+    public const float DOWN_LIMIT     = -228f;
+    public const float Z_POSITION     = -20f;
+    public const float MAX_ORTHOSIZE  = 200f;
+    public const float MIN_ORTHOSIZE  = 170f;
+    public const float ZOOM_SPEED     = 30f;
+    
+    // limits of the camera to check
+    public static bool RIGHT_BORDER;
+    public static bool LEFT_BORDER;
+    public static bool UP_BORDER;
+    public static bool DOWN_BORDER;
+
+    // whale id
+    public const int MIN_ID = 1;
+    public const int MAX_ID = 9;
+    public static int WHALE_ID;
+    public static bool ISWHALEIDENTIFIED = false;
+
+    // is whale on the camera focus?
+    public static bool ISWHALEONCAMERA = false;
+
+    // readonly parameters for photoidentification proccess
+    public const int PIGMENTACAO = 0;
+    public const int MANCHAS = 1;
+    public const int RISCOS = 2;
+    public const int MARCAS = 3;
+    public const int BORDA = 4;
+    public const int PONTAS = 5;
+    public const int ENTALHE = 6;
+
+    /* #### */
+
+
+}

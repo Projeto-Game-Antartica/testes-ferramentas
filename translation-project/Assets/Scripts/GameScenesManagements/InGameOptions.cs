@@ -13,6 +13,11 @@ public class InGameOptions : MonoBehaviour {
         toggle.isOn = Parameters.ACCESSIBILITY;    
     }
 
+    private void OnEnable()
+    {
+        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
+    }
+
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene("MenuScene");

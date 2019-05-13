@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraOverlayController : MonoBehaviour {
+public class CameraOverlayController : AbstractScreenReader {
 
     // object containing all sprites for camera overlay
     public GameObject cameraOverlaySprites;
@@ -14,11 +14,16 @@ public class CameraOverlayController : MonoBehaviour {
     public AudioClip photoAudioClip;
     public AudioClip loadingAudioClip;
     public AudioClip turningOffAudioClip;
-    
+
     // content panel objects
+    public GameObject panelInstruction;
+    public GameObject panelWhalesCatalogo;
     public GameObject panelContent;
+    public GameObject panelFotodentificacao;
+    public GameObject panelOptions;
     public Image panelImage;
     public Button buttonPanelContent;
+    public Button saveButton;
     public Text date;
     public Text latitude;
     public Text longitude;
@@ -28,11 +33,7 @@ public class CameraOverlayController : MonoBehaviour {
 
     // whale controller script
     public WhaleController whaleController;
-
-    // range for whales id according to json
-    private const int min_id = 1;
-    private const int max_id = 9;
-    public static int randomID;
+    public WhaleImages whaleImages;
 
     // camera
     new public Camera camera;
@@ -40,62 +41,56 @@ public class CameraOverlayController : MonoBehaviour {
     // instructions texts
     private ReadableTexts readableTexts;
 
+    // feedback texts
+    private const string NEGATIVE_FB = "A fotografia não ficou muito legal. Tente novamente.";
+    private const string POSITIVE_FB = "A fotografia ficou ótima!";
+
     private void Start()
     {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
     }
 
     // Update is called once per frame
-    void Update () {
-
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("pressed");
-            gameObject.SetActive(true);
-        }
+    void Update ()
+    {
         // open the overlay
-		if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf)
+		if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf && !panelWhalesCatalogo.activeSelf
+             && !panelFotodentificacao.activeSelf&& !panelInstruction.activeSelf)
         {
-            if (!cameraOverlaySprites.activeSelf)
-                audioSource.PlayOneShot(loadingAudioClip);
-            else
-                audioSource.PlayOneShot(turningOffAudioClip);
-
-            //spriteRenderer.enabled = !spriteRenderer.enabled;
-
             if (cameraOverlaySprites.activeSelf)
+            {
                 cameraOverlaySprites.SetActive(false);
+                ReadText("Camera fechada");
+            }
             else
+            {
                 cameraOverlaySprites.SetActive(true);
+                ReadText("Camera aberta");
+            }
+
+            if (!cameraOverlaySprites.activeSelf && !audioSource.isPlaying)
+                audioSource.PlayOneShot(loadingAudioClip);
+            else if (!audioSource.isPlaying)
+                audioSource.PlayOneShot(turningOffAudioClip);
         }
 
         // take the photo
         if(Input.GetKeyDown(KeyCode.Space) && cameraOverlaySprites.activeSelf && !panelContent.activeSelf)
         {
-            audioSource.PlayOneShot(photoAudioClip);
-            cameraOverlaySprites.SetActive(false); ;
-            //StartCoroutine(captureScreenshot());
-
-            // open the content panel (without screenshot)
-            StartCoroutine(GetWhaleInfo());
-            panelContent.SetActive(true);
-            if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
-            buttonPanelContent.Select();
-
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+            HandlePhoto();
         }
 
         // close the catalog panel
         if(Input.GetKeyDown(KeyCode.Escape) && panelContent.activeSelf)
         {
             panelContent.SetActive(false);
-            ReadableTexts.ReadText("Catálogo fechado");
+            ReadText("Catálogo fechado");
         }
 
         // repeat instructions
         if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
         }
 
         // zoom only when overlay is enabled
@@ -105,41 +100,76 @@ public class CameraOverlayController : MonoBehaviour {
             camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
 	}
 
+    public void HandlePhoto()
+    {
+        // whale is not identified yet
+        Parameters.ISWHALEIDENTIFIED = false;
+
+        audioSource.PlayOneShot(photoAudioClip);
+        cameraOverlaySprites.SetActive(false);
+
+        // reset the panel
+        whaleImages.SetPhotographedWhaleImage(null);
+
+        // activate panel options
+        panelOptions.SetActive(true);
+
+        // set the verify button to enabled
+        saveButton.enabled = true;
+
+        // show a whale image
+        if (Parameters.ISWHALEONCAMERA)
+        {
+            StartCoroutine(GetWhaleInfo());
+            // positive feedback
+            ReadText(POSITIVE_FB);
+            panelContent.SetActive(true);
+            saveButton.interactable = true;
+        }
+        else
+        {
+            // whale is not on the camera, take a screenshot
+            StartCoroutine(captureScreenshot());
+            // negative feedback
+            ReadText(NEGATIVE_FB);
+        }
+
+
+        if (Parameters.ACCESSIBILITY)
+            panelContent.GetComponent<ContentPanelController>().ReadInstructions();
+
+        buttonPanelContent.Select();
+
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+    }
 
     private void HandleCameraZoom()
     {
-        if (Input.GetKey(KeyCode.KeypadMinus))
+        if (Input.GetKey(KeyCode.KeypadMinus) || Input.mouseScrollDelta.y < 0)
         {
-            if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
-                camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
-            else
-                camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
-
+            ZoomIn();
         }
 
-        if (Input.GetKey(KeyCode.KeypadPlus))
+        if (Input.GetKey(KeyCode.KeypadPlus) || Input.mouseScrollDelta.y > 0)
         {
-            if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
-                camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
-            else
-                camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
+            ZoomOut();
         }
+    }
 
-        if(Input.mouseScrollDelta.y > 0)
-        {
-            if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
-                camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
-            else
-                camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
-        }
+    public void ZoomIn()
+    {
+        if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
+            camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
+        else
+            camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
+    }
 
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
-                camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
-            else
-                camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
-        }
+    public void ZoomOut()
+    {
+        if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
+            camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
+        else
+            camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
     }
 
     // retrieve whale info according to WhaleData class
@@ -148,19 +178,25 @@ public class CameraOverlayController : MonoBehaviour {
         yield return new WaitForEndOfFrame();
 
         // get and random id
-        randomID = Random.Range(min_id, max_id);
+        Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
 
         // get the whale from random id
-        WhaleData whale = whaleController.getWhaleById(randomID);
+        WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);
 
-        // set the date, image, latitude and longitude to the content panel
-        panelImage.sprite = Resources.Load<Sprite>(whale.image_path);
+        Debug.Log(whale.image_path);
+
+        // set the image to all panels
+        //panelImage.sprite = Resources.Load<Sprite>(whale.image_path);
+        whaleImages.SetPhotographedWhaleImage(whale.image_path);
+
+
+        // set the date, latitude and longitude to the content panel
         date.text = System.DateTime.Now.ToString();
         latitude.text = whale.latitude;
         longitude.text = whale.longitude;
 
         // set the image to the catalog panel
-        catalogImage.sprite = panelImage.sprite;
+        //catalogImage.sprite = panelImage.sprite;
     }
 
     // screenshot coroutine
@@ -213,12 +249,16 @@ public class CameraOverlayController : MonoBehaviour {
             yield return null;
         }
 
+        // after the screenshot
         // activate the content panel and speak the instructions (accessibility only)
+        // set the button inactive
         panelContent.SetActive(true);
+        saveButton.interactable = false;
         if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
         buttonPanelContent.Select();
 
         // set the screenshot on panel image
+        panelImage.sprite = null;
         panelImage.sprite = LoadPNG(path);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class PlayMenu : AbstractMenu {
+public class PlayMenu : AbstractScreenReader {
 
     private Button minigame2;
 
@@ -17,7 +17,7 @@ public class PlayMenu : AbstractMenu {
         minigame2 = GameObject.Find("Minigame2").GetComponent<Button>();
 
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         minigame2.Select();
     }
@@ -47,7 +47,7 @@ public class PlayMenu : AbstractMenu {
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
     }
 }

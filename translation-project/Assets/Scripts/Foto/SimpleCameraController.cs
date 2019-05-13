@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleCameraController : MonoBehaviour {
+public class SimpleCameraController : AbstractScreenReader {
 
     public GameObject panelInstruction;
-    public GameObject panelCatalogo;
+    public GameObject panelWhalesCatalogo;
     public GameObject panelContent;
+    public GameObject panelFotodentificacao;
     public GameObject cameraOverlaySprites;
 
     public AudioClip cameraBeep;
@@ -31,17 +32,20 @@ public class SimpleCameraController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelCatalogo.activeSelf)
+        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf 
+            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
-        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelCatalogo.activeSelf)
+        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf 
+            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
         }
 
-        if (!panelInstruction.activeSelf && !panelCatalogo.activeSelf && !cameraOverlaySprites.activeSelf)
+        if (!panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf && !cameraOverlaySprites.activeSelf 
+            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
             HandleCameraMovement(null);
         }
@@ -55,17 +59,19 @@ public class SimpleCameraController : MonoBehaviour {
 
     private void ActivateInstructionPanel()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !panelCatalogo.activeSelf && !panelContent.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && !panelWhalesCatalogo.activeSelf && !panelContent.activeSelf 
+            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
             if (!panelInstruction.activeSelf)
             {
                 panelInstruction.SetActive(true);
-                ReadableTexts.ReadText("Painel aberto.");
-                ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+                ReadText("Painel de instruções aberto.");
+                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
                 GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
             }
             else
             {
+                ReadText("Painel de instruções fechado.");
                 panelInstruction.SetActive(false);
             }
         }
@@ -137,5 +143,17 @@ public class SimpleCameraController : MonoBehaviour {
                 Parameters.DOWN_BORDER = false;
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger enter");
+        Parameters.ISWHALEONCAMERA = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("trigger exit");
+        Parameters.ISWHALEONCAMERA = false;
     }
 }

@@ -7,7 +7,7 @@ using DavyKager;
 using TMPro;
 using UnityEngine.Audio;
 
-public class MainMenu : AbstractMenu
+public class MainMenu : AbstractScreenReader
 {
     public Slider slider;
     private Button playButton;
@@ -26,15 +26,15 @@ public class MainMenu : AbstractMenu
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         playButton.Select();
     }
 
     public void QuitGame()
     {
-        //Debug.Log("Quit");
         TolkUtil.Unload();
+        Debug.Log("Quit");
         Application.Quit();
     }
 
@@ -62,7 +62,10 @@ public class MainMenu : AbstractMenu
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
+
+        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
+        else HighContrastText.RestoreToDefault("bgothm");
     }
 }

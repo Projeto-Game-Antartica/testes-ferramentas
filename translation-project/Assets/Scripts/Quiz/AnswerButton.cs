@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using DavyKager;
 
-public class AnswerButton : MonoBehaviour
+public class AnswerButton : AbstractScreenReader
 {
 
     public Text answerText;
@@ -39,6 +39,6 @@ public class AnswerButton : MonoBehaviour
 
     public void OnSelectEvent()
     {
-        ReadableTexts.ReadText(answerData.answerText);
+        ReadText(answerData.answerText);
     }
 }

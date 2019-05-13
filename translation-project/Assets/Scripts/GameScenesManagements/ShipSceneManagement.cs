@@ -15,6 +15,7 @@ public class ShipSceneManagement : MonoBehaviour {
     
     public void Start()
     {
+        TolkUtil.Load();
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
             transform.position = character.GetPosition();

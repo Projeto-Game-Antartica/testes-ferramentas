@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CadastroScene : AbstractMenu {
+public class CadastroScene : AbstractScreenReader {
 
     public UnityEngine.UI.Toggle toggle;
     public void Cadastrar()
