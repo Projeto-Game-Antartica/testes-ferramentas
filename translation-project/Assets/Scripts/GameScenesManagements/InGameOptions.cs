@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class InGameOptions : MonoBehaviour {
 
     public Toggle toggle;
+    public Animator charAnimator;
 
     private void Start()
     {
@@ -15,6 +16,9 @@ public class InGameOptions : MonoBehaviour {
 
     private void OnEnable()
     {
+        // runs idle animation when the ingameoption is active
+        charAnimator.SetFloat("Magnitude", 0);
+
         if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
     }
 

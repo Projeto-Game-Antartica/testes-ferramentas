@@ -7,7 +7,6 @@ public class HighContrastSettings : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        Parameters.HIGH_CONTRAST = true;
         SetHighAccessibility();
     }
 

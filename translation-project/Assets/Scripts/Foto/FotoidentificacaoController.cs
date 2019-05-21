@@ -23,13 +23,13 @@ public class FotoidentificacaoController : AbstractScreenReader {
      */
     private readonly string[] questions = new string[] 
     {
-        "Identifique o padrão de pigmentação branca da baleia fotografada!",
-        "Identifique a opção que caracteriza as manchas da baleia fotografada",
-        "Identifique a opção que caracteriza os riscos da baleia fotografada",
-        "Identifique a opção que caracteriza as marcas da baleia fotografada",
-        "Identifique a opção que caracteriza a borda da baleia fotografada",
-        "Identifique a opção que caracteriza a ponta da baleia fotografada",
-        "Identifique a opção que caracteriza a entalhe da baleia fotografada",
+        "Identifique o padrão de pigmentação branca da cauda fotografada!",
+        "Identifique a opção que caracteriza as manchas da cauda fotografada",
+        "Identifique a opção que caracteriza os riscos da cauda fotografada",
+        "Identifique a opção que caracteriza as marcas da cauda fotografada",
+        "Identifique a opção que caracteriza a borda da cauda fotografada",
+        "Identifique a opção que caracteriza a ponta da cauda fotografada",
+        "Identifique a opção que caracteriza a entalhe da cauda fotografada",
     };
 
     private readonly string[,] answersInLine = new string[,]
@@ -87,6 +87,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {
             // enable the next button
             nextButton.gameObject.SetActive(true);
+            // needed to check after enabling gameobject
+            if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
             ChangeBackgroundColor(option, Color.green);
         }
         else
@@ -270,6 +272,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.pigmentacao.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISPIGMENTACAODONE = true;
                     return true;
                 }
 
@@ -280,6 +283,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.manchas.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISMANCHASDONE = true;
                     return true;
                 }
 
@@ -290,6 +294,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.riscos.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISRISCOSDONE = true;
                     return true;
                 }
 
@@ -300,6 +305,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.marcas.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISMARCASDONE = true;
                     return true;
                 }
 
@@ -310,6 +316,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.borda.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISBORDADONE = true;
                     return true;
                 }
 
@@ -320,6 +327,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.ponta.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISPONTADONE = true;
                     return true;
                 }
 
@@ -330,6 +338,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 if (answer.text.ToLower().Equals(whaleData.entalhe.ToLower()))
                 {
                     ReadText("Resposta certa.");
+                    Parameters.ISENTALHEDONE = true;
                     return true;
                 }
 

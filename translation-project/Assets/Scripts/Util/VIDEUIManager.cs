@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using VIDE_Data; //<--- Import to use easily call VD class
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class VIDEUIManager : MonoBehaviour
 {
@@ -29,12 +30,12 @@ public class VIDEUIManager : MonoBehaviour
     public GameObject playerContainer;
     public GameObject itemPopUp;
 
-    public Text NPC_Text;
-    public Text NPC_label;
+    public TextMeshProUGUI NPC_Text;
+    public TextMeshProUGUI NPC_label;
     public Image NPCSprite;
     public GameObject playerChoicePrefab;
     public Image playerSprite;
-    public Text playerLabel;
+    public TextMeshProUGUI playerLabel;
 
     bool dialoguePaused = false; //Custom variable to prevent the manager from calling VD.Next
     bool animatingText = false; //Will help us know when text is currently being animated
@@ -43,7 +44,7 @@ public class VIDEUIManager : MonoBehaviour
     public VIDEPlayer player;
 
     //We'll be using this to store references of the current player choices
-    private List<Text> currentChoices = new List<Text>();
+    private List<TextMeshProUGUI> currentChoices = new List<TextMeshProUGUI>();
 
     //With this we can start a coroutine and stop it. Used to animate text
     IEnumerator NPC_TextAnimator;
@@ -141,7 +142,7 @@ public class VIDEUIManager : MonoBehaviour
                         data.commentIndex++;
 
                         // Read the option selected after changing index
-                        TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                         
                     }
@@ -152,7 +153,7 @@ public class VIDEUIManager : MonoBehaviour
                     {
                         data.commentIndex--;
                         // Read the option selected after changing index
-                        TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                     }
                 }
@@ -186,9 +187,9 @@ public class VIDEUIManager : MonoBehaviour
     {
         //Reset some variables
         //Destroy the current choices
-        foreach (Text op in currentChoices)
+        foreach (TextMeshProUGUI op in currentChoices)
             Destroy(op.gameObject);
-        currentChoices = new List<UnityEngine.UI.Text>();
+        currentChoices = new List<TextMeshProUGUI>();
         NPC_Text.text = "";
         NPC_Container.SetActive(false);
         playerContainer.SetActive(false);
@@ -270,10 +271,11 @@ public class VIDEUIManager : MonoBehaviour
             newOp.transform.SetParent(playerChoicePrefab.transform.parent, true);
             newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
             newOp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-            newOp.GetComponent<UnityEngine.UI.Text>().text = choices[i];
+            //newOp.GetComponent<UnityEngine.UI.Text>().text = choices[i];
+            newOp.GetComponent<TMPro.TextMeshProUGUI>().text = choices[i];
             newOp.SetActive(true);
 
-            currentChoices.Add(newOp.GetComponent<UnityEngine.UI.Text>());
+            currentChoices.Add(newOp.GetComponent<TextMeshProUGUI>());
         }
     }
 
@@ -480,8 +482,8 @@ public class VIDEUIManager : MonoBehaviour
         // Make screenreader read the text. Reads after animation
         Debug.Log(NPC_label.text);
         Debug.Log(NPC_Text.text);
-        TolkUtil.Speak(NPC_label.text);
-        TolkUtil.Speak(NPC_Text.text);
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_label.text);
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_Text.text);
 
         animatingText = false;
     }
@@ -492,8 +494,8 @@ public class VIDEUIManager : MonoBehaviour
         NPC_Text.text = VD.nodeData.comments[VD.nodeData.commentIndex]; //Now just copy full text		
 
         // Make screenreader read the text after cutting the animation
-        TolkUtil.Speak(NPC_label.text);
-        TolkUtil.Speak(NPC_Text.text);
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_label.text);
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_Text.text);
 
         animatingText = false;
     }

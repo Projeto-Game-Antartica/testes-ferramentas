@@ -19,6 +19,14 @@ public class ContentPanelController : AbstractScreenReader {
     public GameObject[] buttons;
     public FotoidentificacaoController fotoidentificacaoController;
 
+    public TextMeshProUGUI pigmentacaoTMPro;
+    public TextMeshProUGUI manchasTMPro;
+    public TextMeshProUGUI riscosTMPro;
+    public TextMeshProUGUI marcasTMPro;
+    public TextMeshProUGUI entalheTMPro;
+    public TextMeshProUGUI bordaTMPro;
+    public TextMeshProUGUI pontaTMPro;
+
     private ReadableTexts readableTexts;
     
     private void Start()
@@ -46,8 +54,14 @@ public class ContentPanelController : AbstractScreenReader {
         }
         else
         {
-            if (panelNomear != null) panelNomear.SetActive(false);
+            if (panelNomear != null)
+            {
+                panelNomear.SetActive(false);
+                titleText.SetActive(true);
+            }
         }
+
+        CheckFotoidentificacaoButtons();
 	}
     
     private void OnEnable()
@@ -105,8 +119,10 @@ public class ContentPanelController : AbstractScreenReader {
         {
             panelOptions.SetActive(false);
             titleText.SetActive(false);
-            saveButton.enabled = false;
+            saveButton.interactable = false;
             panelNomear.SetActive(true);
+
+            if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
 
             string whale_name = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
 
@@ -136,5 +152,43 @@ public class ContentPanelController : AbstractScreenReader {
         {
             b.GetComponent<Image>().color = Color.white;
         }
+    }
+
+    public void CheckFotoidentificacaoButtons()
+    {
+        if (Parameters.ISPIGMENTACAODONE)
+            pigmentacaoTMPro.color = Color.green;
+        else
+            pigmentacaoTMPro.color = Color.white;
+
+        if (Parameters.ISMANCHASDONE)
+            manchasTMPro.color = Color.green;
+        else
+            manchasTMPro.color = Color.white;
+
+        if (Parameters.ISRISCOSDONE)
+            riscosTMPro.color = Color.green;
+        else
+            riscosTMPro.color = Color.white;
+
+        if (Parameters.ISMARCASDONE)
+            marcasTMPro.color = Color.green;
+        else
+            marcasTMPro.color = Color.white;
+
+        if (Parameters.ISENTALHEDONE)
+            entalheTMPro.color = Color.green;
+        else
+            entalheTMPro.color = Color.white;
+
+        if (Parameters.ISBORDADONE)
+            bordaTMPro.color = Color.green;
+        else
+            bordaTMPro.color = Color.white;
+
+        if (Parameters.ISPONTADONE)
+            pontaTMPro.color = Color.green;
+        else
+            pontaTMPro.color = Color.white;
     }
 }

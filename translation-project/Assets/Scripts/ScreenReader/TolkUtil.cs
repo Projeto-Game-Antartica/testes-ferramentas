@@ -33,7 +33,7 @@ public class TolkUtil : AbstractScreenReader {
     public static void Unload()
     {
         
-        if (Tolk.IsLoaded())
+       if (Tolk.IsLoaded())
        {
             Tolk.Unload();
             Debug.Log("Tolk unloaded.");

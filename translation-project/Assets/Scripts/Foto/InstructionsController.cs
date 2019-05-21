@@ -15,6 +15,7 @@ public class InstructionsController : AbstractScreenReader {
     
     public void Start()
     {
+        //Parameters.HIGH_CONTRAST = true;
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization());
         ReadText(ui_title.text);

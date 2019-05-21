@@ -43,6 +43,13 @@ public class Parameters {
     public const int BORDA = 4;
     public const int PONTAS = 5;
     public const int ENTALHE = 6;
+    public static bool ISPIGMENTACAODONE = false;
+    public static bool ISMANCHASDONE     = false;
+    public static bool ISRISCOSDONE      = false;
+    public static bool ISMARCASDONE      = false;
+    public static bool ISBORDADONE       = false;
+    public static bool ISPONTADONE       = false;
+    public static bool ISENTALHEDONE     = false;
 
     /* #### */
 

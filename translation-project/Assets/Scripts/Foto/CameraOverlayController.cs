@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CameraOverlayController : AbstractScreenReader {
-
+    
     // object containing all sprites for camera overlay
     public GameObject cameraOverlaySprites;
 
@@ -27,9 +27,10 @@ public class CameraOverlayController : AbstractScreenReader {
     public Text date;
     public Text latitude;
     public Text longitude;
+    public Button[] fotoidentificationButtons;
 
     // catalog panel objects
-    public Image catalogImage;
+    //public Image catalogImage;
 
     // whale controller script
     public WhaleController whaleController;
@@ -115,11 +116,13 @@ public class CameraOverlayController : AbstractScreenReader {
         panelOptions.SetActive(true);
 
         // set the verify button to enabled
-        saveButton.enabled = true;
+
+        SetFotoidentificacaoParameters(false);
 
         // show a whale image
         if (Parameters.ISWHALEONCAMERA)
         {
+            SetFotoidentificationButtons(true);
             StartCoroutine(GetWhaleInfo());
             // positive feedback
             ReadText(POSITIVE_FB);
@@ -128,6 +131,8 @@ public class CameraOverlayController : AbstractScreenReader {
         }
         else
         {
+            SetFotoidentificationButtons(false);
+            saveButton.interactable = false;
             // whale is not on the camera, take a screenshot
             StartCoroutine(captureScreenshot());
             // negative feedback
@@ -253,13 +258,13 @@ public class CameraOverlayController : AbstractScreenReader {
         // activate the content panel and speak the instructions (accessibility only)
         // set the button inactive
         panelContent.SetActive(true);
-        saveButton.interactable = false;
         if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
         buttonPanelContent.Select();
 
         // set the screenshot on panel image
         panelImage.sprite = null;
         panelImage.sprite = LoadPNG(path);
+
     }
 
     public Sprite LoadPNG(string filePath)
@@ -276,5 +281,26 @@ public class CameraOverlayController : AbstractScreenReader {
 
         Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f,0.5f));
         return sprite;
+    }
+
+    // set the fotoidentificacao parameters to false to begin the proccess 
+    // false = buttons interactables, true = button not interactables
+    public void SetFotoidentificacaoParameters(bool value)
+    {
+        Parameters.ISPIGMENTACAODONE = value;
+        Parameters.ISMANCHASDONE     = value;
+        Parameters.ISRISCOSDONE      = value;
+        Parameters.ISMARCASDONE      = value;
+        Parameters.ISBORDADONE       = value;
+        Parameters.ISPONTADONE       = value;
+        Parameters.ISENTALHEDONE     = value;
+    }
+
+    public void SetFotoidentificationButtons(bool value)
+    {
+        foreach(Button b in fotoidentificationButtons)
+        {
+            b.interactable = value;
+        }
     }
 }
