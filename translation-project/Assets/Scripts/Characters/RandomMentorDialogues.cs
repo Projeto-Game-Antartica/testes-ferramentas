@@ -19,7 +19,7 @@ public class RandomMentorDialogues {
     public static string[] M004_Mentor1 = 
     {
         prefixom004 + "1" + sufixo + "1", prefixom004 + "5" + sufixo + "1", prefixom004 + "9"+ sufixo + "1", prefixom004 + "13"+ sufixo + "1",
-        prefixom004 + "17"+ sufixo + "1", prefixom004 + "21"+ sufixo + "1"
+        prefixom004 + "17"+ sufixo + "1" //, prefixom004 + "21"+ sufixo + "1"
     };
     public static string[] M004_Mentor2 = 
     {
