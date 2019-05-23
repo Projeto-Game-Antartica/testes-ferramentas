@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DictionaryButton : MonoBehaviour
+public class DictionaryButton : AbstractScreenReader
 {
     public Button buttonComponent;
     public Text keyLabel;
@@ -51,11 +51,6 @@ public class DictionaryButton : MonoBehaviour
 
     public void ReadButton()
     {
-        ReadableTexts.ReadText(keyLabel.text);
-    }
-
-    public void ReadText(Text text)
-    {
-        ReadableTexts.ReadText(text.text);
+        ReadText(keyLabel.text);
     }
 }

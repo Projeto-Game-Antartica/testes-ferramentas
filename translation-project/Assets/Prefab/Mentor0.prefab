@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4258536792751056}
   - component: {fileID: 212374714810020790}
   - component: {fileID: 114836528111068732}
-  - component: {fileID: 114283241020736700}
   - component: {fileID: 50048877794602218}
   - component: {fileID: 70142957403917038}
   - component: {fileID: 82441320084554512}
+  - component: {fileID: 114109796043721124}
   m_Layer: 0
   m_Name: Mentor0
   m_TagString: Mentor
@@ -39,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1874616615573510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 451.5, y: -131.9, z: -1}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 1}
+  m_LocalPosition: {x: 902, y: 54, z: -1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -88,7 +88,8 @@ AudioSource:
   m_GameObject: {fileID: 1874616615573510}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 94eacda85c22b414f9715d865713e33b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 28434469d0df10947b126d6150e3ec93, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
@@ -175,7 +176,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114283241020736700
+--- !u!114 &114109796043721124
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,6 +188,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diags:
+  - 1_estagio1
+  - 2_estagio4
+  - 3_ESTAGIO2
+  - 4_ESTAGIO4
+  - 5_ESTAGIO2
+  - 6_ESTAGIO3
+  - 7_ESTAGIO3
+  - 8_ESTAGIO3
   - Charlie
   - CommentModifier
   - CrazyCap
@@ -196,21 +205,52 @@ MonoBehaviour:
   - Example4_dialogue
   - Item_LookUp
   - Laura
+  - M004_1_START_MENTOR0
+  - M004_2_PUZZLE_ESTAGIO1
+  - M004_3_PUZZLE_ESTAGIO2
+  - M004_4_PUZZLE_ESTAGIO3
+  - M004_5_PUZZLE_ESTAGIO4
+  - M004_6_END_MENTOR0
+  - M004_NEW_DIALOGUE
+  - M004_NEW_MISSION
+  - M004_RANDOM1_MENTOR1
+  - M004_RANDOM10_MENTOR2
+  - M004_RANDOM11_MENTOR3
+  - M004_RANDOM12_MENTOR4
+  - M004_RANDOM13_MENTOR1
+  - M004_RANDOM14_MENTOR2
+  - M004_RANDOM15_MENTOR3
+  - M004_RANDOM16_MENTOR4
+  - M004_RANDOM17_MENTOR1
+  - M004_RANDOM18_MENTOR2
+  - M004_RANDOM19_MENTOR0
+  - M004_RANDOM2_MENTOR2
+  - M004_RANDOM20_MENTOR0
+  - M004_RANDOM21_MENTOR1
+  - M004_RANDOM3_MENTOR3
+  - M004_RANDOM4_MENTOR4
+  - M004_RANDOM5_MENTOR1
+  - M004_RANDOM6_MENTOR2
+  - M004_RANDOM7_MENTOR3
+  - M004_RANDOM8_MENTOR4
+  - M004_RANDOM9_MENTOR1
   - Mentor0
+  - Mentor1
   - MrCube
   - NPCOnly
   - QuestChartDemo
   - SelectLanguage
   - TriggeredDude
   - Witch
-  assignedIndex: 14
-  assignedID: 92697
-  assignedDialogue: TriggeredDude
+  assignedIndex: 35
+  assignedID: 17185
+  assignedDialogue: M004_RANDOM19_MENTOR0
   interactionCount: 0
-  alias: 
+  alias: "Guia Tur\xEDstico - Mariela"
   overrideStartNode: -1
-  defaultNPCSprite: {fileID: 0}
-  defaultPlayerSprite: {fileID: 0}
+  defaultNPCSprite: {fileID: 21300000, guid: 359d10f65ec1a33419bee19d264d6fad, type: 3}
+  defaultPlayerSprite: {fileID: 21300000, guid: 025461c334870fb4091c120a059bd0f3,
+    type: 3}
   targetManager: {fileID: 0}
   preload: 0
   notuptodate: 0
@@ -230,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ca789f0974c174292ef881c110954e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogPanel: {fileID: 0}
   audioSource: {fileID: 82441320084554512}
 --- !u!212 &212374714810020790
 SpriteRenderer:
@@ -267,7 +306,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 042129fef3f880e42a9c0e99d3954f6e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 359d10f65ec1a33419bee19d264d6fad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

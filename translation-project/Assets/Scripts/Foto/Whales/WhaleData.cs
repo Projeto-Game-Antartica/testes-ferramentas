@@ -13,7 +13,15 @@ public class WhaleArray
 public class WhaleData
 {
     public int id_whale;
+    public string whale_name;
     public string latitude;
     public string longitude;
+    public string borda;
+    public string ponta;
+    public string entalhe;
+    public string manchas;
+    public string riscos;
+    public string marcas;
+    public string pigmentacao;
     public string image_path;
 }

@@ -25,6 +25,7 @@ public class ReadableTexts : MonoBehaviour
         LoadReadableTexts();
         DontDestroyOnLoad(this.gameObject);
     }
+
     // create a dictionary with the readable texts in ptbr and en
     public void LoadReadableTexts()
     {
@@ -66,12 +67,6 @@ public class ReadableTexts : MonoBehaviour
             result = readabletext_en[key];
 
         return result;
-    }
-
-    // verify if the acessibility parameter is TRUE, is so read the text, if not do nothing.
-    public static void ReadText (string text)
-    {
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
     }
 
     /*

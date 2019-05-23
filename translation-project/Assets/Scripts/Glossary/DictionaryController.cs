@@ -7,7 +7,7 @@ using System.IO;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
 
-public class DictionaryController : MonoBehaviour {
+public class DictionaryController : AbstractScreenReader {
     
     /*
      * nome do arquivo JSON
@@ -59,7 +59,7 @@ public class DictionaryController : MonoBehaviour {
         LoadDictionary();
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -266,7 +266,7 @@ public class DictionaryController : MonoBehaviour {
 
     public void ReadContentText(string content)
     {
-        ReadableTexts.ReadText(content);
+        ReadText(content);
     }
 
     public IEnumerator PlayVideo(VideoPlayer videoPlayer)
@@ -301,7 +301,7 @@ public class DictionaryController : MonoBehaviour {
 
     public void ReadLetterButtin(string letter)
     {
-        ReadableTexts.ReadText(letter);
+        ReadText(letter);
     }
 
     public string GetTextDescription(string key, string localization)

@@ -188,6 +188,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &153801102
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942068746475982, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 60c2fa10ffbc05548bcacfe1f43ae5ac, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &164037759
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +457,16 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114469242756555858, guid: 3762c2b5f772f174cbe392aa905ccf0c,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114683526982523682, guid: 3762c2b5f772f174cbe392aa905ccf0c,
+        type: 2}
+      propertyPath: m_text
+      value: Pressione E para voltar ao navio.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3762c2b5f772f174cbe392aa905ccf0c, type: 2}
   m_IsPrefabAsset: 0
@@ -499,6 +551,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &318072573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114668246412195196, guid: e9bd5d174e69d104ba29ed33b7d23917,
+    type: 2}
+  m_PrefabInternal: {fileID: 1970459136}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &318566654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1110,7 @@ Prefab:
     - target: {fileID: 20874409820685702, guid: 9624f85dea856bc419a9e7b5c81e0027,
         type: 2}
       propertyPath: orthographic size
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 114078395208034750, guid: 9624f85dea856bc419a9e7b5c81e0027,
         type: 2}
@@ -1098,7 +1156,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 100
+  orthographic size: 150
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1177,17 +1235,17 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1153250587}
     - target: {fileID: 114756214545811424, guid: b7e468f004430aa4cba0aace34262d53,
         type: 2}
       propertyPath: NPC_Text
       value: 
-      objectReference: {fileID: 1970459138}
+      objectReference: {fileID: 318072573}
     - target: {fileID: 114756214545811424, guid: b7e468f004430aa4cba0aace34262d53,
         type: 2}
       propertyPath: NPC_label
       value: 
-      objectReference: {fileID: 1970459140}
+      objectReference: {fileID: 1221848189}
     - target: {fileID: 114756214545811424, guid: b7e468f004430aa4cba0aace34262d53,
         type: 2}
       propertyPath: NPCSprite
@@ -1207,7 +1265,7 @@ Prefab:
         type: 2}
       propertyPath: playerLabel
       value: 
-      objectReference: {fileID: 1970459143}
+      objectReference: {fileID: 1319057582}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7e468f004430aa4cba0aace34262d53, type: 2}
   m_IsPrefabAsset: 0
@@ -1292,6 +1350,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &993379314
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 223
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -97
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544550741170386, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626088549069196, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &995384192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1671,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   warningInterface: {fileID: 176679305}
+--- !u!114 &1153250587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114332875366109432, guid: 44698338defdf4545a2b8048f0fcbc70,
+    type: 2}
+  m_PrefabInternal: {fileID: 1487558827}
+  m_Script: {fileID: 11500000, guid: 42567de8e3047f94a94990a9c11bfd22, type: 3}
 --- !u!1 &1204920405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +1752,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1221848189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114492781051806422, guid: e9bd5d174e69d104ba29ed33b7d23917,
+    type: 2}
+  m_PrefabInternal: {fileID: 1970459136}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &1223516120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1877,7 @@ Transform:
   - {fileID: 1795190486}
   - {fileID: 318566655}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272210712
 MonoBehaviour:
@@ -1872,648 +1988,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &1319275962
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: langs.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].vars.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].varKeys.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 161
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -126
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 212526934085039576, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: preload
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: langs.Array.data[0].enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: langs.Array.data[0].name
-      value: English
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: langs.Array.data[1].name
-      value: "Portugu\xEAs"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].text
-      value: "Vim aqui para tirar foto de algumas das 15 esp\xE9cies de cet\xE1ceos
-        na Ant\xE1rtica, mas a minha c\xE2mera est\xE1 com algum problema... Eu at\xE9
-        te mostraria umas fotografias. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outputNodeIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[0].pTag
-      value: Mentor
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].commentCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].text
-      value: "Eu posso consertar para voc\xEA"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].inputSetIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outputNodeIndex
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].text
-      value: Poxa, que pena!
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].inputSetIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outputNodeIndex
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].ID
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].pTag
-      value: Mentor
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[1].isPlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].text
-      value: "At\xE9 tenho, mas o problema \xE9 que n\xE3o queria perder essas fotos."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].inputSetIndex
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outputNodeIndex
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].ID
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[2].pTag
-      value: Mentor
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].text
-      value: "Poxa, isso \xE9 uma pena. Voc\xEA n\xE3o tem outras c\xE2meras?"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].inputSetIndex
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outputNodeIndex
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].ID
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].pTag
-      value: Pesquisador
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[3].isPlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].text
-      value: "S\xE9rio? #gratid\xE3o"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].inputSetIndex
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outputNodeIndex
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].ID
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[4].pTag
-      value: Mentor
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].commentCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].text
-      value: "Eu posso consertar para voc\xEA"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].inputSetIndex
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].outputNodeIndex
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].text
-      value: Eu posso consertar depois
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].inputSetIndex
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].outputNodeIndex
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].s_comment.Array.data[1].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].ID
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].pTag
-      value: Pesquisador
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[5].isPlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].text
-      value: ' Eu posso te ajudar! Mas antes preciso falar com algumas pessoas.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].inputSetIndex
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].outputNodeIndex
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].ID
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[6].pTag
-      value: Pesquisador
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].text
-      value: "S\xE9rio? vou ficar esperando!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].inputSetIndex
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].outputNodeIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].ID
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[7].pTag
-      value: Mentor
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].commentCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.data[0].extraData
-      value: ExtraData
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.data[0].inputSetIndex
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.data[0].outputNodeIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.data[0].outActionIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].s_comment.Array.data[0].visible
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].ID
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].vars.Array.data[0]
-      value: TailMissionScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: S_playerDiags.Array.data[8].varKeys.Array.data[0]
-      value: LoadScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: assignedIndex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: assignedID
-      value: 79710
-      objectReference: {fileID: 0}
-    - target: {fileID: 114921138554735226, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: assignedDialogue
-      value: Charlie
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030215160039160, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 212526934085039576, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212526934085039576, guid: c3f2b5248bd9ddf489c95275a8117bd3,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 359d10f65ec1a33419bee19d264d6fad,
-        type: 3}
-    - target: {fileID: 1651936844724912, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-      propertyPath: m_Name
-      value: Mentor0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
-  m_IsPrefabAsset: 0
+--- !u!114 &1319057582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114868886392210658, guid: e9bd5d174e69d104ba29ed33b7d23917,
+    type: 2}
+  m_PrefabInternal: {fileID: 1970459136}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &1340493136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,6 +2436,10 @@ Prefab:
       propertyPath: chasingCamera
       value: 
       objectReference: {fileID: 1439544595}
+    - target: {fileID: 1930038188777532, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
+      propertyPath: m_Name
+      value: Voluntario
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114720855412633032, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
@@ -3039,7 +2523,7 @@ Transform:
   - {fileID: 324985564}
   - {fileID: 1792482360}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1526001969
 MonoBehaviour:
@@ -3149,52 +2633,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &1701751729
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -278
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 46
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329945536827916, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1105965856834400, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-      propertyPath: m_Name
-      value: Mentor3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e02169aa700347f48aaa6a96a4f3356a, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1734431541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,6 +3240,11 @@ Prefab:
       propertyPath: m_Name
       value: CanvasDialogue
       objectReference: {fileID: 0}
+    - target: {fileID: 114649452716386902, guid: e9bd5d174e69d104ba29ed33b7d23917,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9bd5d174e69d104ba29ed33b7d23917, type: 2}
   m_IsPrefabAsset: 0
@@ -3810,24 +3253,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1566983570208146, guid: e9bd5d174e69d104ba29ed33b7d23917,
     type: 2}
   m_PrefabInternal: {fileID: 1970459136}
---- !u!114 &1970459138 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114746071482820948, guid: e9bd5d174e69d104ba29ed33b7d23917,
-    type: 2}
-  m_PrefabInternal: {fileID: 1970459136}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!114 &1970459139 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114443977955317824, guid: e9bd5d174e69d104ba29ed33b7d23917,
     type: 2}
   m_PrefabInternal: {fileID: 1970459136}
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!114 &1970459140 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114799001218987726, guid: e9bd5d174e69d104ba29ed33b7d23917,
-    type: 2}
-  m_PrefabInternal: {fileID: 1970459136}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1970459141 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1749427992036458, guid: e9bd5d174e69d104ba29ed33b7d23917,
@@ -3839,12 +3270,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1970459136}
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!114 &1970459143 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114340632368876824, guid: e9bd5d174e69d104ba29ed33b7d23917,
-    type: 2}
-  m_PrefabInternal: {fileID: 1970459136}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1970459144 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1030180152756524, guid: e9bd5d174e69d104ba29ed33b7d23917,
@@ -3962,6 +3387,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 736394817}
+    - target: {fileID: 114121649062052822, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 2}
   m_IsPrefabAsset: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoginScene : AbstractMenu {
+public class LoginScene : AbstractScreenReader {
 
     public UnityEngine.UI.Button firstButton;
 

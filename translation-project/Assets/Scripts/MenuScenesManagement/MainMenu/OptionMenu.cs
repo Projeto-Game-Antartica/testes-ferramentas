@@ -5,10 +5,11 @@ using DavyKager;
 using UnityEngine.UI;
 using TMPro;
 
-public class OptionMenu : AbstractMenu {
+public class OptionMenu : AbstractScreenReader {
 
     public Slider slider;
-    public Toggle toggle;
+    public Toggle ScreenReaderToggle;
+    public Toggle HighContrastToggle;
     public LocalizationManager localization;
 
     private ReadableTexts readableTexts;
@@ -17,49 +18,46 @@ public class OptionMenu : AbstractMenu {
     {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         TolkUtil.Instructions();
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
         
         //TolkUtil.Load();
 
         slider.Select();
-        toggle.isOn = Parameters.ACCESSIBILITY;
+        ScreenReaderToggle.isOn = Parameters.ACCESSIBILITY;
+        HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
     }
 
     public void DropDownHandler(int index)
     {
-        //if (index == 0) // ptbr
-        //{
-        //    localization.LoadLocalizedText("locales_ptbr.json");
-        //}
-        //else
-        //{
-        //    localization.LoadLocalizedText("locales_en.json");
-        //}
-
-        //while (!localization.GetIsReady()) ;
     }
 
     public void SliderSettings(Slider slider)
     {
-        ReadableTexts.ReadText("volume" + slider.value);
+        ReadText("volume" + slider.value);
     }
 
     public void ReadToggle(Toggle toggle)
     {
-        ReadableTexts.ReadText(toggle.name + "" + toggle.isOn);
+        ReadText(toggle.name + "" + toggle.isOn);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
         }
     }
 
     public void SetAcessibilityParameter()
     {
-        Parameters.ACCESSIBILITY = toggle.isOn;
-        Debug.Log(Parameters.ACCESSIBILITY);
+        Parameters.ACCESSIBILITY = ScreenReaderToggle.isOn;
+        Debug.Log("A: " + Parameters.ACCESSIBILITY);
+    }
+
+    public void SetHighContrastParameter()
+    {
+        Parameters.HIGH_CONTRAST = HighContrastToggle.isOn;
+        Debug.Log("HC " + Parameters.HIGH_CONTRAST);
     }
 }

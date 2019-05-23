@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
-public class InstructionsController : MonoBehaviour {
+public class InstructionsController : AbstractScreenReader {
     
-    public Text ui_title;
-    public Text ui_instructions;
+    public TextMeshProUGUI ui_title;
+    public TextMeshProUGUI ui_instructions;
     public Button first_button;
 
     private ReadableTexts readableTexts;
     
     public void Start()
     {
+        //Parameters.HIGH_CONTRAST = true;
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization());
-        ReadableTexts.ReadText(ui_title.text);
+        ReadText(ui_title.text);
         ReadInstructions();
         first_button.Select();
     }
 
     public void ReadButtonText(Text button_text)
     {
-        ReadableTexts.ReadText(button_text.text);
+        ReadText(button_text.text);
     }
 
     public void ReadInstructions()
     {
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
     }
 
     public void ReturnToMainMenu()
@@ -44,7 +46,7 @@ public class InstructionsController : MonoBehaviour {
     public void PlayGame()
     {
         gameObject.SetActive(false);
-        ReadableTexts.ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
-        ReadableTexts.ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
+        ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
     }
 }

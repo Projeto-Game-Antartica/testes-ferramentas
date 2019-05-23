@@ -57,8 +57,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 287.72433
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -92,7 +92,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 94eacda85c22b414f9715d865713e33b,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: f90401a342f81714ebaea1c2c5000392, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fe187892825e7d3439a511fe519f7dc3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -210,7 +210,7 @@ MonoBehaviour:
   character: {fileID: 1930038188777532}
   soundsController: {fileID: 0}
   inGameOption: {fileID: 0}
-  SPEED: 75
+  SPEED: 100
 --- !u!114 &114332875366109432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42567de8e3047f94a94990a9c11bfd22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Pesquisador
+  playerName: "Volunt\xE1rio"
   diagUI: {fileID: 0}
   inTrigger: {fileID: 0}
   demo_Items: []
@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warningInterface: {fileID: 0}
   character: {fileID: 114111264331343048}
+  chasingCamera: {fileID: 0}
 --- !u!212 &212924639462476752
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -274,7 +275,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9dedeb689fd2e394db4366dea3c0b518, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
