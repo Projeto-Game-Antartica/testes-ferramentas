@@ -34,9 +34,9 @@ public class TeiaAlimentarController : AbstractScreenReader
 
     enum Cells
     {
-        bentosCell = 1, avesMarinhasCell = 2, pinguinsCell = 3, baleiasCell = 4, krillCell = 5,
-        cefalopodesCell = 6, focasCell = 7, peixesCell = 8, protozariosCell = 9, cetaceosCell = 10,
-        zooplanctonsCell = 11, bacteriasCell = 12, algasCell = 13
+        bentosCell = 1, avesMarinhasCell, pinguinsCell, baleiasCell, krillCell,
+        cefalopodesCell, focasCell, peixesCell, protozariosCell, cetaceosCell,
+        zooplanctonsCell, bacteriasCell, algasCell
     };
 
 
@@ -88,8 +88,11 @@ public class TeiaAlimentarController : AbstractScreenReader
             GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
             DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
             nextCell.GetComponent<Selectable>().Select();
-            ReadText("Elemento ");
+            Debug.Log("Elemento " + ReturnCellNumber(nextCell.name));
+            Debug.Log(ReturnCellInfo(nextCell.name));
             ReadText(nextCell.name);
+            ReadText("Elemento " + ReturnCellNumber(nextCell.name));
+            ReadText(ReturnCellInfo(nextCell.name));
         }
 
         //if (Input.GetKeyDown(KeyCode.F1))
@@ -277,5 +280,77 @@ public class TeiaAlimentarController : AbstractScreenReader
         currentCell = null;
         currentItem = null;
         sourceCell = null;
+    }
+
+    public int ReturnCellNumber(string name)
+    {
+        switch(name)
+        {
+            case "bentosCell":
+                return (int)Cells.bentosCell;
+            case "avesmarinhasCell":
+                return (int)Cells.avesMarinhasCell;
+            case "pinguinsCell":
+                return (int)Cells.pinguinsCell;
+            case "baleiasCell":
+                return (int)Cells.baleiasCell;
+            case "krillCell":
+                return (int)Cells.krillCell;
+            case "cefalopodesCell":
+                return (int)Cells.cefalopodesCell;
+            case "focasCell":
+                return (int)Cells.focasCell;
+            case "peixesCell":
+                return (int)Cells.peixesCell;
+            case "protozoariosCell":
+                return (int)Cells.protozariosCell;
+            case "cetaceosCell":
+                return (int)Cells.cetaceosCell;
+            case "zooplanctonsCell":
+                return (int)Cells.zooplanctonsCell;
+            case "bacteriasCell":
+                return (int)Cells.bacteriasCell;
+            case "algasCell":
+                return (int)Cells.algasCell;
+            default:
+                return -1;
+
+        }   
+    }
+
+    public string ReturnCellInfo(string name)
+    {
+        switch (name)
+        {
+            case "bentosCell":
+                return "serve de alimento para a célula " + (int)Cells.peixesCell;
+            case "avesmarinhasCell":
+                return "não serve de alimento para nenhuma célula";
+            case "pinguinsCell":
+                return "serve de alimento para as células " + (int)Cells.focasCell + "e" + (int)Cells.cetaceosCell;
+            case "baleiasCell":
+                return "snão serve de alimento para nenhuma célula";
+            case "krillCell":
+                return "serve de alimento para as células as células " + (int)Cells.baleiasCell + "e" + (int)Cells.avesMarinhasCell + "e" + (int)Cells.pinguinsCell + "e" + (int)Cells.cefalopodesCell;
+            case "cefalopodesCell":
+                return "serve de alimento para as células " + (int)Cells.pinguinsCell + "e" + (int)Cells.cetaceosCell;
+            case "focasCell":
+                return "serve de alimento para a célula " + (int)Cells.cetaceosCell;
+            case "peixesCell":
+                return "serve de alimento para as células " + (int)Cells.avesMarinhasCell + "e" + (int)Cells.cetaceosCell;
+            case "protozoariosCell":
+                return "serve de alimento para as células " + (int)Cells.krillCell + "e" + (int)Cells.zooplanctonsCell + "e" + (int)Cells.bentosCell;
+            case "cetaceosCell":
+                return  "serve de alimento para a célula " + (int)Cells.bentosCell;
+            case "zooplanctonsCell":
+                return  "serve de alimento para a célula " + (int)Cells.bentosCell;
+            case "bacteriasCell":
+                return  "serve de alimento para as células " + (int)Cells.zooplanctonsCell + "e" + (int)Cells.protozariosCell;
+            case "algasCell":
+                return  "serve de alimento para as células " + (int)Cells.bacteriasCell + "e" + (int)Cells.bentosCell + "e" + (int)Cells.protozariosCell;
+            default:
+                return null;
+
+        }
     }
 }
