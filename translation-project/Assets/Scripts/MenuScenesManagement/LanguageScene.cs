@@ -33,4 +33,9 @@ public class LanguageScene : AbstractScreenReader {
             ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
         }
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

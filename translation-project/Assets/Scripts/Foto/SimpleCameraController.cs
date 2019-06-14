@@ -44,12 +44,13 @@ public class SimpleCameraController : AbstractScreenReader {
             ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
         }
 
+        // camera se movimenta quando os paineis estao desabilitados
         if (!panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf && !cameraOverlaySprites.activeSelf 
             && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
             HandleCameraMovement(null);
         }
-        else if(cameraOverlaySprites.activeSelf)
+        else if(cameraOverlaySprites.activeSelf && !panelInstruction.activeSelf) // audio para movimentacao da camera com overlay aberto (acessibilidade)
         {
             HandleCameraMovement(cameraBeep);
         }

@@ -10,14 +10,14 @@ public class LifeExpController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //healthbar.localScale = new Vector3(0f, 1f, 1f);
-        //expbar.localScale = new Vector3(0f, 1f, 1f);
-	}
+        healthbar.localScale = new Vector3(0f, 1f, 1f);
+        expbar.localScale = new Vector3(0f, 1f, 1f);
+    }
 	
 	// Update is called once per frame
     // just for debug
 	void Update () {
-	    
+        HandleHelthBar();
     }
 
     private void HandleHelthBar()

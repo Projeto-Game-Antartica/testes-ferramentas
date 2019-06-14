@@ -24,7 +24,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
         ItemWillBeDestroyed                                                 // Called just before item will be destroyed
     }
 
-    public class DropEventDescriptor                                        // Info about item's drop event
+    public class DropEventDescriptor                                         // Info about item's drop event
     {
         public TriggerType triggerType;                                     // Type of drag and drop trigger
         public DragAndDropCell sourceCell;                                  // From this cell item was dragged
@@ -166,6 +166,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
                             break;
                         case CellType.DropOnly:                             // Item only can be dropped into destination cell
                             // Fill event descriptor
+                            Debug.Log("DropOnly");
                             desc.item = item;
                             desc.sourceCell = sourceCell;
                             desc.destinationCell = this;
@@ -185,6 +186,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             {
                 if (item.GetComponentInParent<DragAndDropCell>() == null)   // If item have no cell after drop
                 {
+                    Debug.Log("destroyed");
                     Destroy(item.gameObject);                               // Destroy it
                 }
             }
@@ -192,6 +194,8 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 			UpdateBackgroundState();
 			sourceCell.UpdateMyItem();
 			sourceCell.UpdateBackgroundState();
+            Debug.Log("Item: " + item.name);
+            Debug.Log("SourceCell: " + sourceCell.name);
         }
     }
 
@@ -199,7 +203,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 	/// Put item into this cell.
 	/// </summary>
 	/// <param name="item">Item.</param>
-	private void PlaceItem(DragAndDropItem item)
+	public void PlaceItem(DragAndDropItem item)
 	{
 		if (item != null)
 		{
@@ -265,13 +269,18 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
     /// </summary>
     /// <param name="desc"> drag and drop event descriptor </param>
     /// <returns> result from desc.permission </returns>
-    private bool SendRequest(DropEventDescriptor desc)
+    public bool SendRequest(DropEventDescriptor desc)
     {
         bool result = false;
         if (desc != null)
         {
             desc.triggerType = TriggerType.DropRequest;
-            desc.permission = true;
+            Debug.Log("ITEM: " + desc.item.name + ". DESTINATION: " + desc.destinationCell.name);
+            string itemName = desc.item.name + "Cell"; // to compare with destinationCell
+            if (desc.destinationCell.name.Equals(itemName))
+                desc.permission = true;
+            else
+                desc.permission = false;
             SendNotification(desc);
             result = desc.permission;
         }
@@ -283,7 +292,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
     /// </summary>
     /// <param name="desc"> drag and drop event descriptor </param>
     /// <returns></returns>
-    private IEnumerator NotifyOnDragEnd(DropEventDescriptor desc)
+    public IEnumerator NotifyOnDragEnd(DropEventDescriptor desc)
     {
         // Wait end of drag operation
         while (DragAndDropItem.draggedItem != null)
