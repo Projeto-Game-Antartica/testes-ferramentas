@@ -25,10 +25,8 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 	private static string canvasName = "DragAndDropCanvas";                   		// Name of canvas
 	private static int canvasSortOrder = 100;                                       // Sort order for canvas
 
-    public float speed = 50.0f;
-    public float rotationSpeed = 50.0f;
-
     public TeiaAlimentarController teiaAlimentarController;
+    public PinguimController pinguimController;
     
     /// <summary>
     /// Awake this instance.
@@ -218,7 +216,17 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
             //icon.transform.position = teiaAlimentarController.cells[0].transform.position;
             TeiaAlimentarController.cellIndex = 0;
-            icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.cells[0].transform.position);
+            //icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.cells[0].transform.position);
+
+            if (teiaAlimentarController != null)
+            {
+                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.ReturnFirstCell().transform.position);
+            }
+            else if (pinguimController != null)
+            {
+                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(pinguimController.ReturnFirstCell().transform.position);
+            }
+
             Debug.Log(icon.name);
             Debug.Log(draggedItem.name);
             if (OnItemDragStartEvent != null)

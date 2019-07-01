@@ -44,6 +44,10 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 
 	private DragAndDropItem myDadItem;										// Item of this DaD cell
 
+    public TeiaAlimentarController teiaAlimentarController;
+
+
+
     void OnEnable()
     {
         DragAndDropItem.OnItemDragStartEvent += OnAnyItemDragStart;         // Handle any item drag start
@@ -276,11 +280,14 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
         {
             desc.triggerType = TriggerType.DropRequest;
             Debug.Log("ITEM: " + desc.item.name + ". DESTINATION: " + desc.destinationCell.name);
-            string itemName = desc.item.name + "Cell"; // to compare with destinationCell
-            if (desc.destinationCell.name.Equals(itemName))
-                desc.permission = true;
+            //string itemName = desc.item.name + "Cell"; // to compare with destinationCell
+            //if (desc.destinationCell.name.Equals(itemName))
+            if (teiaAlimentarController != null)
+                desc.permission = teiaAlimentarController.CheckAnswer(desc.destinationCell.name, desc.item.name);
             else
-                desc.permission = false;
+                desc.permission = true;
+            //else
+            //    desc.permission = false;
             SendNotification(desc);
             result = desc.permission;
         }

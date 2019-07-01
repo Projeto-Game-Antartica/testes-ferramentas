@@ -60,8 +60,8 @@ public class SimpleCameraController : AbstractScreenReader {
 
     private void ActivateInstructionPanel()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !panelWhalesCatalogo.activeSelf && !panelContent.activeSelf 
-            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && !panelWhalesCatalogo.activeSelf && !panelFotodentificacao.activeSelf 
+            && !panelContent.activeSelf)
         {
             if (!panelInstruction.activeSelf)
             {

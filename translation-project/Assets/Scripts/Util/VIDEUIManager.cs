@@ -175,6 +175,13 @@ public class VIDEUIManager : MonoBehaviour
             {
                 SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
             }
+
+            if(data.extraVars.ContainsKey("SavePosition"))
+            {
+                Vector3 positionSceneChange = new Vector3(transform.position.x, transform.position.y);
+                Debug.Log(positionSceneChange);
+                player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange);
+            }
         }
 
         //Note you could also use Unity's Navi system
