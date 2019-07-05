@@ -11,7 +11,7 @@ public class MentorController : MonoBehaviour {
     private void Start()
     {
         mentorName = gameObject.name;
-        Debug.Log(mentorName);
+        //Debug.Log(mentorName);
 
         if (Parameters.ACCESSIBILITY)
         {
@@ -39,10 +39,28 @@ public class MentorController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-        Debug.Log(index);
+        //Debug.Log(index);
 
         // change the assigned dialogue
-        //GetDialogue(mentorName, index);
+        GetDialogue(mentorName, index);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
+        //Debug.Log(index);
+
+        // change the assigned dialogue
+        GetDialogue(mentorName, index);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
+        //Debug.Log(index);
+
+        // change the assigned dialogue
+        GetDialogue(mentorName, index);
     }
 
     private void GetDialogue(string mentorName, int index)

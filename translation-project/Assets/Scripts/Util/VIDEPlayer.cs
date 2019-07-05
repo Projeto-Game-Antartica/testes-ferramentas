@@ -19,14 +19,21 @@ public class VIDEPlayer : MonoBehaviour
     public List<string> demo_Items = new List<string>();
     public List<string> demo_ItemInventory = new List<string>();
 
-    void OnTriggerEnter(Collider other)
+    public TMPro.TextMeshProUGUI blinkingTextMentor;
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("trigger");
-        if (other.GetComponent<VIDE_Assign>() != null)
+        Debug.Log(collision.name);
+        if (collision.name.Contains("Mentor"))
+            blinkingTextMentor.gameObject.SetActive(true);
+
+        Debug.Log("dialog-trigger");
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
         {
-            inTrigger = other.GetComponent<VIDE_Assign>();
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
         }
-        TryInteract();
+        //TryInteract();
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,7 +42,7 @@ public class VIDEPlayer : MonoBehaviour
         {
             inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
         }
-        TryInteract();
+        //TryInteract();
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -43,9 +50,17 @@ public class VIDEPlayer : MonoBehaviour
         inTrigger = null;
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        inTrigger = null;
+        Debug.Log(collision.name);
+        blinkingTextMentor.gameObject.SetActive(false);
+    }
+
     void OnTriggerExit()
     {
         inTrigger = null;
+        blinkingTextMentor.gameObject.SetActive(false);
     }
 
     void Start()

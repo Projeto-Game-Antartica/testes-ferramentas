@@ -23,6 +23,7 @@ public class PinguimController : DragAndDropController {
     public float verticalLength;
     public float horizontalLenght;
 
+    private const int DOWN   = 0;
     private const int UP     = 1;
     private const int RIGHT  = 2;
     private const int LEFT   = 3;
@@ -180,6 +181,11 @@ public class PinguimController : DragAndDropController {
         {
             switch(g.name)
             {
+                case "down-item":
+                    Debug.Log("Moving down");
+                    goDown(); // the selected go in this direction
+                    goRandomDirection(); // the others go in random direction
+                    break;
                 case "up-item":
                     Debug.Log("Moving up");
                     goUp(); // the selected go in this direction
@@ -222,6 +228,24 @@ public class PinguimController : DragAndDropController {
         if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
         {
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(0, verticalLength), 1);
+        }
+    }
+
+    public void goDown()
+    {
+        if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
+        {
+            pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
+        }
+
+        if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+        {
+            pinguim_papua.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
+        }
+
+        if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+        {
+            pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 // attached to the character
 public class ShipSceneManagement : MonoBehaviour {
@@ -12,7 +13,11 @@ public class ShipSceneManagement : MonoBehaviour {
     public ChasingCamera chasingCamera;
 
     private Vector2 positionSceneChange;
-    
+
+    private Collider2D colliderControl = null;
+
+    public TextMeshProUGUI warningText;
+
     public void Start()
     {
         TolkUtil.Load();
@@ -22,36 +27,49 @@ public class ShipSceneManagement : MonoBehaviour {
             chasingCamera.SetCameraPosition(character.GetPosition());
             Debug.Log(transform.position);
         }
+
+        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     private void Update()
     {
-        if (isTrigger)
+        if (isTrigger && Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                positionSceneChange = new Vector3(transform.position.x, transform.position.y);
+            positionSceneChange = new Vector3(transform.position.x, transform.position.y);
+            // save the position when loading another scene
+            character.SavePosition(positionSceneChange);
 
-                // save the position when loading another scene
-                character.SavePosition(positionSceneChange);
+            if (colliderControl.name.Equals("cabine principal"))
                 SceneManager.LoadScene("ShipInsideScene");
-            }
+            else if (colliderControl.name.Equals("Figurante"))
+                SceneManager.LoadScene("TailMissionScene");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger");
+        Debug.Log("scene-trigger");
+        
         if (collision.name.Equals("cabine principal"))
         {
             warningInterface.SetActive(true);
-            isTrigger = true;
+            warningText.text = "Pressione E para entrar no passadiço do navio.";
         }
+        else if(collision.name.Equals("Figurante"))
+        {
+            warningInterface.SetActive(true);
+            warningText.text = "Pressione E para realizar o desafio.";
+        }
+
+        isTrigger = true;
+        colliderControl = collision;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         warningInterface.SetActive(false);
         isTrigger = false;
+
+        colliderControl = null;
     }
 }

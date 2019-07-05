@@ -9,11 +9,15 @@ public class InsideShipSceneManagement : MonoBehaviour
     private bool isTrigger;
     public GameObject warningInterface;
 
+    public TMPro.TextMeshProUGUI warningText;
+
+    private Collider2D colliderControl = null;
+
     private void Update()
     {
         if (isTrigger)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && colliderControl.name.Equals("door"))
             {
                 SceneManager.LoadScene("ShipScene");
             }
@@ -26,8 +30,11 @@ public class InsideShipSceneManagement : MonoBehaviour
         if (collision.name.Equals("door"))
         {
             warningInterface.SetActive(true);
-            isTrigger = true;
+            warningText.text = "Pressione E para retornar ao navio.";
         }
+
+        colliderControl = collision;
+        isTrigger = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -13,7 +13,7 @@ public class TeiaAlimentarScene : MonoBehaviour {
     // timer settings
     private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
     
-    public GameObject panel;
+    public GameObject LoseImage;
 
     private void Start()
     {
@@ -51,6 +51,7 @@ public class TeiaAlimentarScene : MonoBehaviour {
         {
             timer.text = "00:00";
             // do something
+            LoseImage.SetActive(true);
         }
     }
 

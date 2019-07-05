@@ -33,6 +33,9 @@ public class MemoryManager : MonoBehaviour {
 
     private List<int> c;
 
+    public GameObject WinImage;
+    public GameObject LoseImage;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -53,7 +56,7 @@ public class MemoryManager : MonoBehaviour {
             confirmarButton.interactable = true;
             cancelarButton.interactable = true;
 
-            Debug.Log(c.Count);
+            //Debug.Log(c.Count);
         }
         else
         {
@@ -61,10 +64,10 @@ public class MemoryManager : MonoBehaviour {
             cancelarButton.interactable = false;
         }
         
-        Debug.Log(Card.DO_NOT);
+        //Debug.Log(Card.DO_NOT);
     }
 
-    void initializeCards()
+    public void initializeCards()
     {
         // first 9 cards with images
         for (int i = 1; i < 10; i++)
@@ -172,6 +175,7 @@ public class MemoryManager : MonoBehaviour {
             if (matches == 0)
             {
                 Debug.Log("Fim de Jogo!!");
+                EndGame(true);
             }
         }
         else
@@ -180,6 +184,12 @@ public class MemoryManager : MonoBehaviour {
 
             miss++;
             missText.text = "Tentativas incorretas: " + miss;
+
+            if(miss >= 3)
+            {
+                Debug.Log("Fim de Jogo!!");
+                EndGame(false);
+            }
         }
 
         for(int i = 0; i<c.Count; i++)
@@ -189,5 +199,23 @@ public class MemoryManager : MonoBehaviour {
         }
 
         c.Clear();
+    }
+
+    public void EndGame(bool win)
+    {
+        if (win)
+            WinImage.SetActive(true);
+        else
+            LoseImage.SetActive(true);
+    }
+
+    public void ReturnToShip()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ShipScene");
+    }
+
+    public void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MemoryGameScene");
     }
 }
