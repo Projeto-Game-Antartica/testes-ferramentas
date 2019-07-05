@@ -39,7 +39,7 @@ public class BlinkingText : MonoBehaviour {
     {
         while (true)
         {
-            switch(text.color.a.ToString())
+            switch (text.color.a.ToString())
             {
                 case "0":
                     text.color = new Color(text.color.r, text.color.g, text.color.r, 1);
@@ -48,6 +48,8 @@ public class BlinkingText : MonoBehaviour {
                 case "1":
                     text.color = new Color(text.color.r, text.color.g, text.color.r, 0);
                     yield return new WaitForSeconds(0.5f);
+                    break;
+                default:
                     break;
             }
         }

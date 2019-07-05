@@ -13,10 +13,15 @@ public class WhaleImages : MonoBehaviour {
 
     public void SetPhotographedWhaleImage(string image_path)
     {
-        panelContentImage.sprite = Resources.Load<Sprite>(image_path);
-        panelContentAumentadoImage.sprite = Resources.Load<Sprite>(image_path);
-        panelFotoidentificacaoImage.sprite = Resources.Load<Sprite>(image_path);
-        panelFotoidentificacaoAumentadoImage.sprite = Resources.Load<Sprite>(image_path);
-        panelWhalesCatalogImage.sprite = Resources.Load<Sprite>(image_path);
+        if (panelContentImage != null)
+            panelContentImage.sprite = Resources.Load<Sprite>(image_path);
+        if (panelContentAumentadoImage != null)
+            panelContentAumentadoImage.sprite = Resources.Load<Sprite>(image_path);
+        if (panelFotoidentificacaoImage != null)
+            panelFotoidentificacaoImage.sprite = Resources.Load<Sprite>(image_path);
+        if (panelFotoidentificacaoAumentadoImage != null)
+            panelFotoidentificacaoAumentadoImage.sprite = Resources.Load<Sprite>(image_path);
+        if (panelWhalesCatalogImage != null)
+            panelWhalesCatalogImage.sprite = Resources.Load<Sprite>(image_path);
     }
 }

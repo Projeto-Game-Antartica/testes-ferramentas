@@ -49,6 +49,9 @@ public class VIDEUIManager : MonoBehaviour
     //With this we can start a coroutine and stop it. Used to animate text
     IEnumerator NPC_TextAnimator;
 
+    public GameObject AlertDialog;
+    private string url;
+
     #endregion
 
     #region MAIN
@@ -175,9 +178,32 @@ public class VIDEUIManager : MonoBehaviour
             {
                 SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
             }
+
+            if(data.extraVars.ContainsKey("SavePosition"))
+            {
+                Vector3 positionSceneChange = new Vector2(player.gameObject.transform.position.x, player.gameObject.transform.position.y);
+                Debug.Log(positionSceneChange);
+                player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange);
+            }
+
+            if(data.extraVars.ContainsKey("OpenURL"))
+            {
+                AlertDialog.SetActive(true);
+                url = (string)data.extraVars["OpenURL"];
+                Debug.Log(url);
+            }
         }
 
         //Note you could also use Unity's Navi system
+    }
+
+    public void HandleAlertDialog(bool open)
+    {
+        if (open)
+            Application.OpenURL(url);
+
+        AlertDialog.SetActive(false);
+        VD.Next();
     }
 
     //When we call VD.Next, nodeData will change. When it changes, OnNodeChange event will fire
@@ -291,7 +317,7 @@ public class VIDEUIManager : MonoBehaviour
         VD.EndDialogue();
 
         VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
-        QuestChartDemo.SaveProgress(); //saves OUR custom game data
+        //QuestChartDemo.SaveProgress(); //saves OUR custom game data
     }
 
     void OnDisable()

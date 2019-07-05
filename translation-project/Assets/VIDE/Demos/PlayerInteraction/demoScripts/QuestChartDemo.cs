@@ -158,7 +158,7 @@ public class QuestChartDemo : MonoBehaviour
 
     public static void SaveProgress()
     {
-        var player = GameObject.Find("Pesquisador").GetComponent<VIDEDemoPlayer>();
+        var player = GameObject.Find("Turista").GetComponent<VIDEDemoPlayer>();
 
         List<string> items = player.demo_ItemInventory;
         PlayerPrefs.SetInt("interactedWith", interactedWith.Count);
