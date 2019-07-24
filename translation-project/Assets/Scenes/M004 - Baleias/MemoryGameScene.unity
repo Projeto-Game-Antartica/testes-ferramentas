@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 90945315}
   - component: {fileID: 90945314}
   m_Layer: 5
-  m_Name: Card (17)
+  m_Name: Carta18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,6 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &90945315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,10 +457,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 992406736}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 372584546}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -560,7 +562,7 @@ GameObject:
   - component: {fileID: 128274665}
   - component: {fileID: 128274664}
   m_Layer: 5
-  m_Name: Card (2)
+  m_Name: Carta13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,7 +579,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 2
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.035525996, y: 0.082}
   m_AnchorMax: {x: 0.16700001, y: 0.32440582}
@@ -595,6 +597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &128274665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,11 +611,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1109151694}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1222751165}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -853,26 +857,36 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1412044900}
     - target: {fileID: 114868318713983886, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1412044900}
-    - target: {fileID: 114075227506332910, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114075227506332910, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
+    - target: {fileID: 114613672651235496, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
+    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
+    - target: {fileID: 114564872743685120, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
     - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -883,30 +897,15 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    - target: {fileID: 114075227506332910, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
-      propertyPath: m_text
-      value: "MINIJOGO 2: ANIMAIS ANT\xC1RTICOS"
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    - target: {fileID: 114075227506332910, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 2}
-      propertyPath: m_fontSize
-      value: 26.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 2}
-      propertyPath: m_textInfo.characterCount
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 2}
-      propertyPath: m_textInfo.wordCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 2}
-      propertyPath: m_textInfo.spaceCount
-      value: 3
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 2}
@@ -916,6 +915,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224823027885731656, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
     type: 2}
   m_PrefabInternal: {fileID: 177225788}
+--- !u!114 &177225793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    type: 2}
+  m_PrefabInternal: {fileID: 177225788}
+  m_Script: {fileID: 11500000, guid: 69244332604eef844855bad5da3a77b0, type: 3}
 --- !u!1 &304864093
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +932,7 @@ GameObject:
   - component: {fileID: 304864097}
   - component: {fileID: 304864096}
   - component: {fileID: 304864095}
+  - component: {fileID: 304864098}
   m_Layer: 5
   m_Name: confirmarButton
   m_TagString: Untagged
@@ -968,13 +974,13 @@ MonoBehaviour:
     m_Mode: 3
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 991976351}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.14117648, g: 0.019607844, b: 0.38431373, a: 1}
+    m_PressedColor: {r: 0.14117648, g: 0.019607844, b: 0.38431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -987,7 +993,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 304864096}
   m_OnClick:
     m_PersistentCalls:
@@ -1039,6 +1045,36 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 304864093}
   m_CullTransparentMesh: 0
+--- !u!114 &304864098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 304864093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1412044900}
+          m_MethodName: ReadButtonTextMeshPro
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 304864095}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &372584543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1088,7 @@ GameObject:
   - component: {fileID: 372584546}
   - component: {fileID: 372584545}
   m_Layer: 5
-  m_Name: Card (14)
+  m_Name: Carta17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1069,7 +1105,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.66863155, y: 0.082}
   m_AnchorMax: {x: 0.799, y: 0.32440582}
@@ -1087,6 +1123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &372584546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,11 +1137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1896600055}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 2061350720}
+    m_SelectOnRight: {fileID: 90945315}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1448,6 +1486,75 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224214055056297122, guid: 4253b291e1a83a0498b3f4e0311937eb,
     type: 2}
   m_PrefabInternal: {fileID: 500950899}
+--- !u!1 &552777957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 552777958}
+  - component: {fileID: 552777960}
+  - component: {fileID: 552777959}
+  m_Layer: 5
+  m_Name: BigCard2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &552777958
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 552777957}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9999998, y: 0.9999998, z: 0.9999998}
+  m_Children: []
+  m_Father: {fileID: 1402584794}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.615, y: 0.132}
+  m_AnchorMax: {x: 0.95100003, y: 0.7553185}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &552777959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 552777957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &552777960
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 552777957}
+  m_CullTransparentMesh: 0
 --- !u!1 &555388619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1717,7 @@ GameObject:
   - component: {fileID: 790648809}
   - component: {fileID: 790648808}
   m_Layer: 5
-  m_Name: Card (8)
+  m_Name: Carta15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1627,7 +1734,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 8
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35263157, y: 0.082}
   m_AnchorMax: {x: 0.483, y: 0.32440582}
@@ -1645,6 +1752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &790648809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1657,11 +1766,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 953379171}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1222751165}
+    m_SelectOnRight: {fileID: 2061350720}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1744,7 +1853,7 @@ GameObject:
   - component: {fileID: 953379171}
   - component: {fileID: 953379170}
   m_Layer: 5
-  m_Name: Card (7)
+  m_Name: Carta9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1761,7 +1870,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35263157, y: 0.32440582}
   m_AnchorMax: {x: 0.483, y: 0.5685145}
@@ -1779,6 +1888,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &953379171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1870,6 +1981,75 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1707045910727846, guid: 4253b291e1a83a0498b3f4e0311937eb,
     type: 2}
   m_PrefabInternal: {fileID: 500950899}
+--- !u!1 &982297315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982297316}
+  - component: {fileID: 982297318}
+  - component: {fileID: 982297317}
+  m_Layer: 5
+  m_Name: BigCard1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &982297316
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 982297315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1402584794}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.26200002, y: 0.132}
+  m_AnchorMax: {x: 0.5995313, y: 0.7553185}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &982297317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 982297315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &982297318
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 982297315}
+  m_CullTransparentMesh: 0
 --- !u!1 &991976349
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,6 +2061,7 @@ GameObject:
   - component: {fileID: 991976353}
   - component: {fileID: 991976352}
   - component: {fileID: 991976351}
+  - component: {fileID: 991976354}
   m_Layer: 5
   m_Name: cancelButton
   m_TagString: Untagged
@@ -1923,12 +2104,12 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 304864095}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.14117648, g: 0.019607844, b: 0.38431373, a: 1}
+    m_PressedColor: {r: 0.14117648, g: 0.019607844, b: 0.38431373, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1941,7 +2122,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 991976352}
   m_OnClick:
     m_PersistentCalls:
@@ -1993,6 +2174,36 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 991976349}
   m_CullTransparentMesh: 0
+--- !u!114 &991976354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 991976349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1412044900}
+          m_MethodName: ReadButtonTextMeshPro
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 991976351}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &992406733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2217,7 @@ GameObject:
   - component: {fileID: 992406736}
   - component: {fileID: 992406735}
   m_Layer: 5
-  m_Name: Card (16)
+  m_Name: Carta12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2023,7 +2234,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 16
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8241053, y: 0.32440582}
   m_AnchorMax: {x: 0.9566843, y: 0.5685145}
@@ -2041,6 +2252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &992406736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2053,11 +2266,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1672250938}
+    m_SelectOnDown: {fileID: 90945315}
+    m_SelectOnLeft: {fileID: 1896600055}
+    m_SelectOnRight: {fileID: 128274665}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2140,7 +2353,7 @@ GameObject:
   - component: {fileID: 1034026952}
   - component: {fileID: 1034026951}
   m_Layer: 5
-  m_Name: Card
+  m_Name: Carta1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2175,6 +2388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1034026952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,11 +2402,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 1109151694}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1189658503}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2287,22 +2502,22 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1034026950}
-  - {fileID: 1109151692}
-  - {fileID: 128274663}
   - {fileID: 1189658501}
-  - {fileID: 1699959336}
-  - {fileID: 1222751163}
   - {fileID: 1397906373}
-  - {fileID: 953379169}
-  - {fileID: 790648807}
   - {fileID: 1795046111}
-  - {fileID: 1163249650}
-  - {fileID: 2061350718}
   - {fileID: 2101812125}
-  - {fileID: 1896600053}
-  - {fileID: 372584544}
   - {fileID: 1672250936}
+  - {fileID: 1109151692}
+  - {fileID: 1699959336}
+  - {fileID: 953379169}
+  - {fileID: 1163249650}
+  - {fileID: 1896600053}
   - {fileID: 992406734}
+  - {fileID: 128274663}
+  - {fileID: 1222751163}
+  - {fileID: 790648807}
+  - {fileID: 2061350718}
+  - {fileID: 372584544}
   - {fileID: 90945318}
   m_Father: {fileID: 1402584794}
   m_RootOrder: 3
@@ -2434,7 +2649,7 @@ GameObject:
   - component: {fileID: 1109151694}
   - component: {fileID: 1109151693}
   m_Layer: 5
-  m_Name: Card (1)
+  m_Name: Carta7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2451,7 +2666,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.035525996, y: 0.32440582}
   m_AnchorMax: {x: 0.16700001, y: 0.5685145}
@@ -2469,6 +2684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1109151694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2481,11 +2698,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1034026952}
+    m_SelectOnDown: {fileID: 128274665}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1699959338}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2568,7 +2785,7 @@ GameObject:
   - component: {fileID: 1163249652}
   - component: {fileID: 1163249651}
   m_Layer: 5
-  m_Name: Card (10)
+  m_Name: Carta10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2585,7 +2802,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5092104, y: 0.32440582}
   m_AnchorMax: {x: 0.63963157, y: 0.5685145}
@@ -2603,6 +2820,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1163249652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2702,7 +2921,7 @@ GameObject:
   - component: {fileID: 1189658503}
   - component: {fileID: 1189658502}
   m_Layer: 5
-  m_Name: Card (3)
+  m_Name: Carta2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2719,7 +2938,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19468424, y: 0.5685145}
   m_AnchorMax: {x: 0.32500002, y: 0.81421745}
@@ -2737,6 +2956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1189658503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2905,7 +3126,7 @@ GameObject:
   - component: {fileID: 1222751165}
   - component: {fileID: 1222751164}
   m_Layer: 5
-  m_Name: Card (5)
+  m_Name: Carta14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2922,7 +3143,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 5
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19468424, y: 0.082}
   m_AnchorMax: {x: 0.32500002, y: 0.32440582}
@@ -2940,6 +3161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1222751165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,11 +3175,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1699959338}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 128274665}
+    m_SelectOnRight: {fileID: 790648809}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3039,7 +3262,7 @@ GameObject:
   - component: {fileID: 1397906375}
   - component: {fileID: 1397906374}
   m_Layer: 5
-  m_Name: Card (6)
+  m_Name: Carta3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3056,7 +3279,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35263157, y: 0.5685145}
   m_AnchorMax: {x: 0.483, y: 0.81421745}
@@ -3074,6 +3297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1397906375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3254,6 +3479,8 @@ RectTransform:
   - {fileID: 991976350}
   - {fileID: 500950900}
   - {fileID: 70350503}
+  - {fileID: 982297316}
+  - {fileID: 552777958}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3305,22 +3532,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9ce893c2bfe35744d953333e651bbc23, type: 3}
   - {fileID: 21300000, guid: d91ee68a189bfd9479336b63078e2c58, type: 3}
   - {fileID: 21300000, guid: f3ab9514f20d948459a3e0d620ce9f26, type: 3}
-  - {fileID: 21300000, guid: 1abfbe1254efa424386c3b605f601783, type: 3}
-  - {fileID: 21300000, guid: b822c54deb9cb8b4c9572efeab9b7cae, type: 3}
+  - {fileID: 21300000, guid: faaa65818f66cd549bc4a08c7044f2cb, type: 3}
+  - {fileID: 21300000, guid: aaf758ea5b2011141b16670328060066, type: 3}
   - {fileID: 21300000, guid: 79d2c8fcc78e6304c8bcc231ce891f6b, type: 3}
-  - {fileID: 21300000, guid: 7712dc36599daeb4bb912f9a33161487, type: 3}
-  - {fileID: 21300000, guid: 165ce5c647b117c498c92e18eed0d033, type: 3}
+  - {fileID: 21300000, guid: 930a5a65385b66d408cf920df1ffe7cd, type: 3}
+  - {fileID: 21300000, guid: b21ddc74ef4b1f94d82e15c170831bfe, type: 3}
   - {fileID: 21300000, guid: 904fe5e1c614bff41add8e283a596bb8, type: 3}
   cardText:
-  - {fileID: 21300000, guid: 70d79ebe132848b43b1681ab71e74f07, type: 3}
-  - {fileID: 21300000, guid: e53be626b946a9344b74580c80b47027, type: 3}
-  - {fileID: 21300000, guid: c28dcab439d53bf4583f295c43f09250, type: 3}
-  - {fileID: 21300000, guid: bc1dcb760a1eee74da5805390b0e2228, type: 3}
-  - {fileID: 21300000, guid: 744cb936dae71014d8e398e7152c2a04, type: 3}
-  - {fileID: 21300000, guid: 55634dcebfa75b647b68d0b42fabe213, type: 3}
-  - {fileID: 21300000, guid: 29f8cb0755b463b44a87ec8175722849, type: 3}
-  - {fileID: 21300000, guid: d5d5026dd8ce3a644b56329a8988b129, type: 3}
-  - {fileID: 21300000, guid: 5eabd1e9b3df9cb488b3da7dc33f4b0c, type: 3}
+  - {fileID: 21300000, guid: 12ca1845b2ec27c4399a902c44fbfab8, type: 3}
+  - {fileID: 21300000, guid: 442008533449b364a94608ad7353a5f3, type: 3}
+  - {fileID: 21300000, guid: 64942dac096ce504394b313e6a561c7c, type: 3}
+  - {fileID: 21300000, guid: ab9618c384273ed41ae9767b8df1840e, type: 3}
+  - {fileID: 21300000, guid: 5034da789396eb548ad490b1079a9a78, type: 3}
+  - {fileID: 21300000, guid: 4f7f47f7047fa444b83274074037ea10, type: 3}
+  - {fileID: 21300000, guid: dbdc731b418f83a418e1bd90dbc1e34b, type: 3}
+  - {fileID: 21300000, guid: 1fb589c66b38f974bb610a8016a32427, type: 3}
+  - {fileID: 21300000, guid: 7fe43eb91291d864db7fd7af98d1ec38, type: 3}
   cardBack: {fileID: 21300000, guid: da3e7bf895c75ea44bf0eccfea679e91, type: 3}
   cards:
   - {fileID: 1034026949}
@@ -3350,6 +3577,9 @@ MonoBehaviour:
   wrongAudio: {fileID: 8300000, guid: 9334914c91919bb4d828dd4a41bfe914, type: 3}
   WinImage: {fileID: 977949288}
   LoseImage: {fileID: 1596455380}
+  BigImage1: {fileID: 982297315}
+  BigImage2: {fileID: 552777957}
+  dicas: {fileID: 177225793}
 --- !u!4 &1412044901
 Transform:
   m_ObjectHideFlags: 0
@@ -3477,7 +3707,7 @@ GameObject:
   - component: {fileID: 1672250938}
   - component: {fileID: 1672250937}
   m_Layer: 5
-  m_Name: Card (15)
+  m_Name: Carta6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3494,7 +3724,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 15
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8241053, y: 0.5685145}
   m_AnchorMax: {x: 0.9566843, y: 0.81421745}
@@ -3512,6 +3742,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1672250938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3524,11 +3756,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 992406736}
+    m_SelectOnLeft: {fileID: 2101812127}
+    m_SelectOnRight: {fileID: 1109151694}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3767,7 +3999,7 @@ GameObject:
   - component: {fileID: 1699959338}
   - component: {fileID: 1699959337}
   m_Layer: 5
-  m_Name: Card (4)
+  m_Name: Carta8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3784,7 +4016,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19468424, y: 0.32440582}
   m_AnchorMax: {x: 0.32500002, y: 0.5685145}
@@ -3802,6 +4034,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1699959338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3976,7 +4210,7 @@ GameObject:
   - component: {fileID: 1795046113}
   - component: {fileID: 1795046112}
   m_Layer: 5
-  m_Name: Card (9)
+  m_Name: Carta4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3993,7 +4227,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 9
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5092104, y: 0.5685145}
   m_AnchorMax: {x: 0.63963157, y: 0.81421745}
@@ -4011,6 +4245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1795046113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4172,7 +4408,7 @@ GameObject:
   - component: {fileID: 1896600055}
   - component: {fileID: 1896600054}
   m_Layer: 5
-  m_Name: Card (13)
+  m_Name: Carta11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4189,7 +4425,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.66863155, y: 0.32440582}
   m_AnchorMax: {x: 0.799, y: 0.5685145}
@@ -4207,6 +4443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &1896600055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4306,7 +4544,7 @@ GameObject:
   - component: {fileID: 2061350720}
   - component: {fileID: 2061350719}
   m_Layer: 5
-  m_Name: Card (11)
+  m_Name: Carta16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4323,7 +4561,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 11
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5092104, y: 0.082}
   m_AnchorMax: {x: 0.63963157, y: 0.32440582}
@@ -4341,6 +4579,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &2061350720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4353,11 +4593,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1163249652}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 790648809}
+    m_SelectOnRight: {fileID: 372584546}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4440,7 +4680,7 @@ GameObject:
   - component: {fileID: 2101812127}
   - component: {fileID: 2101812126}
   m_Layer: 5
-  m_Name: Card (12)
+  m_Name: Carta5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4457,7 +4697,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000011, y: 1.0000011, z: 1.0000011}
   m_Children: []
   m_Father: {fileID: 1061884488}
-  m_RootOrder: 12
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.66863155, y: 0.5685145}
   m_AnchorMax: {x: 0.799, y: 0.81421745}
@@ -4475,6 +4715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc10e38d231b744b9e7c04156b1dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardFace: {fileID: 0}
+  cardText: {fileID: 0}
 --- !u!114 &2101812127
 MonoBehaviour:
   m_ObjectHideFlags: 0

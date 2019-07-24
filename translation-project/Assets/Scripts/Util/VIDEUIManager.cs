@@ -52,6 +52,9 @@ public class VIDEUIManager : MonoBehaviour
     public GameObject AlertDialog;
     private string url;
 
+    // to get mentor position
+    private GameObject mentor;
+
     #endregion
 
     #region MAIN
@@ -76,6 +79,7 @@ public class VIDEUIManager : MonoBehaviour
 
         if (!VD.isActive)
         {
+            mentor = dialogue.gameObject;
             Begin(dialogue);
         }
         else
@@ -181,7 +185,16 @@ public class VIDEUIManager : MonoBehaviour
 
             if(data.extraVars.ContainsKey("SavePosition"))
             {
-                Vector3 positionSceneChange = new Vector2(player.gameObject.transform.position.x, player.gameObject.transform.position.y);
+                Vector3 positionSceneChange;
+                float xdif = player.transform.position.x - mentor.gameObject.transform.position.x;
+
+                // afasta um pouco o mentor depois que volta a cena pois, caso contrário, iria iniciar o dialogo novamente (devido ao colisor)
+                if(xdif > 0)
+                    positionSceneChange = new Vector2(player.gameObject.transform.position.x + 10.0f, player.gameObject.transform.position.y);
+                else
+                    positionSceneChange = new Vector2(player.gameObject.transform.position.x - 10.0f, player.gameObject.transform.position.y);
+
+                
                 Debug.Log(positionSceneChange);
                 player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange);
             }
@@ -307,7 +320,7 @@ public class VIDEUIManager : MonoBehaviour
 
     //Unsuscribe from everything, disable UI, and end dialogue
     //Called automatically because we subscribed to the OnEnd event
-    void EndDialogue(VD.NodeData data)
+    public void EndDialogue(VD.NodeData data)
     {
         CheckTasks();
         VD.OnActionNode -= ActionHandler;
@@ -316,7 +329,7 @@ public class VIDEUIManager : MonoBehaviour
         dialogueContainer.SetActive(false);
         VD.EndDialogue();
 
-        VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
+        //VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
         //QuestChartDemo.SaveProgress(); //saves OUR custom game data
     }
 

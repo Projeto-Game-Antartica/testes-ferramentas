@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using DavyKager;
-using TMPro;
-using UnityEngine.Audio;
 
 public class MainMenu : AbstractScreenReader
 {
@@ -13,6 +10,11 @@ public class MainMenu : AbstractScreenReader
     private Button playButton;
 
     private ReadableTexts readableTexts;
+
+    public GameObject loadScreenObject;
+    public Slider loadingSlider;
+
+    AsyncOperation async;
 
     void Start()
     {
@@ -29,6 +31,17 @@ public class MainMenu : AbstractScreenReader
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         playButton.Select();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        }
+
+        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
+        else HighContrastText.RestoreToDefault("bgothm");
     }
 
     public void QuitGame()
@@ -53,19 +66,27 @@ public class MainMenu : AbstractScreenReader
         SceneManager.LoadScene("AjudaGlossariosScene");
     }
 
-    public void LoadAntarticaScene()
+    public void LoadGame()
     {
-        SceneManager.LoadScene("ShipScene");
+        StartCoroutine(LoadingScreen());
     }
 
-    private void Update()
+    public IEnumerator LoadingScreen()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
-        {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-        }
+        loadScreenObject.SetActive(true);
+        async = SceneManager.LoadSceneAsync("ShipScene");
+        async.allowSceneActivation = false;
 
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
-        else HighContrastText.RestoreToDefault("bgothm");
+        while(!async.isDone)
+        {
+            slider.value = async.progress;
+            if(async.progress == 0.9f)
+            {
+                slider.value = 1f;
+                async.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
     }
 }

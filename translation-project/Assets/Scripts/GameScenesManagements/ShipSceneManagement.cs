@@ -20,7 +20,8 @@ public class ShipSceneManagement : MonoBehaviour {
 
     public void Start()
     {
-        TolkUtil.Load();
+        isTrigger = false;
+
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
             transform.position = character.GetPosition();
@@ -39,9 +40,10 @@ public class ShipSceneManagement : MonoBehaviour {
             // save the position when loading another scene
             character.SavePosition(positionSceneChange);
 
-            if (colliderControl.name.Equals("cabine principal"))
-                SceneManager.LoadScene("ShipInsideScene");
-            else if (colliderControl.name.Equals("Figurante"))
+            //if (colliderControl.name.Equals("cabine principal"))
+            //    SceneManager.LoadScene("ShipInsideScene");
+            //else 
+            if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
                 SceneManager.LoadScene("TailMissionScene");
         }
     }
@@ -50,15 +52,19 @@ public class ShipSceneManagement : MonoBehaviour {
     {
         Debug.Log("scene-trigger");
         
-        if (collision.name.Equals("cabine principal"))
+        //if (collision.name.Equals("cabine principal"))
+        //{
+        //    warningInterface.SetActive(true);
+        //    warningText.text = "Pressione E para entrar no passadiço do navio.";
+        //}
+        //else 
+        if(collision.name.Equals("Figurante"))
         {
             warningInterface.SetActive(true);
-            warningText.text = "Pressione E para entrar no passadiço do navio.";
-        }
-        else if(collision.name.Equals("Figurante"))
-        {
-            warningInterface.SetActive(true);
-            warningText.text = "Pressione E para realizar o desafio.";
+            if (PlayerPreferences.finishedAllM004Games())
+                warningText.text = "Pressione E para realizar o desafio.";
+            else
+                warningText.text = "Para realizar a missão é necessário concluir todos os minijogos.";
         }
 
         isTrigger = true;

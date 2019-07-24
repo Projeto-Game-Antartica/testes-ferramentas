@@ -17,7 +17,7 @@ public class Parameters {
     public const float DOWN_LIMIT     = -228f;
     public const float Z_POSITION     = -20f;
     public const float MAX_ORTHOSIZE  = 200f;
-    public const float MIN_ORTHOSIZE  = 170f;
+    public const float MIN_ORTHOSIZE  = 100f;
     public const float ZOOM_SPEED     = 30f;
     
     // limits of the camera to check

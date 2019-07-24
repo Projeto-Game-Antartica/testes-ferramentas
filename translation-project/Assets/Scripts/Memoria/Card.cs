@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Card : MonoBehaviour {
+public class Card : AbstractScreenReader, ISelectHandler {
 
     public static bool DO_NOT = false;
 
@@ -12,10 +13,12 @@ public class Card : MonoBehaviour {
     public bool initialized { get; set; }
 
     private Sprite cardBack;
-    private Sprite cardFace;
-    private Sprite cardText;
+    public Sprite cardFace;
+    public Sprite cardText;
 
     private GameObject memoryManager;
+
+    private bool _init = false;
 
     private void Start()
     {
@@ -37,11 +40,21 @@ public class Card : MonoBehaviour {
     {
         cardBack = memoryManager.GetComponent<MemoryManager>().getCardBack();
         if (choice == MemoryManager.CARDFACE)
+        {
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
+            cardText = null;
+            gameObject.name += ": " + cardFace.name;
+        }
         else if (choice == MemoryManager.CARDTEXT)
+        {
             cardText = memoryManager.GetComponent<MemoryManager>().getCardText(cardValue);
+            cardFace = null;
+            gameObject.name += ": " + cardText.name;
+        }
 
         flipCard();
+
+        _init = true;
     }
 
     public void flipCard()
@@ -59,6 +72,18 @@ public class Card : MonoBehaviour {
                 GetComponent<Image>().sprite = cardFace;
             else
                 GetComponent<Image>().sprite = cardText;
+
+            if(_init)
+            {
+                string objectName = CardsDescription.GetCardDescription(gameObject.name);
+
+                if (objectName != null)
+                    //Debug.Log(objectName);
+                    ReadText(objectName);
+                else
+                    //Debug.Log(gameObject.name);
+                    ReadText(gameObject.name);
+            }
         }
     }
 
@@ -89,5 +114,11 @@ public class Card : MonoBehaviour {
         }
 
         DO_NOT = false;
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+        ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
     }
 }

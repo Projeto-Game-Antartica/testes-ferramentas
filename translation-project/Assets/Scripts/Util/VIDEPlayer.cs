@@ -19,13 +19,13 @@ public class VIDEPlayer : MonoBehaviour
     public List<string> demo_Items = new List<string>();
     public List<string> demo_ItemInventory = new List<string>();
 
-    public TMPro.TextMeshProUGUI blinkingTextMentor;
+    //public TMPro.TextMeshProUGUI blinkingTextMentor;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.name);
-        if (collision.name.Contains("Mentor"))
-            blinkingTextMentor.gameObject.SetActive(true);
+        //if (collision.name.Contains("Mentor"))
+        //    blinkingTextMentor.gameObject.SetActive(true);
 
         Debug.Log("dialog-trigger");
         if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
@@ -42,7 +42,7 @@ public class VIDEPlayer : MonoBehaviour
         {
             inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
         }
-        //TryInteract();
+        TryInteract();
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -54,13 +54,13 @@ public class VIDEPlayer : MonoBehaviour
     {
         inTrigger = null;
         Debug.Log(collision.name);
-        blinkingTextMentor.gameObject.SetActive(false);
+        //blinkingTextMentor.gameObject.SetActive(false);
     }
 
     void OnTriggerExit()
     {
         inTrigger = null;
-        blinkingTextMentor.gameObject.SetActive(false);
+        //blinkingTextMentor.gameObject.SetActive(false);
     }
 
     void Start()
@@ -79,6 +79,10 @@ public class VIDEPlayer : MonoBehaviour
         {
             TryInteract();
         }
+
+        if (VD.isActive && Input.GetKey(KeyCode.Escape))
+            diagUI.EndDialogue(VD.nodeData);
+
 
         //Hide/Show cursor
         /*

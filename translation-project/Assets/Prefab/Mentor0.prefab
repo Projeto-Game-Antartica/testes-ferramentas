@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1874616615573510}
   m_IsPrefabAsset: 1
+--- !u!1 &1730618917329980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4445764032470070}
+  - component: {fileID: 212769339656791906}
+  m_Layer: 0
+  m_Name: minijogo-balloon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1874616615573510
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,10 +57,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1874616615573510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 239, y: -100, z: -1}
+  m_LocalPosition: {x: 247, y: -126, z: -1}
   m_LocalScale: {x: 1.7, y: 1.7, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4445764032470070}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4445764032470070
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730618917329980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.7, y: 19.1, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4258536792751056}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50048877794602218
@@ -231,36 +261,6 @@ MonoBehaviour:
   - 6_ESTAGIO3
   - 7_ESTAGIO3
   - 8_ESTAGIO3
-  - cena0_1_mentor
-  - cena0_2_mentor0
-  - cena0_3_mentor0
-  - cena0_4_mentor0
-  - cena0_5_mentor0
-  - cena1_1_mentor4
-  - cena1_2_mentor2
-  - cena1_3_mentor3
-  - cena1_4_mentor2
-  - cena1_5_mentor4
-  - cena1_6_mentor1
-  - cena1_7_mentor1
-  - cena1_numero7_mentor1
-  - cena2_1_mentor3
-  - cena2_2_mentor2
-  - cena2_3_mentor1
-  - cena2_4_mentor4
-  - cena2_5_mentor3
-  - cena2_6_mentor3
-  - cena2_7_mentor1
-  - cena2_8_mentor2
-  - cena3_10_mentor4
-  - cena3_9_mentor4
-  - cena4_11_mentor2
-  - cena4_12_mentor1
-  - cena4_13_mentor3
-  - cena4_14_mentor3
-  - cena4_15_mentor4
-  - cena5_16__
-  - cena6_17_mentorGV
   - Charlie
   - CommentModifier
   - CrazyCap
@@ -276,6 +276,10 @@ MonoBehaviour:
   - M004_4_PUZZLE_ESTAGIO3
   - M004_5_PUZZLE_ESTAGIO4
   - M004_6_END_MENTOR0
+  - M004_Mentor1_Dialogue
+  - M004_Mentor2_Dialogue
+  - M004_Mentor3_Dialogue
+  - M004_Mentor4_Dialogue
   - M004_RANDOM1_MENTOR1
   - M004_RANDOM10_MENTOR2
   - M004_RANDOM11_MENTOR3
@@ -307,14 +311,14 @@ MonoBehaviour:
   - SelectLanguage
   - TriggeredDude
   - Witch
-  assignedIndex: 68
-  assignedID: 71689
-  assignedDialogue: M004_RANDOM23_MENTOR0
+  assignedIndex: 17
+  assignedID: 7543
+  assignedDialogue: M004_1_START_MENTOR0
   interactionCount: 0
-  alias: "Guia Tur\xEDstico - Mariela"
+  alias: Naturalista - Bia
   overrideStartNode: -1
-  defaultNPCSprite: {fileID: 21300000, guid: 359d10f65ec1a33419bee19d264d6fad, type: 3}
-  defaultPlayerSprite: {fileID: 21300000, guid: 025461c334870fb4091c120a059bd0f3,
+  defaultNPCSprite: {fileID: 21300000, guid: 537ec39222adad84da7031fdc33a8bdc, type: 3}
+  defaultPlayerSprite: {fileID: 21300000, guid: b84e8134efdc1f74f93e975c5918a8c9,
     type: 3}
   targetManager: {fileID: 0}
   preload: 0
@@ -336,7 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 82441320084554512}
-  blinkingTextMentor: {fileID: 0}
+  spriteRenderer:
+  - {fileID: 212374714810020790}
 --- !u!212 &212374714810020790
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -378,6 +383,52 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 35.43, y: 35.43}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!212 &212769339656791906
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730618917329980}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 8c250c3ee688b4849a4fdfb4654c6bb4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.7, y: 3.17}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

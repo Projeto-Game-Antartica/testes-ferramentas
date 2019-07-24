@@ -17,7 +17,7 @@ public class InstructionsController : AbstractScreenReader {
     {
         //Parameters.HIGH_CONTRAST = true;
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
-        ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization());
+        ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_identification, LocalizationManager.instance.GetLozalization());
         ReadText(ui_title.text);
         ReadInstructions();
         first_button.Select();
@@ -30,7 +30,7 @@ public class InstructionsController : AbstractScreenReader {
 
     public void ReadInstructions()
     {
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_identification, LocalizationManager.instance.GetLozalization()));
     }
 
     public void ReturnToMainMenu()

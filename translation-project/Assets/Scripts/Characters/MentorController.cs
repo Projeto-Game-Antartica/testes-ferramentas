@@ -8,6 +8,8 @@ public class MentorController : MonoBehaviour {
     public AudioSource audioSource; // beep for localization
     private string mentorName;
 
+    public SpriteRenderer[] spriteRenderer;
+
     private void Start()
     {
         mentorName = gameObject.name;
@@ -38,30 +40,43 @@ public class MentorController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-        //Debug.Log(index);
+        //int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
+        ////Debug.Log(index);
 
-        // change the assigned dialogue
-        GetDialogue(mentorName, index);
+        //// change the assigned dialogue
+        //GetDialogue(mentorName, index);
+        float xdif = gameObject.transform.position.x - collision.gameObject.transform.position.x;
+        //Debug.Log(gameObject.transform.position - collision.gameObject.transform.position);
+
+        if(xdif > 0)
+        {
+            foreach(SpriteRenderer sp in spriteRenderer)
+                sp.flipX = true;
+        }
+        else
+        {
+            foreach (SpriteRenderer sp in spriteRenderer)
+                sp.flipX = false;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-        //Debug.Log(index);
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
+    //    //Debug.Log(index);
 
-        // change the assigned dialogue
-        GetDialogue(mentorName, index);
-    }
+    //    // change the assigned dialogue
+    //    GetDialogue(mentorName, index);
+    //}
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-        //Debug.Log(index);
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
+    //    //Debug.Log(index);
 
-        // change the assigned dialogue
-        GetDialogue(mentorName, index);
-    }
+    //    // change the assigned dialogue
+    //    GetDialogue(mentorName, index);
+    //}
 
     private void GetDialogue(string mentorName, int index)
     {

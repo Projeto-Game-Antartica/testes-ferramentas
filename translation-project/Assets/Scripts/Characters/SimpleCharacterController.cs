@@ -12,6 +12,8 @@ public class SimpleCharacterController : AbstractScreenReader {
     AudioSource audioSource;
     Animator animator;
 
+    private Rigidbody2D rb;
+
     // cant be too high 
     public float SPEED;
 
@@ -19,26 +21,12 @@ public class SimpleCharacterController : AbstractScreenReader {
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update ()
+    private void FixedUpdate()
     {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!inGameOption.activeSelf)
-            {
-                ReadText("Menu de opções aberto");
-                inGameOption.SetActive(true);
-            }
-            else
-            {
-                ReadText("Menu de opções fechado");
-                inGameOption.SetActive(false);
-            }
-        }
 
         if (!VD.isActive)
         {
@@ -48,9 +36,9 @@ public class SimpleCharacterController : AbstractScreenReader {
                 if (movement.magnitude > 0) WalkingSound();
 
                 // check last direction for idle animation: true = right, false = left
-                if(movement.x > 0 || movement.y > 0)
+                if (movement.x > 0 || movement.y > 0)
                     animator.SetBool("LastDirection", true);
-                if(movement.x < 0 || movement.y < 0)
+                if (movement.x < 0 || movement.y < 0)
                     animator.SetBool("LastDirection", false);
 
                 // parameters for animator blend tree
@@ -58,7 +46,9 @@ public class SimpleCharacterController : AbstractScreenReader {
                 animator.SetFloat("Vertical", movement.y);
                 animator.SetFloat("Magnitude", movement.magnitude);
 
-                transform.position = transform.position + movement * SPEED *  Time.deltaTime;
+                //transform.position = transform.position + movement * SPEED * Time.deltaTime;
+                //rb.AddForce(movement * SPEED);
+                rb.velocity = movement * SPEED;
             }
 
             //if (Input.GetKeyDown(KeyCode.F))
@@ -71,7 +61,27 @@ public class SimpleCharacterController : AbstractScreenReader {
             // runs idle animation when the dialogue is active
             animator.SetFloat("Magnitude", 0);
         }
-        
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if (!VD.isActive)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (!inGameOption.activeSelf)
+                {
+                    ReadText("Menu de opções aberto");
+                    inGameOption.SetActive(true);
+                }
+                else
+                {
+                    ReadText("Menu de opções fechado");
+                    inGameOption.SetActive(false);
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -100,6 +110,7 @@ public class SimpleCharacterController : AbstractScreenReader {
     public void SavePosition(Vector2 position)
     {
         PlayerPrefs.SetFloat("p_x", position.x);
+
         PlayerPrefs.SetFloat("p_y", position.y);
 
         PlayerPrefs.SetInt("Saved", 1);

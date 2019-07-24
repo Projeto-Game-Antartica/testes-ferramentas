@@ -19,4 +19,18 @@ public class AudioSettings : MonoBehaviour {
         mixer.SetFloat("volume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MusicVolume", sliderValue);
     }
+
+    public void EnableSlider(Slider slider)
+    {
+        if (slider.IsActive())
+            slider.gameObject.SetActive(false);
+        else
+            slider.gameObject.SetActive(true);
+    }
+
+    public void OnValueChange(float value)
+    {
+        Debug.Log("Volume " + value);
+        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Volume " + value);
+    }
 }

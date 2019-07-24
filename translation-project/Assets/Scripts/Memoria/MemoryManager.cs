@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MemoryManager : MonoBehaviour {
+public class MemoryManager : AbstractScreenReader {
+
+    private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
     public Sprite[] cardFace;
     public Sprite[] cardText;
@@ -18,7 +20,7 @@ public class MemoryManager : MonoBehaviour {
     private int matches = 9;
     private int miss = 0;
 
-    private bool init = false;
+    private bool init;
 
     public static int CARDFACE = 1;
     public static int CARDTEXT = 2;
@@ -36,16 +38,31 @@ public class MemoryManager : MonoBehaviour {
     public GameObject WinImage;
     public GameObject LoseImage;
 
+    public GameObject BigImage1;
+    public GameObject BigImage2;
+
+    // hint settings
+    public Minijogos_dicas dicas;
+
+
     private void Start()
     {
+        init = false;
+
+        ReadText(instructions);
+
         audioSource = GetComponent<AudioSource>();
+        
+        // start afther dicas.time seconds and repeat at dicas.repeatRate rate
+        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
+
     // Update is called once per frame
     void Update () {
         if (!init)
             initializeCards();
 
-        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space)) && !Card.DO_NOT)
+        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Return)) && !Card.DO_NOT)
         {
             checkCards();
         }
@@ -63,8 +80,13 @@ public class MemoryManager : MonoBehaviour {
             confirmarButton.interactable = false;
             cancelarButton.interactable = false;
         }
-        
+
         //Debug.Log(Card.DO_NOT);
+    }
+
+    public void CallHintMethod()
+    {
+        dicas.StartHints();
     }
 
     public void initializeCards()
@@ -82,6 +104,7 @@ public class MemoryManager : MonoBehaviour {
 
             cards[choice].GetComponent<Card>().cardValue = i;
             cards[choice].GetComponent<Card>().initialized = true;
+
 
             //Debug.Log(choice);
             
@@ -103,14 +126,19 @@ public class MemoryManager : MonoBehaviour {
             cards[choice].GetComponent<Card>().cardValue = i;
             cards[choice].GetComponent<Card>().initialized = true;
 
+            //cards[choice].gameObject.name = getCardText(choice).name;
+
             //Debug.Log(choice);
 
             cards[choice].GetComponent<Card>().setupGraphics(CARDTEXT);
         }
-        
-        
+
+
         if (!init)
+        {
             init = true;
+            cards[0].GetComponent<Button>().Select();
+        }
     }
 
     public Sprite getCardBack()
@@ -135,7 +163,19 @@ public class MemoryManager : MonoBehaviour {
         for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i].GetComponent<Card>().state == 1)
+            {
                 c.Add(i);
+                
+                if (c.Count == 2)
+                {
+                    BigImage1.SetActive(true);
+                    BigImage1.GetComponentInChildren<Image>().sprite = cards[c[0]].GetComponent<Card>().cardFace ?? cards[c[0]].GetComponent<Card>().cardText;
+                    BigImage2.SetActive(true);
+                    BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
+
+                    confirmarButton.Select();
+                }
+            }
         }
 
         //Debug.Log(c.Count);
@@ -146,17 +186,25 @@ public class MemoryManager : MonoBehaviour {
     public void CompareCards()
     {
         cardComparison(c);
+        BigImage1.SetActive(false);
+        BigImage2.SetActive(false);
     }
 
     public void Cancel()
     {
-        Debug.Log(c.Count);
+        BigImage1.SetActive(false);
+        BigImage2.SetActive(false);
 
         for (int i = 0; i < c.Count; i++)
         {
             cards[c[i]].GetComponent<Card>().state = 0;
             cards[c[i]].GetComponent<Card>().turnCardDown();
         }
+
+        c.Clear();
+        Debug.Log(c.Count);
+
+        cards[0].GetComponent<Button>().Select();
     }
 
     void cardComparison(List<int> c)
@@ -174,7 +222,8 @@ public class MemoryManager : MonoBehaviour {
             matchesText.text = "Pares restantes: " + matches;
             if (matches == 0)
             {
-                Debug.Log("Fim de Jogo!!");
+                Debug.Log("Fim de jogo! Você conseguiu terminar com sucesso.");
+                PlayerPreferences.M004_Memoria = true;
                 EndGame(true);
             }
         }
@@ -187,7 +236,7 @@ public class MemoryManager : MonoBehaviour {
 
             if(miss >= 3)
             {
-                Debug.Log("Fim de Jogo!!");
+                Debug.Log("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
                 EndGame(false);
             }
         }
@@ -199,6 +248,7 @@ public class MemoryManager : MonoBehaviour {
         }
 
         c.Clear();
+        cards[0].GetComponent<Button>().Select();
     }
 
     public void EndGame(bool win)

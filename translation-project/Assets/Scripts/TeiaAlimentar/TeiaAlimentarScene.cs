@@ -83,7 +83,7 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public void ActivateAudioSlider()
     {
-        if(audioSlider.IsActive())
+        if(audioSlider.IsActive())  
         {
             audioSlider.gameObject.SetActive(false);
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class InGameOptions : MonoBehaviour {
+public class InGameOptions : AbstractScreenReader {
 
     public Toggle toggle;
     public Animator charAnimator;

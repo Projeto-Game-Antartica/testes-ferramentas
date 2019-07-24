@@ -8,6 +8,8 @@ using System;
 
 public class TeiaAlimentarController : DragAndDropController
 {
+    private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
+
     // count the correct/wrong drops
     private int correctAnswer = 0;
     private int wrongAnswer = 0;
@@ -15,6 +17,8 @@ public class TeiaAlimentarController : DragAndDropController
 
     public AudioClip correctClip;
     public AudioClip wrongClip;
+
+    public Minijogos_dicas dicas;
 
     enum Cells
     {
@@ -25,6 +29,8 @@ public class TeiaAlimentarController : DragAndDropController
 
     private void Start()
     {
+        ReadText(instructions);
+
         NRO_CELLS = 12;
 
         Debug.Log(cells.Length);
@@ -34,6 +40,9 @@ public class TeiaAlimentarController : DragAndDropController
         }
 
         audioSource = GetComponent<AudioSource>();
+
+        // start afther time seconds and repeat at repeatRate rate
+        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
 
     
@@ -145,6 +154,11 @@ public class TeiaAlimentarController : DragAndDropController
         }
     }
 
+    public void CallHintMethod()
+    {
+        dicas.StartHints();
+    }
+
     public override void OnSimpleDragAndDropEvent(DragAndDropCell.DropEventDescriptor desc)
     {
         // Get control unit of source cell
@@ -191,6 +205,7 @@ public class TeiaAlimentarController : DragAndDropController
         {
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
+            PlayerPreferences.M004_TeiaAlimentar = true;
         }
     }
 

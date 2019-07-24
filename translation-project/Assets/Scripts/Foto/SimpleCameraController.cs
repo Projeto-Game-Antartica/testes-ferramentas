@@ -45,15 +45,15 @@ public class SimpleCameraController : AbstractScreenReader {
         }
 
         // camera se movimenta quando os paineis estao desabilitados
-        if (!panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf && !cameraOverlaySprites.activeSelf 
+        if (!panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf
             && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
-        {
-            HandleCameraMovement(null);
-        }
-        else if(cameraOverlaySprites.activeSelf && !panelInstruction.activeSelf) // audio para movimentacao da camera com overlay aberto (acessibilidade)
         {
             HandleCameraMovement(cameraBeep);
         }
+        //else if(cameraOverlaySprites.activeSelf && !panelInstruction.activeSelf && !panelContent.activeSelf) // audio para movimentacao da camera com overlay aberto (acessibilidade)
+        //{
+            
+        //}
 
         ActivateInstructionPanel();
     }
