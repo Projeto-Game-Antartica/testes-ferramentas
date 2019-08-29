@@ -8,6 +8,8 @@ using System;
 
 public class TeiaAlimentarController : DragAndDropController
 {
+    private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
+
     // count the correct/wrong drops
     private int correctAnswer = 0;
     private int wrongAnswer = 0;
@@ -15,6 +17,10 @@ public class TeiaAlimentarController : DragAndDropController
 
     public AudioClip correctClip;
     public AudioClip wrongClip;
+
+    public Minijogos_dicas dicas;
+
+    public LifeExpController lifeExpController;
 
     enum Cells
     {
@@ -25,6 +31,8 @@ public class TeiaAlimentarController : DragAndDropController
 
     private void Start()
     {
+        ReadText(instructions);
+
         NRO_CELLS = 12;
 
         Debug.Log(cells.Length);
@@ -34,6 +42,9 @@ public class TeiaAlimentarController : DragAndDropController
         }
 
         audioSource = GetComponent<AudioSource>();
+
+        // start afther time seconds and repeat at repeatRate rate
+        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
 
     
@@ -78,7 +89,7 @@ public class TeiaAlimentarController : DragAndDropController
                 nextCell.GetComponent<Selectable>().Select();
                 Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
                 Debug.Log(ReturnCellInfo(nextCell.name));
-                ReadText(nextCell.name);
+                //ReadText(nextCell.name);
                 ReadText("Célula " + ReturnCellNumber(nextCell.name));
                 ReadText(ReturnCellInfo(nextCell.name));   
             }
@@ -145,6 +156,11 @@ public class TeiaAlimentarController : DragAndDropController
         }
     }
 
+    public void CallHintMethod()
+    {
+        dicas.StartHints();
+    }
+
     public override void OnSimpleDragAndDropEvent(DragAndDropCell.DropEventDescriptor desc)
     {
         // Get control unit of source cell
@@ -189,8 +205,11 @@ public class TeiaAlimentarController : DragAndDropController
     {
         if (WIN)
         {
+            lifeExpController.AddEXP(0.001f); // concluiu o minijogo
+            lifeExpController.AddEXP(0.0002f); // ganhou um item
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
+            PlayerPreferences.M004_TeiaAlimentar = true;
         }
     }
 

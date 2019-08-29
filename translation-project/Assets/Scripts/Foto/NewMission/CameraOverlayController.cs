@@ -54,26 +54,26 @@ public class CameraOverlayController : AbstractScreenReader {
     // Update is called once per frame
     void Update ()
     {
-        // open the overlay
-		if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf && !panelWhalesCatalogo.activeSelf
-             && !panelFotodentificacao.activeSelf&& !panelInstruction.activeSelf)
-        {
-            if (cameraOverlaySprites.activeSelf)
-            {
-                cameraOverlaySprites.SetActive(false);
-                ReadText("Camera fechada");
-            }
-            else
-            {
-                cameraOverlaySprites.SetActive(true);
-                ReadText("Camera aberta");
-            }
+  //      // open the overlay
+		//if(Input.GetKeyDown(KeyCode.F) && !panelContent.activeSelf && !panelWhalesCatalogo.activeSelf
+  //           && !panelFotodentificacao.activeSelf&& !panelInstruction.activeSelf)
+  //      {
+  //          if (cameraOverlaySprites.activeSelf)
+  //          {
+  //              cameraOverlaySprites.SetActive(false);
+  //              ReadText("Camera fechada");
+  //          }
+  //          else
+  //          {
+  //              cameraOverlaySprites.SetActive(true);
+  //              ReadText("Camera aberta");
+  //          }
 
-            if (!cameraOverlaySprites.activeSelf && !audioSource.isPlaying)
-                audioSource.PlayOneShot(loadingAudioClip);
-            else if (!audioSource.isPlaying)
-                audioSource.PlayOneShot(turningOffAudioClip);
-        }
+  //          if (!cameraOverlaySprites.activeSelf && !audioSource.isPlaying)
+  //              audioSource.PlayOneShot(loadingAudioClip);
+  //          else if (!audioSource.isPlaying)
+  //              audioSource.PlayOneShot(turningOffAudioClip);
+  //      }
 
         // take the photo
         if(Input.GetKeyDown(KeyCode.Space) && cameraOverlaySprites.activeSelf && !panelContent.activeSelf)
@@ -107,7 +107,7 @@ public class CameraOverlayController : AbstractScreenReader {
         Parameters.ISWHALEIDENTIFIED = false;
 
         audioSource.PlayOneShot(photoAudioClip);
-        cameraOverlaySprites.SetActive(false);
+        //cameraOverlaySprites.SetActive(false);
 
         // reset the panel
         whaleImages.SetPhotographedWhaleImage(null);
@@ -150,14 +150,14 @@ public class CameraOverlayController : AbstractScreenReader {
 
     private void HandleCameraZoom()
     {
-        if (Input.GetKey(KeyCode.KeypadMinus) || Input.mouseScrollDelta.y < 0)
-        {
-            ZoomIn();
-        }
-
-        if (Input.GetKey(KeyCode.KeypadPlus) || Input.mouseScrollDelta.y > 0)
+        if (Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.Minus) || Input.mouseScrollDelta.y < 0)
         {
             ZoomOut();
+        }
+
+        if (Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.Equals) || Input.mouseScrollDelta.y > 0)
+        {
+            ZoomIn();
         }
     }
 
@@ -184,6 +184,7 @@ public class CameraOverlayController : AbstractScreenReader {
 
         // get and random id
         Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
+        //Parameters.WHALE_ID = 7;
 
         // get the whale from random id
         WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);

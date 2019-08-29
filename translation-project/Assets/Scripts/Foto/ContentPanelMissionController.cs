@@ -32,10 +32,10 @@ public class ContentPanelMissionController : AbstractScreenReader {
         }
 
         // not the best way
-        if (Parameters.ISWHALEIDENTIFIED)
-        {
-            CheckWhaleName();
-        }
+        //if (Parameters.ISWHALEIDENTIFIED)
+        //{
+        //    CheckWhaleName();
+        //}
 	}
     
     private void OnEnable()
@@ -50,7 +50,18 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public void Save()
     {
-        gameObject.SetActive(false);
+        //whaleController.getWhaleById(Parameters.WHALE_ID).indentified = true;
+
+        if (string.IsNullOrEmpty(whaleNameInput.text))
+        {
+            Debug.Log("O nome não pode ser vazio!");
+            whaleNameInput.Select();
+        }
+        else
+        {
+            whaleController.getWhaleById(Parameters.WHALE_ID).whale_name = whaleNameInput.text;
+            gameObject.SetActive(false);
+        }
     }
 
     public void CheckWhaleName()
@@ -67,11 +78,13 @@ public class ContentPanelMissionController : AbstractScreenReader {
             whaleNameInput.interactable = false;
         }
         else
-        {
+        { 
             whaleNameInput.interactable = true;
             whaleNameInput.Select();
-            saveButton.interactable = true;
         }
+            saveButton.interactable = true;
+
+        //whaleController.getWhaleById(Parameters.WHALE_ID).indentified = true;
     }
 
     public void ClearNameInputField()

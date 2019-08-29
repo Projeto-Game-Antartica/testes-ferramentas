@@ -86,6 +86,8 @@ public class ReadableTexts : MonoBehaviour
 
     public static string key_foto_instructions = "foto_instructions";
 
+    public static string key_foto_identification = "foto_identification";
+
     public static string key_foto_sceneDescription = "foto_sceneDescription";
 
     public static string key_foto_catalogDescription = "foto_catalogDescription";

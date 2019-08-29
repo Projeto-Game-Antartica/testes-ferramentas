@@ -16,7 +16,7 @@ using VIDE_Data; //<--- Import to use easily call VD class
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class VIDEUIManager : MonoBehaviour
+public class VIDEUIManager : AbstractScreenReader
 {
 
     //This script will handle everything related to dialogue interface
@@ -52,6 +52,12 @@ public class VIDEUIManager : MonoBehaviour
     public GameObject AlertDialog;
     private string url;
 
+    // to get mentor position
+    private GameObject mentor;
+
+    public LifeExpController lifeExpController;
+    private bool flagEXP;
+
     #endregion
 
     #region MAIN
@@ -72,14 +78,21 @@ public class VIDEUIManager : MonoBehaviour
         //We might want to modify the dialogue or perhaps go to another node, or dont start the dialogue at all
         //In such cases, the function will return true
         var doNotInteract = PreConditions(dialogue);
-        if (doNotInteract) return;
+        if (doNotInteract)
+        {
+            Debug.Log("Não interagir....");
+            return;
+        }
 
         if (!VD.isActive)
         {
+            Debug.Log("inicio de diálogo");
+            mentor = dialogue.gameObject;
             Begin(dialogue);
         }
         else
         {
+            Debug.Log("Próximo nó.");
             CallNext();
         }
     }
@@ -87,6 +100,8 @@ public class VIDEUIManager : MonoBehaviour
     //This begins the conversation
     void Begin(VIDE_Assign dialogue)
     {
+        flagEXP = true;
+
         //Let's reset the NPC text variables
         NPC_Text.text = "";
         NPC_label.text = "";
@@ -103,6 +118,10 @@ public class VIDEUIManager : MonoBehaviour
         VD.BeginDialogue(dialogue); //Begins dialogue, will call the first OnNodeChange
 
         dialogueContainer.SetActive(true); //Let's make our dialogue container visible
+
+        // accessibility
+        ReadText("Início do diálogo.");
+        Debug.Log("Início do diálogo.");
     }
 
     //Calls next node in the dialogue
@@ -145,7 +164,7 @@ public class VIDEUIManager : MonoBehaviour
                         data.commentIndex++;
 
                         // Read the option selected after changing index
-                        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        ReadText("Opção " + data.commentIndex + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                         
                     }
@@ -156,7 +175,7 @@ public class VIDEUIManager : MonoBehaviour
                     {
                         data.commentIndex--;
                         // Read the option selected after changing index
-                        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        ReadText("Opção " + data.commentIndex + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                     }
                 }
@@ -169,7 +188,7 @@ public class VIDEUIManager : MonoBehaviour
                     {
                         currentChoices[i].color = Color.yellow;
                         //Debug.Log(data.comments[data.commentIndex]);
-                        //TolkUtil.Speak(data.comments[data.commentIndex]);
+                        //ReadText(data.comments[data.commentIndex]);
                     }
                 }
             }
@@ -181,7 +200,16 @@ public class VIDEUIManager : MonoBehaviour
 
             if(data.extraVars.ContainsKey("SavePosition"))
             {
-                Vector3 positionSceneChange = new Vector2(player.gameObject.transform.position.x, player.gameObject.transform.position.y);
+                Vector3 positionSceneChange;
+                float xdif = player.transform.position.x - mentor.gameObject.transform.position.x;
+
+                // afasta um pouco o mentor depois que volta a cena pois, caso contrário, iria iniciar o dialogo novamente (devido ao colisor)
+                if(xdif > 0)
+                    positionSceneChange = new Vector2(player.gameObject.transform.position.x + 10.0f, player.gameObject.transform.position.y);
+                else
+                    positionSceneChange = new Vector2(player.gameObject.transform.position.x - 10.0f, player.gameObject.transform.position.y);
+
+                
                 Debug.Log(positionSceneChange);
                 player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange);
             }
@@ -192,9 +220,24 @@ public class VIDEUIManager : MonoBehaviour
                 url = (string)data.extraVars["OpenURL"];
                 Debug.Log(url);
             }
+
+            if(data.extraVars.ContainsKey("AddEXP"))
+            {
+                AddExperience();
+            }
         }
 
         //Note you could also use Unity's Navi system
+    }
+
+    public void AddExperience()
+    {
+        if (flagEXP)
+        {
+            lifeExpController.AddEXP(0.0005f);
+            Debug.Log("exp gained");
+            flagEXP = false;
+        }
     }
 
     public void HandleAlertDialog(bool open)
@@ -307,8 +350,10 @@ public class VIDEUIManager : MonoBehaviour
 
     //Unsuscribe from everything, disable UI, and end dialogue
     //Called automatically because we subscribed to the OnEnd event
-    void EndDialogue(VD.NodeData data)
+    public void EndDialogue(VD.NodeData data)
     {
+        //NPC_Text.text = string.Empty;
+        CutTextAnim();
         CheckTasks();
         VD.OnActionNode -= ActionHandler;
         VD.OnNodeChange -= UpdateUI;
@@ -316,8 +361,12 @@ public class VIDEUIManager : MonoBehaviour
         dialogueContainer.SetActive(false);
         VD.EndDialogue();
 
-        VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
+        //VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
         //QuestChartDemo.SaveProgress(); //saves OUR custom game data
+
+        // accessibility
+        ReadText("Fim do diálogo");
+        Debug.Log("Fim do diálogo");
     }
 
     void OnDisable()
@@ -426,7 +475,8 @@ public class VIDEUIManager : MonoBehaviour
             //Checks for extraData that concerns font size (CrazyCap node 2)
             if (data.extraData[data.commentIndex].Contains("fs"))
             {
-                int fSize = 14;
+                //int fSize = 14;
+                int fSize = 16;
 
                 string[] fontSize = data.extraData[data.commentIndex].Split(","[0]);
                 int.TryParse(fontSize[1], out fSize);
@@ -434,7 +484,8 @@ public class VIDEUIManager : MonoBehaviour
             }
             else
             {
-                NPC_Text.fontSize = 14;
+                //NPC_Text.fontSize = 14;
+                NPC_Text.fontSize = 16;
             }
         }
     }
@@ -508,8 +559,8 @@ public class VIDEUIManager : MonoBehaviour
         // Make screenreader read the text. Reads after animation
         Debug.Log(NPC_label.text);
         Debug.Log(NPC_Text.text);
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_label.text);
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_Text.text);
+        ReadText(NPC_label.text);
+        ReadText(NPC_Text.text);
 
         animatingText = false;
     }
@@ -520,8 +571,8 @@ public class VIDEUIManager : MonoBehaviour
         NPC_Text.text = VD.nodeData.comments[VD.nodeData.commentIndex]; //Now just copy full text		
 
         // Make screenreader read the text after cutting the animation
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_label.text);
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak(NPC_Text.text);
+        ReadText(NPC_label.text);
+        ReadText(NPC_Text.text);
 
         animatingText = false;
     }

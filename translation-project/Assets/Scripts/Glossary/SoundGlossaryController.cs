@@ -13,7 +13,8 @@ public class SoundGlossaryController : AbstractScreenReader {
     /*
      * nome do arquivo JSON
      */
-    private const string dataFilename = "glossary.json";
+    //private const string dataFilename = "glossary.json";
+    private const string dataFilename = "soundglossary.json";
 
     /*
      * Classe C# para mapear o JSON
@@ -26,7 +27,7 @@ public class SoundGlossaryController : AbstractScreenReader {
     [SerializeField]
     private float m_lerpTime;
     private List<Button> m_buttons;
-    private int m_index;
+    private int m_index = 0;
     private float m_verticalPosition;
     private bool m_up;
     private bool m_down;
@@ -59,25 +60,26 @@ public class SoundGlossaryController : AbstractScreenReader {
 
     public void Update()
     {
-        if (SoundButton.contentButton)
-        {
-            m_up = Input.GetKeyDown(KeyCode.UpArrow);
-            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+        // scrollbar follows the selected button (accessibility ?)
+        //if (SoundButton.contentButton)
+        //{
+        //    m_up = Input.GetKeyDown(KeyCode.UpArrow);
+        //    m_down = Input.GetKeyDown(KeyCode.DownArrow);
 
-            if (m_up ^ m_down)
-            {
-                if (m_up)
-                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
-                else
-                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+        //    if (m_up ^ m_down)
+        //    {
+        //        if (m_up)
+        //            m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+        //        else
+        //            m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
 
-                m_buttons[m_index].Select();
-                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
-            }
+        //        m_buttons[m_index].Select();
+        //        m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+        //    }
 
-            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
-            m_verticalPosition, Time.deltaTime / m_lerpTime);
-        }
+        //    m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
+        //    m_verticalPosition, Time.deltaTime / m_lerpTime);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

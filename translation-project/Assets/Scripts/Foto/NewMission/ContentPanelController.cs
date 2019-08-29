@@ -28,6 +28,8 @@ public class ContentPanelController : AbstractScreenReader {
     public TextMeshProUGUI pontaTMPro;
 
     private ReadableTexts readableTexts;
+
+    public GameObject WinImage;
     
     private void Start()
     {
@@ -62,6 +64,9 @@ public class ContentPanelController : AbstractScreenReader {
         }
 
         CheckFotoidentificacaoButtons();
+
+        Debug.Log(Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
+            && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE);
 	}
     
     private void OnEnable()
@@ -190,5 +195,12 @@ public class ContentPanelController : AbstractScreenReader {
             pontaTMPro.color = Color.green;
         else
             pontaTMPro.color = Color.white;
+
+        if (Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
+            && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE)
+        {
+            PlayerPreferences.M004_FotoIdentificacao = true;
+            WinImage.SetActive(true);
+        }
     }
 }

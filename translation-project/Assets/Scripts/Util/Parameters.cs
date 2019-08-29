@@ -7,7 +7,6 @@ public class Parameters {
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;
     public static bool HIGH_CONTRAST;
-    
 
     /* ## PHOTOIDENTIFICATION MISSION ## */
     // readonly parameters for camera limits
@@ -17,7 +16,7 @@ public class Parameters {
     public const float DOWN_LIMIT     = -228f;
     public const float Z_POSITION     = -20f;
     public const float MAX_ORTHOSIZE  = 200f;
-    public const float MIN_ORTHOSIZE  = 170f;
+    public const float MIN_ORTHOSIZE  = 100f;
     public const float ZOOM_SPEED     = 30f;
     
     // limits of the camera to check
@@ -53,5 +52,8 @@ public class Parameters {
 
     /* #### */
 
+    /* ## MEMORY GAME ## */
+    public static int MEMORY_ROUNDINDEX = 0;
+    /* #### */
 
 }

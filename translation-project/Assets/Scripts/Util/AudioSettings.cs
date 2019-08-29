@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class AudioSettings : MonoBehaviour {
+public class AudioSettings : AbstractScreenReader {
 
     public AudioMixer mixer;
     public Slider slider;
@@ -18,5 +18,19 @@ public class AudioSettings : MonoBehaviour {
     {
         mixer.SetFloat("volume", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+    }
+
+    public void EnableSlider(Slider slider)
+    {
+        if (slider.IsActive())
+            slider.gameObject.SetActive(false);
+        else
+            slider.gameObject.SetActive(true);
+    }
+
+    public void OnValueChange(float value)
+    {
+        Debug.Log("Volume " + value);
+        ReadText("Volume " + value);
     }
 }

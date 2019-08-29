@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 
 // attached to the character
-public class ShipSceneManagement : MonoBehaviour {
+public class ShipSceneManagement : AbstractScreenReader {
 
     private bool isTrigger;
     public GameObject warningInterface;
@@ -20,7 +20,10 @@ public class ShipSceneManagement : MonoBehaviour {
 
     public void Start()
     {
-        TolkUtil.Load();
+        isTrigger = false;
+
+        StartCoroutine(InitialInstruction());
+
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
             transform.position = character.GetPosition();
@@ -39,10 +42,11 @@ public class ShipSceneManagement : MonoBehaviour {
             // save the position when loading another scene
             character.SavePosition(positionSceneChange);
 
-            if (colliderControl.name.Equals("cabine principal"))
-                SceneManager.LoadScene("ShipInsideScene");
-            else if (colliderControl.name.Equals("Figurante"))
-                SceneManager.LoadScene("TailMissionScene");
+            //if (colliderControl.name.Equals("cabine principal"))
+            //    SceneManager.LoadScene("ShipInsideScene");
+            //else 
+            if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
+                SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
     }
 
@@ -50,15 +54,24 @@ public class ShipSceneManagement : MonoBehaviour {
     {
         Debug.Log("scene-trigger");
         
-        if (collision.name.Equals("cabine principal"))
+        //if (collision.name.Equals("cabine principal"))
+        //{
+        //    warningInterface.SetActive(true);
+        //    warningText.text = "Pressione E para entrar no passadiço do navio.";
+        //}
+        //else 
+        if(collision.name.Equals("Figurante"))
         {
             warningInterface.SetActive(true);
-            warningText.text = "Pressione E para entrar no passadiço do navio.";
-        }
-        else if(collision.name.Equals("Figurante"))
-        {
-            warningInterface.SetActive(true);
-            warningText.text = "Pressione E para realizar o desafio.";
+            if (PlayerPreferences.finishedAllM004Games())
+                warningText.text = "Você concluiu todos os minijogos com sucesso. Agora, pressione E para realizar o desafio.";
+            else
+                warningText.text = "Para realizar a missão é necessário concluir todos os minijogos. " + "Finalize os seguintes minijogos: " +
+                    (PlayerPreferences.M004_FotoIdentificacao == false ? "Fotoidentificação de baleias; " : "") +
+                    (PlayerPreferences.M004_Memoria == false ? "Animais antárticos; " : "") +
+                    (PlayerPreferences.M004_TeiaAlimentar == false ? "Teia Alimentar; " : "") +
+                    "e depois retorne para realizar a missão.";
+
         }
 
         isTrigger = true;
@@ -71,5 +84,17 @@ public class ShipSceneManagement : MonoBehaviour {
         isTrigger = false;
 
         colliderControl = null;
+    }
+
+    private IEnumerator InitialInstruction()
+    {
+        ReadText("Painel de instruções iniciais aberto");
+        warningInterface.SetActive(true);
+        warningText.text = "Conheça o navio e converse com os pesquisadores para novos desafios.";
+        ReadText(warningText.text);
+        yield return new WaitForSeconds(10f);
+
+        warningInterface.SetActive(false);
+        ReadText("Painel de instruções iniciais fechado.");
     }
 }
