@@ -45,4 +45,14 @@ public abstract class AbstractScreenReader : MonoBehaviour {
     {
         if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
     }
+
+    // play clip when selecting a button
+    public static void PlaySelectAudio(AudioSource audioSource, AudioClip audioClip)
+    {
+        if (Parameters.ACCESSIBILITY)
+        {
+            audioSource.volume = 0.3f;
+            audioSource.PlayOneShot(audioClip);
+        }
+    }
 }

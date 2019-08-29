@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 
 // attached to the character
-public class ShipSceneManagement : MonoBehaviour {
+public class ShipSceneManagement : AbstractScreenReader {
 
     private bool isTrigger;
     public GameObject warningInterface;
@@ -21,6 +21,8 @@ public class ShipSceneManagement : MonoBehaviour {
     public void Start()
     {
         isTrigger = false;
+
+        StartCoroutine(InitialInstruction());
 
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
@@ -44,7 +46,7 @@ public class ShipSceneManagement : MonoBehaviour {
             //    SceneManager.LoadScene("ShipInsideScene");
             //else 
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
-                SceneManager.LoadScene("TailMissionScene");
+                SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
     }
 
@@ -62,9 +64,14 @@ public class ShipSceneManagement : MonoBehaviour {
         {
             warningInterface.SetActive(true);
             if (PlayerPreferences.finishedAllM004Games())
-                warningText.text = "Pressione E para realizar o desafio.";
+                warningText.text = "Você concluiu todos os minijogos com sucesso. Agora, pressione E para realizar o desafio.";
             else
-                warningText.text = "Para realizar a missão é necessário concluir todos os minijogos.";
+                warningText.text = "Para realizar a missão é necessário concluir todos os minijogos. " + "Finalize os seguintes minijogos: " +
+                    (PlayerPreferences.M004_FotoIdentificacao == false ? "Fotoidentificação de baleias; " : "") +
+                    (PlayerPreferences.M004_Memoria == false ? "Animais antárticos; " : "") +
+                    (PlayerPreferences.M004_TeiaAlimentar == false ? "Teia Alimentar; " : "") +
+                    "e depois retorne para realizar a missão.";
+
         }
 
         isTrigger = true;
@@ -77,5 +84,17 @@ public class ShipSceneManagement : MonoBehaviour {
         isTrigger = false;
 
         colliderControl = null;
+    }
+
+    private IEnumerator InitialInstruction()
+    {
+        ReadText("Painel de instruções iniciais aberto");
+        warningInterface.SetActive(true);
+        warningText.text = "Conheça o navio e converse com os pesquisadores para novos desafios.";
+        ReadText(warningText.text);
+        yield return new WaitForSeconds(10f);
+
+        warningInterface.SetActive(false);
+        ReadText("Painel de instruções iniciais fechado.");
     }
 }

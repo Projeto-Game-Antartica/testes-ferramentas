@@ -35,12 +35,12 @@ public class InstructionsController : AbstractScreenReader {
 
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("MenuScene"); 
+        SceneManager.LoadScene(ScenesNames.Menu); 
     }
 
     public void ReturnToAntarticaScene()
     {
-        SceneManager.LoadScene("ShipScene");
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 
     public void PlayGame()

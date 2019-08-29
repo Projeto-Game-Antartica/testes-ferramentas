@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &120620918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114367880615808066, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+    type: 2}
+  m_PrefabInternal: {fileID: 865358380}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &135317500
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstButton: {fileID: 534630595}
+  selectClip: {fileID: 8300000, guid: 2d5cf72af856a3d4d84d65581c09b172, type: 3}
 --- !u!4 &135317502
 Transform:
   m_ObjectHideFlags: 0
@@ -383,6 +390,7 @@ RectTransform:
   - {fileID: 1313101046}
   - {fileID: 624486127}
   - {fileID: 475038156}
+  - {fileID: 620499996}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -402,6 +410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e402134d876d34b927dc1cc91fa9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &298206228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114188193784305656, guid: cc5615ada5f645d4caf39360cbab549d,
+    type: 2}
+  m_PrefabInternal: {fileID: 475038155}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &314198736
 Prefab:
   m_ObjectHideFlags: 0
@@ -608,7 +622,7 @@ Prefab:
         type: 2}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1313101047}
     - target: {fileID: 224159006326237978, guid: cc5615ada5f645d4caf39360cbab549d,
         type: 2}
       propertyPath: m_AnchorMin.x
@@ -707,6 +721,31 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 1.9200001
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277558073082850, guid: cc5615ada5f645d4caf39360cbab549d,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277558073082850, guid: cc5615ada5f645d4caf39360cbab549d,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 298206228}
+    - target: {fileID: 114277558073082850, guid: cc5615ada5f645d4caf39360cbab549d,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Text, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277558073082850, guid: cc5615ada5f645d4caf39360cbab549d,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114277558073082850, guid: cc5615ada5f645d4caf39360cbab549d,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySelectionAudio
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc5615ada5f645d4caf39360cbab549d, type: 2}
@@ -1095,6 +1134,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 114292331030644960, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
     - {fileID: 114789828265539942, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
+    - {fileID: 114711493927073504, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &534630593 stripped
@@ -1130,11 +1170,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 135317501}
-          m_MethodName: ReadButtonText
+          m_MethodName: ReadText
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 534630595}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_ObjectArgument: {fileID: 534630602}
+            m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 135317501}
+          m_MethodName: PlaySelectionAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1160,6 +1211,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: login_conta
+--- !u!114 &534630602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114088529441586444, guid: 5f28d50dff584c945b7983817d74bcf7,
+    type: 2}
+  m_PrefabInternal: {fileID: 534630592}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!224 &620499996 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+    type: 2}
+  m_PrefabInternal: {fileID: 865358380}
 --- !u!1 &624486126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,6 +1653,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 114292331030644960, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
     - {fileID: 114789828265539942, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
+    - {fileID: 114711493927073504, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &696685663 stripped
@@ -1603,12 +1666,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1229579263253484, guid: 5f28d50dff584c945b7983817d74bcf7,
     type: 2}
   m_PrefabInternal: {fileID: 696685662}
---- !u!114 &696685665 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114320657741113842, guid: 5f28d50dff584c945b7983817d74bcf7,
-    type: 2}
-  m_PrefabInternal: {fileID: 696685662}
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &696685666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,11 +1683,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 135317501}
-          m_MethodName: ReadButtonText
+          m_MethodName: ReadText
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 696685665}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_ObjectArgument: {fileID: 696685670}
+            m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 135317501}
+          m_MethodName: PlaySelectionAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1656,6 +1724,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: login_email
+--- !u!114 &696685670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114088529441586444, guid: 5f28d50dff584c945b7983817d74bcf7,
+    type: 2}
+  m_PrefabInternal: {fileID: 696685662}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &865311403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,6 +1799,176 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 865311403}
   m_CullTransparentMesh: 0
+--- !u!1001 &865358380
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 253332113}
+    m_Modifications:
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224358499728670484, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySelectionAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 120620918}
+    - target: {fileID: 114544908582726894, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Text, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114764168579386006, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114764168579386006, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114764168579386006, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114764168579386006, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySelectionAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 114209636466587274, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114209636466587274, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114209636466587274, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1313101047}
+    - target: {fileID: 114209636466587274, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySelectionAudio
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33cb03bc5ab23564d9a1ac7d0f3caf06, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &1021682783
 Prefab:
   m_ObjectHideFlags: 0
@@ -2098,6 +2342,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 114292331030644960, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
     - {fileID: 114789828265539942, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
+    - {fileID: 114711493927073504, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 5f28d50dff584c945b7983817d74bcf7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &1021682784 stripped
@@ -2110,12 +2355,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1229579263253484, guid: 5f28d50dff584c945b7983817d74bcf7,
     type: 2}
   m_PrefabInternal: {fileID: 1021682783}
---- !u!114 &1021682786 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114320657741113842, guid: 5f28d50dff584c945b7983817d74bcf7,
-    type: 2}
-  m_PrefabInternal: {fileID: 1021682783}
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!114 &1021682787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2133,11 +2372,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 135317501}
-          m_MethodName: ReadButtonText
+          m_MethodName: ReadText
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 1021682786}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+            m_ObjectArgument: {fileID: 1021682791}
+            m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 135317501}
+          m_MethodName: PlaySelectionAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -2163,6 +2413,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: login_facebook
+--- !u!114 &1021682791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114088529441586444, guid: 5f28d50dff584c945b7983817d74bcf7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1021682783}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1001 &1313101045
 Prefab:
   m_ObjectHideFlags: 0
@@ -2298,6 +2554,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224680167042179274, guid: 03b03c1983cd9504a9235476dfb95ea4,
     type: 2}
   m_PrefabInternal: {fileID: 1313101045}
+--- !u!114 &1313101047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114912289595634862, guid: 03b03c1983cd9504a9235476dfb95ea4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1313101045}
+  m_Script: {fileID: 11500000, guid: 9f000740352fcf94185b35b1b1f8a319, type: 3}
 --- !u!1 &1599299453
 GameObject:
   m_ObjectHideFlags: 0

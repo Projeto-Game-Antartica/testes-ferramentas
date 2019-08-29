@@ -102,8 +102,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1390245191950986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.9, y: 16.3, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: 19.6, y: 15.4, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4544550741170386}
   m_RootOrder: 2
@@ -115,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626088549069196}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1010, y: -30, z: -1}
+  m_LocalPosition: {x: -982, y: -121, z: -1}
   m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_Children:
   - {fileID: 4177857268964402}
@@ -185,7 +185,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 80, y: 0.0001}
   m_Direction: 0
 --- !u!82 &82141035748820876
 AudioSource:
@@ -208,7 +208,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 2082.5044
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 82141035748820876}
+  minijogoBalloon: {fileID: 0}
   spriteRenderer:
   - {fileID: 212745786032501714}
   - {fileID: 212431900153388712}
@@ -346,72 +347,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diags:
-  - 1_estagio1
-  - 2_estagio4
-  - 3_ESTAGIO2
-  - 4_ESTAGIO4
-  - 5_ESTAGIO2
-  - 6_ESTAGIO3
-  - 7_ESTAGIO3
-  - 8_ESTAGIO3
-  - Charlie
-  - CommentModifier
-  - CrazyCap
-  - DEMO_Condition
   - demo_Narration
-  - Example3Dialogue
-  - Example4_dialogue
-  - Item_LookUp
   - Laura
-  - M004_1_START_MENTOR0
-  - M004_2_PUZZLE_ESTAGIO1
-  - M004_3_PUZZLE_ESTAGIO2
-  - M004_4_PUZZLE_ESTAGIO3
-  - M004_5_PUZZLE_ESTAGIO4
-  - M004_6_END_MENTOR0
+  - M004_Mentor0_Dialogue
   - M004_Mentor1_Dialogue
   - M004_Mentor2_Dialogue
   - M004_Mentor3_Dialogue
   - M004_Mentor4_Dialogue
-  - M004_RANDOM1_MENTOR1
-  - M004_RANDOM10_MENTOR2
-  - M004_RANDOM11_MENTOR3
-  - M004_RANDOM12_MENTOR4
-  - M004_RANDOM13_MENTOR1
-  - M004_RANDOM14_MENTOR2
-  - M004_RANDOM15_MENTOR3
-  - M004_RANDOM16_MENTOR4
-  - M004_RANDOM17_MENTOR1
-  - M004_RANDOM18_MENTOR2
-  - M004_RANDOM19_MENTOR0
-  - M004_RANDOM2_MENTOR2
-  - M004_RANDOM20_MENTOR0
-  - M004_RANDOM21_MENTOR1
-  - M004_RANDOM22_MENTOR1
-  - M004_RANDOM23_MENTOR0
-  - M004_RANDOM3_MENTOR3
-  - M004_RANDOM4_MENTOR4
-  - M004_RANDOM5_MENTOR1
-  - M004_RANDOM6_MENTOR2
-  - M004_RANDOM7_MENTOR3
-  - M004_RANDOM8_MENTOR4
-  - M004_RANDOM9_MENTOR1
-  - Mentor0
-  - Mentor1
   - MrCube
   - NPCOnly
-  - QuestChartDemo
-  - SelectLanguage
-  - TriggeredDude
   - Witch
-  assignedIndex: 23
+  assignedIndex: 3
   assignedID: 89068
   assignedDialogue: M004_Mentor1_Dialogue
   interactionCount: 0
   alias: Naturalista - Artur
   overrideStartNode: -1
-  defaultNPCSprite: {fileID: 21300000, guid: 36f10f7e680103f44b44773ca65fd9b9, type: 3}
-  defaultPlayerSprite: {fileID: 21300000, guid: b84e8134efdc1f74f93e975c5918a8c9,
+  defaultNPCSprite: {fileID: 21300000, guid: 0357b282f7c822c45be0e0e986e170c7, type: 3}
+  defaultPlayerSprite: {fileID: 21300000, guid: 45a6c8f121d905640927dcb22d8f0a57,
     type: 3}
   targetManager: {fileID: 0}
   preload: 0

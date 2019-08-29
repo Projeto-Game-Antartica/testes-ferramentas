@@ -48,7 +48,6 @@ public class CameraOverlayController : AbstractScreenReader {
 
     private void Start()
     {
-        PlayerPreferences.M004_FotoIdentificacao = true;
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
     }
 
@@ -185,6 +184,7 @@ public class CameraOverlayController : AbstractScreenReader {
 
         // get and random id
         Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
+        //Parameters.WHALE_ID = 7;
 
         // get the whale from random id
         WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);

@@ -7,7 +7,6 @@ public class Parameters {
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;
     public static bool HIGH_CONTRAST;
-    
 
     /* ## PHOTOIDENTIFICATION MISSION ## */
     // readonly parameters for camera limits
@@ -53,5 +52,8 @@ public class Parameters {
 
     /* #### */
 
+    /* ## MEMORY GAME ## */
+    public static int MEMORY_ROUNDINDEX = 0;
+    /* #### */
 
 }

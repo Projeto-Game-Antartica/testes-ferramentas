@@ -11,18 +11,20 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public int state { get; set; }
     public int cardValue { get; set; }
     public bool initialized { get; set; }
-
+   
     private Sprite cardBack;
     public Sprite cardFace;
     public Sprite cardText;
 
     private GameObject memoryManager;
 
+    public Image BGImage;
+
     private bool _init = false;
 
     private void Start()
     {
-        state = 0;
+        //state = 0;
         initialized = false;
         memoryManager = GameObject.FindGameObjectWithTag("GameController");
 
@@ -31,9 +33,9 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public IEnumerator showCards()
     {
-        yield return new WaitForSeconds(2);
-
-        flipCard();
+        yield return new WaitForSeconds(9);
+        state = 0;
+        turnCardDown();
     }
 
     public void setupGraphics(int choice)
@@ -61,8 +63,8 @@ public class Card : AbstractScreenReader, ISelectHandler {
     {
         if (state == 0)
             state = 1;
-        else if (state == 1)
-            state = 0;
+        //else if (state == 1)
+        //    state = 0;
 
         if (state == 0 && !DO_NOT)
             GetComponent<Image>().sprite = cardBack;
@@ -77,12 +79,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
             {
                 string objectName = CardsDescription.GetCardDescription(gameObject.name);
 
-                if (objectName != null)
-                    //Debug.Log(objectName);
-                    ReadText(objectName);
-                else
-                    //Debug.Log(gameObject.name);
-                    ReadText(gameObject.name);
+                ReadAndDebugCardText(objectName);
             }
         }
     }
@@ -118,7 +115,31 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void OnSelect(BaseEventData eventData)
     {
-        //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
-        ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+        //Debug.Log(state);
+
+        if (state == 0 || state == 1)
+        {
+            Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+            ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+        }
+        else
+        {
+            string objectName = CardsDescription.GetCardDescription(gameObject.name);
+            ReadAndDebugCardText(objectName);
+        }
+    }
+
+    public void ReadAndDebugCardText(string objectName)
+    {
+        // numero da carta + descrição ou numero da carta + nome do animal
+        Debug.Log(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
+        ReadText(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
+    }
+
+    public void ChangeDisabledCardColor(Button button, Color color)
+    {
+        var newCardColor = button.colors;
+        newCardColor.disabledColor = color;
+        button.colors = newCardColor;
     }
 }

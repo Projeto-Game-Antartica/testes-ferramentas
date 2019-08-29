@@ -7,7 +7,9 @@ using UnityEngine.Video;
 public class DescriptionContent : MonoBehaviour {
 
     public Transform descriptionContent;
-    public Text descriptionText;
+    //public Text descriptionText;
+    public TMPro.TextMeshProUGUI descriptionText;
     public VideoPlayer videoPlayer;
     public Image image;
+    public TMPro.TextMeshProUGUI PlayAudioText;
 }

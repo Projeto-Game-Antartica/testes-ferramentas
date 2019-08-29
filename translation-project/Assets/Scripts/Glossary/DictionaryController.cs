@@ -71,24 +71,24 @@ public class DictionaryController : AbstractScreenReader {
             contentAudioSource.Stop();
         }
 
-        if (DictionaryButton.contentButton)
-        {
-            m_up = Input.GetKeyDown(KeyCode.UpArrow);
-            m_down = Input.GetKeyDown(KeyCode.DownArrow);
+        //if (DictionaryButton.contentButton)
+        //{
+        //    m_up = Input.GetKeyDown(KeyCode.UpArrow);
+        //    m_down = Input.GetKeyDown(KeyCode.DownArrow);
 
-            if (m_up ^ m_down)
-            {
-                if (m_up)
-                    m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
-                else
-                    m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+        //    if (m_up ^ m_down)
+        //    {
+        //        if (m_up)
+        //            m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+        //        else
+        //            m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
 
-                m_buttons[m_index].Select();
-                m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
-            }
+        //        m_buttons[m_index].Select();
+        //        m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+        //    }
 
-            m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
-        }
+        //    m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
+        //}
         if (Input.GetKeyDown(KeyCode.F1))
         {
             ReadContentText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
@@ -253,6 +253,7 @@ public class DictionaryController : AbstractScreenReader {
             descriptionContent.videoPlayer.gameObject.SetActive(false);
         }
 
+        descriptionContent.PlayAudioText.text = key + ": Ouvir som";
         descriptionContent.descriptionText.text = GetTextDescription(key, LocalizationManager.instance.GetLozalization());
         descriptionContent.image.sprite = image;
 

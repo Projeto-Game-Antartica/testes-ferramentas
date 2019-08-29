@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class DictionaryButton : AbstractScreenReader
 {
     public Button buttonComponent;
-    public Text keyLabel;
+    //public Text keyLabel;
+    public TMPro.TextMeshProUGUI keyLabel;
     public DictionaryController dictionaryController;
     public AudioSource audioSource;
     public static bool contentButton;

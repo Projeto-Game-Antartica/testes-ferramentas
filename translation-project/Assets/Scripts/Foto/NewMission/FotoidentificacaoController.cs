@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FotoidentificacaoController : AbstractScreenReader {
 
@@ -53,6 +54,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
     public GameObject whalesCatalogPanel;
     public GameObject fotoidentificacaoPanel;
     public Image whalesCatalogImage;
+    private int attempts = 0;
+    public GameObject LoseImage;
 
     /*
      *  Set the GameObjects on the inspector according to the view. Answers options in line or in rows.
@@ -60,7 +63,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
      */ 
     public GameObject[] options;
     public GameObject[] whale_images;
-    public TMPro.TextMeshProUGUI questionText;
+    public TextMeshProUGUI questionText;
 
 
     private void Start()
@@ -72,7 +75,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         //RoundSettings(roundIndex);
         //SetOptionActiveInactive(roundIndex);
         //SetOptionSprites(roundIndex);
-            
+        attempts = 0;
     }
 
     private void Update()
@@ -93,7 +96,13 @@ public class FotoidentificacaoController : AbstractScreenReader {
         }
         else
         {
+            attempts++;
+            Debug.Log(attempts);
             ChangeBackgroundColor(option, Color.red);
+            if (attempts >= 3)
+            {
+                LoseImage.SetActive(true);
+            }
         }
     }
 
@@ -275,7 +284,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
                     Parameters.ISPIGMENTACAODONE = true;
                     return true;
                 }
-
                 ReadText("Resposta errada.");
                 return false;
             case Parameters.MANCHAS:
@@ -394,5 +402,10 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private void OnEnable()
     {
         if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
+    }
+
+    public void ReturnToShip()
+    {
+        SceneManager.LoadScene("ShipScene");
     }
 }

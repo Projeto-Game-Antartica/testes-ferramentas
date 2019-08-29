@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Minijogos_dicas : MonoBehaviour {
+public class Minijogos_dicas : AbstractScreenReader {
 
     public TextMeshProUGUI targetText;
     public string[] hints;
 
     private float waitTime = 5;
 
-    public readonly float time = 5.0f;
+    public readonly float time = 10.0f;
     public readonly float repeatRate = 10.0f;
 
     public GameObject dicas;
@@ -28,7 +28,9 @@ public class Minijogos_dicas : MonoBehaviour {
             int index = Random.Range(0, hints.Length - 1);
 
             dicas.SetActive(true);
-            Debug.Log("showing hint number " + index);
+            //Debug.Log("showing hint number " + index);
+            ReadText("Nova dica: " + hints[index]);
+            //Debug.Log("Nova dica: " + hints[index]);
             targetText.text = hints[index];
 
             yield return new WaitForSeconds(waitTime);

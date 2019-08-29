@@ -175,6 +175,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
         // get and random id
         Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
+        //Parameters.WHALE_ID = 1;
 
         // get the whale from random id
         WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);
@@ -191,7 +192,9 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         latitude.text = whale.latitude;
         longitude.text = whale.longitude;
 
+        //whale.identified = true;
         Debug.Log(whale.whale_name);
+        Debug.Log(whale.identified);
 
         // set the image to the catalog panel
         //catalogImage.sprite = panelImage.sprite;

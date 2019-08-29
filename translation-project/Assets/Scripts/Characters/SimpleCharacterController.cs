@@ -13,9 +13,24 @@ public class SimpleCharacterController : AbstractScreenReader {
     Animator animator;
 
     private Rigidbody2D rb;
-
-    // cant be too high 
+    
     public float SPEED;
+
+    private bool isWalking = false;
+
+    public AudioClip mapLimitClip;
+
+    public AudioClip snowAudioClip;
+    public AudioClip grassAudioClip;
+    public AudioClip rockAudioClip;
+    public AudioClip asphaltAudioClip;
+    public AudioClip sandAudioClip;
+
+    public AudioClip impactMetalAudio;
+    public AudioClip impactGlassAudio;
+    public AudioClip impactWoodAudio;
+    public AudioClip impactRockAudio;
+
 
     private void Start()
     {
@@ -33,7 +48,10 @@ public class SimpleCharacterController : AbstractScreenReader {
             // character movement
             if (!inGameOption.activeSelf)
             {
-                if (movement.magnitude > 0) WalkingSound();
+                if (movement.magnitude > 0)
+                    isWalking = true;
+                else
+                    isWalking = false;
 
                 // check last direction for idle animation: true = right, false = left
                 if (movement.x > 0 || movement.y > 0)
@@ -86,23 +104,56 @@ public class SimpleCharacterController : AbstractScreenReader {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Metal"))
+        Debug.Log(collision.gameObject.tag);
+
+        audioSource.volume = 1;
+        audioSource.pitch = 1;
+
+        switch (collision.gameObject.tag)
         {
-            soundsController.PlayImpactAudio("Metal");
-        }
-        else if (collision.gameObject.tag.Equals("Glass"))
-        {
-            soundsController.PlayImpactAudio("Glass");
+            case "Metal":
+                audioSource.PlayOneShot(impactMetalAudio);
+                break;
+            case "Glass":
+                audioSource.PlayOneShot(impactGlassAudio);
+                break;
+            case "Wood":
+                audioSource.PlayOneShot(impactWoodAudio);
+                break;
+            case "Rock":
+                audioSource.PlayOneShot(impactRockAudio);
+                break;
+            case "MapLimit":
+                audioSource.PlayOneShot(mapLimitClip);
+                break;
         }
     }
 
-    void WalkingSound()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!audioSource.isPlaying)
+        if (isWalking && !audioSource.isPlaying)
         {
             audioSource.volume = Random.Range(0.4f, 0.8f);
             audioSource.pitch = Random.Range(0.8f, 1.0f);
-            audioSource.Play();
+
+            switch(collision.tag)
+            {
+                case "snow":
+                    audioSource.PlayOneShot(snowAudioClip);
+                    break;
+                case "grass":
+                    audioSource.PlayOneShot(grassAudioClip);
+                    break;
+                case "rock":
+                    audioSource.PlayOneShot(rockAudioClip);
+                    break;
+                case "asphalt":
+                    audioSource.PlayOneShot(asphaltAudioClip);
+                    break;
+                case "sand":
+                    audioSource.PlayOneShot(sandAudioClip);
+                    break;
+            }
         }
     }
 

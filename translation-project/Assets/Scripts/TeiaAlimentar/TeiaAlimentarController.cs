@@ -20,6 +20,8 @@ public class TeiaAlimentarController : DragAndDropController
 
     public Minijogos_dicas dicas;
 
+    public LifeExpController lifeExpController;
+
     enum Cells
     {
         bentosCell = 1, avesMarinhasCell, pinguinsCell, baleiasCell, krillCell,
@@ -87,7 +89,7 @@ public class TeiaAlimentarController : DragAndDropController
                 nextCell.GetComponent<Selectable>().Select();
                 Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
                 Debug.Log(ReturnCellInfo(nextCell.name));
-                ReadText(nextCell.name);
+                //ReadText(nextCell.name);
                 ReadText("Célula " + ReturnCellNumber(nextCell.name));
                 ReadText(ReturnCellInfo(nextCell.name));   
             }
@@ -203,6 +205,8 @@ public class TeiaAlimentarController : DragAndDropController
     {
         if (WIN)
         {
+            lifeExpController.AddEXP(0.001f); // concluiu o minijogo
+            lifeExpController.AddEXP(0.0002f); // ganhou um item
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
             PlayerPreferences.M004_TeiaAlimentar = true;

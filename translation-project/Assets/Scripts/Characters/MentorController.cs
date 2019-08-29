@@ -8,6 +8,8 @@ public class MentorController : MonoBehaviour {
     public AudioSource audioSource; // beep for localization
     private string mentorName;
 
+    public SpriteRenderer minijogoBalloon;
+
     public SpriteRenderer[] spriteRenderer;
 
     private void Start()
@@ -21,6 +23,8 @@ public class MentorController : MonoBehaviour {
             audioSource.Play();
             audioSource.loop = true;
         }
+
+        HandleMinijogoBalloonColor(mentorName);
     }
 
     private void Update()
@@ -29,6 +33,26 @@ public class MentorController : MonoBehaviour {
             PlayAcessibilityAudio();
         else if (audioSource.isPlaying)
             audioSource.Stop();
+    }
+
+    private void HandleMinijogoBalloonColor(string mentorName)
+    {
+        // mentores com minijogos
+        switch(mentorName)
+        {
+            case "Mentor0":
+                if (PlayerPreferences.M004_Memoria) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                break;
+            case "Mentor2":
+                if (PlayerPreferences.M004_TeiaAlimentar) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                break;
+            case "Mentor4":
+                if (PlayerPreferences.M004_FotoIdentificacao) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                break;
+        }
     }
 
     private void PlayAcessibilityAudio()

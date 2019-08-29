@@ -15,6 +15,8 @@ public class TeiaAlimentarScene : MonoBehaviour {
     
     public GameObject LoseImage;
 
+    public LifeExpController lifeExpController;
+
     private void Start()
     {
         initialMinutes = 9f;
@@ -28,7 +30,7 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public void ResetGameObjects()
     {
-        SceneManager.LoadScene("TeiaAlimentarScene");
+        SceneManager.LoadScene(ScenesNames.M004TeiaAlimentar);
     }
 
     public void RestartTimer()
@@ -52,6 +54,7 @@ public class TeiaAlimentarScene : MonoBehaviour {
             timer.text = "00:00";
             // do something
             LoseImage.SetActive(true);
+            lifeExpController.AddEXP(0.0001f);
         }
     }
 
@@ -78,7 +81,8 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public void ReturnToShip()
     {
-        SceneManager.LoadScene("ShipScene");
+        if (!PlayerPreferences.M004_TeiaAlimentar) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 
     public void ActivateAudioSlider()

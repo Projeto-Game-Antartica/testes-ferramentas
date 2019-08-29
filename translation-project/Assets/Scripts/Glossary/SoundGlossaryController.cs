@@ -13,7 +13,8 @@ public class SoundGlossaryController : AbstractScreenReader {
     /*
      * nome do arquivo JSON
      */
-    private const string dataFilename = "glossary.json";
+    //private const string dataFilename = "glossary.json";
+    private const string dataFilename = "soundglossary.json";
 
     /*
      * Classe C# para mapear o JSON

@@ -23,11 +23,11 @@ public class VIDEPlayer : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
+        //Debug.Log(collision.name);
         //if (collision.name.Contains("Mentor"))
         //    blinkingTextMentor.gameObject.SetActive(true);
 
-        Debug.Log("dialog-trigger");
+        //Debug.Log("dialog-trigger");
         if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
         {
             inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
@@ -47,13 +47,13 @@ public class VIDEPlayer : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        inTrigger = null;
+        //inTrigger = null;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         inTrigger = null;
-        Debug.Log(collision.name);
+        //Debug.Log(collision.name);
         //blinkingTextMentor.gameObject.SetActive(false);
     }
 
@@ -73,7 +73,7 @@ public class VIDEPlayer : MonoBehaviour
 
     void Update()
     {
-
+        //Debug.Log(inTrigger);
         //Interact with NPCs when pressing E
         if (Input.GetKeyDown(KeyCode.E))
         {

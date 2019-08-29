@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class AudioSettings : MonoBehaviour {
+public class AudioSettings : AbstractScreenReader {
 
     public AudioMixer mixer;
     public Slider slider;
@@ -31,6 +31,6 @@ public class AudioSettings : MonoBehaviour {
     public void OnValueChange(float value)
     {
         Debug.Log("Volume " + value);
-        if (Parameters.ACCESSIBILITY) TolkUtil.Speak("Volume " + value);
+        ReadText("Volume " + value);
     }
 }
