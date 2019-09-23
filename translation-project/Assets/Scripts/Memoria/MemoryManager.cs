@@ -23,6 +23,7 @@ public class MemoryManager : AbstractScreenReader {
 
     public Button confirmarButton;
     public Button cancelarButton;
+    public Button backButton;
     public Button resetButton;
     public Button audioButton;
 
@@ -46,6 +47,7 @@ public class MemoryManager : AbstractScreenReader {
     private List<int> c;
 
     public GameObject WinImage;
+    public TMPro.TextMeshProUGUI WinText;
     public GameObject LoseImage;
 
     public GameObject BigImage1;
@@ -56,28 +58,33 @@ public class MemoryManager : AbstractScreenReader {
 
     public LifeExpController lifeExpController;
 
+    public GameObject instructionInterface;
 
+    private bool _first;
+
+    private enum Operation { correct, confirm, wrong }
+    
     private void Start()
     {
-        init = false;
+        backButton.interactable = false;
+        resetButton.interactable = false;
 
-        Debug.Log(Parameters.MEMORY_ROUNDINDEX);
+        init = false;
+        _first = true;        
+
+        //Debug.Log(Parameters.MEMORY_ROUNDINDEX);
 
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
-        
-        // start afther dicas.time seconds and repeat at dicas.repeatRate rate
-        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
 
     // Update is called once per frame
     void Update () {
-        if (!init)
-            initializeCards();
-
-        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !Card.DO_NOT)
+        
+        if (!_first && (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !Card.DO_NOT)
         {
+            Debug.Log("Checando cartas....");
             checkCards();
         }
 
@@ -94,19 +101,42 @@ public class MemoryManager : AbstractScreenReader {
         if (c != null && c.Count >= 2)
         {
             Card.DO_NOT = true;
-            confirmarButton.interactable = true;
             cancelarButton.interactable = true;
-
-            //Debug.Log(c.Count);
+            confirmarButton.interactable = true;
+            Debug.Log(c.Count);
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (!instructionInterface.activeSelf)
+                instructionInterface.SetActive(true);
+            else
+                instructionInterface.SetActive(false);
+        }
+
         //else
         //{
         //    confirmarButton.interactable = false;
         //    cancelarButton.interactable = false;
-        
+
         //}
 
         //Debug.Log(Card.DO_NOT);
+    }
+
+    public void initializeGame()
+    {
+        if (!init)
+            initializeCards();
+        
+        // start afther dicas.time seconds and repeat at dicas.repeatRate rate
+        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
+        
+        StartCoroutine(showCards());
+
+        backButton.interactable = true;
+        resetButton.interactable = true;
+
     }
 
     public void CallHintMethod()
@@ -188,23 +218,38 @@ public class MemoryManager : AbstractScreenReader {
 
         for (int i = 0; i < cards.Length; i++)
         {
-            if (cards[i].GetComponent<Card>().state == 1)
+            if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
+                Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
+                Debug.Log("após adicionar carta >> " + c.Count);
                 
                 if (c.Count == 2)
                 {
-                    BigImage1.SetActive(true);
-                    BigImage1.GetComponentInChildren<Image>().sprite = cards[c[0]].GetComponent<Card>().cardFace ?? cards[c[0]].GetComponent<Card>().cardText;
-                    BigImage2.SetActive(true);
-                    BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
+                    // block the comparison of two text cards
+                    //if (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText)
+                    //{
+                    //    Debug.Log("clear....");
+                    //    cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+                    //    c.Clear();
+                    //}
+                    //else
+                    //{
+                        //BigImage1.SetActive(true);
+                        //BigImage1.GetComponentInChildren<Image>().sprite = cards[c[0]].GetComponent<Card>().cardFace ?? cards[c[0]].GetComponent<Card>().cardText;
+                        //BigImage2.SetActive(true);
+                        //BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
 
-                    confirmarButton.Select();
+                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
+                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
+
+                        confirmarButton.Select();
+                    //}
                 }
             }
         }
 
-        //Debug.Log(c.Count);
+        Debug.Log("Após checar cartas >> " + c.Count);
         //if (c.Count == 2)
         //    cardComparison(c);
     }
@@ -212,8 +257,8 @@ public class MemoryManager : AbstractScreenReader {
     public void CompareCards()
     {
         cardComparison(c);
-        BigImage1.SetActive(false);
-        BigImage2.SetActive(false);
+        //BigImage1.SetActive(false);
+        //BigImage2.SetActive(false);
 
         cancelarButton.interactable = false;
         confirmarButton.interactable = false;
@@ -221,17 +266,20 @@ public class MemoryManager : AbstractScreenReader {
 
     public void Cancel()
     {
-        BigImage1.SetActive(false);
-        BigImage2.SetActive(false);
+        //BigImage1.SetActive(false);
+        //BigImage2.SetActive(false);
+
+        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, -1));
+        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, -1));
 
         for (int i = 0; i < c.Count; i++)
         {
-            cards[c[i]].GetComponent<Card>().state = 0;
+            cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
             cards[c[i]].GetComponent<Card>().turnCardDown();
         }
 
         c.Clear();
-        Debug.Log(c.Count);
+        Debug.Log("Depois de limpar a lista >> " +  c.Count);
 
         cancelarButton.interactable = false;
         confirmarButton.interactable = false;
@@ -248,8 +296,8 @@ public class MemoryManager : AbstractScreenReader {
         {
             audioSource.PlayOneShot(correctAudio);
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage));
+            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.correct));
+            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.correct));
 
             x = 2;
             matches--;
@@ -266,6 +314,9 @@ public class MemoryManager : AbstractScreenReader {
         {
             audioSource.PlayOneShot(wrongAudio);
 
+            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.wrong));
+            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.wrong));
+
             miss++;
             missText.text = "Tentativas incorretas: " + miss;
 
@@ -274,10 +325,9 @@ public class MemoryManager : AbstractScreenReader {
                 Debug.Log("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
                 ReadText("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
                 EndGame(false);
+                // 0 or 1
+                Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
             }
-
-            // 0 or 1
-            Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
         }
 
         for(int i = 0; i<c.Count; i++)
@@ -300,6 +350,11 @@ public class MemoryManager : AbstractScreenReader {
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
+            if (!PlayerPreferences.M004_TeiaAlimentar)
+                WinText.text = "Parabéns, você ganhou a câmera fotográfica para realizar a missão, mas ainda falta um item.";
+            else
+                WinText.text = "Parabéns, você ganhou a câmera fotográfica. Agora você já tem os itens necessários para realizar a missão.";
+
             lifeExpController.AddEXP(0.001f); // finalizou o minijogo
             lifeExpController.AddEXP(0.0002f); // ganhou o item
         }
@@ -309,6 +364,8 @@ public class MemoryManager : AbstractScreenReader {
             resetButton.Select();
             lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
+
+        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
 
     public void ReturnToShip()
@@ -339,18 +396,36 @@ public class MemoryManager : AbstractScreenReader {
         for (int i = 0; i < tmpCards.Length; i++)
         {
             string objectName = CardsDescription.GetCardDescription(tmpCards[i].name);
-            Debug.Log(objectName != null ? (tmpCards[i].name.Substring(0, tmpCards[i].name.IndexOf(":")) + ": " + objectName) : tmpCards[i].gameObject.name);
+            //Debug.Log(objectName != null ? (tmpCards[i].name.Substring(0, tmpCards[i].name.IndexOf(":")) + ": " + objectName) : tmpCards[i].gameObject.name);
 
             //tmpCards[i].GetComponent<Button>().Select();
             yield return new WaitForSeconds(0.5f);
         }
     }
 
-    public IEnumerator ChangeBGColor(Image image)
+    public IEnumerator ChangeBGColor(Image image, int op)
     {
-        Debug.Log("ChangeBGColor");
+        //Debug.Log("ChangeBGColor");
 
-        image.color = new Color(0,1,0,1);
+        Color color;
+
+        switch (op)
+        {
+            case (int)Operation.confirm:
+                color = new Color(1, 1, 0, 1); // yellow
+                break;
+            case (int)Operation.correct:
+                color = new Color(0, 1, 0, 1); // green
+                //color = new Color(0, 0, 0, 0); // transparent
+                break;
+            case (int)Operation.wrong:
+                color = new Color(1, 0, 0, 1); // red
+                break;
+            default:
+                color = new Color(0, 0, 0, 0);
+                break;
+        }
+            image.color = color;
 
         // setting alpha color to 1 and bg color to green
         //var tempColor = image.color;
@@ -358,10 +433,47 @@ public class MemoryManager : AbstractScreenReader {
         //image.color = tempColor;
 
 
-        // wait seconds
-        yield return new WaitForSeconds(3f);
+        
+        if (op != (int)Operation.confirm && op != (int)Operation.correct)
+        {
+            // wait seconds
+            yield return new WaitForSeconds(2f);
 
-        // back to normal!!
-        image.color = new Color(1, 1, 1, 0);
+            // back to normal!!
+            image.color = new Color(1, 1, 1, 0);
+        }
+    }
+
+    public bool ContainJustText(List<Card> list)
+    {
+        foreach(Card c in list)
+        {
+            if (!c.isText)
+                return false;
+        }
+
+        return true;
+    }
+
+    public IEnumerator showCards()
+    {
+        for (int i = 0; i < cards.Length; i++)
+        {
+            //if (!cards[i].GetComponent<Card>().isText)
+            cards[i].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+
+            cards[i].GetComponent<Card>().turnCardDown();
+        }
+
+        yield return new WaitForSeconds(4);
+
+        _first = false;
+    }
+
+    public IEnumerator ReturnToShipCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

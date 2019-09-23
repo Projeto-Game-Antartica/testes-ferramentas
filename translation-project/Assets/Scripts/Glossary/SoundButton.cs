@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SoundButton : AbstractScreenReader
 {
     public Button buttonComponent;
-    public Text keyLabel;
+    public TMPro.TextMeshProUGUI keyLabel;
     public SoundGlossaryController soundGlossaryController;
     public static AudioSource audioSource;
     public static bool contentButton;

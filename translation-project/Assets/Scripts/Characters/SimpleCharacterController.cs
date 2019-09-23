@@ -9,6 +9,7 @@ public class SimpleCharacterController : AbstractScreenReader {
     public GameObject character;
     public SoundsController soundsController;
     public GameObject inGameOption;
+    public GameObject instructionInterface;
     AudioSource audioSource;
     Animator animator;
 
@@ -16,7 +17,7 @@ public class SimpleCharacterController : AbstractScreenReader {
     
     public float SPEED;
 
-    private bool isWalking = false;
+    public bool isWalking = false;
 
     public AudioClip mapLimitClip;
 
@@ -46,7 +47,7 @@ public class SimpleCharacterController : AbstractScreenReader {
         if (!VD.isActive)
         {
             // character movement
-            if (!inGameOption.activeSelf)
+            if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
             {
                 if (movement.magnitude > 0)
                     isWalking = true;
@@ -97,6 +98,20 @@ public class SimpleCharacterController : AbstractScreenReader {
                 {
                     ReadText("Menu de opções fechado");
                     inGameOption.SetActive(false);
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.F1))
+            {
+                if (!instructionInterface.activeSelf)
+                {
+                    ReadText("Menu de instruções aberto");
+                    instructionInterface.SetActive(true);
+                }
+                else
+                {
+                    ReadText("Menu de instruções fechado");
+                    instructionInterface.SetActive(false);
                 }
             }
         }

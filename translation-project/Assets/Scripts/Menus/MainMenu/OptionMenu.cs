@@ -14,8 +14,6 @@ public class OptionMenu : AbstractScreenReader {
 
     private ReadableTexts readableTexts;
 
-    public FontSizeText fontSizeText;
-
     public AudioClip selectClip;
 
     void Start()
