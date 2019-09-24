@@ -13,9 +13,6 @@ public abstract class AbstractCardManager : MonoBehaviour {
     public Image currentCard;
     public Image nextCard;
 
-    public Button likeButton;
-    public Button dislikeButton;
-
     public TMPro.TextMeshProUGUI cardName;
     
     public int cardIndex;
@@ -39,19 +36,16 @@ public abstract class AbstractCardManager : MonoBehaviour {
 
     public void SwipeNegative()
     {
-        SetButtonsInteractable(false);
         StartCoroutine(SwipeNegativeCoroutine());
     }
 
     public void SwipePositive()
     {
-        SetButtonsInteractable(false);
         StartCoroutine(SwipePositiveCoroutine());
     }
 
     public void SwipePositiveScaled()
     {
-        SetButtonsInteractable(false);
         StartCoroutine(SwipePositiveScaledCoroutine());
     }
 
@@ -98,7 +92,6 @@ public abstract class AbstractCardManager : MonoBehaviour {
 
     public void NextCard()
     {
-        Debug.Log("cardIndex: "+cardIndex);
         cardIndex++;
 
         if (cardIndex < sprites.Length)
@@ -112,25 +105,12 @@ public abstract class AbstractCardManager : MonoBehaviour {
                 nextCard.sprite = sprites[cardIndex + 1];
                 nextCard.name = sprites[cardIndex + 1].name;
             }
-            else
-            {
-                nextCard.sprite = sprites[0];
-                nextCard.name = sprites[0].name;
-            }
         }
         else
         {
             Debug.Log("fim das cartas");
-            cardIndex = 0;
         }
 
         ResetPosition();
-        SetButtonsInteractable(true);
-    }
-
-    public void SetButtonsInteractable(bool value)
-    {
-        likeButton.interactable = value;
-        dislikeButton.interactable = value;
     }
 }
