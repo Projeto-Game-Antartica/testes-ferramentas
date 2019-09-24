@@ -5,21 +5,39 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 
-public class Homeostase : AbstractCardManager {
+public class Homeostase : MonoBehaviour {
+
+    public Vector3 initialPosition;
+
+    public Sprite[] sprites;
+
+    public Image currentCard;
+    public Image nextCard;
+
+    public TMPro.TextMeshProUGUI cardName;
 
     public Image kcalBar;
+<<<<<<< Updated upstream:translation-project/Assets/Scripts/Homeostase/Homeostase.cs
+
+    private int cardIndex;
+
 =======
+    public Transform alimentos;
     //private int cardIndex;
+>>>>>>> Stashed changes:translation-project/Assets/Scripts/Cartas/Homeostase/Homeostase.cs
     private float kcal;
     private readonly int MAX_KCAL = 2000;
+<<<<<<< Updated upstream:translation-project/Assets/Scripts/Homeostase/Homeostase.cs
+
+=======
     public Image[] alimentosCesta;
     private int alimentosCestaIndex = 20;
 
     public GameObject alimentoCestaPrefab;
-    public Image[] alimentosCesta;
 
-    private int alimentosCestaIndex = 0;
-
+    private List<GameObject> alimentosCestaList;
+    
+>>>>>>> Stashed changes:translation-project/Assets/Scripts/Cartas/Homeostase/Homeostase.cs
 	// Use this for initialization
 	void Start ()
     {
@@ -37,23 +55,61 @@ public class Homeostase : AbstractCardManager {
         nextCard.name = sprites[cardIndex + 1].name;
 
         initialPosition = currentCard.transform.parent.position;
+	}
+
+    public void SwipePositive()
+    {
+        currentCard.transform.parent.DOMoveX(400, 1);
+        currentCard.transform.parent.DOMoveY(-300, 2);
+        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
     }
 
-    override public void CheckLike()
+    public void SwipeNegative()
+    {
+        StartCoroutine(SwipeNegativeCoroutine());
+    }
+
+<<<<<<< Updated upstream:translation-project/Assets/Scripts/Homeostase/Homeostase.cs
+    public void SwipePositiveScaled()
+    {
+        StartCoroutine(SwipePositiveCoroutine());
+    }
+
+    public IEnumerator SwipeNegativeCoroutine()
+    {
+        currentCard.transform.parent.DOMoveX(-400, 1);
+        currentCard.transform.parent.DOMoveY(-300, 2);
+        currentCard.transform.parent.DORotate(new Vector3(0, 0, 45), 2);
+
+        yield return new WaitForSeconds(1f);
+
+        CheckDislike();
+    }
+    
+    public IEnumerator SwipePositiveCoroutine()
+    {
+        int delta = Random.Range(0, 80);
+        currentCard.transform.parent.DOMoveX(120 + delta, 1);
+        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
+        currentCard.transform.parent.DOScale(new Vector3(0.4f, 0.4f), 2);
+
+        yield return new WaitForSeconds(2f);
+
+        CheckLike();
+    }
+
+    public void ResetPosition()
+    {
+        currentCard.transform.parent.position = initialPosition;
+        currentCard.transform.parent.rotation = Quaternion.identity;
+        currentCard.transform.parent.DOScale(Vector3.one, 0);
+    }
+
+    public void CheckLike()
     {
         // do something
-        Transform cardImage = currentCard.GetComponentInChildren<Image>().transform;
-
-        Instantiate(cardImage, currentCard.transform.position, Quaternion.identity, alimentos);
-
-        if (alimentosCestaIndex < 20)
-        {
-            alimentosCesta[alimentosCestaIndex].color = new Color(1, 1, 1, 1);
-            alimentosCesta[alimentosCestaIndex].sprite = currentCard.GetComponentInChildren<Image>().sprite;
-            alimentosCesta[alimentosCestaIndex].preserveAspect = true;
-            alimentosCestaIndex++;
-        }
-
+        switch(currentCard.name.ToLower())
+=======
         //Instantiate(cardImage, currentCard.transform.position, Quaternion.identity, alimentos);
         var alimentoCesta = Instantiate(alimentoCestaPrefab, currentCard.transform.position, Quaternion.identity, alimentos);
         alimentoCesta.name = currentCard.name;
@@ -93,7 +149,8 @@ public class Homeostase : AbstractCardManager {
     // true to add calories, false to remove calories
     public void CheckCalories(string cardName, bool add)
     {
-        switch (currentCard.name.ToLower())
+        switch (cardName.ToLower())
+>>>>>>> Stashed changes:translation-project/Assets/Scripts/Cartas/Homeostase/Homeostase.cs
         {
             case "abacate":
                 if (add) kcal += 160;
@@ -179,18 +236,46 @@ public class Homeostase : AbstractCardManager {
                 kcal += 0;
                 break;
         }
+
+<<<<<<< Updated upstream:translation-project/Assets/Scripts/Homeostase/Homeostase.cs
         CheckCalories(kcal);
         NextCard();
     }
 
-    override public void CheckDislike()
+    public void CheckDislike()
     {
         // do something else
         NextCard();
     }
-    
+
+    private void NextCard()
+    {
+        cardIndex++;
+
+        if (cardIndex < sprites.Length)
+        {
+            currentCard.sprite = nextCard.sprite;
+            currentCard.name = sprites[cardIndex].name;
+            cardName.text = currentCard.name;
+
+            if (cardIndex < sprites.Length - 1)
+            {
+                nextCard.sprite = sprites[cardIndex + 1];
+                nextCard.name = sprites[cardIndex + 1].name;
+            }
+        }
+        else
+        {
+            Debug.Log("fim das cartas");
+        }
+
+        ResetPosition();
+    }
+
     public void CheckCalories(float kcal)
     {
+=======
+>>>>>>> Stashed changes:translation-project/Assets/Scripts/Cartas/Homeostase/Homeostase.cs
         // normalize
         kcalBar.fillAmount = kcal / MAX_KCAL;
 
