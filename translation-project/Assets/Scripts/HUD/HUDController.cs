@@ -8,8 +8,6 @@ public class HUDController : MonoBehaviour {
 
     private const float time = 0.03f;
 
-    public GameObject instructionInterface;
-
     // bag bar settings
     public Image bar;
     public Image camera_inv;
@@ -28,13 +26,6 @@ public class HUDController : MonoBehaviour {
     public GameObject missionDescription;
     private readonly int INFO = 2;
 
-    private void Start()
-    {
-        // "InstructionInterface" set on the main menu script
-        if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0) 
-            ActivateInstructionInterface();
-    }
-
     private void LateUpdate()
     {
         if (!PlayerPreferences.M004_Memoria)
@@ -49,11 +40,6 @@ public class HUDController : MonoBehaviour {
            
     }
 
-    public void ActivateInstructionInterface()
-    {
-        instructionInterface.SetActive(true);
-        PlayerPrefs.SetInt("InstructionInterface", 1);
-    }
 
     public void HandleBagBar()
     {

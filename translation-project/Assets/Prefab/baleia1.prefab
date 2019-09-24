@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 222475018143512688}
   - component: {fileID: 114211055575553380}
   - component: {fileID: 114145787985324082}
-  - component: {fileID: 114114622498908906}
+  - component: {fileID: 114145160227713802}
   m_Layer: 5
   m_Name: baleia1
   m_TagString: Untagged
@@ -47,7 +47,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114114622498908906
+--- !u!114 &114145160227713802
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,22 +55,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786874486998472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d19bd9462edac364eb3ef57ba66bd015, type: 3}
+  m_Script: {fileID: 11500000, guid: 09982f1f3fa7f6d4cb72ef0b6f9b9729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whaleController: {fileID: 0}
+  panelCatalog: {fileID: 0}
+  scrollSnapImage: {fileID: 114211055575553380}
   contornoBaleiaPrincipal: {fileID: 0}
   whaleSprite: {fileID: 114872458202766206}
-  inputField: {fileID: 0}
-  nova_baleia: {fileID: 0}
-  buttons:
-  - {fileID: 0}
-  - {fileID: 1786874486998472}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  saveButton: {fileID: 0}
 --- !u!114 &114145787985324082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +102,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114114622498908906}
+      - m_Target: {fileID: 114145160227713802}
         m_MethodName: CheckWhale
         m_Mode: 1
         m_Arguments:
@@ -169,7 +161,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7d5ff7142ffc499408ef7084fca96311, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0b2a3931d4e4cf4eaa41b4b190b15d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -204,10 +196,10 @@ RectTransform:
   m_Father: {fileID: 224829731506883980}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
+  m_SizeDelta: {x: 70, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224829731506883980
 RectTransform:
@@ -217,7 +209,7 @@ RectTransform:
   m_GameObject: {fileID: 1786874486998472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -24.20005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1.8974974, z: 0.9999849}
   m_Children:
   - {fileID: 224556270806805084}
   m_Father: {fileID: 0}
@@ -225,6 +217,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 340.40015, y: -99.90001}
-  m_SizeDelta: {x: 226, y: 179}
+  m_AnchoredPosition: {x: 113.90015, y: -100}
+  m_SizeDelta: {x: 75, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}

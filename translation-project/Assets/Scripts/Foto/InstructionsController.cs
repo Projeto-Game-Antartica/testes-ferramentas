@@ -11,33 +11,18 @@ public class InstructionsController : AbstractScreenReader {
     public TextMeshProUGUI ui_instructions;
     public Button first_button;
 
-    //public Button resetButton;
-    public Button backButton;
-
     private ReadableTexts readableTexts;
-
-    public GameObject instructionInterface;
     
     public void Start()
     {
         //Parameters.HIGH_CONTRAST = true;
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
-        //ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_identification, LocalizationManager.instance.GetLozalization());
+        ui_instructions.text = readableTexts.GetReadableText(ReadableTexts.key_foto_identification, LocalizationManager.instance.GetLozalization());
         ReadText(ui_title.text);
         ReadInstructions();
         first_button.Select();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (!instructionInterface.activeSelf)
-                instructionInterface.SetActive(true);
-            else
-                instructionInterface.SetActive(false);
-        }
-    }
     public void ReadButtonText(Text button_text)
     {
         ReadText(button_text.text);
@@ -53,7 +38,7 @@ public class InstructionsController : AbstractScreenReader {
         SceneManager.LoadScene(ScenesNames.Menu); 
     }
 
-    public void ReturnToShip()
+    public void ReturnToAntarticaScene()
     {
         SceneManager.LoadScene(ScenesNames.M004Ship);
     }
@@ -61,8 +46,6 @@ public class InstructionsController : AbstractScreenReader {
     public void PlayGame()
     {
         gameObject.SetActive(false);
-        backButton.interactable = true;
-        //resetButton.interactable = true;
         ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
     }

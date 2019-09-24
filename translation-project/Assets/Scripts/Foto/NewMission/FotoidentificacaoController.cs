@@ -57,8 +57,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private int attempts = 0;
     public GameObject LoseImage;
 
-    public TextMeshProUGUI attemptsText;
-
     /*
      *  Set the GameObjects on the inspector according to the view. Answers options in line or in rows.
      *  For row option: with design purposes, the order of columns is 1,0,2.
@@ -90,26 +88,20 @@ public class FotoidentificacaoController : AbstractScreenReader {
     {
         if(isCorrect(option.GetComponentInChildren<Text>(), roundIndex))
         {
-            Debug.Log(option.GetComponentInChildren<Text>().text);
             // enable the next button
             nextButton.gameObject.SetActive(true);
             // needed to check after enabling gameobject
             if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
             ChangeBackgroundColor(option, Color.green);
-
-            PlayerPreferences.M004_FotoIdentificacao = true;
         }
         else
         {
             attempts++;
-            attemptsText.text = "Erros: " + attempts;
-
             Debug.Log(attempts);
             ChangeBackgroundColor(option, Color.red);
-            if (attempts > 3)
+            if (attempts >= 3)
             {
                 LoseImage.SetActive(true);
-                StartCoroutine(ReturnToShipCoroutine());
             }
         }
     }
@@ -415,12 +407,5 @@ public class FotoidentificacaoController : AbstractScreenReader {
     public void ReturnToShip()
     {
         SceneManager.LoadScene("ShipScene");
-    }
-
-    public IEnumerator ReturnToShipCoroutine()
-    {
-        yield return new WaitForSeconds(7f);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

@@ -16,7 +16,6 @@ public class HighContrastText : MonoBehaviour {
     public static TMP_FontAsset arialFont   = Resources.Load<TMP_FontAsset>("Fonts/ARIAL SDF");
     public static TMP_FontAsset bgothmFont  = Resources.Load<TMP_FontAsset>("Fonts/bgothm SDF");
     public static TMP_FontAsset swiss       = Resources.Load<TMP_FontAsset>("Fonts/Swiss 721 SDF");
-    public static TMP_FontAsset averageFont       = Resources.Load<TMP_FontAsset>("Fonts/AverageSans SDF");
 
     /*
      * Change the background color of text using TextMeshProUGUI
@@ -38,7 +37,7 @@ public class HighContrastText : MonoBehaviour {
         text.font = arialFont;
         text.fontSize = 24;
         text.fontStyle = FontStyles.Bold;
-        //text.fontStyle = FontStyles.UpperCase;
+        text.fontStyle = FontStyles.UpperCase;
         //Debug.Log(text.text);
         text.text = "<font=\"LiberationSans SDF\"><mark=#000000>" + text.text + "</mark>";
     }
@@ -71,7 +70,7 @@ public class HighContrastText : MonoBehaviour {
             image.color = tempColor;
 
             text.font = arialFont;
-            //text.fontStyle = FontStyles.UpperCase;
+            text.fontStyle = FontStyles.UpperCase;
         }
     }
 
@@ -95,9 +94,6 @@ public class HighContrastText : MonoBehaviour {
                     break;
                 case "swiss":
                     text.font = swiss;
-                    break;
-                case "average":
-                    text.font = averageFont;
                     break;
                 default:
                     text.font = arialFont;

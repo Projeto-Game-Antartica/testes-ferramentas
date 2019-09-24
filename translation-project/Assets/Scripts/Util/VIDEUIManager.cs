@@ -218,13 +218,12 @@ public class VIDEUIManager : AbstractScreenReader
             {
                 AlertDialog.SetActive(true);
                 url = (string)data.extraVars["OpenURL"];
-                //Debug.Log(url);
+                Debug.Log(url);
             }
 
             if(data.extraVars.ContainsKey("AddEXP"))
             {
                 AddExperience();
-                mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
             }
         }
 
@@ -535,34 +534,26 @@ public class VIDEUIManager : AbstractScreenReader
 
         string[] words = text.Split(' ');
 
-        char[] letters = text.ToCharArray();
-
-
-        for(int i = 0; i<letters.Length; i++)
+        for (int i = 0; i < words.Length; i++)
         {
-            NPC_Text.text += letters[i];
-            yield return new WaitForSeconds(time);
+            string word = words[i];
+            if (i != words.Length - 1) word += " ";
+
+            string previousText = NPC_Text.text;
+
+            float lastHeight = NPC_Text.preferredHeight;
+            NPC_Text.text += word;
+            if (NPC_Text.preferredHeight > lastHeight)
+            {
+                previousText += System.Environment.NewLine;
+            }
+
+            for (int j = 0; j < word.Length; j++)
+            {
+                NPC_Text.text = previousText + word.Substring(0, j + 1);
+                yield return new WaitForSeconds(time);
+            }
         }
-        //for (int i = 0; i < words.Length; i++)
-        //{
-        //    string word = words[i];
-        //    if (i != words.Length - 1) word += " ";
-
-        //    string previousText = NPC_Text.text;
-
-        //    float lastHeight = NPC_Text.preferredHeight;
-        //    NPC_Text.text += word;
-        //    if (NPC_Text.preferredHeight > lastHeight)
-        //    {
-        //        previousText += System.Environment.NewLine;
-        //    }
-
-        //    for (int j = 0; j < word.Length; j++)
-        //    {
-        //        NPC_Text.text = previousText + word.Substring(0, j + 1);
-        //        yield return new WaitForSeconds(time);
-        //    }
-        //}
         NPC_Text.text = text;
 
         // Make screenreader read the text. Reads after animation

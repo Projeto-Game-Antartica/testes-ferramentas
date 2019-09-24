@@ -12,15 +12,11 @@ public class ContentPanelController : AbstractScreenReader {
     public GameObject panelNomear;
     public GameObject panelOptions;
     public GameObject panelFotoidentificacao;
-    public GameObject instructionInterface;
     public GameObject titleText;
     public Button saveButton;
-    public Button restartButton;
     public InputField whaleNameInput;
     public WhaleController whaleController;
-    public WhaleImages whaleImages;
     public GameObject[] buttons;
-    public Button[] fotoidentificationButtons;
     public FotoidentificacaoController fotoidentificacaoController;
 
     public TextMeshProUGUI pigmentacaoTMPro;
@@ -40,10 +36,9 @@ public class ContentPanelController : AbstractScreenReader {
         //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
         
-        //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
-        //ReadInstructions();
+        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        ReadInstructions();
         first_button.Select();
-        
     }
 
     // Update is called once per frame
@@ -51,10 +46,6 @@ public class ContentPanelController : AbstractScreenReader {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            if (!instructionInterface.activeSelf)
-                instructionInterface.SetActive(true);
-            else
-                instructionInterface.SetActive(false);
             ReadInstructions();
         }
 
@@ -74,10 +65,9 @@ public class ContentPanelController : AbstractScreenReader {
 
         CheckFotoidentificacaoButtons();
 
-        //Debug.Log(Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
-        //    && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE);
+        Debug.Log(Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
+            && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE);
 	}
-    
     
     private void OnEnable()
     {
@@ -93,19 +83,6 @@ public class ContentPanelController : AbstractScreenReader {
     {
         gameObject.SetActive(false);
         panelCatalogo.SetActive(true);
-    }
-
-    public void SetWhalePhoto()
-    {
-        // adaptint to choose a whale (from cameraOverlay)
-        // reset the panel
-        whaleImages.SetPhotographedWhaleImage(null);
-        SetFotoidentificacaoParameters(false);
-        SetFotoidentificationButtons(true);
-        StartCoroutine(GetWhaleInfo());
-        saveButton.interactable = true;
-        restartButton.interactable = true;
-        Debug.Log("whale photo set");
     }
 
     public void StartFotoidenfiticacao(TextMeshProUGUI type)
@@ -222,61 +199,8 @@ public class ContentPanelController : AbstractScreenReader {
         if (Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
             && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE)
         {
-            // wins the game
             PlayerPreferences.M004_FotoIdentificacao = true;
             WinImage.SetActive(true);
-            // return to ship after 3 seconds
-            StartCoroutine(ReturnToShipCoroutine());
         }
-    }
-
-    // set the fotoidentificacao parameters to false to begin the proccess 
-    // false = buttons interactables, true = button not interactables
-    public void SetFotoidentificacaoParameters(bool value)
-    {
-        Parameters.ISPIGMENTACAODONE = value;
-        Parameters.ISMANCHASDONE = value;
-        Parameters.ISRISCOSDONE = value;
-        Parameters.ISMARCASDONE = value;
-        Parameters.ISBORDADONE = value;
-        Parameters.ISPONTADONE = value;
-        Parameters.ISENTALHEDONE = value;
-    }
-
-    public void SetFotoidentificationButtons(bool value)
-    {
-        foreach (Button b in fotoidentificationButtons)
-        {
-            b.interactable = value;
-        }
-    }
-
-    // retrieve whale info according to WhaleData class
-    public IEnumerator GetWhaleInfo()
-    {
-        yield return new WaitForEndOfFrame();
-
-        // get and random id
-        Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
-        //Parameters.WHALE_ID = 7;
-
-        // get the whale from random id
-        WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);
-
-        Debug.Log(whale.image_path);
-
-        // set the image to all panels
-        //panelImage.sprite = Resources.Load<Sprite>(whale.image_path);
-        whaleImages.SetPhotographedWhaleImage(whale.image_path);
-
-        // set the image to the catalog panel
-        //catalogImage.sprite = panelImage.sprite;
-    }
-
-    public IEnumerator ReturnToShipCoroutine()
-    {
-        yield return new WaitForSeconds(7f);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

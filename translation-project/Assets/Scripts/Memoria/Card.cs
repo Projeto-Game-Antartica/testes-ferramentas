@@ -6,15 +6,11 @@ using UnityEngine.EventSystems;
 
 public class Card : AbstractScreenReader, ISelectHandler {
 
-    public const int VIRADA_BAIXO = 0;
-    public const int VIRADA_CIMA  = 1;
-
     public static bool DO_NOT = false;
 
     public int state { get; set; }
     public int cardValue { get; set; }
     public bool initialized { get; set; }
-    public bool isText { get; set; }
    
     private Sprite cardBack;
     public Sprite cardFace;
@@ -28,19 +24,19 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     private void Start()
     {
-        state = VIRADA_BAIXO;
+        //state = 0;
         initialized = false;
         memoryManager = GameObject.FindGameObjectWithTag("GameController");
 
-        //StartCoroutine(showCards());
+        StartCoroutine(showCards());
     }
 
-    //public IEnumerator showCards()
-    //{
-    //    yield return new WaitForSeconds(9);
-    //    if(!isText) state = 0;
-    //    turnCardDown();
-    //}
+    public IEnumerator showCards()
+    {
+        yield return new WaitForSeconds(9);
+        state = 0;
+        turnCardDown();
+    }
 
     public void setupGraphics(int choice)
     {
@@ -50,16 +46,13 @@ public class Card : AbstractScreenReader, ISelectHandler {
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
             cardText = null;
             gameObject.name += ": " + cardFace.name;
-            isText = false;
         }
         else if (choice == MemoryManager.CARDTEXT)
         {
             cardText = memoryManager.GetComponent<MemoryManager>().getCardText(cardValue);
             cardFace = null;
             gameObject.name += ": " + cardText.name;
-            isText = true;
         }
-        //state = 1;
 
         flipCard();
 
@@ -68,32 +61,21 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void flipCard()
     {
-        //if (isText)
-        //{
-        //    state = 1;
-        //    GetComponent<Image>().sprite = cardText;
-        //}
+        if (state == 0)
+            state = 1;
+        //else if (state == 1)
+        //    state = 0;
 
-        if (state == VIRADA_BAIXO)
-            state = VIRADA_CIMA;
-        else if (state == VIRADA_CIMA)
-            state = VIRADA_BAIXO;
-
-        if (state == VIRADA_BAIXO && !DO_NOT)
-        {
+        if (state == 0 && !DO_NOT)
             GetComponent<Image>().sprite = cardBack;
-
-            if(isText)
-                GetComponent<Image>().sprite = cardText;
-        }
-        else if (state == VIRADA_CIMA && !DO_NOT)
+        else if (state == 1 && !DO_NOT)
         {
             if (cardText == null)
                 GetComponent<Image>().sprite = cardFace;
             else
                 GetComponent<Image>().sprite = cardText;
 
-            if (_init)
+            if(_init)
             {
                 string objectName = CardsDescription.GetCardDescription(gameObject.name);
 
@@ -109,27 +91,20 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void turnCardDown()
     {
+        GetComponent<Image>().sprite = cardBack;
 
-        if(!isText) GetComponent<Image>().sprite = cardBack;
-
-        state = VIRADA_BAIXO;
         DO_NOT = false;
     }
 
     IEnumerator pause()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1);
 
-        if (state == VIRADA_BAIXO)
+        if (state == 0)
+            GetComponent<Image>().sprite = cardBack;
+        else if (state == 1)
         {
-            if(isText)
-                GetComponent<Image>().sprite = cardText;
-            else
-                GetComponent<Image>().sprite = cardBack;
-        }
-        else if (state == VIRADA_CIMA)
-        {
-            if (cardText == null)
+            if(cardText == null)
                 GetComponent<Image>().sprite = cardFace;
             else
                 GetComponent<Image>().sprite = cardText;
@@ -142,9 +117,9 @@ public class Card : AbstractScreenReader, ISelectHandler {
     {
         //Debug.Log(state);
 
-        if (state == VIRADA_BAIXO || state == VIRADA_CIMA && !isText)
+        if (state == 0 || state == 1)
         {
-            //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+            Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
             ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
         }
         else
@@ -157,7 +132,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public void ReadAndDebugCardText(string objectName)
     {
         // numero da carta + descrição ou numero da carta + nome do animal
-        //Debug.Log(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
+        Debug.Log(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
         ReadText(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
     }
 

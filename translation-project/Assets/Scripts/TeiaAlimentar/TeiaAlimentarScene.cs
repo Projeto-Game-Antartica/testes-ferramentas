@@ -17,41 +17,15 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public LifeExpController lifeExpController;
 
-    public Button resetButton;
-    public Button backButton;
-
-    private bool started = false;
-
-    private float timerCount;
-    private float timeInSeconds;
-    private int timeInMinutes;
-
-    public GameObject instructionInterface;
-
-    public void StartTimer()
+    private void Start()
     {
         initialMinutes = 9f;
         initialSeconds = 59f;
-
-        timerCount = 0;
-
-        started = true;
-
-        resetButton.interactable = true;
-        backButton.interactable = true;
     }
 
     private void Update()
     {
-        if(started) HandleTimer();
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (!instructionInterface.activeSelf)
-                instructionInterface.SetActive(true);
-            else
-                instructionInterface.SetActive(false);
-        }
+        HandleTimer();
     }
 
     public void ResetGameObjects()
@@ -69,13 +43,8 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public void HandleTimer()
     {
-        timerCount += Time.deltaTime;
-
-        elapsedMinutes = (int)initialMinutes - (int)(timerCount / 60f);
-        elapsedSeconds = (int)initialSeconds - (int)(timerCount % 60f);
-
-        //elapsedMinutes = (int)initialMinutes - (int)(Time.timeSinceLevelLoad / 60f);
-        //elapsedSeconds = (int)initialSeconds - (int)(Time.timeSinceLevelLoad % 60f);
+        elapsedMinutes = (int)initialMinutes - (int)(Time.timeSinceLevelLoad / 60f);
+        elapsedSeconds = (int)initialSeconds - (int)(Time.timeSinceLevelLoad % 60f);
 
         timer.text = elapsedMinutes.ToString("00") + ":" + elapsedSeconds.ToString("00");
 
@@ -86,8 +55,6 @@ public class TeiaAlimentarScene : MonoBehaviour {
             // do something
             LoseImage.SetActive(true);
             lifeExpController.AddEXP(0.0001f);
-
-            StartCoroutine(ReturnToShipCoroutine()); // volta para o navio
         }
     }
 
@@ -128,12 +95,5 @@ public class TeiaAlimentarScene : MonoBehaviour {
         {
             audioSlider.gameObject.SetActive(true);
         }
-    }
-
-    public IEnumerator ReturnToShipCoroutine()
-    {
-        yield return new WaitForSeconds(7f);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

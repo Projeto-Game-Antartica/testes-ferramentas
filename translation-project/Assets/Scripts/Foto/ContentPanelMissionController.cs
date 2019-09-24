@@ -10,11 +10,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public Button saveButton;
     public InputField whaleNameInput;
     public WhaleController whaleController;
-    public GameObject confirmFoto;
 
     private ReadableTexts readableTexts;
-
-    public TextMeshProUGUI confirmText;
     
     private void Start()
     {
@@ -63,13 +60,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
         else
         {
             whaleController.getWhaleById(Parameters.WHALE_ID).whale_name = whaleNameInput.text;
-            confirmFoto.SetActive(true);
-
-            if(!whaleController.getWhaleById(Parameters.WHALE_ID).whale_name.Equals(""))
-                confirmText.text = "Baleia identificada. Deseja fazer nova foto?";
-            else
-                confirmText.text = "Baleia cadastrada. Deseja fazer nova foto?";
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 
@@ -79,8 +70,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
         string whale_name = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
 
-        Debug.Log(whale_name);
-
         if (!whale_name.Equals(""))
         {
             Debug.Log(whale_name);
@@ -89,7 +78,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
             whaleNameInput.interactable = false;
         }
         else
-        {
+        { 
             whaleNameInput.interactable = true;
             whaleNameInput.Select();
         }
@@ -101,10 +90,5 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public void ClearNameInputField()
     {
         whaleNameInput.text = string.Empty;
-    }
-
-    public void ReturnToShip()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }
