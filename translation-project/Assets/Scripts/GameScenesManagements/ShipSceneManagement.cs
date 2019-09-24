@@ -18,11 +18,13 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     public TextMeshProUGUI warningText;
 
+    //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
+
     public void Start()
     {
         isTrigger = false;
 
-        StartCoroutine(InitialInstruction());
+        //InitialInstruction();
 
         if (PlayerPrefs.GetInt("Saved") == 1)
         {
@@ -36,7 +38,8 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     private void Update()
     {
-        if (isTrigger && Input.GetKeyDown(KeyCode.E))
+
+        if (isTrigger && Input.GetKeyDown(KeyCode.Return))
         {
             positionSceneChange = new Vector3(transform.position.x, transform.position.y);
             // save the position when loading another scene
@@ -48,6 +51,12 @@ public class ShipSceneManagement : AbstractScreenReader {
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
                 SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
+
+        //if (character.isWalking && warningText.text == initialInstruction)
+        //{
+        //    warningInterface.SetActive(false);
+        //    ReadText("Painel de instruções iniciais fechado.");
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -64,7 +73,7 @@ public class ShipSceneManagement : AbstractScreenReader {
         {
             warningInterface.SetActive(true);
             if (PlayerPreferences.finishedAllM004Games())
-                warningText.text = "Você concluiu todos os minijogos com sucesso. Agora, pressione E para realizar o desafio.";
+                warningText.text = "Você concluiu todos os minijogos com sucesso. Agora, pressione ENTER para realizar o desafio.";
             else
                 warningText.text = "Para realizar a missão é necessário concluir todos os minijogos. " + "Finalize os seguintes minijogos: " +
                     (PlayerPreferences.M004_FotoIdentificacao == false ? "Fotoidentificação de baleias; " : "") +
@@ -86,15 +95,11 @@ public class ShipSceneManagement : AbstractScreenReader {
         colliderControl = null;
     }
 
-    private IEnumerator InitialInstruction()
-    {
-        ReadText("Painel de instruções iniciais aberto");
-        warningInterface.SetActive(true);
-        warningText.text = "Conheça o navio e converse com os pesquisadores para novos desafios.";
-        ReadText(warningText.text);
-        yield return new WaitForSeconds(10f);
-
-        warningInterface.SetActive(false);
-        ReadText("Painel de instruções iniciais fechado.");
-    }
+    //private void InitialInstruction()
+    //{
+    //    ReadText("Painel de instruções iniciais aberto");
+    //    warningInterface.SetActive(true);
+    //    warningText.text = initialInstruction;
+    //    ReadText(warningText.text);
+    //}
 }

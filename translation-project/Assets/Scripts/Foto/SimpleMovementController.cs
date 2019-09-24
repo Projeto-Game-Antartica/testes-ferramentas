@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SimpleMovementController : MonoBehaviour {
 
+    private string spriteFinalName = "15";
+    
     // determined via editor
     public SpriteRenderer spriteRenderer;
     public SphereCollider sphereCollider;
@@ -14,27 +16,51 @@ public class SimpleMovementController : MonoBehaviour {
     public bool isWhale;
 
     public float speed;
-    public float TIMER;
+    //public float TIMER;
 
-    private float hidingTime;
-    private float showingTime;
+    //private float hidingTime;
+    //private float showingTime;
+
+    Animator animator;
 
     private void Start()
     {
-        hidingTime  = TIMER;
-        showingTime = TIMER;
+        //hidingTime  = TIMER;
+        //showingTime = TIMER;
         if (isWhale)    audioSource = GetComponent<AudioSource>();
+
+        if (isWhale)
+        {
+            animator = GetComponent<Animator>();
+            StartCoroutine(WhaleAnimationCoroutine());
+        }
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if(isWhale)
-        {
-            WhaleAnimation();
-        }
-
         SimpleMovement();
+    }
+
+    private void LateUpdate()
+    {
+        if (isWhale)
+        {
+            if (spriteRenderer.sprite.name.Equals(spriteFinalName))
+            {
+                //Debug.Log("waiting....");
+                spriteRenderer.enabled = false;
+                sphereCollider.enabled = false;
+                Parameters.ISWHALEONCAMERA = false;
+
+                if (audioSource.isPlaying) audioSource.Stop();
+            }
+            else
+            {
+                spriteRenderer.enabled = true;
+                sphereCollider.enabled = true;
+            }
+        }
     }
 
     private void SimpleMovement()
@@ -61,30 +87,43 @@ public class SimpleMovementController : MonoBehaviour {
         }
     }
 
-    private void WhaleAnimation()
+    //private void WhaleAnimation()
+    //{
+    //    hidingTime -= Time.deltaTime;
+
+    //    if (hidingTime <= 0)
+    //    {
+    //        spriteRenderer.enabled = true;
+    //        sphereCollider.enabled = true;
+
+    //        showingTime -= Time.deltaTime;
+
+    //        if (!audioSource.isPlaying) audioSource.Play();
+
+    //        if (showingTime <= 0)
+    //        {
+    //            spriteRenderer.enabled = false;
+    //            sphereCollider.enabled = false;
+    //            Parameters.ISWHALEONCAMERA = false;
+
+    //            hidingTime = TIMER;
+    //            showingTime = TIMER;
+
+    //            if (audioSource.isPlaying) audioSource.Stop();
+    //        }
+    //    }
+    //}
+
+    private IEnumerator WhaleAnimationCoroutine()
     {
-        hidingTime -= Time.deltaTime;
-
-        if (hidingTime <= 0)
+        while(true)
         {
-            spriteRenderer.enabled = true;
-            sphereCollider.enabled = true;
-
-            showingTime -= Time.deltaTime;
-
             if (!audioSource.isPlaying) audioSource.Play();
-
-            if (showingTime <= 0)
-            {
-                spriteRenderer.enabled = false;
-                sphereCollider.enabled = false;
-                Parameters.ISWHALEONCAMERA = false;
-
-                hidingTime = TIMER;
-                showingTime = TIMER;
-
-                if (audioSource.isPlaying) audioSource.Stop();
-            }
+            float rand = Random.Range(5, 15);
+            //Debug.Log("set trigger");
+            animator.SetTrigger("trigger");
+            
+            yield return new WaitForSeconds(rand);
         }
     }
 }

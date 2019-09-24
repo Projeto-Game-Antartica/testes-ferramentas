@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // content panel objects
     public GameObject panelInstruction;
     public GameObject panelContent;
+    public GameObject warningInterface;
     public Image panelImage;
     public Button saveButton;
     public Button cadastrarButton;
@@ -25,6 +27,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public Text latitude;
     public Text longitude;
     public InputField nameInputField;
+
+    public Sprite cenario;
 
     // catalog panel objects
     //public Image catalogImage;
@@ -39,6 +43,11 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // instructions texts
     private ReadableTexts readableTexts;
 
+    // array containing the 8 indexes for photo
+    // sort the array for randomization
+    private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    private int index;
+
     // feedback texts
     private const string NEGATIVE_FB = "A fotografia não ficou muito legal. Tente novamente.";
     private const string POSITIVE_FB = "A fotografia ficou ótima!";
@@ -46,6 +55,12 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     private void Start()
     {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+
+        // randomize the indexes
+        System.Random r = new System.Random();
+        whaleIndexes = whaleIndexes.OrderBy(x => r.Next()).ToArray();
+
+        index = 0;
     }
 
     // Update is called once per frame
@@ -114,21 +129,29 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         nameInputField.text = null;
         nameInputField.interactable = false;
 
+        warningInterface.SetActive(false);
+        panelContent.SetActive(true);
+
         // show a whale image
         if (Parameters.ISWHALEONCAMERA)
         {
             StartCoroutine(GetWhaleInfo());
             // positive feedback
             ReadText(POSITIVE_FB);
-            panelContent.SetActive(true);
-            cadastrarButton.interactable = true;
         }
         else
         {
             // whale is not on the camera, take a screenshot
-            StartCoroutine(captureScreenshot());
+            //StartCoroutine(captureScreenshot());
+            warningInterface.SetActive(true);
+
+            // set the screenshot on panel image
+            panelImage.sprite = cenario;
+
             // negative feedback
             ReadText(NEGATIVE_FB);
+
+            Parameters.WHALE_ID = -1;
         }
 
         if (Parameters.ACCESSIBILITY)
@@ -174,8 +197,11 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         yield return new WaitForEndOfFrame();
 
         // get and random id
-        Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
+        //Parameters.WHALE_ID = Random.Range(Parameters.MIN_ID, Parameters.MAX_ID);
         //Parameters.WHALE_ID = 1;
+
+        // get an whale index starting from 1
+        Parameters.WHALE_ID = whaleIndexes[index];
 
         // get the whale from random id
         WhaleData whale = whaleController.getWhaleById(Parameters.WHALE_ID);
@@ -198,12 +224,25 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
         // set the image to the catalog panel
         //catalogImage.sprite = panelImage.sprite;
+
+        // increment whale index
+        index++;
+        if (index >= whaleIndexes.Length)
+            index = 0;
+
+        if(!whale.whale_name.Equals(""))
+            cadastrarButton.interactable = false;
+        else
+            cadastrarButton.interactable = true;
+        //Debug.Log(index);
     }
 
     // screenshot coroutine
     public IEnumerator captureScreenshot()
     {
         yield return new WaitForEndOfFrame();
+
+        Parameters.WHALE_ID = -1;
 
         // just a simple way to not override any screenshot. System.DateTime.Now format = "MM/DD/YYYY HH:MM:SS AM/PM"
         //string path = Application.persistentDataPath + "/"+ System.DateTime.Now + "whale-screenshot.png";

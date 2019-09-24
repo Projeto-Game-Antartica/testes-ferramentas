@@ -28,6 +28,9 @@ public class MainMenu : AbstractScreenReader
 
     void Start()
     {
+        // set the parameter to show the instruction interface when loading the game
+        PlayerPrefs.SetInt("InstructionInterface", 0);
+        
         // localization
         LocalizationManager.instance.LoadLocalizedText("locales_ptbr.json");
 
@@ -58,7 +61,7 @@ public class MainMenu : AbstractScreenReader
         }
 
         if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
-        else HighContrastText.RestoreToDefault("bgothm");
+        else HighContrastText.RestoreToDefault("average");
     }
 
     public void TryQuitGame()

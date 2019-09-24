@@ -35,6 +35,11 @@ public class SimpleCameraController : AbstractScreenReader {
         if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf 
             && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
         {
+            if (!panelInstruction.activeSelf)
+                panelInstruction.SetActive(true);
+            else
+                panelInstruction.SetActive(false);
+
             ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
@@ -72,8 +77,8 @@ public class SimpleCameraController : AbstractScreenReader {
             }
             else
             {
-                ReadText("Painel de instruções fechado.");
                 panelInstruction.SetActive(false);
+                ReadText("Painel de instruções fechado.");
             }
         }
     }
@@ -152,9 +157,14 @@ public class SimpleCameraController : AbstractScreenReader {
         Parameters.ISWHALEONCAMERA = true;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("trigger exit");
-        Parameters.ISWHALEONCAMERA = false;
+        Debug.Log("trigger stay");
+        Parameters.ISWHALEONCAMERA = true;
     }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("trigger exit");
+    //}
 }

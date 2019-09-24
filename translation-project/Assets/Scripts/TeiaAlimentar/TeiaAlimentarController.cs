@@ -22,6 +22,9 @@ public class TeiaAlimentarController : DragAndDropController
 
     public LifeExpController lifeExpController;
 
+    public GameObject WinImage;
+    public TMPro.TextMeshProUGUI WinText; 
+
     enum Cells
     {
         bentosCell = 1, avesMarinhasCell, pinguinsCell, baleiasCell, krillCell,
@@ -209,7 +212,16 @@ public class TeiaAlimentarController : DragAndDropController
             lifeExpController.AddEXP(0.0002f); // ganhou um item
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
+
+            if (!PlayerPreferences.M004_Memoria)
+                WinText.text = "Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.";
+            else
+                WinText.text = "Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.";
+
             PlayerPreferences.M004_TeiaAlimentar = true;
+
+
+            StartCoroutine(ReturnToShipCoroutine());
         }
     }
 
@@ -288,5 +300,12 @@ public class TeiaAlimentarController : DragAndDropController
     public bool CheckAnswer(string currentCellname, string currentItemname)
     {
         return currentCellname.Equals(currentItemname + "Cell") ? true : false;
+    }
+
+    public IEnumerator ReturnToShipCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

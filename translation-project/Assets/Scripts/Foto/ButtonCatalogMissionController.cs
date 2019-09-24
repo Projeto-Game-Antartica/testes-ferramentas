@@ -31,9 +31,9 @@ public class ButtonCatalogMissionController : MonoBehaviour {
         // id of whale on the photo
         int whale_id = Parameters.WHALE_ID;
 
-        Debug.Log(whaleController.getWhaleById(whale_id).image_path);
+        //Debug.Log(whaleController.getWhaleById(whale_id).image_path);
 
-        if (whale_image.Equals(whaleController.getWhaleById(whale_id).image_path))
+        if (Parameters.WHALE_ID != -1 && whale_image.Equals(whaleController.getWhaleById(whale_id).image_path))
         {
             GetComponent<Image>().color = Color.green;
             nova_baleia.interactable = true;
