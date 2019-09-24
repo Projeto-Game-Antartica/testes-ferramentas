@@ -4,24 +4,21 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class Homeostase : MonoBehaviour {
-
-    public Vector3 initialPosition;
-
-    public Sprite[] sprites;
-
-    public Image currentCard;
-    public Image nextCard;
-
-    public TMPro.TextMeshProUGUI cardName;
+public class Homeostase : AbstractCardManager {
 
     public Image kcalBar;
 
-    private int cardIndex;
+    public Transform alimentos;
 
+    //private int cardIndex;
+    
     private float kcal;
 
     private readonly int MAX_KCAL = 2000;
+
+    public Image[] alimentosCesta;
+
+    private int alimentosCestaIndex = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -37,59 +34,25 @@ public class Homeostase : MonoBehaviour {
         nextCard.name = sprites[cardIndex + 1].name;
 
         initialPosition = currentCard.transform.parent.position;
-	}
-
-    public void SwipePositive()
-    {
-        currentCard.transform.parent.DOMoveX(400, 1);
-        currentCard.transform.parent.DOMoveY(-300, 2);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
     }
 
-    public void SwipeNegative()
-    {
-        StartCoroutine(SwipeNegativeCoroutine());
-    }
-
-    public void SwipePositiveScaled()
-    {
-        StartCoroutine(SwipePositiveCoroutine());
-    }
-
-    public IEnumerator SwipeNegativeCoroutine()
-    {
-        currentCard.transform.parent.DOMoveX(-400, 1);
-        currentCard.transform.parent.DOMoveY(-300, 2);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, 45), 2);
-
-        yield return new WaitForSeconds(1f);
-
-        CheckDislike();
-    }
-    
-    public IEnumerator SwipePositiveCoroutine()
-    {
-        int delta = Random.Range(0, 80);
-        currentCard.transform.parent.DOMoveX(120 + delta, 1);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
-        currentCard.transform.parent.DOScale(new Vector3(0.4f, 0.4f), 2);
-
-        yield return new WaitForSeconds(2f);
-
-        CheckLike();
-    }
-
-    public void ResetPosition()
-    {
-        currentCard.transform.parent.position = initialPosition;
-        currentCard.transform.parent.rotation = Quaternion.identity;
-        currentCard.transform.parent.DOScale(Vector3.one, 0);
-    }
-
-    public void CheckLike()
+    override public void CheckLike()
     {
         // do something
-        switch(currentCard.name.ToLower())
+        Transform cardImage = currentCard.GetComponentInChildren<Image>().transform;
+
+        Instantiate(cardImage, currentCard.transform.position, Quaternion.identity, alimentos);
+
+        if (alimentosCestaIndex < 20)
+        {
+            alimentosCesta[alimentosCestaIndex].color = new Color(1, 1, 1, 1);
+            alimentosCesta[alimentosCestaIndex].sprite = currentCard.GetComponentInChildren<Image>().sprite;
+            alimentosCesta[alimentosCestaIndex].preserveAspect = true;
+            alimentosCestaIndex++;
+        }
+
+
+        switch (currentCard.name.ToLower())
         {
             case "abacate":
                 kcal += 160;
@@ -160,36 +123,12 @@ public class Homeostase : MonoBehaviour {
         NextCard();
     }
 
-    public void CheckDislike()
+    override public void CheckDislike()
     {
         // do something else
         NextCard();
     }
-
-    private void NextCard()
-    {
-        cardIndex++;
-
-        if (cardIndex < sprites.Length)
-        {
-            currentCard.sprite = nextCard.sprite;
-            currentCard.name = sprites[cardIndex].name;
-            cardName.text = currentCard.name;
-
-            if (cardIndex < sprites.Length - 1)
-            {
-                nextCard.sprite = sprites[cardIndex + 1];
-                nextCard.name = sprites[cardIndex + 1].name;
-            }
-        }
-        else
-        {
-            Debug.Log("fim das cartas");
-        }
-
-        ResetPosition();
-    }
-
+    
     public void CheckCalories(float kcal)
     {
         // normalize
