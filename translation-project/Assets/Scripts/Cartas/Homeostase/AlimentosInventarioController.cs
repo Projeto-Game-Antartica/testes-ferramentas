@@ -16,10 +16,10 @@ public class AlimentosInventarioController : MonoBehaviour {
     public bool initialized;
 
     //   // Use this for initialization
-    void Start()
-    {
-        initialized = false;
-    }
+    //void Start()
+    //{
+    //    initialized = false;
+    //}
 
     //// Update is called once per frame
     //void Update () {

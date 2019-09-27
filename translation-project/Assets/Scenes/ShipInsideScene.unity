@@ -470,17 +470,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3762c2b5f772f174cbe392aa905ccf0c, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &176679305 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1512327885585342, guid: 3762c2b5f772f174cbe392aa905ccf0c,
-    type: 2}
-  m_PrefabInternal: {fileID: 176679304}
---- !u!114 &176679306 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114683526982523682, guid: 3762c2b5f772f174cbe392aa905ccf0c,
-    type: 2}
-  m_PrefabInternal: {fileID: 176679304}
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &216338584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,6 +1270,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 760321756}
   m_Script: {fileID: 11500000, guid: 85dcb91beb938be4fa65ba9d46a50190, type: 3}
+--- !u!1 &783590990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1898185719459980, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 2}
+  m_PrefabInternal: {fileID: 2066947432}
 --- !u!1 &786328110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,8 +1624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f84a33426dd0f6c46bd3d4260d48849c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warningInterface: {fileID: 176679305}
-  warningText: {fileID: 176679306}
+  warningInterface: {fileID: 0}
+  warningText: {fileID: 0}
 --- !u!114 &1153250587 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114332875366109432, guid: 44698338defdf4545a2b8048f0fcbc70,
@@ -2391,7 +2385,7 @@ Prefab:
         type: 2}
       propertyPath: warningInterface
       value: 
-      objectReference: {fileID: 176679305}
+      objectReference: {fileID: 0}
     - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
         type: 2}
       propertyPath: chasingCamera
@@ -2406,6 +2400,11 @@ Prefab:
       propertyPath: blinkingTextMentor
       value: 
       objectReference: {fileID: 2066947434}
+    - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 2}
+      propertyPath: instructionInterface
+      value: 
+      objectReference: {fileID: 783590990}
     m_RemovedComponents:
     - {fileID: 114720855412633032, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
