@@ -11,6 +11,6 @@ public class PlayerPreferences {
 
     public static bool finishedAllM004Games()
     {
-        return M004_FotoIdentificacao && M004_Memoria && M004_Memoria;
+        return M004_FotoIdentificacao && M004_Memoria && M004_TeiaAlimentar;
     }
 }   

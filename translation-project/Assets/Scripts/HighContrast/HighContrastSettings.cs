@@ -20,6 +20,6 @@ public class HighContrastSettings : MonoBehaviour {
         if (Parameters.HIGH_CONTRAST)
             HighContrastText.ChangeTextBackgroundColor();
         else
-            HighContrastText.RestoreToDefault("swiss");
+            HighContrastText.RestoreToDefault("average");
     }
 }

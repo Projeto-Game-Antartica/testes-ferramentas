@@ -13,6 +13,11 @@ public abstract class AbstractCardManager : MonoBehaviour {
     public Image currentCard;
     public Image nextCard;
 
+    public Button likeButton;
+    public Button dislikeButton;
+
+    public bool isDone;
+
     public TMPro.TextMeshProUGUI cardName;
     
     public int cardIndex;
@@ -32,20 +37,31 @@ public abstract class AbstractCardManager : MonoBehaviour {
         nextCard.name = sprites[cardIndex + 1].name;
 
         initialPosition = currentCard.transform.parent.position;
+
+        isDone = false;
     }
 
     public void SwipeNegative()
     {
+        likeButton.interactable = false;
+        dislikeButton.interactable = false;
+
         StartCoroutine(SwipeNegativeCoroutine());
     }
 
     public void SwipePositive()
     {
+        likeButton.interactable = false;
+        dislikeButton.interactable = false;
+
         StartCoroutine(SwipePositiveCoroutine());
     }
 
     public void SwipePositiveScaled()
     {
+        likeButton.interactable = false;
+        dislikeButton.interactable = false;
+
         StartCoroutine(SwipePositiveScaledCoroutine());
     }
 
@@ -88,6 +104,11 @@ public abstract class AbstractCardManager : MonoBehaviour {
         currentCard.transform.parent.position = initialPosition;
         currentCard.transform.parent.rotation = Quaternion.identity;
         currentCard.transform.parent.DOScale(Vector3.one, 0);
+
+        if (!isDone)
+            likeButton.interactable = true;
+
+        dislikeButton.interactable = true;
     }
 
     public void NextCard()
@@ -105,10 +126,13 @@ public abstract class AbstractCardManager : MonoBehaviour {
                 nextCard.sprite = sprites[cardIndex + 1];
                 nextCard.name = sprites[cardIndex + 1].name;
             }
-        }
-        else
-        {
-            Debug.Log("fim das cartas");
+            else
+            {
+                Debug.Log("fim das cartas... Começando de novo");
+                cardIndex = 0;
+                nextCard.sprite = sprites[cardIndex];
+                nextCard.name = sprites[cardIndex].name;
+            }
         }
 
         ResetPosition();

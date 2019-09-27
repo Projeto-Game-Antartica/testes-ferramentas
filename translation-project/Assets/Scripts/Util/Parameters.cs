@@ -55,5 +55,4 @@ public class Parameters {
     /* ## MEMORY GAME ## */
     public static int MEMORY_ROUNDINDEX = 0;
     /* #### */
-
 }

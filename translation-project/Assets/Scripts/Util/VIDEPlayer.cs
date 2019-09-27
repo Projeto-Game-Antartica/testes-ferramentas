@@ -74,8 +74,9 @@ public class VIDEPlayer : MonoBehaviour
     void Update()
     {
         //Debug.Log(inTrigger);
-        //Interact with NPCs when pressing E
-        if (Input.GetKeyDown(KeyCode.E))
+        //Interact with NPCs when pressing right arrow
+        // Input.GetKeyDown(KeyCode.E)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             TryInteract();
         }
