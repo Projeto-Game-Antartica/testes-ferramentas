@@ -48,7 +48,8 @@ public class MainMenu : AbstractScreenReader
         //TolkUtil.Load();
 
         TolkUtil.Instructions();
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
 
         playButton.Select();
     }
@@ -57,7 +58,8 @@ public class MainMenu : AbstractScreenReader
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
         }
 
         if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();

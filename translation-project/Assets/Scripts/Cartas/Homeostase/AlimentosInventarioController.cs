@@ -8,50 +8,35 @@ using UnityEngine.EventSystems;
 public class AlimentosInventarioController : MonoBehaviour {
 
     public Homeostase homeostase;
-    public Button dislikeButton;
     private int alimentoIndex;
-    public GameObject confirmPanel;
     private GameObject selectedObject;
+
+    public GameObject confirmPanel;
+    public TMPro.TextMeshProUGUI confirmText;
+    public Image confirmImage;
+    public Button removeButton;
 
     public bool initialized;
 
-    //   // Use this for initialization
-    //void Start()
-    //{
-    //    initialized = false;
-    //}
-
-    //// Update is called once per frame
-    //void Update () {
-    //       //if (confirmPanel.activeSelf)
-    //       //    GetComponent<Selectable>().interactable = false;
-    //       //else
-    //       //    GetComponent<Selectable>().interactable = true;
-    //}
-
-    //   public void OnSelect(BaseEventData eventData)
-    //   {
-    //       selectedObject = EventSystem.current.currentSelectedGameObject;
-
-    //       if (selectedObject.GetComponent<Image>() != null)
-    //       {
-    //           //dislikeButton.interactable = true;
-
-    //           //confirmPanel.SetActive(true);
-    //           //confirmPanel.GetComponentsInChildren<Image>()[1].sprite = selectedObject.GetComponent<Image>().sprite;
-
-
-    //           //// get the integer from game object name
-    //           //alimentoIndex = int.Parse(Regex.Match(EventSystem.current.currentSelectedGameObject.name, @"\d+").Value);
-    //           //Debug.Log(alimentoIndex);
-    //       }
-    //   }
-
     public void RemoverAlimento(Transform alimento)
     {
+
         Debug.Log(alimento.name);
+
         int index = int.Parse(Regex.Match(alimento.name, @"\d+").Value);
 
+        confirmPanel.SetActive(true);
+
+        confirmText.text = "Tem certeza que deseja remover o (a) " + alimento.GetComponent<Image>().sprite.name + " da cesta?";
+        Debug.Log(alimento.GetComponent<Image>().sprite.name);
+        confirmImage.sprite = alimento.GetComponent<Image>().sprite;
+        
+        // add onClick event do removerButton at runtime
+        removeButton.onClick.AddListener(() => { ConfirmRemover(index); });
+    }
+
+    public void ConfirmRemover(int index)
+    {
         homeostase.RemoverAlimentoCesta(index);
 
         confirmPanel.SetActive(false);

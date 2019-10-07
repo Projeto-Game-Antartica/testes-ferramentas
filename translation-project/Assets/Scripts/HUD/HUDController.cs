@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HUDController : MonoBehaviour {
+public class HUDController : AbstractScreenReader {
 
     private const float time = 0.03f;
 
@@ -28,11 +28,21 @@ public class HUDController : MonoBehaviour {
     public GameObject missionDescription;
     private readonly int INFO = 2;
 
+    private string navioDescription = "Notas proemias Convés de navio: " +
+        "Convés de navio, com piso listrado marrom, do lado direito popa de três andares, branca com portas marrons, e do lado esquerdo popa com porta." +
+        "Personagem principal no canto superior esquerdo da tela com duas barras uma em cima da outra ao seu lado direito. A barra de cima vermelha, representada por " +
+        "um coração vermelho é a carga vida do personagem.A debaixo, amarela, " +
+        "representada por uma estrela amarela, representa os pontos de experiência do personagem." +
+        "Livro marrom com fita vermelha no canto inferior direito que represent o logbook do personagem, ainda não está em funcionamento." +
+        "Mochila branca e marrom no canto inferior esquerdo que representa o inventário do personagem com os itens já adquiridos.";
+
     private void Start()
     {
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0) 
             ActivateInstructionInterface();
+
+        instructionInterface.GetComponentInChildren<Button>().Select();
     }
 
     private void LateUpdate()
@@ -136,5 +146,10 @@ public class HUDController : MonoBehaviour {
 
             yield return new WaitForSeconds(time);
         }
+    }
+
+    public void ReadInstructions()
+    {
+        ReadText(navioDescription);
     }
 }
