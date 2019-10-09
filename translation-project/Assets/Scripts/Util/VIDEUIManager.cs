@@ -164,7 +164,7 @@ public class VIDEUIManager : AbstractScreenReader
                         data.commentIndex++;
 
                         // Read the option selected after changing index
-                        ReadText("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        //ReadText("Opção " + data.commentIndex + " de " + (currentChoices.Count-1).ToString() + " " + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                         
                     }
@@ -175,7 +175,7 @@ public class VIDEUIManager : AbstractScreenReader
                     {
                         data.commentIndex--;
                         // Read the option selected after changing index
-                        ReadText("Opção " + data.commentIndex + data.comments[data.commentIndex]);
+                        //ReadText("Opção " + data.commentIndex + " de " + (currentChoices.Count - 1).ToString() + " " + data.comments[data.commentIndex]);
                         Debug.Log(data.comments[data.commentIndex]);
                     }
                 }
@@ -187,8 +187,8 @@ public class VIDEUIManager : AbstractScreenReader
                     if (i == data.commentIndex)
                     {
                         currentChoices[i].color = Color.yellow;
-                        //Debug.Log(data.comments[data.commentIndex]);
-                        //ReadText(data.comments[data.commentIndex]);
+                        Debug.Log("Opção " + data.commentIndex + " de " + (currentChoices.Count - 1).ToString() + " " + data.comments[data.commentIndex]);
+                        ReadText("Opção " + data.commentIndex + " de " + (currentChoices.Count - 1).ToString() + " " + data.comments[data.commentIndex]);
                     }
                 }
             }

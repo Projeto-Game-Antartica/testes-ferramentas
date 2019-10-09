@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class Homeostase : AbstractCardManager
 {
@@ -25,6 +26,7 @@ public class Homeostase : AbstractCardManager
     public GameObject alimentoCestaPrefab;
 
     private List<GameObject> alimentosCestaList;
+    
 
     // Use this for initialization
     void Start()
@@ -32,6 +34,7 @@ public class Homeostase : AbstractCardManager
         alimentosCestaList = new List<GameObject>();
 
         cardIndex = 0;
+        isDone = false;
 
         kcalBar.fillAmount = 0f;
 
@@ -39,9 +42,11 @@ public class Homeostase : AbstractCardManager
         currentCard.name = sprites[cardIndex].name;
         cardName.text = currentCard.name;
 
+        Debug.Log(cardName.text);
+
         nextCard.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
         nextCard.name = sprites[cardIndex + 1].name;
-
+        
         initialPosition = currentCard.transform.parent.position;
 
         // set initialized from alimentos on inventory to false
@@ -49,6 +54,9 @@ public class Homeostase : AbstractCardManager
         {
             alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
         }
+
+        // show first hint
+        minijogosDicas.SetHintByIndex(cardIndex);
     }
 
     override public void CheckLike()
@@ -67,7 +75,7 @@ public class Homeostase : AbstractCardManager
 
         for (int i = 0; i < alimentosCestaIndex; i++)
         {
-            Debug.Log(i + " " + alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized);
+            //Debug.Log(i + " " + alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized);
             if (!alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized)
             {
                 alimentosCesta[i].GetComponentsInChildren<Image>()[1].color = new Color(1, 1, 1, 1);
@@ -77,7 +85,7 @@ public class Homeostase : AbstractCardManager
                 alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = true;
                 alimentosCesta[i].gameObject.name = currentCard.name;
 
-                Debug.Log("adicionado na pos: " + i);
+                //Debug.Log("adicionado na pos: " + i);
                 // exit for loop
                 i = alimentosCestaIndex + 1;
             }
@@ -234,6 +242,11 @@ public class Homeostase : AbstractCardManager
             //likeButton.interactable = false;
             Debug.Log("Atingido o máximo de calorias");
         }
+    }
+
+    public void ConfirmRemover()
+    {
+        Debug.Log(EventSystem.current.currentSelectedGameObject.transform.parent.name);
     }
 
     public void RemoverAlimentoCesta(int index)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using VIDE_Data;
 
 public class MentorController : MonoBehaviour {
@@ -8,13 +9,25 @@ public class MentorController : MonoBehaviour {
     public AudioSource audioSource; // beep for localization
     private string mentorName;
 
+    public string missionNumber;
+    
     public SpriteRenderer minijogoBalloon;
 
     public SpriteRenderer[] spriteRenderer;
 
+    private int[] mentorIndexes;
+    private int count;
+
     private void Start()
     {
+        count = 0;
         mentorName = gameObject.name;
+        mentorIndexes = new int[MentorDialogues.GetVectorLenght(missionNumber, mentorName)];
+
+        Debug.Log(mentorName + " " + MentorDialogues.GetVectorLenght(missionNumber, mentorName));
+        for (int i = 0; i < MentorDialogues.GetVectorLenght(missionNumber, mentorName); i++)
+            mentorIndexes[i] = i;
+
         //Debug.Log(mentorName);
 
         if (Parameters.ACCESSIBILITY)
@@ -65,10 +78,18 @@ public class MentorController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-        ////Debug.Log(index);
+        Debug.Log(mentorIndexes[count]);
 
-        //// change the assigned dialogue
-        //GetDialogue(mentorName, index);
+        // change the assigned dialogue
+        GetDialogue(missionNumber, mentorName, mentorIndexes[count]);
+
+        // sum the counter
+        count++;
+
+        // if is the end of vector, start over
+        if (count >= mentorIndexes.Length)
+            count = 0;
+
         float xdif = gameObject.transform.position.x - collision.gameObject.transform.position.x;
         //Debug.Log(gameObject.transform.position - collision.gameObject.transform.position);
 
@@ -102,9 +123,10 @@ public class MentorController : MonoBehaviour {
     //    GetDialogue(mentorName, index);
     //}
 
-    private void GetDialogue(string mentorName, int index)
+    private void GetDialogue(string missionNumber, string mentorName, int index)
     {
-        GetComponent<VIDE_Assign>().assignedDialogue = RandomMentorDialogues.GetRandomDialogue(mentorName, index);
+        GetComponent<VIDE_Assign>().assignedDialogue = MentorDialogues.GetDialogue(missionNumber, mentorName, index);
+        Debug.Log(GetComponent<VIDE_Assign>().assignedDialogue);
     }
 
 }

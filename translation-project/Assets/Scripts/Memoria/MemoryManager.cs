@@ -54,7 +54,7 @@ public class MemoryManager : AbstractScreenReader {
     public GameObject BigImage2;
 
     // hint settings
-    public Minijogos_dicas dicas;
+    public MinijogosDicas dicas;
 
     public LifeExpController lifeExpController;
 
@@ -77,6 +77,9 @@ public class MemoryManager : AbstractScreenReader {
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
+
+        if (instructionInterface.activeSelf)
+            instructionInterface.GetComponentInChildren<Button>().Select();
     }
 
     // Update is called once per frame
@@ -109,7 +112,10 @@ public class MemoryManager : AbstractScreenReader {
         if (Input.GetKeyDown(KeyCode.F1))
         {
             if (!instructionInterface.activeSelf)
+            {
                 instructionInterface.SetActive(true);
+                instructionInterface.GetComponentInChildren<Button>().Select();
+            }
             else
                 instructionInterface.SetActive(false);
         }

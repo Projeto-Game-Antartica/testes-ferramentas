@@ -12,11 +12,15 @@ public class PinguimController : DragAndDropController {
     public GameObject pinguim_antartico;
     public GameObject pinguim_papua;
 
+    private Animator pinguim_adeliaAnimator;
+    private Animator pinguim_antarticoAnimator;
+    private Animator pinguim_papuaAnimator;
+
     public Image fillImage;
 
-    private static bool adeliaFinished;
-    private static bool antarticoFinished;
-    private static bool papuaFinished;
+    public static bool adeliaFinished;
+    public static bool antarticoFinished;
+    public static bool papuaFinished;
     
     private List<GameObject> draggedItems;
 
@@ -36,6 +40,14 @@ public class PinguimController : DragAndDropController {
         adeliaFinished = false;
         antarticoFinished = false;
         papuaFinished = false;
+        
+        pinguim_adeliaAnimator = pinguim_adelia.GetComponent<Animator>();
+        pinguim_antarticoAnimator = pinguim_antartico.GetComponent<Animator>();
+        pinguim_papuaAnimator = pinguim_papua.GetComponent<Animator>();
+
+        pinguim_adeliaAnimator.SetBool("isMoving", false);
+        pinguim_antarticoAnimator.SetBool("isMoving", false);
+        pinguim_papuaAnimator.SetBool("isMoving", false);
 
         fillImage.fillAmount = 1f;
     }
@@ -96,20 +108,27 @@ public class PinguimController : DragAndDropController {
         {
             GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
 
-            if (currentItem != null)
+            try
             {
-                DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
-            }
+                if (currentItem != null)
+                {
+                    DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
+                }
 
-            if (isCell)
-            {
-                nextCell.GetComponent<Selectable>().Select();
+                if (isCell)
+                {
+                    nextCell.GetComponent<Selectable>().Select();
+                }
+                else
+                {
+                    nextCell.GetComponent<Selectable>().Select();
+                    Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                    ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                }
             }
-            else
+            catch (Exception e)
             {
-                nextCell.GetComponent<Selectable>().Select();
-                Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
-                ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                Debug.Log("null exception >> " + e.StackTrace);
             }
         }
 
@@ -179,6 +198,10 @@ public class PinguimController : DragAndDropController {
     {
         foreach (GameObject g in draggedItems)
         {
+            pinguim_adeliaAnimator.SetBool("isMoving", true);
+            pinguim_antarticoAnimator.SetBool("isMoving", true);
+            pinguim_papuaAnimator.SetBool("isMoving", true);
+
             switch(g.name)
             {
                 case "down-item":
@@ -211,6 +234,10 @@ public class PinguimController : DragAndDropController {
         RemoveAllItems();
         draggedItems.Clear();
         UpdateBackgroundState();
+
+        pinguim_adeliaAnimator.SetBool("isMoving", false);
+        pinguim_antarticoAnimator.SetBool("isMoving", false);
+        pinguim_papuaAnimator.SetBool("isMoving", false);
     }
 
     public void goUp()
@@ -253,16 +280,19 @@ public class PinguimController : DragAndDropController {
     {
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
+            FlipPinguim(pinguim_adelia.name, false);
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
         }
 
         if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
         {
+            FlipPinguim(pinguim_papua.name, false);
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
         }
 
         if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
         {
+            FlipPinguim(pinguim_antartico.name, false);
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
         }
     }
@@ -271,23 +301,26 @@ public class PinguimController : DragAndDropController {
     {
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
+            FlipPinguim(pinguim_adelia.name, true);
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
         }
 
         if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
         {
+            FlipPinguim(pinguim_papua.name, true);
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
         }
 
         if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
         {
+            FlipPinguim(pinguim_antartico.name, true);
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
         }
     }
 
     public void goRandomDirection()
     {
-        int random = UnityEngine.Random.Range(1, 3);
+        int random = UnityEngine.Random.Range(1, 4);
 
         switch (random)
         {
@@ -310,33 +343,55 @@ public class PinguimController : DragAndDropController {
             case 2: // go right
                 if (!pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
                 {
+                    FlipPinguim(pinguim_adelia.name, false);
                     pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
                 }
 
                 if (!pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
                 {
+                    FlipPinguim(pinguim_papua.name, false);
                     pinguim_papua.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
                 }
 
                 if (!pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
                 {
+                    FlipPinguim(pinguim_antartico.name, false);
                     pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
                 }
                 break;
             case 3: // go left
                 if (!pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
                 {
+                    FlipPinguim(pinguim_adelia.name, true);
                     pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
                 }
 
                 if (!pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
                 {
+                    FlipPinguim(pinguim_papua.name, true);
                     pinguim_papua.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
                 }
 
                 if (!pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
                 {
+                    FlipPinguim(pinguim_antartico.name, true);
                     pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
+                }
+                break;
+            case 4: // go down
+                if (!pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
+                {
+                    pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
+                }
+
+                if (!pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+                {
+                    pinguim_papua.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
+                }
+
+                if (!pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+                {
+                    pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
                 }
                 break;
         }
@@ -393,5 +448,21 @@ public class PinguimController : DragAndDropController {
     {
         if (fillImage.fillAmount < 0) fillImage.fillAmount = 0;
         fillImage.fillAmount -= 0.1f;
+    }
+
+    public void FlipPinguim(string name, bool left)
+    {
+        switch(name)
+        {
+            case "pinguim_adelia":
+                pinguim_adelia.GetComponent<SpriteRenderer>().flipX = left;
+                break;
+            case "pinguim_antartico":
+                pinguim_antartico.GetComponent<SpriteRenderer>().flipX = left;
+                break;
+            case "pinguim_papua":
+                pinguim_papua.GetComponent<SpriteRenderer>().flipX = left;
+                break;
+        }
     }
 }

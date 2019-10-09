@@ -18,7 +18,7 @@ public class TeiaAlimentarController : DragAndDropController
     public AudioClip correctClip;
     public AudioClip wrongClip;
 
-    public Minijogos_dicas dicas;
+    public MinijogosDicas dicas;
 
     public LifeExpController lifeExpController;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Minijogos_dicas : AbstractScreenReader {
+public class MinijogosDicas : AbstractScreenReader {
 
     public TextMeshProUGUI targetText;
     public string[] hints;
@@ -13,11 +13,14 @@ public class Minijogos_dicas : AbstractScreenReader {
     public readonly float time = 10.0f;
     public readonly float repeatRate = 10.0f;
 
+    public bool isRandom;
+
     public GameObject dicas;
 
     public void StartHints()
     {
-        StartCoroutine(ShowHints());
+        if (isRandom)
+            StartCoroutine(ShowHints());
     }
 
     private IEnumerator ShowHints()
@@ -40,6 +43,21 @@ public class Minijogos_dicas : AbstractScreenReader {
         }
         else
             yield return null;
+    }
+
+    public void SetHintByIndex(int index)
+    {
+        if (!dicas.activeSelf)
+            dicas.SetActive(true);
+
+        Debug.Log("showing hint number " + index);
+
+        ReadText("Nova dica: " + hints[index]);
+        Debug.Log("Nova dica: " + hints[index]);
+        targetText.text = hints[index];
+
+        if (index == -1)
+            dicas.SetActive(false);
     }
 
     public string[] GetHints()

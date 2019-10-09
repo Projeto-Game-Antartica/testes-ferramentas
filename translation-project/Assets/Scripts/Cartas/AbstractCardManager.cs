@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public abstract class AbstractCardManager : MonoBehaviour {
+public abstract class AbstractCardManager : AbstractScreenReader {
 
     public Vector3 initialPosition;
 
@@ -22,24 +22,11 @@ public abstract class AbstractCardManager : MonoBehaviour {
     
     public int cardIndex;
 
+    public MinijogosDicas minijogosDicas;
+
     public abstract void CheckLike();
 
     public abstract void CheckDislike();
-
-    // Use this for initialization
-    void Start()
-    {
-        currentCard.sprite = sprites[cardIndex];
-        currentCard.name = sprites[cardIndex].name;
-        cardName.text = currentCard.name;
-
-        nextCard.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
-        nextCard.name = sprites[cardIndex + 1].name;
-
-        initialPosition = currentCard.transform.parent.position;
-
-        isDone = false;
-    }
 
     public void SwipeNegative()
     {
@@ -115,11 +102,15 @@ public abstract class AbstractCardManager : MonoBehaviour {
     {
         cardIndex++;
 
+        minijogosDicas.SetHintByIndex(cardIndex);
+
         if (cardIndex < sprites.Length)
         {
             currentCard.sprite = nextCard.sprite;
             currentCard.name = sprites[cardIndex].name;
             cardName.text = currentCard.name;
+
+            Debug.Log(cardName.text);
 
             if (cardIndex < sprites.Length - 1)
             {
