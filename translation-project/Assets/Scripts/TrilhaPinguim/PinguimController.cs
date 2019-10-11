@@ -33,6 +33,8 @@ public class PinguimController : DragAndDropController {
     private const int LEFT   = 3;
     private const int RANDOM = 4;
 
+    public GameObject WinImage;
+
     private void Start()
     {
         draggedItems = new List<GameObject>();
@@ -149,6 +151,9 @@ public class PinguimController : DragAndDropController {
                 firstItem.GetComponent<Selectable>().Select();
             }
         }
+
+        if (adeliaFinished && antarticoFinished && papuaFinished)
+            WinImage.SetActive(true);
     }
 
     /// <summary>

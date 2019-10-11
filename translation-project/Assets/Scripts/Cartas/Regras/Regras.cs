@@ -15,6 +15,8 @@ public class Regras : AbstractCardManager {
     public TextMeshProUGUI CardLeft;
     public TextMeshProUGUI CardCount;
 
+    public GameObject winImage;
+
     // Use this for initialization
     void Start () {
         cardIndex = 0;
@@ -50,10 +52,12 @@ public class Regras : AbstractCardManager {
 
         NextCard();
 
-        if (likeCount >= 12)
+        if (likeCount >= rulesNumber)
         {
             likeButton.interactable = false;
             dislikeButton.interactable = false;
+
+            winImage.SetActive(true);
         }
     }
 

@@ -20,13 +20,12 @@ public class EinsteinManager : AbstractScreenReader
     public Button backButton;
     public Button resetButton;
     public Button audioButton;
+    public Button confirmarButton;
+    public Button cancelButton;
 
     public int[] index;
 
     private bool init;
-
-    public static int CARDFACE = 1;
-    public static int CARDTEXT = 2;
 
     private AudioSource audioSource;
 
@@ -48,7 +47,21 @@ public class EinsteinManager : AbstractScreenReader
 
     public GameObject instructionInterface;
 
-    private enum Operation { correct, confirm, wrong }
+    private enum Operation { correct, wrong }
+
+    private enum DropDownColors { blue = 1, orange, yellow, green, grey }
+
+    private Color lightBlue = new Color(0, 0.6f, 1);
+    private Color lightOrange = new Color(1, 0.7f, 0.4f);
+    private Color lightYellow = new Color(1, 1, 0.3f);
+    private Color lightGreen = new Color(0.3f, 1, 0.4f);
+    private Color grey = new Color(0.7f, 0.7f, 0.7f);
+
+    private int remainingOptionsBlue = 4;
+    private int remainingOptionsOrange = 4;
+    private int remainingOptionsYellow = 4;
+    private int remainingOptionsGreen = 4;
+    private int remainingOptionsGrey = 4;
 
     private void Start()
     {
@@ -60,14 +73,19 @@ public class EinsteinManager : AbstractScreenReader
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
+
+        //initializeGame();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!init)
+            initializeGame();
+
         if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !EinsteinCard.DO_NOT)
         {
-            Debug.Log("Checando cartas....");
+            //Debug.Log("Checando cartas....");
             checkCards();
         }
 
@@ -81,10 +99,17 @@ public class EinsteinManager : AbstractScreenReader
             cards[0].GetComponent<Button>().Select();
         }
 
-        if (c != null && c.Count >= 2)
+        if (c != null && c.Count >= GetRemainingOptions(GetDropDownValue()))
         {
             EinsteinCard.DO_NOT = true;
-            Debug.Log(c.Count);
+            confirmarButton.interactable = true;
+            cancelButton.interactable = true;
+            //Debug.Log(c.Count);
+        }
+        else
+        {
+            confirmarButton.interactable = false;
+            cancelButton.interactable = false;
         }
 
         if (Input.GetKeyDown(KeyCode.F1))
@@ -104,38 +129,11 @@ public class EinsteinManager : AbstractScreenReader
         // start afther dicas.time seconds and repeat at dicas.repeatRate rate
         InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
 
-        StartCoroutine(showCards());
+        //StartCoroutine(showCards());
 
         backButton.interactable = true;
         resetButton.interactable = true;
 
-    }
-
-    public void ChangeDropDownColor()
-    {
-        Image dropDownImage = processDropDown.GetComponent<Image>();
-
-        switch(processDropDown.value)
-        {
-            case 1:
-                dropDownImage.color = new Color(0, 0.6f, 1); // light blue
-                break;
-            case 2:
-                dropDownImage.color = new Color(1, 0.7f, 0.4f); // light orange
-                break;
-            case 3:
-                dropDownImage.color = new Color(1, 1, 0.3f); // light yellow
-                break;
-            case 4:
-                dropDownImage.color = new Color(0.3f, 1, 0.4f); // light green
-                break;
-            case 5:
-                dropDownImage.color = new Color(0.7f, 0.7f, 0.7f); // grey
-                break;
-            default:
-                dropDownImage.color = Color.white;
-                break;
-        }
     }
 
     public void CallHintMethod()
@@ -161,8 +159,7 @@ public class EinsteinManager : AbstractScreenReader
 
             //Debug.Log(choice);
 
-            cards[choice].GetComponent<EinsteinCard>().setupGraphics(CARDFACE);
-
+            cards[choice].GetComponent<EinsteinCard>().setupGraphics();
         }
         
         if (!init)
@@ -193,18 +190,15 @@ public class EinsteinManager : AbstractScreenReader
             {
                 Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
-                Debug.Log("após adicionar carta >> " + c.Count);
+                //Debug.Log("após adicionar carta >> " + c.Count);
 
-                if (c.Count == 2)
-                {
-                    StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<EinsteinCard>().BGImage, (int)Operation.confirm));
-                    StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<EinsteinCard>().BGImage, (int)Operation.confirm));
-                }
+                cards[i].GetComponent<EinsteinCard>().BGImage.color = GetColor(GetDropDownValue());
             }
         }
 
-        Debug.Log("Após checar cartas >> " + c.Count);
-        //if (c.Count == 2)
+        //Debug.Log("Após checar cartas >> " + c.Count);
+
+        //if (c.Count == GetRemainingOptions(GetDropDownValue()))
         //    cardComparison(c);
     }
 
@@ -215,18 +209,22 @@ public class EinsteinManager : AbstractScreenReader
 
     public void Cancel()
     {
-
-        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<EinsteinCard>().BGImage, -1));
-        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<EinsteinCard>().BGImage, -1));
+        //for (int i = 0; i < c.Count; i++)
+        //{
+        //    //cards[c[i]].GetComponent<EinsteinCard>().state = EinsteinCard.VIRADA_BAIXO;
+        //    cards[c[i]].GetComponent<EinsteinCard>().BGImage.color = GetColor(-1);
+        //    cards[c[i]].GetComponent<EinsteinCard>().turnCardDown();
+        //}
 
         for (int i = 0; i < c.Count; i++)
         {
-            cards[c[i]].GetComponent<EinsteinCard>().state = EinsteinCard.VIRADA_BAIXO;
+            cards[c[i]].GetComponent<EinsteinCard>().BGImage.color = GetColor(-1);
+            cards[c[i]].GetComponent<EinsteinCard>().state = 0;
             cards[c[i]].GetComponent<EinsteinCard>().turnCardDown();
         }
 
         c.Clear();
-        Debug.Log("Depois de limpar a lista >> " + c.Count);
+        //Debug.Log("Depois de limpar a lista >> " + c.Count);
         
         cards[0].GetComponent<Button>().Select();
     }
@@ -235,34 +233,119 @@ public class EinsteinManager : AbstractScreenReader
     {
         Card.DO_NOT = true;
 
-        int x = 0;
+        int x;
 
-        if (cards[c[0]].GetComponent<EinsteinCard>().cardValue == cards[c[1]].GetComponent<EinsteinCard>().cardValue)
+        switch(GetDropDownValue())
         {
-            audioSource.PlayOneShot(correctAudio);
+            case (int)DropDownColors.blue:
+                for (int i = 0; i < remainingOptionsBlue; i++)
+                {
+                    x = 0;
+                    if (cards[c[i]].GetComponent<EinsteinCard>().name.Contains("azul"))
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                        x = 2;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    }
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
 
-            x = 2;
-            
-            // fim de jogo
-            // to do
+                break;
+
+            case (int)DropDownColors.orange:
+                for (int i = 0; i < remainingOptionsOrange; i++)
+                {
+                    x = 0;
+                    if (cards[c[i]].GetComponent<EinsteinCard>().name.Contains("laranja"))
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                        x = 2;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    }
+
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
+
+                break;
+
+            case (int)DropDownColors.yellow:
+                for (int i = 0; i < remainingOptionsYellow; i++)
+                {
+                    Debug.Log(cards[c[i]].name);
+                    x = 0;
+                    if (cards[c[i]].GetComponent<EinsteinCard>().name.Contains("amarelo"))
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                        x = 2;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    }
+
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
+
+                break;
+
+            case (int)DropDownColors.green:
+                for (int i = 0; i < remainingOptionsGreen; i++)
+                {
+                    x = 0;
+                    if (cards[c[i]].GetComponent<EinsteinCard>().name.Contains("verde"))
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                        x = 2;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    }
+
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
+
+                break;
+
+            case (int)DropDownColors.grey:
+                for (int i = 0; i < remainingOptionsGrey; i++)
+                {
+                    x = 0;
+                    if (cards[c[i]].GetComponent<EinsteinCard>().name.Contains("cinza"))
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.correct));
+                        x = 2;
+                    }
+                    else
+                    {
+                        StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    }
+
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
+
+                break;
+
+            default:
+                for (int i = 0; i < c.Count; i++)
+                {
+                    x = 0;
+                    StartCoroutine(CheckAnswer(cards[c[i]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
+                    cards[c[i]].GetComponent<EinsteinCard>().state = x;
+                }
+
+                break;
         }
-        else
+
+        for (int i = 0; i < GetRemainingOptions(GetDropDownValue()); i++)
         {
-            audioSource.PlayOneShot(wrongAudio);
-
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<EinsteinCard>().BGImage, (int)Operation.wrong));
-
-            // fim de jogo
-            // to do
-        }
-
-        for (int i = 0; i < c.Count; i++)
-        {
-            cards[c[i]].GetComponent<EinsteinCard>().state = x;
             cards[c[i]].GetComponent<EinsteinCard>().falseCheck();
         }
 
@@ -330,20 +413,105 @@ public class EinsteinManager : AbstractScreenReader
         }
     }
 
-    public IEnumerator ChangeBGColor(Image image, int op)
+    // return the color depending on dropdown value
+    public Color GetColor(int dropDownValue)
     {
-        //Debug.Log("ChangeBGColor");
-
         Color color;
+
+        switch(dropDownValue)
+        {
+            case (int)DropDownColors.blue:
+                color = lightBlue;
+                break;
+            case (int)DropDownColors.orange:
+                color = lightOrange;
+                break;
+            case (int)DropDownColors.yellow:
+                color = lightYellow;
+                break;
+            case (int)DropDownColors.green:
+                color = lightGreen;
+                break;
+            case (int)DropDownColors.grey:
+                color = grey;
+                break;
+            default:
+                color = new Color(1, 1, 1, 0);
+                break;
+        }
+
+        return color;
+    }
+
+    public int GetRemainingOptions(int dropDownValue)
+    {
+        int result;
+
+        switch (dropDownValue)
+        {
+            case (int)DropDownColors.blue:
+                result = remainingOptionsBlue;
+                break;
+            case (int)DropDownColors.orange:
+                result = remainingOptionsOrange;
+                break;
+            case (int)DropDownColors.yellow:
+                result = remainingOptionsYellow;
+                break;
+            case (int)DropDownColors.green:
+                result = remainingOptionsGreen;
+                break;
+            case (int)DropDownColors.grey:
+                result = remainingOptionsGrey;
+                break;
+            default:
+                result = -1;
+                break;
+        }
+
+        return result;
+    }
+
+    public void  SetRemainingOptions(int dropDownValue, int value)
+    {
+        switch (dropDownValue)
+        {
+            case (int)DropDownColors.blue:
+                remainingOptionsBlue = value;
+                break;
+            case (int)DropDownColors.orange:
+                remainingOptionsOrange = value;
+                break;
+            case (int)DropDownColors.yellow:
+                remainingOptionsYellow = value;
+                break;
+            case (int)DropDownColors.green:
+                remainingOptionsGreen = value;
+                break;
+            case (int)DropDownColors.grey:
+                remainingOptionsGrey = value;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public IEnumerator CheckAnswer(Image image, int op)
+    {
+        Color color;
+
+        int dropDownValue = GetDropDownValue();
+
+        //Debug.Log("Checking answer...");
 
         switch (op)
         {
-            case (int)Operation.confirm:
-                color = new Color(1, 1, 0, 1); // yellow
-                break;
             case (int)Operation.correct:
                 color = new Color(0, 1, 0, 1); // green
-                //color = new Color(0, 0, 0, 0); // transparent
+                
+                // subtract 1 from remaining option
+                SetRemainingOptions(dropDownValue, GetRemainingOptions(dropDownValue) - 1);
+                Debug.Log(GetRemainingOptions(dropDownValue));
                 break;
             case (int)Operation.wrong:
                 color = new Color(1, 0, 0, 1); // red
@@ -352,36 +520,35 @@ public class EinsteinManager : AbstractScreenReader
                 color = new Color(0, 0, 0, 0);
                 break;
         }
+
         image.color = color;
 
-        // setting alpha color to 1 and bg color to green
-        //var tempColor = image.color;
-        //tempColor.a = 1f;
-        //image.color = tempColor;
+        // wait seconds
+        yield return new WaitForSeconds(2f);
 
-
-
-        if (op != (int)Operation.confirm && op != (int)Operation.correct)
+        if (op == (int)Operation.wrong)
         {
-            // wait seconds
-            yield return new WaitForSeconds(2f);
-
             // back to normal!!
             image.color = new Color(1, 1, 1, 0);
         }
-    }
-
-    public IEnumerator showCards()
-    {
-        for (int i = 0; i < cards.Length; i++)
+        else
         {
-            cards[i].GetComponent<EinsteinCard>().state = EinsteinCard.VIRADA_BAIXO;
-
-            cards[i].GetComponent<EinsteinCard>().turnCardDown();
+            // set the color to dropdown color
+            image.color = GetColor(GetDropDownValue());
         }
-
-        yield return new WaitForSeconds(4);
     }
+    
+    public int GetDropDownValue()
+    {
+        return processDropDown.value;
+    }
+
+    public void ChangeDropDownColor(int dropdownValue)
+    {
+        EinsteinCard.DO_NOT = false;
+
+        processDropDown.GetComponent<Image>().color = GetColor(dropdownValue);
+    }   
 
     public IEnumerator ReturnToShipCoroutine()
     {
