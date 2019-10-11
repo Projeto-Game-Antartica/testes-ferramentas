@@ -5,10 +5,10 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Homeostase : AbstractCardManager
 {
-
     public Image kcalBar;
 
     public Transform alimentos;
@@ -26,10 +26,15 @@ public class Homeostase : AbstractCardManager
     public GameObject alimentoCestaPrefab;
 
     private List<GameObject> alimentosCestaList;
-    
 
-    // Use this for initialization
-    void Start()
+    public Button satisfeitoButton;
+
+    public Button resetButton;
+    public Button backButton;
+    public GameObject confirmQuit;
+
+    // initialize after button click on instruction
+    public void Initialize()
     {
         alimentosCestaList = new List<GameObject>();
 
@@ -46,17 +51,20 @@ public class Homeostase : AbstractCardManager
 
         nextCard.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
         nextCard.name = sprites[cardIndex + 1].name;
-        
+
         initialPosition = currentCard.transform.parent.position;
 
         // set initialized from alimentos on inventory to false
-        for(int i = 0; i<alimentosCesta.Length; i++)
+        for (int i = 0; i < alimentosCesta.Length; i++)
         {
             alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
         }
 
         // show first hint
         minijogosDicas.SetHintByIndex(cardIndex);
+
+        resetButton.interactable = true;
+        backButton.interactable = true;
     }
 
     override public void CheckLike()
@@ -241,7 +249,11 @@ public class Homeostase : AbstractCardManager
             isDone = true;
             //likeButton.interactable = false;
             Debug.Log("Atingido o máximo de calorias");
+
+            satisfeitoButton.interactable = true;
         }
+        else
+            satisfeitoButton.interactable = false;
     }
 
     public void ConfirmRemover()
@@ -275,6 +287,7 @@ public class Homeostase : AbstractCardManager
         {
             isDone = false;
             likeButton.interactable = true;
+            dislikeButton.interactable = true;
         }
 
         //ShiftArray(index);
@@ -286,5 +299,20 @@ public class Homeostase : AbstractCardManager
         {
             alimentosCesta[i] = alimentosCesta[i + 1];
         }
+    }
+
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(ScenesNames.M002Homeostase);
+    }
+
+    public void TryQuit()
+    {
+        confirmQuit.SetActive(true);
+    }
+
+    public void ReturnToUshuaia()
+    {
+        SceneManager.LoadScene(ScenesNames.M002Ushuaia);
     }
 }

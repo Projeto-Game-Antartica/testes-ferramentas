@@ -64,4 +64,10 @@ public class MinijogosDicas : AbstractScreenReader {
     {
         return hints;
     }
+
+    public void ShowIsolatedHint(string hint)
+    {
+        dicas.SetActive(true);
+        targetText.text = hint;
+    }
 }

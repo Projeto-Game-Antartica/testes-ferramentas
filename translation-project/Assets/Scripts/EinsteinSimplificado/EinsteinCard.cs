@@ -19,7 +19,7 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
     private Sprite cardBack;
     public Sprite cardFace;
 
-    private GameObject einsteinManager;
+    public EinsteinManager einsteinManager;
 
     public Image BGImage;
 
@@ -29,24 +29,22 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
     {
         state = VIRADA_BAIXO;
         initialized = false;
-        einsteinManager = GameObject.FindGameObjectWithTag("GameController");
-
-        //StartCoroutine(showCards());
+        StartCoroutine(showCards());
     }
 
-    //public IEnumerator showCards()
-    //{
-    //    yield return new WaitForSeconds(9);
-    //    if(!isText) state = 0;
-    //    turnCardDown();
-    //}
-
-    public void setupGraphics(int choice)
+    public IEnumerator showCards()
     {
-        cardBack = einsteinManager.GetComponent<EinsteinManager>().getCardBack();
-        cardFace = einsteinManager.GetComponent<EinsteinManager>().getCardFace(cardValue);
+        yield return new WaitForSeconds(2);
+
+        flipCard();
+    }
+
+    public void setupGraphics()
+    {
+        cardBack = einsteinManager.getCardBack();
+        cardFace = einsteinManager.getCardFace(cardValue);
+
         gameObject.name += ": " + cardFace.name;
-        //state = 1;
 
         flipCard();
 
@@ -84,7 +82,8 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
     public void turnCardDown()
     {
-        state = VIRADA_BAIXO;
+        GetComponent<Image>().sprite = cardBack;
+
         DO_NOT = false;
     }
 

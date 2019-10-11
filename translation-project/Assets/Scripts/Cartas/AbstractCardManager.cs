@@ -93,16 +93,18 @@ public abstract class AbstractCardManager : AbstractScreenReader {
         currentCard.transform.parent.DOScale(Vector3.one, 0);
 
         if (!isDone)
+        {
             likeButton.interactable = true;
-
-        dislikeButton.interactable = true;
+            dislikeButton.interactable = true;
+        }
     }
 
     public void NextCard()
     {
         cardIndex++;
 
-        minijogosDicas.SetHintByIndex(cardIndex);
+        if(minijogosDicas.hints.Length > 0)
+            minijogosDicas.SetHintByIndex(cardIndex);
 
         if (cardIndex < sprites.Length)
         {

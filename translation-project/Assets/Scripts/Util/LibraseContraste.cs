@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-public class PlayLibrasVideo : MonoBehaviour {
+public class LibraseContraste : MonoBehaviour {
 
     public VideoPlayer videoPlayer;
     public RawImage rawImage;
@@ -39,5 +39,15 @@ public class PlayLibrasVideo : MonoBehaviour {
 
         Debug.Log("Done Playing Video");
         moldura.SetActive(false);
+    }
+
+    public void SetHighContrastParameter()
+    {
+        if (Parameters.HIGH_CONTRAST)
+            Parameters.HIGH_CONTRAST = false;
+        else
+            Parameters.HIGH_CONTRAST = true;
+
+        Debug.Log("HC " + Parameters.HIGH_CONTRAST);
     }
 }

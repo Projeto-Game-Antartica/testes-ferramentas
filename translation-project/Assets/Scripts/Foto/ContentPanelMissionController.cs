@@ -15,9 +15,14 @@ public class ContentPanelMissionController : AbstractScreenReader {
     private ReadableTexts readableTexts;
 
     public TextMeshProUGUI confirmText;
+
+    public TextMeshProUGUI whaleCountText;
+
+    private int count = 0;
     
     private void Start()
     {
+        whaleCountText.text = count.ToString();
         //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
         
@@ -64,6 +69,10 @@ public class ContentPanelMissionController : AbstractScreenReader {
         {
             whaleController.getWhaleById(Parameters.WHALE_ID).whale_name = whaleNameInput.text;
             confirmFoto.SetActive(true);
+
+            count++;
+
+            whaleCountText.text = count.ToString();
 
             if(!whaleController.getWhaleById(Parameters.WHALE_ID).whale_name.Equals(""))
                 confirmText.text = "Baleia identificada. Deseja fazer nova foto?";
