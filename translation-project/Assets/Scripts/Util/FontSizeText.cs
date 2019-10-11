@@ -55,14 +55,4 @@ public class FontSizeText : MonoBehaviour {
                 text.GetComponentInChildren<TextMeshProUGUI>().text = "<b>" + tmp + "</b>";
         }
     }
-
-    public void SetHighContrastParameter()
-    {
-        if (Parameters.HIGH_CONTRAST)
-            Parameters.HIGH_CONTRAST = false;
-        else
-            Parameters.HIGH_CONTRAST = true;
-
-        Debug.Log("HC " + Parameters.HIGH_CONTRAST);
-    }
 }
