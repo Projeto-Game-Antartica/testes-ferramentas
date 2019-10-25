@@ -13,6 +13,7 @@ public class MemoryManager : AbstractScreenReader {
     // round 0
     public Sprite[] cardFace0;
     public Sprite[] cardText0;
+    
     // round 1
     public Sprite[] cardFace1;
     public Sprite[] cardText1;
@@ -241,11 +242,6 @@ public class MemoryManager : AbstractScreenReader {
                     //}
                     //else
                     //{
-                        //BigImage1.SetActive(true);
-                        //BigImage1.GetComponentInChildren<Image>().sprite = cards[c[0]].GetComponent<Card>().cardFace ?? cards[c[0]].GetComponent<Card>().cardText;
-                        //BigImage2.SetActive(true);
-                        //BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
-
                         StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
                         StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
 
@@ -263,18 +259,12 @@ public class MemoryManager : AbstractScreenReader {
     public void CompareCards()
     {
         cardComparison(c);
-        //BigImage1.SetActive(false);
-        //BigImage2.SetActive(false);
-
         cancelarButton.interactable = false;
         confirmarButton.interactable = false;
     }
 
     public void Cancel()
     {
-        //BigImage1.SetActive(false);
-        //BigImage2.SetActive(false);
-
         StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, -1));
         StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, -1));
 
@@ -310,8 +300,6 @@ public class MemoryManager : AbstractScreenReader {
             matchesText.text = "Pares restantes: " + matches;
             if (matches == 0)
             {
-                Debug.Log("Fim de jogo! Você conseguiu terminar com sucesso. Volte ao navio para novas aventuras.");
-                ReadText("Fim de jogo! Você conseguiu terminar com sucesso. Volte ao navio para novas aventuras.");
                 PlayerPreferences.M004_Memoria = true;
                 EndGame(true);
             }
@@ -328,8 +316,6 @@ public class MemoryManager : AbstractScreenReader {
 
             if(miss >= 3)
             {
-                Debug.Log("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
-                ReadText("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
                 EndGame(false);
                 // 0 or 1
                 Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
@@ -348,18 +334,23 @@ public class MemoryManager : AbstractScreenReader {
 
     public void EndGame(bool win)
     {
-        BigImage1.SetActive(false);
-        BigImage2.SetActive(false);
-
         if (win)
         {
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
             if (!PlayerPreferences.M004_TeiaAlimentar)
-                WinText.text = "Parabéns, você ganhou a câmera fotográfica para realizar a missão, mas ainda falta um item.";
+            {
+                WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
+                ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
+            }
             else
-                WinText.text = "Parabéns, você ganhou a câmera fotográfica. Agora você já tem os itens necessários para realizar a missão.";
+            {
+                WinText.text = "Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+                    "contribuir com as pesquisas da Ciência Cidadã.";
+                ReadText("Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+                    "contribuir com as pesquisas da Ciência Cidadã.");
+            }
 
             lifeExpController.AddEXP(0.001f); // finalizou o minijogo
             lifeExpController.AddEXP(0.0002f); // ganhou o item
@@ -367,6 +358,7 @@ public class MemoryManager : AbstractScreenReader {
         else
         {
             LoseImage.SetActive(true);
+            ReadText("Você não conseguiu completar o minijogo. Tente novamente.");
             resetButton.Select();
             lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
@@ -401,7 +393,7 @@ public class MemoryManager : AbstractScreenReader {
         // imprime e le o conteudo a cada meio segundo (tempo que as cartas ficarão abertas no início)
         for (int i = 0; i < tmpCards.Length; i++)
         {
-            string objectName = CardsDescription.GetCardDescription(tmpCards[i].name);
+            string objectName = CardsDescription.GetCardText(tmpCards[i].name);
             //Debug.Log(objectName != null ? (tmpCards[i].name.Substring(0, tmpCards[i].name.IndexOf(":")) + ": " + objectName) : tmpCards[i].gameObject.name);
 
             //tmpCards[i].GetComponent<Button>().Select();
@@ -471,7 +463,7 @@ public class MemoryManager : AbstractScreenReader {
             cards[i].GetComponent<Card>().turnCardDown();
         }
 
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(0.5f);
 
         _first = false;
     }

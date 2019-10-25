@@ -5,7 +5,7 @@ using VIDE_Data;
 
 public class VIDEPlayer : MonoBehaviour
 {
-    public string playerName = "Pesquisador";
+    public string playerName;
 
     //Reference to our diagUI script for quick access
     public VIDEUIManager diagUI;
@@ -19,8 +19,10 @@ public class VIDEPlayer : MonoBehaviour
     public List<string> demo_Items = new List<string>();
     public List<string> demo_ItemInventory = new List<string>();
 
-    //public TMPro.TextMeshProUGUI blinkingTextMentor;
+    public GameObject inGameOptions;
 
+    //public TMPro.TextMeshProUGUI blinkingTextMentor;
+    
     void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.name);
@@ -31,9 +33,18 @@ public class VIDEPlayer : MonoBehaviour
         if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
         {
             inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+            //Debug.Log(inTrigger);
         }
         //TryInteract();
 
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
+        {
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -69,11 +80,12 @@ public class VIDEPlayer : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         */
+
+        playerName = gameObject.name;
     }
 
     void Update()
     {
-        //Debug.Log(inTrigger);
         //Interact with NPCs when pressing right arrow
         // Input.GetKeyDown(KeyCode.E)
         if (Input.GetKeyDown(KeyCode.Return))
@@ -82,9 +94,10 @@ public class VIDEPlayer : MonoBehaviour
         }
 
         if (VD.isActive && Input.GetKey(KeyCode.Escape))
+        {
             diagUI.EndDialogue(VD.nodeData);
-
-
+        }
+        
         //Hide/Show cursor
         /*
         if (Input.GetMouseButtonDown(0))

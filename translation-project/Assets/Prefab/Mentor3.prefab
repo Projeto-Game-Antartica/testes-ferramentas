@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4586690185694592}
   - component: {fileID: 212271220673883274}
   - component: {fileID: 95403786055434026}
+  - component: {fileID: 114311327128188016}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   - component: {fileID: 4527562906815894}
   - component: {fileID: 212871948152426392}
   - component: {fileID: 95465943048135080}
+  - component: {fileID: 114700258608268636}
   m_Layer: 0
   m_Name: head3
   m_TagString: Untagged
@@ -54,6 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4567254536471706}
   - component: {fileID: 212167634912733922}
+  - component: {fileID: 114263574083476532}
   m_Layer: 0
   m_Name: dialogue-balloon
   m_TagString: Untagged
@@ -128,8 +131,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973283968652058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -634, y: 228, z: -1}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
+  m_LocalPosition: {x: -1163, y: -1110, z: -1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4586690185694592}
   - {fileID: 4527562906815894}
@@ -319,6 +322,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114263574083476532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623792934605382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aac7ef1c93f1f14ea33c6a28fad3180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: 100
+  runOnlyOnce: 0
+--- !u!114 &114311327128188016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1157281058560488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aac7ef1c93f1f14ea33c6a28fad3180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: 100
+  runOnlyOnce: 0
 --- !u!114 &114624176828991162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,10 +362,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 82047441674896370}
+  missionNumber: M002
   minijogoBalloon: {fileID: 0}
   spriteRenderer:
   - {fileID: 212271220673883274}
   - {fileID: 212871948152426392}
+--- !u!114 &114700258608268636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1239128486005314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aac7ef1c93f1f14ea33c6a28fad3180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: 100
+  runOnlyOnce: 0
 --- !u!114 &114942992704705184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,6 +395,26 @@ MonoBehaviour:
   diags:
   - demo_Narration
   - Laura
+  - M002_Mentor1_Dialogue1
+  - M002_Mentor1_Dialogue2
+  - M002_Mentor1_Dialogue3
+  - M002_Mentor1_Dialogue4
+  - M002_Mentor1_Dialogue5
+  - M002_Mentor2_Dialogue1
+  - M002_Mentor2_Dialogue2
+  - M002_Mentor2_Dialogue3
+  - M002_Mentor2_Dialogue4
+  - M002_Mentor2_Dialogue5
+  - M002_Mentor3_Dialogue1
+  - M002_Mentor3_Dialogue2
+  - M002_Mentor3_Dialogue3
+  - M002_Mentor3_Dialogue4
+  - M002_Mentor3_Dialogue5
+  - M002_Mentor4_Dialogue1
+  - M002_Mentor4_Dialogue2
+  - M002_Mentor4_Dialogue3
+  - M002_Mentor4_Dialogue4
+  - M002Casinha_Mentor4_Dialogue4
   - M004_Mentor0_Dialogue
   - M004_Mentor1_Dialogue
   - M004_Mentor2_Dialogue
@@ -357,9 +423,9 @@ MonoBehaviour:
   - MrCube
   - NPCOnly
   - Witch
-  assignedIndex: 5
-  assignedID: 34057
-  assignedDialogue: M004_Mentor3_Dialogue
+  assignedIndex: 12
+  assignedID: 98475
+  assignedDialogue: M002_Mentor3_Dialogue1
   interactionCount: 0
   alias: Naturalista - Pedro
   overrideStartNode: -1
@@ -410,7 +476,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: f1263cd496a855f4c8250e651a32fc28, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29803923, g: 0.69803923, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0

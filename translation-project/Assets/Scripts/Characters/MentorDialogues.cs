@@ -10,6 +10,7 @@ public class MentorDialogues {
      */
     public const string sufixo = "_Dialogue";
     public const string prefixom002 = "M002_Mentor";
+    public const string prefixom002Casinha = "M002_Casinha_Mentor";
     public const string prefixom004 = "M004_Mentor";
     
     /* ####### */ 
@@ -64,7 +65,11 @@ public class MentorDialogues {
     public static string[] M002_Mentor4 =
     {
         prefixom002 + "4" + sufixo + "1", prefixom002 + "4" + sufixo + "2", prefixom002 + "4" + sufixo + "3",
-        prefixom002 + "4" + sufixo + "4", prefixom002 + "4" + sufixo + "5"
+        prefixom002 + "4" + sufixo + "4"
+    };
+    public static string[] M002_Casinha_Mentor4 =
+    {
+        prefixom002Casinha + "4" + sufixo + "1"
     };
 
     /*
@@ -87,6 +92,14 @@ public class MentorDialogues {
                         return M002_Mentor3[index];
                     case "Mentor4":
                         return M002_Mentor4[index];
+                    default:
+                        return "Check mentor name.";
+                }
+            case "M002_Casinha":
+                switch(mentor)
+                {
+                    case "Mentor4":
+                        return M002_Casinha_Mentor4[index];
                     default:
                         return "Check mentor name.";
                 }
@@ -129,6 +142,14 @@ public class MentorDialogues {
                         return M002_Mentor3.Length;
                     case "Mentor4":
                         return M002_Mentor4.Length;
+                    default:
+                        return -1;
+                }
+            case "M002_Casinha":
+                switch (mentor)
+                {
+                    case "Mentor4":
+                        return M002_Casinha_Mentor4.Length;
                     default:
                         return -1;
                 }

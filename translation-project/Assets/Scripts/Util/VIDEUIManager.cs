@@ -41,7 +41,8 @@ public class VIDEUIManager : AbstractScreenReader
     bool animatingText = false; //Will help us know when text is currently being animated
 
     //Reference to the player script
-    public VIDEPlayer player;
+    //public VIDEPlayer player;
+    public SimpleCharacterController player;
 
     //We'll be using this to store references of the current player choices
     private List<TextMeshProUGUI> currentChoices = new List<TextMeshProUGUI>();

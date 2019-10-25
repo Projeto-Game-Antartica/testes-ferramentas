@@ -10,8 +10,8 @@ public abstract class AbstractCardManager : AbstractScreenReader {
 
     public Sprite[] sprites;
 
-    public Image currentCard;
-    public Image nextCard;
+    public Image currentImage;
+    public Image nextImage;
 
     public Button likeButton;
     public Button dislikeButton;
@@ -54,9 +54,9 @@ public abstract class AbstractCardManager : AbstractScreenReader {
 
     public IEnumerator SwipePositiveCoroutine()
     {
-        currentCard.transform.parent.DOMoveX(400, 1);
-        currentCard.transform.parent.DOMoveY(-300, 2);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
+        currentImage.transform.parent.DOMoveX(400, 1);
+        currentImage.transform.parent.DOMoveY(-300, 2);
+        currentImage.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
 
         yield return new WaitForSeconds(2f);
 
@@ -65,9 +65,9 @@ public abstract class AbstractCardManager : AbstractScreenReader {
 
     public IEnumerator SwipeNegativeCoroutine()
     {
-        currentCard.transform.parent.DOMoveX(-400, 1);
-        currentCard.transform.parent.DOMoveY(-300, 2);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, 45), 2);
+        currentImage.transform.parent.DOMoveX(-400, 1);
+        currentImage.transform.parent.DOMoveY(-300, 2);
+        currentImage.transform.parent.DORotate(new Vector3(0, 0, 45), 2);
 
         yield return new WaitForSeconds(2f);
 
@@ -77,9 +77,9 @@ public abstract class AbstractCardManager : AbstractScreenReader {
     public IEnumerator SwipePositiveScaledCoroutine()
     {
         int delta = Random.Range(0, 90);
-        currentCard.transform.parent.DOMoveX(120 + delta, 1);
-        currentCard.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
-        currentCard.transform.parent.DOScale(new Vector3(0.4f, 0.4f), 2);
+        currentImage.transform.parent.DOMoveX(120 + delta, 1);
+        currentImage.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
+        currentImage.transform.parent.DOScale(new Vector3(0.4f, 0.4f), 2);
 
         yield return new WaitForSeconds(2f);
 
@@ -88,9 +88,9 @@ public abstract class AbstractCardManager : AbstractScreenReader {
 
     public void ResetPosition()
     {
-        currentCard.transform.parent.position = initialPosition;
-        currentCard.transform.parent.rotation = Quaternion.identity;
-        currentCard.transform.parent.DOScale(Vector3.one, 0);
+        currentImage.transform.parent.position = initialPosition;
+        currentImage.transform.parent.rotation = Quaternion.identity;
+        currentImage.transform.parent.DOScale(Vector3.one, 0);
 
         if (!isDone)
         {
@@ -108,23 +108,23 @@ public abstract class AbstractCardManager : AbstractScreenReader {
 
         if (cardIndex < sprites.Length)
         {
-            currentCard.sprite = nextCard.sprite;
-            currentCard.name = sprites[cardIndex].name;
-            cardName.text = currentCard.name;
+            currentImage.sprite = nextImage.sprite;
+            currentImage.name = sprites[cardIndex].name;
+            cardName.text = currentImage.name;
 
             Debug.Log(cardName.text);
 
             if (cardIndex < sprites.Length - 1)
             {
-                nextCard.sprite = sprites[cardIndex + 1];
-                nextCard.name = sprites[cardIndex + 1].name;
+                nextImage.sprite = sprites[cardIndex + 1];
+                nextImage.name = sprites[cardIndex + 1].name;
             }
             else
             {
                 Debug.Log("fim das cartas... Começando de novo");
-                cardIndex = 0;
-                nextCard.sprite = sprites[cardIndex];
-                nextCard.name = sprites[cardIndex].name;
+                cardIndex = -1;
+                nextImage.sprite = sprites[cardIndex+1];
+                nextImage.name = sprites[cardIndex+1].name;
             }
         }
 

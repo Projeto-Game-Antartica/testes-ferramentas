@@ -5,9 +5,7 @@ using UnityEngine;
 public class SimpleCameraController : AbstractScreenReader {
 
     public GameObject panelInstruction;
-    public GameObject panelWhalesCatalogo;
     public GameObject panelContent;
-    public GameObject panelFotodentificacao;
     public GameObject cameraOverlaySprites;
 
     public AudioClip cameraBeep;
@@ -32,54 +30,37 @@ public class SimpleCameraController : AbstractScreenReader {
     // Update is called once per frame
     void Update () {
 
-        if(Input.GetKeyDown(KeyCode.F1) && !panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf 
-            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             if (!panelInstruction.activeSelf)
+            {
                 panelInstruction.SetActive(true);
-            else
-                panelInstruction.SetActive(false);
+                GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
 
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+                ReadText("Painel de instruções aberto.");
+                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+            }
+            else
+            {
+                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf 
-            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            panelInstruction.SetActive(false);
+            ReadText("Painel de instruções fechado.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelContent.activeSelf)
         {
             ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
         }
 
         // camera se movimenta quando os paineis estao desabilitados
-        if (!panelInstruction.activeSelf && !panelWhalesCatalogo.activeSelf
-            && !panelFotodentificacao.activeSelf && !panelContent.activeSelf)
+        if (!panelInstruction.activeSelf && !panelContent.activeSelf)
         {
             HandleCameraMovement(cameraBeep);
-        }
-        //else if(cameraOverlaySprites.activeSelf && !panelInstruction.activeSelf && !panelContent.activeSelf) // audio para movimentacao da camera com overlay aberto (acessibilidade)
-        //{
-            
-        //}
-
-        ActivateInstructionPanel();
-    }
-
-    private void ActivateInstructionPanel()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && !panelWhalesCatalogo.activeSelf && !panelFotodentificacao.activeSelf 
-            && !panelContent.activeSelf)
-        {
-            if (!panelInstruction.activeSelf)
-            {
-                panelInstruction.SetActive(true);
-                ReadText("Painel de instruções aberto.");
-                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
-                GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
-            }
-            else
-            {
-                panelInstruction.SetActive(false);
-                ReadText("Painel de instruções fechado.");
-            }
         }
     }
 

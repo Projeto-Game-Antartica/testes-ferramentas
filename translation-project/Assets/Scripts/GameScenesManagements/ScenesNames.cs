@@ -18,6 +18,7 @@ public class ScenesNames {
     public const string M002Pinguim = "M002PinguimScene";
     public const string M002Regras = "M002RegrasScene";
     public const string M002Ushuaia = "M002UshuaiaScene";
+    public const string M002Einstein = "M002EinsteinSimplificadoScene";
 
     /* M004 Baleias */
     public const string M004Fotoidentification = "M004FotoidentificationScene";

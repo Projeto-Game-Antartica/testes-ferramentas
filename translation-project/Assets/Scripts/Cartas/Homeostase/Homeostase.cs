@@ -33,6 +33,21 @@ public class Homeostase : AbstractCardManager
     public Button backButton;
     public GameObject confirmQuit;
 
+    public GameObject instruction_interface;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            instruction_interface.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            instruction_interface.SetActive(false);
+        }
+    }
+
     // initialize after button click on instruction
     public void Initialize()
     {
@@ -43,16 +58,16 @@ public class Homeostase : AbstractCardManager
 
         kcalBar.fillAmount = 0f;
 
-        currentCard.sprite = sprites[cardIndex];
-        currentCard.name = sprites[cardIndex].name;
-        cardName.text = currentCard.name;
+        currentImage.sprite = sprites[cardIndex];
+        currentImage.name = sprites[cardIndex].name;
+        cardName.text = currentImage.name;
 
         Debug.Log(cardName.text);
 
-        nextCard.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
-        nextCard.name = sprites[cardIndex + 1].name;
+        nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
+        nextImage.name = sprites[cardIndex + 1].name;
 
-        initialPosition = currentCard.transform.parent.position;
+        initialPosition = currentImage.transform.parent.position;
 
         // set initialized from alimentos on inventory to false
         for (int i = 0; i < alimentosCesta.Length; i++)
@@ -70,13 +85,13 @@ public class Homeostase : AbstractCardManager
     override public void CheckLike()
     {
         // do something
-        Transform cardImage = currentCard.GetComponentInChildren<Image>().transform;
+        Transform cardImage = currentImage.GetComponentInChildren<Image>().transform;
 
-        //Instantiate(cardImage, currentCard.transform.position, Quaternion.identity, alimentos);
+        //Instantiate(cardImage, currentImage.transform.position, Quaternion.identity, alimentos);
 
-        var alimentoCesta = Instantiate(alimentoCestaPrefab, currentCard.transform.position, Quaternion.identity, alimentos);
-        alimentoCesta.name = currentCard.name;
-        alimentoCesta.GetComponent<Image>().sprite = currentCard.GetComponentInChildren<Image>().sprite;
+        var alimentoCesta = Instantiate(alimentoCestaPrefab, currentImage.transform.position, Quaternion.identity, alimentos);
+        alimentoCesta.name = currentImage.name;
+        alimentoCesta.GetComponent<Image>().sprite = currentImage.GetComponentInChildren<Image>().sprite;
         alimentoCesta.GetComponent<Image>().preserveAspect = true;
 
         alimentosCestaList.Add(alimentoCesta);
@@ -87,11 +102,11 @@ public class Homeostase : AbstractCardManager
             if (!alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized)
             {
                 alimentosCesta[i].GetComponentsInChildren<Image>()[1].color = new Color(1, 1, 1, 1);
-                alimentosCesta[i].GetComponentsInChildren<Image>()[1].sprite = currentCard.GetComponentInChildren<Image>().sprite;
+                alimentosCesta[i].GetComponentsInChildren<Image>()[1].sprite = currentImage.GetComponentInChildren<Image>().sprite;
                 alimentosCesta[i].GetComponentsInChildren<Image>()[1].preserveAspect = true;
                 alimentosCesta[i].GetComponentInChildren<Button>().interactable = true;
                 alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = true;
-                alimentosCesta[i].gameObject.name = currentCard.name;
+                alimentosCesta[i].gameObject.name = currentImage.name;
 
                 //Debug.Log("adicionado na pos: " + i);
                 // exit for loop
@@ -99,7 +114,7 @@ public class Homeostase : AbstractCardManager
             }
         }
 
-        CheckCalories(currentCard.name, true);
+        CheckCalories(currentImage.name, true);
         NextCard();
     }
 
@@ -270,11 +285,13 @@ public class Homeostase : AbstractCardManager
 
         try
         {
+            Debug.Log("alimento: " + alimentosCesta[index].gameObject.name);
             var result = alimentosCestaList.Find(x => x.name.Contains(alimentosCesta[index].gameObject.name));
-            Debug.Log(alimentosCesta[index].gameObject.name);
+            Debug.Log("resultado da lista: " + result.name);
             result.GetComponent<Image>().enabled = false;
 
             CheckCalories(result.name, false);
+
             alimentosCestaList.Remove(result);
         }
         catch (Exception ex)
@@ -306,13 +323,8 @@ public class Homeostase : AbstractCardManager
         SceneManager.LoadScene(ScenesNames.M002Homeostase);
     }
 
-    public void TryQuit()
-    {
-        confirmQuit.SetActive(true);
-    }
-
     public void ReturnToUshuaia()
     {
-        SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+        SceneManager.LoadScene(ScenesNames.M002CasaUshuaia);
     }
 }

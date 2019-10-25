@@ -8,7 +8,6 @@ using TMPro;
 public class ShipSceneManagement : AbstractScreenReader {
 
     private bool isTrigger;
-    public GameObject warningInterface;
     public SimpleCharacterController character;
     public ChasingCamera chasingCamera;
 
@@ -16,7 +15,12 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     private Collider2D colliderControl = null;
 
+    public GameObject warningInterface;
     public TextMeshProUGUI warningText;
+
+    public GameObject dialogueInterface;
+    public TextMeshProUGUI dialogueInterfaceText;
+    public TextMeshProUGUI dialogueInterfacePlayerName;
 
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
@@ -71,15 +75,24 @@ public class ShipSceneManagement : AbstractScreenReader {
         //else 
         if(collision.name.Equals("Figurante"))
         {
-            warningInterface.SetActive(true);
             if (PlayerPreferences.finishedAllM004Games())
-                warningText.text = "Você concluiu todos os minijogos com sucesso. Agora, pressione ENTER para realizar o desafio.";
+            {
+                warningInterface.SetActive(true);
+                warningText.text = "Parabéns!! Você já tem tudo o que precisa para fotografar caudas de baleias jubarte e contribuir com "
+                    + "as pesquisas da Ciência Cidadã. Pressione ENTER para iniciar.";
+            }
             else
-                warningText.text = "Para realizar a missão é necessário concluir todos os minijogos. " + "Finalize os seguintes minijogos: " +
+            {
+                dialogueInterface.SetActive(true);
+                dialogueInterfacePlayerName.text = "Turistas";
+                
+                dialogueInterfaceText.text = "Olá, nós também somos turistas e estamos participando do Ciência Cidadã de " +
+                    "identificação de baleias.Para você participar, você ainda precisa" + "Finalize os seguintes minijogos: " +
                     (PlayerPreferences.M004_FotoIdentificacao == false ? "Fotoidentificação de baleias; " : "") +
                     (PlayerPreferences.M004_Memoria == false ? "Animais antárticos; " : "") +
                     (PlayerPreferences.M004_TeiaAlimentar == false ? "Teia Alimentar; " : "") +
-                    "e depois retorne para realizar a missão.";
+                    "Volte aqui depois para concluir a missão!!";
+            }
 
         }
 
@@ -90,6 +103,8 @@ public class ShipSceneManagement : AbstractScreenReader {
     private void OnTriggerExit2D(Collider2D collision)
     {
         warningInterface.SetActive(false);
+        dialogueInterface.SetActive(false);
+
         isTrigger = false;
 
         colliderControl = null;

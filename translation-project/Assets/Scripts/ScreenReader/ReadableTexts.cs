@@ -84,6 +84,8 @@ public class ReadableTexts : MonoBehaviour
 
     public static string key_soundglossary_instructions = "soundglossary_instructions";
 
+    public static string key_navio_instructions = "navio_instructions";
+
     public static string key_foto_instructions = "foto_instructions";
 
     public static string key_foto_identification = "foto_identification";

@@ -50,10 +50,10 @@ public class MinijogosDicas : AbstractScreenReader {
         if (!dicas.activeSelf)
             dicas.SetActive(true);
 
-        Debug.Log("showing hint number " + index);
+        //Debug.Log("showing hint number " + index);
 
         ReadText("Nova dica: " + hints[index]);
-        Debug.Log("Nova dica: " + hints[index]);
+        //Debug.Log("Nova dica: " + hints[index]);
         targetText.text = hints[index];
 
         if (index == -1)

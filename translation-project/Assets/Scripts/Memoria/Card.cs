@@ -26,6 +26,11 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     private bool _init = false;
 
+    public GameObject memoryCardBackImage;
+    public GameObject memoryCardBackText;
+
+    public GameObject cardImage;
+
     private void Start()
     {
         state = VIRADA_BAIXO;
@@ -38,19 +43,27 @@ public class Card : AbstractScreenReader, ISelectHandler {
     //public IEnumerator showCards()
     //{
     //    yield return new WaitForSeconds(9);
-    //    if(!isText) state = 0;
+    //    if (!isText) state = 0;
     //    turnCardDown();
     //}
 
     public void setupGraphics(int choice)
     {
         cardBack = memoryManager.GetComponent<MemoryManager>().getCardBack();
+
         if (choice == MemoryManager.CARDFACE)
         {
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
             cardText = null;
             gameObject.name += ": " + cardFace.name;
             isText = false;
+
+            //GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+            cardImage = Instantiate(memoryCardBackImage, transform, false);
+
+            cardImage.GetComponentsInChildren<Image>()[1].sprite = cardFace;
+            cardImage.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cardFace.name;
         }
         else if (choice == MemoryManager.CARDTEXT)
         {
@@ -58,6 +71,15 @@ public class Card : AbstractScreenReader, ISelectHandler {
             cardFace = null;
             gameObject.name += ": " + cardText.name;
             isText = true;
+
+            //GameObject obj = Instantiate(memoryCardBackText, transform, false);
+            // create prefab
+            GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            GameObject obj = Instantiate(memoryCardBackText, BGImage.transform, false);
+            // set the card to prefab's child due the selectable
+            transform.SetParent(obj.transform, true);
+            // add the corresponding text
+            obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescription.GetCardText(cardText.name);
         }
         //state = 1;
 
@@ -74,28 +96,38 @@ public class Card : AbstractScreenReader, ISelectHandler {
         //    GetComponent<Image>().sprite = cardText;
         //}
 
-        if (state == VIRADA_BAIXO)
+        // change the state of card
+        if (state == VIRADA_BAIXO && !DO_NOT)
             state = VIRADA_CIMA;
-        else if (state == VIRADA_CIMA)
+        else if (state == VIRADA_CIMA && !DO_NOT)
             state = VIRADA_BAIXO;
 
+        // set the sprites according to state
         if (state == VIRADA_BAIXO && !DO_NOT)
         {
-            GetComponent<Image>().sprite = cardBack;
-
-            if(isText)
+            if (isText)
                 GetComponent<Image>().sprite = cardText;
+            else
+            { 
+                GetComponent<Image>().sprite = cardBack;
+                GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                cardImage.SetActive(false);
+            }
         }
         else if (state == VIRADA_CIMA && !DO_NOT)
         {
             if (cardText == null)
+            {
                 GetComponent<Image>().sprite = cardFace;
+                GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                cardImage.SetActive(true);
+            }
             else
                 GetComponent<Image>().sprite = cardText;
 
             if (_init)
             {
-                string objectName = CardsDescription.GetCardDescription(gameObject.name);
+                string objectName = CardsDescription.GetCardText(gameObject.name);
 
                 ReadAndDebugCardText(objectName);
             }
@@ -110,22 +142,32 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public void turnCardDown()
     {
 
-        if(!isText) GetComponent<Image>().sprite = cardBack;
+        if (!isText)
+        {
+            GetComponent<Image>().sprite = cardBack;
+            GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            cardImage.SetActive(false);
+        }
 
         state = VIRADA_BAIXO;
         DO_NOT = false;
     }
 
+    // wait seconds to play another "round"
     IEnumerator pause()
     {
         yield return new WaitForSeconds(2f);
 
         if (state == VIRADA_BAIXO)
         {
-            if(isText)
+            if (isText)
                 GetComponent<Image>().sprite = cardText;
             else
+            {
                 GetComponent<Image>().sprite = cardBack;
+                GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                cardImage.SetActive(false);
+            }
         }
         else if (state == VIRADA_CIMA)
         {
@@ -149,7 +191,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
         }
         else
         {
-            string objectName = CardsDescription.GetCardDescription(gameObject.name);
+            string objectName = CardsDescription.GetCardText(gameObject.name);
             ReadAndDebugCardText(objectName);
         }
     }
