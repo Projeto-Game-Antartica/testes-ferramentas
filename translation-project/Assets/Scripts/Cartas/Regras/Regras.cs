@@ -17,25 +17,59 @@ public class Regras : AbstractCardManager {
 
     public GameObject winImage;
 
-    // Use this for initialization
-    void Start () {
+    public GameObject instruction_interface;
+
+    public Button resetButton;
+    public Button backButton;
+
+    public GameObject textPrefab;
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            instruction_interface.SetActive(true);
+        }
+
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            instruction_interface.SetActive(false);
+        }
+    }
+    // after instructions, initialize the game
+    public void InitializeGame()
+    {
         cardIndex = 0;
-        
+
         cardsNumber = sprites.Length;
 
-        currentCard.sprite = sprites[cardIndex];
-        currentCard.name = sprites[cardIndex].name;
-        //cardName.text = currentCard.name;
+        // current card initial settings
+        currentImage.sprite = sprites[cardIndex];
+        currentImage.color = new Color(1, 1, 1, 0);
+        currentImage.name = sprites[cardIndex].name;
+        //cardName.text = currentImage.name;
+        Instantiate(textPrefab, currentImage.transform, false);
+        currentImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex);
 
-        nextCard.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
-        //nextCard.name = sprites[cardIndex + 1].name;
+        // next card initial settings
+        nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
+        nextImage.color = new Color(1, 1, 1, 0);
+        //nextImage.name = sprites[cardIndex + 1].name;
+        Instantiate(textPrefab, nextImage.transform, false);
+        nextImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex+1);
 
-        initialPosition = currentCard.transform.parent.position;
+        initialPosition = currentImage.transform.parent.position;
+
+        resetButton.interactable = true;
+        backButton.interactable = true;
     }
 
     public override void CheckDislike()
     {
         cardCount++;
+        if (cardCount == cardsNumber)
+            cardCount = 0;
 
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
 
@@ -47,6 +81,7 @@ public class Regras : AbstractCardManager {
         cardCount++;
         likeCount++;
 
+        
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         CardCount.text = "Regras escolhidas: " + likeCount + "/" + rulesNumber;
 
@@ -58,6 +93,8 @@ public class Regras : AbstractCardManager {
             dislikeButton.interactable = false;
 
             winImage.SetActive(true);
+
+            StartCoroutine(ReturnToUshuaiaCoroutine());
         }
     }
 
@@ -131,4 +168,55 @@ public class Regras : AbstractCardManager {
         }
     }
 
+    public new void NextCard()
+    {
+        cardIndex++;
+
+        if (minijogosDicas.hints.Length > 0)
+            minijogosDicas.SetHintByIndex(cardIndex);
+
+        if (cardIndex < sprites.Length)
+        {
+            currentImage.sprite = nextImage.sprite;
+            currentImage.name = sprites[cardIndex].name;
+            currentImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex);
+            cardName.text = currentImage.name;
+
+            Debug.Log(cardName.text);
+
+            if (cardIndex < sprites.Length - 1)
+            {
+                nextImage.sprite = sprites[cardIndex + 1];
+                nextImage.name = sprites[cardIndex + 1].name;
+                nextImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex + 1);
+            }
+            else
+            {
+                Debug.Log("fim das cartas... Começando de novo");
+                cardIndex = -1;
+                nextImage.sprite = sprites[cardIndex+1];
+                nextImage.name = sprites[cardIndex+1].name;
+                nextImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex+1);
+            }
+        }
+
+        ResetPosition();
+    }
+
+    public void ReturnToUshuaia()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    }
+
+    public void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Regras);
+    }
+
+    public IEnumerator ReturnToUshuaiaCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    }
 }

@@ -126,7 +126,6 @@ public class MentorController : MonoBehaviour {
     private void GetDialogue(string missionNumber, string mentorName, int index)
     {
         GetComponent<VIDE_Assign>().assignedDialogue = MentorDialogues.GetDialogue(missionNumber, mentorName, index);
-        Debug.Log(GetComponent<VIDE_Assign>().assignedDialogue);
     }
 
 }

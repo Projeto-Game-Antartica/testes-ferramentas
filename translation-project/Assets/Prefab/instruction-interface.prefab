@@ -517,10 +517,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114521419833970058}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -577,13 +577,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "Objetivo: identificar as caracter\xEDsticas do processo de fotoidentifica\xE7\xE3o.
-    \r\n\r\nA fotoidentifica\xE7\xE3o das baleias segue um protocolo de analisar as
-    caracter\xEDsticas da cauda de uma baleia.\r\n1. Observe a foto a seguir e verifique
-    as caracter\xEDsticas da cauda de uma baleia jubarte, que voc\xEA consegue ver
-    na foto.\r\n2. Exclua a foto no X caso n\xE3o consiga fazer a fotoidentifica\xE7\xE3o.\r\n3.
-    Voc\xEA precisa identificar pelo menos uma caracter\xEDstica de uma cauda para
-    finalizar o minijogo."
+  m_text: "Objetivo: Conhecer os animais que vivem ou migram para a Ant\xE1rtica.\n1.
+    Combine os pares de imagem de acordo com seu conte\xFAdo.\r\n2. Clique no bot\xE3o
+    de confirmar para escolher os pares.\r\n3. Clique no bot\xE3o de cancelar, para
+    desistir da escolha.\r\n4. Voc\xEA ter\xE1 3 tentativas para para finalizar. Caso
+    n\xE3o consiga terminar neste tempo, o minijogo ser\xE1 bloqueado e voc\xEA retornar\xE1
+    ao gameplay.\n\r\nPara repetir as instru\xE7\xF5es deste minijogo tecle F1."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f7f97c4bb0f0f5f48821761a6b8cf218, type: 2}
   m_sharedMaterial: {fileID: 21761795021717504, guid: f7f97c4bb0f0f5f48821761a6b8cf218,
@@ -611,10 +610,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
+  m_fontSize: 32.1
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -652,9 +651,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 114157988782853510}
-    characterCount: 472
+    characterCount: 438
     spriteCount: 0
-    spaceCount: 74
+    spaceCount: 73
     wordCount: 73
     linkCount: 0
     lineCount: 12
@@ -1142,11 +1141,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 114154822314443624}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1182,18 +1181,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: SetWhalePhoto
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayGame
+        m_MethodName: initializeGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1379,7 +1367,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1521,7 +1509,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1770,11 +1758,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1876,7 +1864,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1370815084810230}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -2403,8 +2391,8 @@ RectTransform:
   m_Father: {fileID: 224491366479887476}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.141}
-  m_AnchorMax: {x: 1, y: 0.87855095}
+  m_AnchorMin: {x: 0, y: 0.11546871}
+  m_AnchorMax: {x: 1, y: 0.8875562}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2497,8 +2485,8 @@ RectTransform:
   m_Father: {fileID: 224491366479887476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.893521}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.8875562}
+  m_AnchorMax: {x: 1, y: 0.98200005}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2748,8 +2736,8 @@ RectTransform:
   m_Father: {fileID: 224491366479887476}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.59189606, y: 0.032317795}
-  m_AnchorMax: {x: 0.98815715, y: 0.11546871}
+  m_AnchorMin: {x: 0.6656843, y: 0.012}
+  m_AnchorMax: {x: 0.9868414, y: 0.080000006}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class HUDController : AbstractScreenReader {
@@ -17,9 +18,9 @@ public class HUDController : AbstractScreenReader {
     public Image ponteiraButton;
     private readonly int BAG = 1;
 
-    public Sprite camera_black;
+    public Sprite camera_cinza;
     public Sprite camera_color;
-    public Sprite lente_black;
+    public Sprite lente_cinza;
     public Sprite lente_color;
 
     // info settings
@@ -28,13 +29,13 @@ public class HUDController : AbstractScreenReader {
     public GameObject missionDescription;
     private readonly int INFO = 2;
 
-    private string navioDescription = "Notas proemias Convés de navio: " +
-        "Convés de navio, com piso listrado marrom, do lado direito popa de três andares, branca com portas marrons, e do lado esquerdo popa com porta." +
-        "Personagem principal no canto superior esquerdo da tela com duas barras uma em cima da outra ao seu lado direito. A barra de cima vermelha, representada por " +
-        "um coração vermelho é a carga vida do personagem.A debaixo, amarela, " +
-        "representada por uma estrela amarela, representa os pontos de experiência do personagem." +
-        "Livro marrom com fita vermelha no canto inferior direito que represent o logbook do personagem, ainda não está em funcionamento." +
-        "Mochila branca e marrom no canto inferior esquerdo que representa o inventário do personagem com os itens já adquiridos.";
+    //private string navioDescription = "Notas proemias Convés de navio: " +
+    //    "Convés de navio, com piso listrado marrom, do lado direito popa de três andares, branca com portas marrons, e do lado esquerdo popa com porta." +
+    //    "Personagem principal no canto superior esquerdo da tela com duas barras uma em cima da outra ao seu lado direito. A barra de cima vermelha, representada por " +
+    //    "um coração vermelho é a carga vida do personagem.A debaixo, amarela, " +
+    //    "representada por uma estrela amarela, representa os pontos de experiência do personagem." +
+    //    "Livro marrom com fita vermelha no canto inferior direito que represent o logbook do personagem, ainda não está em funcionamento." +
+    //    "Mochila branca e marrom no canto inferior esquerdo que representa o inventário do personagem com os itens já adquiridos.";
 
     private void Start()
     {
@@ -48,15 +49,28 @@ public class HUDController : AbstractScreenReader {
     private void LateUpdate()
     {
         if (!PlayerPreferences.M004_Memoria)
-            camera_inv.sprite = camera_black;
+            camera_inv.sprite = camera_cinza;
         else
             camera_inv.sprite = camera_color;
 
         if (!PlayerPreferences.M004_TeiaAlimentar)
-            lente_inv.sprite = lente_black;
+            lente_inv.sprite = lente_cinza;
         else
             lente_inv.sprite = lente_color;
            
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(InputKeys.QUEST_KEY))
+        {
+            HandleInfoBar();
+        }
+
+        if(Input.GetKeyDown(InputKeys.INVENTORY_KEY))
+        {
+            HandleBagBar();
+        }
     }
 
     public void ActivateInstructionInterface()
@@ -150,6 +164,25 @@ public class HUDController : AbstractScreenReader {
 
     public void ReadInstructions()
     {
-        ReadText(navioDescription);
+        ReadText(ReadableTexts.key_navio_instructions);
+    }
+
+    public void ChangeMission(TextMeshProUGUI missionName)
+    {
+        // not save any position before changing scene
+        PlayerPrefs.SetInt("Saved", 0);
+
+        // to show instruction interface when changing scene
+        PlayerPrefs.SetInt("InstructionInterface", 0);
+
+        switch (missionName.text.ToLower())
+        {
+            case "baleias":
+                SceneManager.LoadScene(ScenesNames.M004Ship);
+                break;
+            case "itens":
+                SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+                break;
+        }
     }
 }

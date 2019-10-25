@@ -28,16 +28,6 @@ public class InstructionsController : AbstractScreenReader {
         first_button.Select();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (!instructionInterface.activeSelf)
-                instructionInterface.SetActive(true);
-            else
-                instructionInterface.SetActive(false);
-        }
-    }
     public void ReadButtonText(Text button_text)
     {
         ReadText(button_text.text);

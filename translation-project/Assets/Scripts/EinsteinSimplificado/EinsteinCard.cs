@@ -12,6 +12,8 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
     public static bool DO_NOT = false;
 
+    public bool added { get; set; }
+
     public int state { get; set; }
     public int cardValue { get; set; }
     public bool initialized { get; set; }
@@ -25,24 +27,32 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
     private bool _init = false;
 
+    public GameObject proccessTextPrefab;
+
     private void Start()
     {
         state = VIRADA_BAIXO;
         initialized = false;
+        added = false;
         StartCoroutine(showCards());
     }
 
     public IEnumerator showCards()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
 
         flipCard();
     }
 
     public void setupGraphics()
     {
-        cardBack = einsteinManager.getCardBack();
+        //cardBack = einsteinManager.getCardBack();
+        cardBack = einsteinManager.getCardFace(cardValue);
         cardFace = einsteinManager.getCardFace(cardValue);
+
+        CreateText(cardFace.name);
+
+        GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         gameObject.name += ": " + cardFace.name;
 
@@ -53,9 +63,9 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
     public void flipCard()
     {
-        if (state == VIRADA_BAIXO)
+        if (state == VIRADA_BAIXO && !DO_NOT)
             state = VIRADA_CIMA;
-        else if (state == VIRADA_CIMA)
+        else if (state == VIRADA_CIMA && !DO_NOT)
             state = VIRADA_BAIXO;
 
         if (state == VIRADA_BAIXO && !DO_NOT)
@@ -66,12 +76,12 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         {
             GetComponent<Image>().sprite = cardFace;
 
-            if (_init)
-            {
-                string objectName = CardsDescription.GetCardDescription(gameObject.name);
+            //if (_init)
+            //{
+            //    string objectName = CardsDescription.GetCardText(gameObject.name);
 
-                ReadAndDebugCardText(objectName);
-            }
+            //    ReadAndDebugCardText(objectName);
+            //}
         }
     }
 
@@ -112,11 +122,11 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
             //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
             ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
         }
-        else
-        {
-            string objectName = CardsDescription.GetCardDescription(gameObject.name);
-            ReadAndDebugCardText(objectName);
-        }
+        //else
+        //{
+        //    string objectName = CardsDescription.GetCardText(gameObject.name);
+        //    ReadAndDebugCardText(objectName);
+        //}
     }
 
     public void ReadAndDebugCardText(string objectName)
@@ -131,5 +141,14 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         var newCardColor = button.colors;
         newCardColor.disabledColor = color;
         button.colors = newCardColor;
+    }
+
+    public void CreateText(string cardName)
+    {
+        //GameObject text = new GameObject();
+        GameObject text = Instantiate(proccessTextPrefab);
+        text.transform.SetParent(transform, false);
+
+        text.GetComponent<TMPro.TextMeshProUGUI>().text = EinsteinCardContent.GetText(cardName);
     }
 }

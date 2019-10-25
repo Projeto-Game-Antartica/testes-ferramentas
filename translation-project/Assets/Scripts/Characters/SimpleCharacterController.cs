@@ -22,6 +22,8 @@ public class SimpleCharacterController : AbstractScreenReader {
     public AudioClip mapLimitClip;
 
     public AudioClip snowAudioClip;
+    public AudioClip woodAudioClip;
+    public AudioClip carpetAudioClip;
     public AudioClip grassAudioClip;
     public AudioClip rockAudioClip;
     public AudioClip asphaltAudioClip;
@@ -32,12 +34,32 @@ public class SimpleCharacterController : AbstractScreenReader {
     public AudioClip impactWoodAudio;
     public AudioClip impactRockAudio;
 
+    public ReadableTexts readableTexts;
 
+    // VIDEPlayer attributes
+
+    public string playerName;
+
+    //Reference to our diagUI script for quick access
+    public VIDEUIManager diagUI;
+    //public QuestChartDemo questUI;
+
+    //Stored current VA when inside a trigger
+    public VIDE_Assign inTrigger;
+
+    //DEMO variables for item inventory
+    //Crazy cap NPC in the demo has items you can collect
+    public List<string> demo_Items = new List<string>();
+    public List<string> demo_ItemInventory = new List<string>();
+
+    public GameObject inGameOptions;
     private void Start()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
+
+        playerName = gameObject.name;
     }
 
     private void FixedUpdate()
@@ -99,6 +121,13 @@ public class SimpleCharacterController : AbstractScreenReader {
                     ReadText("Menu de opções fechado");
                     inGameOption.SetActive(false);
                 }
+
+                if (instructionInterface.activeSelf)
+                {
+                    ReadText("Menu de instruções fechado");
+                    instructionInterface.SetActive(false);
+                    inGameOption.SetActive(false);
+                }
             }
 
             if(Input.GetKeyDown(KeyCode.F1))
@@ -110,10 +139,19 @@ public class SimpleCharacterController : AbstractScreenReader {
                 }
                 else
                 {
-                    ReadText("Menu de instruções fechado");
-                    instructionInterface.SetActive(false);
+                    ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            TryInteract();
+        }
+
+        if (VD.isActive && Input.GetKey(KeyCode.Escape))
+        {
+            diagUI.EndDialogue(VD.nodeData);
         }
     }
 
@@ -123,6 +161,12 @@ public class SimpleCharacterController : AbstractScreenReader {
 
         audioSource.volume = 1;
         audioSource.pitch = 1;
+
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
+        {
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+        }
+        TryInteract();
 
         switch (collision.gameObject.tag)
         {
@@ -141,6 +185,15 @@ public class SimpleCharacterController : AbstractScreenReader {
             case "MapLimit":
                 audioSource.PlayOneShot(mapLimitClip);
                 break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
+        {
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+            //Debug.Log(inTrigger);
         }
     }
 
@@ -168,8 +221,24 @@ public class SimpleCharacterController : AbstractScreenReader {
                 case "sand":
                     audioSource.PlayOneShot(sandAudioClip);
                     break;
+                case "wood":
+                    audioSource.PlayOneShot(woodAudioClip);
+                    break;
+                case "carpet":
+                    audioSource.PlayOneShot(carpetAudioClip);
+                    break;
             }
         }
+
+        if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
+        {
+            inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        inTrigger = null;
     }
 
     // Save the position in player prefs
@@ -192,4 +261,15 @@ public class SimpleCharacterController : AbstractScreenReader {
 
         return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"));
     }
+
+    void TryInteract()
+    {
+        /* Prioritize triggers */
+        if (inTrigger)
+        {
+            diagUI.Interact(inTrigger);
+            return;
+        }
+    }
+
 }

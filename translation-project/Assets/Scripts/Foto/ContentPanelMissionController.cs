@@ -18,6 +18,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public TextMeshProUGUI whaleCountText;
 
+    public GameObject WinImage;
+
     private int count = 0;
     
     private void Start()
@@ -74,10 +76,19 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
             whaleCountText.text = count.ToString();
 
-            if(!whaleController.getWhaleById(Parameters.WHALE_ID).whale_name.Equals(""))
-                confirmText.text = "Baleia identificada. Deseja fazer nova foto?";
-            else
-                confirmText.text = "Baleia cadastrada. Deseja fazer nova foto?";
+            if (count < 4)
+            {
+                if (!whaleController.getWhaleById(Parameters.WHALE_ID).whale_name.Equals(""))
+                    confirmText.text = "Parabéns, baleia identificada. Realize uma nova foto.";
+                else
+                    confirmText.text = "Parabéns, baleia cadastrada. Realize uma nova foto.";
+
+                StartCoroutine(BackToPhotoCoroutine());
+            }
+            else 
+            {
+                StartCoroutine(FinishMissionCoroutine());
+            }
             //gameObject.SetActive(false);
         }
     }
@@ -115,5 +126,22 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public void ReturnToShip()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+    }
+
+    public IEnumerator BackToPhotoCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+
+        confirmFoto.SetActive(false);
+        gameObject.SetActive(false);
+    }
+
+    public IEnumerator FinishMissionCoroutine()
+    {
+        WinImage.SetActive(true);
+
+        yield return new WaitForSeconds(7);
+
+        ReturnToShip();
     }
 }

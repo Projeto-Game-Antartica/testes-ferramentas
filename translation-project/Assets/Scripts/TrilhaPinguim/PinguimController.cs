@@ -16,11 +16,11 @@ public class PinguimController : DragAndDropController {
     private Animator pinguim_antarticoAnimator;
     private Animator pinguim_papuaAnimator;
 
-    public Image fillImage;
+    public Image timer;
 
-    public static bool adeliaFinished;
-    public static bool antarticoFinished;
-    public static bool papuaFinished;
+    public bool adeliaFinished;
+    public bool antarticoFinished;
+    public bool papuaFinished;
     
     private List<GameObject> draggedItems;
 
@@ -33,16 +33,21 @@ public class PinguimController : DragAndDropController {
     private const int LEFT   = 3;
     private const int RANDOM = 4;
 
-    public GameObject WinImage;
+    //public GameObject WinImage;
+    public GameObject LoseImage;
 
-    private void Start()
+    public GameObject instruction_interface;
+
+    public Button resetButton;
+
+    public void initializeGame()
     {
         draggedItems = new List<GameObject>();
 
         adeliaFinished = false;
         antarticoFinished = false;
         papuaFinished = false;
-        
+
         pinguim_adeliaAnimator = pinguim_adelia.GetComponent<Animator>();
         pinguim_antarticoAnimator = pinguim_antartico.GetComponent<Animator>();
         pinguim_papuaAnimator = pinguim_papua.GetComponent<Animator>();
@@ -51,11 +56,23 @@ public class PinguimController : DragAndDropController {
         pinguim_antarticoAnimator.SetBool("isMoving", false);
         pinguim_papuaAnimator.SetBool("isMoving", false);
 
-        fillImage.fillAmount = 1f;
+        timer.fillAmount = 1f;
+
+        resetButton.interactable = true;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            instruction_interface.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            instruction_interface.SetActive(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             try
@@ -70,6 +87,9 @@ public class PinguimController : DragAndDropController {
                 Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
             }
         }
+
+        if (timer.fillAmount <= 0f)
+            LoseImage.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -153,7 +173,10 @@ public class PinguimController : DragAndDropController {
         }
 
         if (adeliaFinished && antarticoFinished && papuaFinished)
+        {
             WinImage.SetActive(true);
+            StartCoroutine(ReturnToUshuaiaCoroutine());
+        }
     }
 
     /// <summary>
@@ -203,9 +226,11 @@ public class PinguimController : DragAndDropController {
     {
         foreach (GameObject g in draggedItems)
         {
-            pinguim_adeliaAnimator.SetBool("isMoving", true);
-            pinguim_antarticoAnimator.SetBool("isMoving", true);
-            pinguim_papuaAnimator.SetBool("isMoving", true);
+            CountTime(0.01f);  
+
+            if (pinguim_adelia.activeSelf) pinguim_adeliaAnimator.SetBool("isMoving", true);
+            if (pinguim_antartico.activeSelf) pinguim_antarticoAnimator.SetBool("isMoving", true);
+            if (pinguim_papua.activeSelf) pinguim_papuaAnimator.SetBool("isMoving", true);
 
             switch(g.name)
             {
@@ -240,9 +265,13 @@ public class PinguimController : DragAndDropController {
         draggedItems.Clear();
         UpdateBackgroundState();
 
-        pinguim_adeliaAnimator.SetBool("isMoving", false);
-        pinguim_antarticoAnimator.SetBool("isMoving", false);
-        pinguim_papuaAnimator.SetBool("isMoving", false);
+
+        if (pinguim_adelia.activeSelf)
+            pinguim_adeliaAnimator.SetBool("isMoving", false);
+        if (pinguim_antartico.activeSelf)
+            pinguim_antarticoAnimator.SetBool("isMoving", false);
+        if (pinguim_papua.activeSelf)
+            pinguim_papuaAnimator.SetBool("isMoving", false);
     }
 
     public void goUp()
@@ -449,10 +478,15 @@ public class PinguimController : DragAndDropController {
         }
     }
 
-    public void LoseHP()
+    public void CountTime(float value)
     {
-        if (fillImage.fillAmount < 0) fillImage.fillAmount = 0;
-        fillImage.fillAmount -= 0.1f;
+        if (timer.fillAmount < 0)
+        {
+            timer.fillAmount = 0;
+            LoseImage.SetActive(true);
+        }
+        else
+            timer.fillAmount -= value;
     }
 
     public void FlipPinguim(string name, bool left)
@@ -469,5 +503,22 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.GetComponent<SpriteRenderer>().flipX = left;
                 break;
         }
+    }
+
+    public void ReturnToUshuaia()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    }
+
+    public void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Pinguim);
+    }
+
+    public IEnumerator ReturnToUshuaiaCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
     }
 }

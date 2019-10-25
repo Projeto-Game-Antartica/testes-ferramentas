@@ -20,6 +20,8 @@ public class MainMenu : AbstractScreenReader
 
     public GameObject confirmQuit;
 
+    public TMPro.TextMeshProUGUI loadingText;
+
     AsyncOperation async;
 
     // player preferences hp and exp
@@ -30,6 +32,8 @@ public class MainMenu : AbstractScreenReader
     {
         // set the parameter to show the instruction interface when loading the game
         PlayerPrefs.SetInt("InstructionInterface", 0);
+        // set the saved position int to 0
+        PlayerPrefs.SetInt("Saved", 0);
         
         // localization
         LocalizationManager.instance.LoadLocalizedText("locales_ptbr.json");
@@ -106,18 +110,19 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
+        async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
+
         loadScreenObject.SetActive(true);
-        async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
-        async.allowSceneActivation = false;
 
         while(!async.isDone)
         {
-            slider.value = async.progress;
-            if(async.progress == 0.9f)
-            {
-                slider.value = 1f;
-                async.allowSceneActivation = true;
-            }
+            float progress = Mathf.Clamp01(async.progress / .9f);
+
+            loadingSlider.value = progress;
+
+            Debug.Log(progress);
+
+            loadingText.text = (progress * 100f).ToString("F0") + "%";
 
             yield return null;
         }

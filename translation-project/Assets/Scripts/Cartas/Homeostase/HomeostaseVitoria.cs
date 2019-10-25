@@ -12,6 +12,7 @@ public class HomeostaseVitoria : MonoBehaviour {
     public GameObject fleeceCard;
 
     public GameObject winImage;
+    public GameObject loseImage;
 
     public Button likeButton;
 
@@ -22,6 +23,7 @@ public class HomeostaseVitoria : MonoBehaviour {
     public string algodaoHint;
     public string fleeceHint;
 
+    public GameObject instruction_interface;
 
     private GameObject clickedCard = null;
 
@@ -32,9 +34,18 @@ public class HomeostaseVitoria : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            instruction_interface.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            instruction_interface.SetActive(false);
+        }
+    }
 
     public void OnCardClick()
     {
@@ -59,11 +70,21 @@ public class HomeostaseVitoria : MonoBehaviour {
         if (clickedCard.name.Equals(algodaoCard.name))
         {
             // wrong choice
+            loseImage.SetActive(true);
         }
         else if (clickedCard.name.Equals(fleeceCard.name))
         {
             // correct choice
             winImage.SetActive(true);
         }
+
+        StartCoroutine(ReturnToUshuaiaCoroutine());
+    }
+
+    public IEnumerator ReturnToUshuaiaCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002CasaUshuaia);
     }
 }

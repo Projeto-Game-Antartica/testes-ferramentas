@@ -20,10 +20,11 @@ public class AlimentosInventarioController : MonoBehaviour {
 
     public void RemoverAlimento(Transform alimento)
     {
-
         Debug.Log(alimento.name);
 
         int index = int.Parse(Regex.Match(alimento.name, @"\d+").Value);
+
+        Debug.Log(index);
 
         confirmPanel.SetActive(true);
 
@@ -37,8 +38,11 @@ public class AlimentosInventarioController : MonoBehaviour {
 
     public void ConfirmRemover(int index)
     {
+        Debug.Log("confirmar remover index: " + index);
         homeostase.RemoverAlimentoCesta(index);
 
         confirmPanel.SetActive(false);
+
+        removeButton.onClick.RemoveAllListeners();
     }
 }
