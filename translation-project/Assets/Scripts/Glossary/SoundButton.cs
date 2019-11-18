@@ -11,6 +11,9 @@ public class SoundButton : AbstractScreenReader
     public static AudioSource audioSource;
     public static bool contentButton;
 
+    public bool first = false;
+    public bool last = false;
+
     // Use this for initialization
     void Start()
     {
@@ -45,5 +48,12 @@ public class SoundButton : AbstractScreenReader
     public void ReadButton()
     {
         ReadText(keyLabel.text);
+
+        if (first && last)
+            ReadText("Único item da lista");
+        else if (first)
+            ReadText("Primeiro item da lista");
+        else if (last)
+            ReadText("Último item da lista");
     }
 }

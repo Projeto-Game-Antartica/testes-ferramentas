@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class CasaUshuaiaSceneManagement : MonoBehaviour {
+public class CasaUshuaiaSceneManagement : AbstractScreenReader {
 
     private bool isTrigger;
 
@@ -18,12 +18,17 @@ public class CasaUshuaiaSceneManagement : MonoBehaviour {
 
     private Collider2D colliderControl;
 
+    // instruction settings
+    public GameObject instructionInterface;
+    public TextMeshProUGUI missionName;
+    public TextMeshProUGUI descriptionText;
+    
+    public string sceneDescription;
+
     // Use this for initialization
     void Start()
     {
         isTrigger = false;
-
-        //InitialInstruction();
 
         Debug.Log(SceneManager.GetActiveScene().name);
     }
@@ -40,6 +45,20 @@ public class CasaUshuaiaSceneManagement : MonoBehaviour {
             if (colliderControl.name.Equals("door"))
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
         }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                ReadSceneDescription();
+            }
+        }
+    }
+
+    public void ReadSceneDescription()
+    {
+        ReadText(sceneDescription);
+        Debug.Log(sceneDescription);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

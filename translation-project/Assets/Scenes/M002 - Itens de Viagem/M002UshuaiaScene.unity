@@ -2214,6 +2214,10 @@ MonoBehaviour:
   chasingCamera: {fileID: 952704472}
   warningText: {fileID: 189764719}
   warningInterface: {fileID: 1153967794}
+  instructionInterface: {fileID: 330471717}
+  missionName: {fileID: 527157660}
+  descriptionText: {fileID: 527157659}
+  sceneDescription: Cidade de Ushuaia
 --- !u!114 &380219417 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
@@ -3159,6 +3163,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224044704426130502, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -3262,42 +3271,42 @@ Prefab:
     - target: {fileID: 114067511719706992, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114067511719706992, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114195973896555552, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114195973896555552, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114793242758212078, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114793242758212078, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
@@ -3312,12 +3321,12 @@ Prefab:
     - target: {fileID: 114326844556980092, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114326844556980092, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224207780255754144, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 2}
@@ -3353,9 +3362,118 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_text
+      value: "1. Movimente o jogador pelo cen\xE1rio com as setas direcionais.\r\n2.
+        Interaja com os personagens (mentores) do cen\xE1rio.\r\n3. Em alguns di\xE1logos
+        voc\xEA ter\xE1 dois caminhos a seguir.\r\n4. Monitore sua sa\xFAde e pontua\xE7\xE3o.\r\n5.
+        Complete os minijogos dialogando com os mentores, ganhe itens para a Expedi\xE7\xE3o
+        na Ant\xE1rtica.\n6. Escolha op\xE7\xE3o de di\xE1logo atrav\xE9s das teclas
+        direcionais (setas para cima ou baixo) e selecione com tecla ENTER\n\nPara
+        abrir as instru\xE7\xF5es desta miss\xE3o tecle F1."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 469
+      objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 76
+      objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 76
+      objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 27.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.lineCount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 26.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_text
+      value: ITENS DE VIAGEM
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114100347341746834, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: iniciarButton
+      value: 
+      objectReference: {fileID: 527157658}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 380219414}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ReadSceneDescription
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &527157658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 2}
+  m_PrefabInternal: {fileID: 527157657}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &527157659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 2}
+  m_PrefabInternal: {fileID: 527157657}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!114 &527157660 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 2}
+  m_PrefabInternal: {fileID: 527157657}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1 &611962722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,6 +3788,12 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 82662523116964856, guid: 0e2bd3f17c076384d95f3bedf0528b7b,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e2bd3f17c076384d95f3bedf0528b7b, type: 2}
   m_IsPrefabAsset: 0
@@ -6812,6 +6936,12 @@ Prefab:
       propertyPath: missionNumber
       value: M002
       objectReference: {fileID: 0}
+    - target: {fileID: 82441320084554512, guid: 417352f00240166488760a049e531004,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 417352f00240166488760a049e531004, type: 2}
   m_IsPrefabAsset: 0
@@ -6878,6 +7008,12 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c250c3ee688b4849a4fdfb4654c6bb4,
         type: 3}
+    - target: {fileID: 82047441674896370, guid: 207cb39d1e141554aa46baef2cc5dde4,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 207cb39d1e141554aa46baef2cc5dde4, type: 2}
   m_IsPrefabAsset: 0
@@ -9391,6 +9527,12 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 82141035748820876, guid: c3f2b5248bd9ddf489c95275a8117bd3,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3f2b5248bd9ddf489c95275a8117bd3, type: 2}
   m_IsPrefabAsset: 0
@@ -9559,6 +9701,22 @@ Prefab:
       propertyPath: playerName
       value: Turist
       objectReference: {fileID: 0}
+    - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 2}
+      propertyPath: woodAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 83caa8c31e15c0b42b80cf210ffe4442, type: 3}
+    - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 2}
+      propertyPath: carpetAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fe187892825e7d3439a511fe519f7dc3, type: 3}
+    - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 114720855412633032, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
     - {fileID: 114332875366109432, guid: 44698338defdf4545a2b8048f0fcbc70, type: 2}
@@ -10128,6 +10286,12 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 82960690957786192, guid: ae9f52b453ae36d4487b9e66914db525,
+        type: 2}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae9f52b453ae36d4487b9e66914db525, type: 2}
   m_IsPrefabAsset: 0

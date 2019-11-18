@@ -26,6 +26,8 @@ public class LocalizationManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        instance.LoadLocalizedText("locales_ptbr.json");
     }
 
     public void LoadLocalizedText(string fileName)

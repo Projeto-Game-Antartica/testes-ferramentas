@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using VIDE_Data;
 
 public class HUDController : AbstractScreenReader {
 
     private const float time = 0.03f;
-
-    public GameObject instructionInterface;
-
+    
     // bag bar settings
     public Image bar;
     public Image camera_inv;
@@ -25,25 +24,30 @@ public class HUDController : AbstractScreenReader {
 
     // info settings
     public Image info;
-    public GameObject missionName;
-    public GameObject missionDescription;
+    public GameObject infoMissionName;
+    public GameObject infoMissionDescription;
     private readonly int INFO = 2;
 
-    //private string navioDescription = "Notas proemias Convés de navio: " +
-    //    "Convés de navio, com piso listrado marrom, do lado direito popa de três andares, branca com portas marrons, e do lado esquerdo popa com porta." +
-    //    "Personagem principal no canto superior esquerdo da tela com duas barras uma em cima da outra ao seu lado direito. A barra de cima vermelha, representada por " +
-    //    "um coração vermelho é a carga vida do personagem.A debaixo, amarela, " +
-    //    "representada por uma estrela amarela, representa os pontos de experiência do personagem." +
-    //    "Livro marrom com fita vermelha no canto inferior direito que represent o logbook do personagem, ainda não está em funcionamento." +
-    //    "Mochila branca e marrom no canto inferior esquerdo que representa o inventário do personagem com os itens já adquiridos.";
+    public GameObject inGameOption;
+
+    // instruction interface settings
+    public GameObject instructionInterface;
+    public TextMeshProUGUI missionTitle;
+    public TextMeshProUGUI missionDescription;
+    public Button iniciarButton;
+
+    public SimpleCharacterController simpleCharacterController;
 
     private void Start()
     {
         // "InstructionInterface" set on the main menu script
-        if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0) 
+        if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
+        {
             ActivateInstructionInterface();
+            ReadInstructions();
+        }
 
-        instructionInterface.GetComponentInChildren<Button>().Select();
+        iniciarButton.Select();
     }
 
     private void LateUpdate()
@@ -62,7 +66,52 @@ public class HUDController : AbstractScreenReader {
 
     private void Update()
     {
-        if(Input.GetKeyDown(InputKeys.QUEST_KEY))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                ReadText("Menu de instruções aberto");
+                instructionInterface.SetActive(true);
+                ReadInstructions();
+            }
+            else
+            {
+                ReadInstructions();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!VD.isActive)
+            {
+                Debug.Log("HUDController");
+                if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
+                {
+                    ReadText("Menu de opções aberto");
+                    inGameOption.SetActive(true);
+                }
+                else
+                {
+                    ReadText("Menu de opções fechado");
+                    inGameOption.SetActive(false);
+                }
+
+                if (instructionInterface.activeSelf)
+                {
+                    ReadText("Menu de instruções fechado");
+                    instructionInterface.SetActive(false);
+                    inGameOption.SetActive(false);
+                }
+            }
+            else
+            {
+                Debug.Log("SimpleCharacter");
+                simpleCharacterController.diagUI.EndDialogue(VD.nodeData);
+                inGameOption.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(InputKeys.QUEST_KEY))
         {
             HandleInfoBar();
         }
@@ -92,9 +141,17 @@ public class HUDController : AbstractScreenReader {
     public void HandleInfoBar()
     {
         if (info.fillAmount == 0)
+        {
             StartCoroutine(FillImage(info, INFO));
+            ReadText("Informações ativadas");
+            ReadText(infoMissionName.GetComponentInChildren<TextMeshProUGUI>().text);
+            ReadText(infoMissionDescription.GetComponentInChildren<TextMeshProUGUI>().text);
+        }
         else if (info.fillAmount == 1)
+        {
             StartCoroutine(UnfillImage(info, INFO));
+            ReadText("Informações desativadas");
+        }
     }
 
     public IEnumerator FillImage(Image img, int op)
@@ -113,8 +170,8 @@ public class HUDController : AbstractScreenReader {
         if (op == BAG) ponteiraButton.fillAmount = 1;
         else if (op == INFO)
         {
-            missionDescription.SetActive(true);
-            missionName.SetActive(true);
+            infoMissionDescription.SetActive(true);
+            infoMissionName.SetActive(true);
         }
     }
 
@@ -123,8 +180,8 @@ public class HUDController : AbstractScreenReader {
         if (op == BAG) ponteiraButton.fillAmount = 0;
         else if (op == INFO)
         {
-            missionDescription.SetActive(false);
-            missionName.SetActive(false);
+            infoMissionDescription.SetActive(false);
+            infoMissionName.SetActive(false);
         }
 
         while (img.fillAmount > 0)
@@ -138,7 +195,7 @@ public class HUDController : AbstractScreenReader {
 
             yield return new WaitForSeconds(time);
         }
-    }
+    } 
 
     public IEnumerator ShowInvItems()
     {
@@ -164,7 +221,10 @@ public class HUDController : AbstractScreenReader {
 
     public void ReadInstructions()
     {
-        ReadText(ReadableTexts.key_navio_instructions);
+        ReadText(missionTitle.text);
+        ReadText(missionDescription.text);
+        Debug.Log(missionTitle.text);
+        Debug.Log(missionDescription.text);
     }
 
     public void ChangeMission(TextMeshProUGUI missionName)

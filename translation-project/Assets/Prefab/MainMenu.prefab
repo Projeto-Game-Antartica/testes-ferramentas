@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 114595158685627328}
   - component: {fileID: 114317521802837912}
   - component: {fileID: 114735265656196790}
+  - component: {fileID: 114899561403821218}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -144,6 +145,7 @@ GameObject:
   - component: {fileID: 114576370298824220}
   - component: {fileID: 114001861278097250}
   - component: {fileID: 114750848372281604}
+  - component: {fileID: 114770921023912186}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -163,6 +165,7 @@ GameObject:
   - component: {fileID: 114774310918706264}
   - component: {fileID: 114898576223473718}
   - component: {fileID: 114534655045760388}
+  - component: {fileID: 114688004689451622}
   m_Layer: 5
   m_Name: HelpButton
   m_TagString: Untagged
@@ -286,6 +289,7 @@ GameObject:
   - component: {fileID: 114553536952929124}
   - component: {fileID: 114187552213980584}
   - component: {fileID: 114907566409697250}
+  - component: {fileID: 114623334634407728}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -322,6 +326,7 @@ GameObject:
   - component: {fileID: 114059758626575266}
   - component: {fileID: 114686117197022302}
   - component: {fileID: 114669091202776380}
+  - component: {fileID: 114464920515042430}
   m_Layer: 5
   m_Name: ConfigurationButton
   m_TagString: Untagged
@@ -499,7 +504,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.326, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_PressedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_DisabledColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 0.4745098}
     m_ColorMultiplier: 1
@@ -520,6 +525,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114912289595634862}
         m_MethodName: TryQuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -806,11 +822,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -871,7 +887,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.326, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_PressedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_DisabledColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 0.4745098}
     m_ColorMultiplier: 1
@@ -1221,7 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 114686117197022302}
@@ -1229,7 +1245,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.326, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_PressedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_DisabledColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 0.4745098}
     m_ColorMultiplier: 1
@@ -1300,6 +1316,17 @@ MonoBehaviour:
   m_canvasRenderer: {fileID: 222657014195628562}
   m_TextComponent: {fileID: 114020954445225434}
   m_materialReferenceIndex: 1
+--- !u!114 &114464920515042430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1573740085744698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2555841ed171aed409d13f843a92b7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114485267365392594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1468,7 +1495,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 114912289595634862}
+        - m_Target: {fileID: 0}
           m_MethodName: PlaySelectionAudio
           m_Mode: 1
           m_Arguments:
@@ -1743,6 +1770,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114623334634407728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1501223400506206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2555841ed171aed409d13f843a92b7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114630485298265482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1798,7 +1836,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 114912289595634862}
+        - m_Target: {fileID: 0}
           m_MethodName: PlaySelectionAudio
           m_Mode: 1
           m_Arguments:
@@ -1854,7 +1892,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1876,11 +1914,11 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 114898576223473718}
-    m_SelectOnRight: {fileID: 114317521802837912}
+    m_SelectOnRight: {fileID: 114001861278097250}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.326, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_PressedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_DisabledColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 0.4745098}
     m_ColorMultiplier: 1
@@ -1934,6 +1972,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114688004689451622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1276242934025706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2555841ed171aed409d13f843a92b7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114735265656196790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1961,7 +2010,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 114912289595634862}
+        - m_Target: {fileID: 0}
           m_MethodName: PlaySelectionAudio
           m_Mode: 1
           m_Arguments:
@@ -2002,7 +2051,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 114912289595634862}
+        - m_Target: {fileID: 0}
           m_MethodName: PlaySelectionAudio
           m_Mode: 1
           m_Arguments:
@@ -2016,6 +2065,17 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114770921023912186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250960531475408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2555841ed171aed409d13f843a92b7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114774310918706264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2157,7 +2217,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 1}
-    m_HighlightedColor: {r: 0, g: 0.326, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_PressedColor: {r: 0.69803923, g: 0.9019608, b: 1, a: 1}
     m_DisabledColor: {r: 0, g: 0.36078432, b: 0.62352943, a: 0.4745098}
     m_ColorMultiplier: 1
@@ -2198,8 +2258,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114899561403821218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1084688015534596}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2555841ed171aed409d13f843a92b7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114907566409697250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2227,7 +2309,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 114912289595634862}
+        - m_Target: {fileID: 0}
           m_MethodName: PlaySelectionAudio
           m_Mode: 1
           m_Arguments:
@@ -2255,7 +2337,6 @@ MonoBehaviour:
   slider: {fileID: 0}
   loadScreenObject: {fileID: 1848238392093970}
   loadingSlider: {fileID: 114680845492830488}
-  selectClip: {fileID: 8300000, guid: 2d5cf72af856a3d4d84d65581c09b172, type: 3}
   confirmQuit: {fileID: 0}
   loadingText: {fileID: 114077925196305254}
 --- !u!114 &114942052922383654
@@ -2459,7 +2540,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -150.3, y: 19.4}
+  m_AnchoredPosition: {x: -150.29999, y: 19.400024}
   m_SizeDelta: {x: 285.02, y: 32.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224060685180970464
@@ -2702,7 +2783,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -8,22 +8,25 @@ using System;
 
 public class TeiaAlimentarController : DragAndDropController
 {
-    private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
+    //private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
 
     // count the correct/wrong drops
     private int correctAnswer = 0;
     private int wrongAnswer = 0;
     private bool WIN = false;
-
+    
     public AudioClip correctClip;
     public AudioClip wrongClip;
-
-    public MinijogosDicas dicas;
+    public AudioClip victoryClip;
+    public AudioClip selectTeia;
 
     public LifeExpController lifeExpController;
 
     public GameObject WinImage;
-    public TMPro.TextMeshProUGUI WinText; 
+    public TMPro.TextMeshProUGUI WinText;
+
+    // itens da teia alimentar (parte de baixo)
+    public GameObject[] items;
 
     enum Cells
     {
@@ -34,34 +37,22 @@ public class TeiaAlimentarController : DragAndDropController
 
     private void Start()
     {
-        ReadText(instructions);
+        //ReadText(instructions);
 
         NRO_CELLS = 12;
 
-        Debug.Log(cells.Length);
-        foreach(GameObject g in cells)
-        {
-            Debug.Log(g.name);
-        }
+        //Debug.Log(cells.Length);
+        //foreach(GameObject g in cells)
+        //{
+        //    Debug.Log(g.name);
+        //}
 
         audioSource = GetComponent<AudioSource>();
-
-        // start afther time seconds and repeat at repeatRate rate
-        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
 
     
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            //RemoveFirstItem();
-            if (WinImage.activeSelf)
-                WinImage.SetActive(false);
-            else
-                audioButton.Select();
-        }
-
         if(Input.GetKeyDown(KeyCode.Space))
         {
             try
@@ -69,6 +60,7 @@ public class TeiaAlimentarController : DragAndDropController
                 if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
                 {
                     OnButtonClick();
+                    audioSource.PlayOneShot(selectTeia);
                     isPositioning = true;
                 }
             } catch (Exception e)
@@ -89,18 +81,17 @@ public class TeiaAlimentarController : DragAndDropController
 
             if (isCell)
             {
+                // navegando pelas celulas
                 nextCell.GetComponent<Selectable>().Select();
-                Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
-                Debug.Log(ReturnCellInfo(nextCell.name));
-                //ReadText(nextCell.name);
-                ReadText("Célula " + ReturnCellNumber(nextCell.name));
-                ReadText(ReturnCellInfo(nextCell.name));   
+
+                ReadCell(nextCell);
             }
             else
             {
+                // navegando pelos itens
                 nextCell.GetComponent<Selectable>().Select();
-                Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
-                ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+
+                ReadItem(nextCell);
             }
         }
 
@@ -128,11 +119,15 @@ public class TeiaAlimentarController : DragAndDropController
                 sourceCell.UpdateBackgroundState();
 
                 // go to item
-                firstItem.GetComponent<Selectable>().Select();
+                items[FindNextItem()].GetComponent<Selectable>().Select();
+                ReadItem(items[FindNextItem()]);
+
+                audioSource.PlayOneShot(selectTeia);
 
                 ResetConditions();
 
                 isPositioning = false;
+
             }
             catch(Exception e)
             {
@@ -148,20 +143,80 @@ public class TeiaAlimentarController : DragAndDropController
             {
                 ReadText("Células");
                 Debug.Log("Células");
-                cells[0].GetComponent<Selectable>().Select();
+                cells[FindNextEmptyCell()].GetComponent<Selectable>().Select();
+                ReadCell(cells[FindNextEmptyCell()]);
             }
             else
             {
                 ReadText("Itens");
                 Debug.Log("Itens");
-                firstItem.GetComponent<Selectable>().Select();
+                items[FindNextItem()].GetComponent<Selectable>().Select();
+                ReadItem(items[FindNextItem()]);
             }
         }
     }
 
-    public void CallHintMethod()
+    public void SelectFirstItem()
     {
-        dicas.StartHints();
+        items[0].GetComponent<Selectable>().Select();
+
+        ReadItem(items[0]);
+    }
+    
+    void ReadCell(GameObject nextCell)
+    {
+        // navegando pelas celulas vazias
+        if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            Debug.Log("Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            ReadText("Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+        }
+        else
+        {
+            // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+            Debug.Log("Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name + " e " + ReturnCellInfo(nextCell.name));
+            ReadText("Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name + " e " + ReturnCellInfo(nextCell.name));
+        }
+    }
+
+    void ReadItem(GameObject nextCell)
+    {
+        // navegando por itens vazios
+        if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            // caso que o jogador estara navegando com o item selecionado nas ceulas
+            // entao é preciso ler a celula e seu numero para auxiliar o usuario a escolher o posicionamento correto
+            if (nextCell.gameObject.name.Contains("Cell"))
+            {
+                Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
+                ReadText("Célula " + ReturnCellNumber(nextCell.name));
+            }
+            else
+            {
+                Debug.Log("Item vazio");
+                ReadText("Item vazio");
+            }
+        }
+        else // navegando por itens ainda com conteudo
+        {
+            Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+            ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+        }
+    }
+
+    // return the index of cell that has a item to be dropped.
+    public int FindNextItem()
+    {
+        int index = 0;
+
+        while(items[index].GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            index++;
+        }
+
+        return index;
     }
 
     public override void OnSimpleDragAndDropEvent(DragAndDropCell.DropEventDescriptor desc)
@@ -183,7 +238,7 @@ public class TeiaAlimentarController : DragAndDropController
                     PlayAudioClip(correctClip);
                     correctAnswer++;
                     if (correctAnswer >= NRO_CELLS) WIN = true;
-                    CheckEndGame();
+                    StartCoroutine(CheckEndGame());
                 }
                 else                                                            // If drop unsuccessful (was denied before)
                 {
@@ -204,7 +259,7 @@ public class TeiaAlimentarController : DragAndDropController
         }
     }
     
-    public void CheckEndGame()
+    public IEnumerator CheckEndGame()
     {
         if (WIN)
         {
@@ -214,9 +269,24 @@ public class TeiaAlimentarController : DragAndDropController
             WinImage.SetActive(true);
 
             if (!PlayerPreferences.M004_Memoria)
+            {
                 WinText.text = "Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.";
+
+                audioSource.PlayOneShot(victoryClip);
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                ReadText("Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.");
+            }
             else
+            {
                 WinText.text = "Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.";
+
+                audioSource.PlayOneShot(victoryClip);
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                ReadText("Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.");
+
+            }
 
             PlayerPreferences.M004_TeiaAlimentar = true;
 
@@ -274,7 +344,7 @@ public class TeiaAlimentarController : DragAndDropController
             case "baleiasCell":
                 return "não serve de alimento para nenhuma célula";
             case "krillCell":
-                return "serve de alimento para as células as células " + (int)Cells.baleiasCell + " e " + (int)Cells.avesMarinhasCell + " e " + (int)Cells.pinguinsCell + " e " + (int)Cells.cefalopodesCell;
+                return "Krill: serve de alimento para as células as células " + (int)Cells.baleiasCell + " e " + (int)Cells.avesMarinhasCell + " e " + (int)Cells.pinguinsCell + " e " + (int)Cells.cefalopodesCell;
             case "cefalopodesCell":
                 return "serve de alimento para as células " + (int)Cells.pinguinsCell + " e " + (int)Cells.cetaceosCell;
             case "focasCell":
@@ -304,7 +374,7 @@ public class TeiaAlimentarController : DragAndDropController
 
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
         SceneManager.LoadScene(ScenesNames.M004Ship);
     }

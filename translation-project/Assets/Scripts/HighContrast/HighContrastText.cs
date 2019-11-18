@@ -11,18 +11,18 @@ public class HighContrastText : MonoBehaviour {
      *  white  = #FFFFFF
      *  black  = #000000
      *  yellow = #FFFF00
+     *  
+     *  
+     * Change the background color of text using TextMeshProUGUI
+     * UI Text need to be TMPro
+     * Problem: restore to default
      */
-
+     
     public static TMP_FontAsset arialFont   = Resources.Load<TMP_FontAsset>("Fonts/ARIAL SDF");
     public static TMP_FontAsset bgothmFont  = Resources.Load<TMP_FontAsset>("Fonts/bgothm SDF");
     public static TMP_FontAsset swiss       = Resources.Load<TMP_FontAsset>("Fonts/Swiss 721 SDF");
     public static TMP_FontAsset averageFont       = Resources.Load<TMP_FontAsset>("Fonts/AverageSans SDF");
 
-    /*
-     * Change the background color of text using TextMeshProUGUI
-     * UI Text need to be TMPro
-     * Problem: restore to default
-     */
     public static void ChangeAllTextColors(string color)
     {
         Object[] textComponents = Resources.FindObjectsOfTypeAll(typeof(TextMeshProUGUI));
@@ -42,6 +42,27 @@ public class HighContrastText : MonoBehaviour {
         //Debug.Log(text.text);
         text.text = "<font=\"LiberationSans SDF\"><mark=#000000>" + text.text + "</mark>";
     }
+
+    /*
+     * if gameobject starts inactive, the ChangeBackGroundColor method wont find it
+     * so on enable calls do the color change if Parameters.HIGHCONTRAST is true
+     */
+    //private void Start()
+    //{
+    //    Debug.Log("Started...");
+    //    if (Parameters.HIGH_CONTRAST)
+    //    {
+    //        Image image = GetComponent<Image>();
+    //        TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
+
+    //        var tempColor = image.color;
+    //        tempColor = Color.black;
+    //        tempColor.a = 1f;
+    //        image.color = tempColor;
+
+    //        text.font = arialFont;
+    //    }
+    //}
 
     public static void ChangeFontToBgoth(TextMeshProUGUI text)
     {

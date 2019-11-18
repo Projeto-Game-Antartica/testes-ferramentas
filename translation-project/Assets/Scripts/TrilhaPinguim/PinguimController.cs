@@ -33,12 +33,13 @@ public class PinguimController : DragAndDropController {
     private const int LEFT   = 3;
     private const int RANDOM = 4;
 
-    //public GameObject WinImage;
+    public GameObject WinImage;
     public GameObject LoseImage;
 
     public GameObject instruction_interface;
 
     public Button resetButton;
+    public Button firstItem;
 
     public void initializeGame()
     {

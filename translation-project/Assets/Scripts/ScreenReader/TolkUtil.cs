@@ -7,7 +7,6 @@ public class TolkUtil : AbstractScreenReader {
 
     public static void Load()
     {
-        
         if (!Tolk.IsLoaded())
         {
             Debug.Log("Inicializando...");
@@ -55,9 +54,9 @@ public class TolkUtil : AbstractScreenReader {
         Tolk.Speak(text);
     }
 
-    public static void Instructions()
+    public void Instructions()
     {
-        const string instructions = "Utilize a tecla F1 para repetir as instruções à qualquer momento.";
+        string instructions = "Utilize a tecla F1 para repetir as instruções à qualquer momento.";
         ReadText(instructions);
     }
 }

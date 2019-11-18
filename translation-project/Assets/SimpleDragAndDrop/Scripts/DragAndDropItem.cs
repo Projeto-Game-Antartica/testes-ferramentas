@@ -215,16 +215,16 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             iconRect.sizeDelta = new Vector2(myRect.rect.width, myRect.rect.height);
 
             //icon.transform.position = teiaAlimentarController.cells[0].transform.position;
-            TeiaAlimentarController.cellIndex = 0;
+            //TeiaAlimentarController.cellIndex = 0;
             //icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.cells[0].transform.position);
 
             if (teiaAlimentarController != null)
             {
-                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.ReturnFirstCell().transform.position);
+                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.ReturnNextEmptyCell().transform.position);
             }
             else if (pinguimController != null)
             {
-                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(pinguimController.ReturnFirstCell().transform.position);
+                icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(pinguimController.ReturnNextEmptyCell().transform.position);
             }
 
             Debug.Log(icon.name);

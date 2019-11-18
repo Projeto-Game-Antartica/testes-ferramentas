@@ -46,7 +46,7 @@ public class GameController : AbstractScreenReader
 
     private void Awake()
     {
-        TolkUtil.Instructions();
+        //TolkUtil.Instructions();
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_quiz_instructions, LocalizationManager.instance.GetLozalization()));
     }
 

@@ -57,6 +57,9 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private int attempts = 0;
     public GameObject LoseImage;
 
+    public AudioSource audioSource;
+    public AudioClip loseClip;
+
     public TextMeshProUGUI attemptsText;
 
     /*
@@ -77,6 +80,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
         //RoundSettings(roundIndex);
         //SetOptionActiveInactive(roundIndex);
         //SetOptionSprites(roundIndex);
+
+        audioSource = GetComponent<AudioSource>();
         attempts = 0;
     }
 
@@ -88,9 +93,9 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public void CheckAnswer(GameObject option)
     {
-        if(isCorrect(option.GetComponentInChildren<Text>(), roundIndex))
+        if(isCorrect(option.GetComponentInChildren<TextMeshProUGUI>(), roundIndex))
         {
-            Debug.Log(option.GetComponentInChildren<Text>().text);
+            Debug.Log(option.GetComponentInChildren<TextMeshProUGUI>().text);
             // enable the next button
             nextButton.gameObject.SetActive(true);
             // needed to check after enabling gameobject
@@ -106,12 +111,25 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
             Debug.Log(attempts);
             ChangeBackgroundColor(option, Color.red);
+
             if (attempts > 3)
             {
-                LoseImage.SetActive(true);
-                StartCoroutine(ReturnToShipCoroutine());
+                StartCoroutine(EndGame());
             }
         }
+    }
+
+    public IEnumerator EndGame()
+    {
+        LoseImage.SetActive(true);
+
+        audioSource.PlayOneShot(loseClip);
+
+        yield return new WaitWhile(() => audioSource.isPlaying);
+
+        ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+
+        StartCoroutine(ReturnToShipCoroutine());
     }
 
     public void RoundSettings(int roundIndex)
@@ -137,7 +155,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {
             if (options[i].activeSelf)
             {
-                options[i].GetComponentInChildren<Text>().text = result[i];
+                options[i].GetComponentInChildren<TextMeshProUGUI>().text = result[i];
             }
         }
     }
@@ -278,7 +296,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         return Resources.Load<Sprite>(path);
     }
 
-    public bool isCorrect(Text answer, int roundIndex)
+    public bool isCorrect(TextMeshProUGUI answer, int roundIndex)
     {
         // compare the answer with the respective field on json file.
         // compare the texts with lower case.
@@ -419,7 +437,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }

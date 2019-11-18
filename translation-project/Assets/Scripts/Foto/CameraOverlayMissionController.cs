@@ -38,7 +38,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public WhaleImages whaleImages;
 
     // camera
-    new public Camera camera;
+    public new Camera camera;
 
     // instructions texts
     private ReadableTexts readableTexts;

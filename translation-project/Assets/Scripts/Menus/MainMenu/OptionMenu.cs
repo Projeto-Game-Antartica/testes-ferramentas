@@ -10,16 +10,15 @@ public class OptionMenu : AbstractScreenReader {
     public Slider slider;
     public Toggle ScreenReaderToggle;
     public Toggle HighContrastToggle;
-    public LocalizationManager localization;
+    public HighContrastSettings hcsettings;
 
     private ReadableTexts readableTexts;
 
-    public AudioClip selectClip;
-
     void Start()
     {
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
-        TolkUtil.Instructions();
+        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
+        //TolkUtil.Instructions();
+
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
         
         //TolkUtil.Load();
@@ -27,10 +26,8 @@ public class OptionMenu : AbstractScreenReader {
         slider.Select();
         ScreenReaderToggle.isOn = Parameters.ACCESSIBILITY;
         HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
-    }
 
-    public void DropDownHandler(int index)
-    {
+        Debug.Log(Parameters.HIGH_CONTRAST);
     }
 
     private void OnEnable()
@@ -38,17 +35,21 @@ public class OptionMenu : AbstractScreenReader {
         //GameObject[] newTexts = GameObject.FindGameObjectsWithTag("text-hc");
         //fontSizeText.SetNewTexts(newTexts);
 
-        FontSizeText.texts = GameObject.FindGameObjectsWithTag("text-hc");
-    }
+        //HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
 
-    public void SliderSettings(Slider slider)
-    {
-        ReadText("volume" + slider.value);
+        //hcsettings.ChangeHighContrast();
     }
-
+    
     public void ReadToggle(Toggle toggle)
     {
-        ReadText(toggle.name + "" + toggle.isOn);
+        var tmp = "";
+
+        if (toggle.isOn)
+            tmp = "ativado";
+        else
+            tmp = "desativado";
+
+        ReadText(toggle.name + "" + tmp);
     }
 
     private void Update()
@@ -62,28 +63,27 @@ public class OptionMenu : AbstractScreenReader {
     public void SetAcessibilityParameter()
     {
         Parameters.ACCESSIBILITY = ScreenReaderToggle.isOn;
-        Debug.Log("A: " + Parameters.ACCESSIBILITY);
+        //Debug.Log("A: " + Parameters.ACCESSIBILITY);
 
-        if (Parameters.ACCESSIBILITY) TolkUtil.Load();
-        else TolkUtil.Unload();
+        if (Parameters.ACCESSIBILITY)
+        {
+            TolkUtil.Load();
+            ReadText("Leitura de tela habilitada;");
+        }
+        else
+        {
+            TolkUtil.Unload();
+            ReadText("Leitura de tela desabilitada;");
+        }
     }
 
     public void SetHighContrastParameter()
     {
-        Parameters.HIGH_CONTRAST = HighContrastToggle.isOn;
-        Debug.Log("HC " + Parameters.HIGH_CONTRAST);
-    }
+        hcsettings.SetHighAccessibility();
 
-    public void PlaySelectionAudio()
-    {
-        if (GetComponent<AudioSource>() == null)
-        {
-            gameObject.AddComponent<AudioSource>();
-
-            UnityEngine.Audio.AudioMixer audioMixer = Resources.Load("Audio/AudioMixer") as UnityEngine.Audio.AudioMixer;
-            GetComponent<AudioSource>().outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[0];
-        }
-
-        PlaySelectAudio(GetComponent<AudioSource>(), selectClip);
+        if (Parameters.HIGH_CONTRAST)
+            ReadText("Alto contraste ativado");
+        else
+            ReadText("Alto contraste desativado");
     }
 }
