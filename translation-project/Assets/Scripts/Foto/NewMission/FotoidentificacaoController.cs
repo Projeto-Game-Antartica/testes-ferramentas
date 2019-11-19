@@ -59,13 +59,19 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public AudioSource audioSource;
     public AudioClip loseClip;
+    public AudioClip correctClip;
+    public AudioClip wrongClip;
 
     public TextMeshProUGUI attemptsText;
+
+    public GameObject instructionInterface;
+    public Button audioButton;
+    public LifeExpController lifeExpController;
 
     /*
      *  Set the GameObjects on the inspector according to the view. Answers options in line or in rows.
      *  For row option: with design purposes, the order of columns is 1,0,2.
-     */ 
+     */
     public GameObject[] options;
     public GameObject[] whale_images;
     public TextMeshProUGUI questionText;
@@ -89,23 +95,62 @@ public class FotoidentificacaoController : AbstractScreenReader {
     {
         // not the best way but works
         whaleData = whaleController.getWhaleById(Parameters.WHALE_ID);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (instructionInterface.activeSelf)
+                instructionInterface.SetActive(false);
+
+            audioButton.Select();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                instructionInterface.SetActive(true);
+                instructionInterface.GetComponentInChildren<Button>().Select();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            options[0].GetComponentInChildren<Button>().Select();
+        }
     }
 
     public void CheckAnswer(GameObject option)
     {
         if(isCorrect(option.GetComponentInChildren<TextMeshProUGUI>(), roundIndex))
         {
+            audioSource.PlayOneShot(correctClip);
+
             Debug.Log(option.GetComponentInChildren<TextMeshProUGUI>().text);
-            // enable the next button
-            nextButton.gameObject.SetActive(true);
+            
             // needed to check after enabling gameobject
             if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
             ChangeBackgroundColor(option, Color.green);
 
             PlayerPreferences.M004_FotoIdentificacao = true;
+
+            // enable and select the next button
+            nextButton.gameObject.SetActive(true);
+            nextButton.Select();
         }
         else
         {
+            audioSource.PlayOneShot(wrongClip);
             attempts++;
             attemptsText.text = "Erros: " + attempts;
 
@@ -142,6 +187,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
         // set the question
         questionText.text = questions[roundIndex];
+
+        ReadText(questionText.text);
         
         // show the needed buttons for round
         SetOptionActiveInactive(roundIndex);
@@ -158,6 +205,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 options[i].GetComponentInChildren<TextMeshProUGUI>().text = result[i];
             }
         }
+
+        options[0].GetComponentInChildren<Button>().Select();
     }
     
     public void ChangeBackgroundColor(GameObject option, Color color)
@@ -306,77 +355,57 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.pigmentacao);
                 if (answer.text.ToLower().Equals(whaleData.pigmentacao.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISPIGMENTACAODONE = true;
                     return true;
                 }
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.MANCHAS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.manchas);
                 if (answer.text.ToLower().Equals(whaleData.manchas.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISMANCHASDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.RISCOS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.riscos);
                 if (answer.text.ToLower().Equals(whaleData.riscos.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISRISCOSDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.MARCAS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.marcas);
                 if (answer.text.ToLower().Equals(whaleData.marcas.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISMARCASDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.BORDA:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.borda);
                 if (answer.text.ToLower().Equals(whaleData.borda.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISBORDADONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.PONTAS:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.ponta);
                 if (answer.text.ToLower().Equals(whaleData.ponta.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISPONTADONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.ENTALHE:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.entalhe);
                 if (answer.text.ToLower().Equals(whaleData.entalhe.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISENTALHEDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             default:
                 return false;
@@ -439,6 +468,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
     {
         yield return new WaitForSeconds(4f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

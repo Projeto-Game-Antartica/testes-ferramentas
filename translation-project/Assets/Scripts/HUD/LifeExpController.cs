@@ -42,11 +42,11 @@ public class LifeExpController : AbstractScreenReader {
     public void ReadHPandEXP()
     {
         // hp and exp points are 0 to 1
-        Debug.Log("Você tem " +HPImage.fillAmount * 100  + " pontos de vida.");
-        ReadText("Você tem " +HPImage.fillAmount * 100  + " pontos de vida.");
+        Debug.Log("Você tem " + (HPImage.fillAmount * 100).ToString("F")  + " pontos de vida.");
+        ReadText("Você tem " + (HPImage.fillAmount * 100).ToString("F") + " pontos de vida.");
 
-        Debug.Log("Você tem " +EXPImage.fillAmount * 100  + " pontos de experiência.");
-        ReadText("Você tem " +EXPImage.fillAmount * 100  + " pontos de experiência.");
+        Debug.Log("Você tem " + (EXPImage.fillAmount * 100).ToString("F")  + " pontos de experiência.");
+        ReadText("Você tem " + (EXPImage.fillAmount * 100).ToString("F") + " pontos de experiência.");
     }
 	
 }

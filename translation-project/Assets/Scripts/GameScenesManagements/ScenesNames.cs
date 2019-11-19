@@ -27,4 +27,8 @@ public class ScenesNames {
     public const string M004TailMission = "M004TailMissionScene";
     public const string M004TeiaAlimentar = "M004TeiaAlimentarScene";
 
+    /* M009 Paleo */
+    public const string M009MemoryGame = "M009MemoryGameScene";
+    public const string M009Camp = "M009CampaScene";
+
 }

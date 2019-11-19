@@ -370,13 +370,13 @@ public class MemoryManager : AbstractScreenReader {
             }
             else
             {
-                WinText.text = "Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+                WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
                     "contribuir com as pesquisas da Ciência Cidadã.";
 
                 audioSource.PlayOneShot(victoryAudio);
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+                ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
                     "contribuir com as pesquisas da Ciência Cidadã.");
             }
 

@@ -24,6 +24,7 @@ public class WhaleData
     public string marcas;
     public string pigmentacao;
     public string image_path;
+    public string description;
 
     public bool identified;
 }

@@ -30,6 +30,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
     public Sprite cenario;
 
+    public Button backButton;
+
     // catalog panel objects
     //public Image catalogImage;
 
@@ -54,7 +56,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
     private void Start()
     {
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
 
         // randomize the indexes
         System.Random r = new System.Random();
@@ -111,6 +113,15 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         else
             camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
 	}
+
+    public void Initialize()
+    {
+        panelInstruction.SetActive(false);
+        backButton.interactable = true;
+        //resetButton.interactable = true;
+        ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
+    }
 
     public void HandlePhoto()
     {

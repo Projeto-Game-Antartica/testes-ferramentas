@@ -16,6 +16,8 @@ public class ContentPanelController : AbstractScreenReader {
     public Button[] fotoidentificationButtons;
     public FotoidentificacaoController fotoidentificacaoController;
 
+    public TextMeshProUGUI descriptionText;
+
     public TextMeshProUGUI pigmentacaoTMPro;
     public TextMeshProUGUI manchasTMPro;
     public TextMeshProUGUI riscosTMPro;
@@ -34,6 +36,10 @@ public class ContentPanelController : AbstractScreenReader {
 
     public bool finished = false;
 
+    public GameObject instructionInterface;
+    public Button audioButton;
+    public LifeExpController lifeExpController;
+
     // array containing the 8 indexes for photo
     // sort the array for randomization
     private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7 };
@@ -47,16 +53,6 @@ public class ContentPanelController : AbstractScreenReader {
 
         //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         //ReadInstructions();
-
-
-        // randomize the indexes
-        System.Random r = new System.Random();
-        whaleIndexes = whaleIndexes.OrderBy(x => r.Next()).ToArray();
-
-        index = 0;
-
-        first_button.Select();
-        
     }
 
     // Update is called once per frame
@@ -65,11 +61,57 @@ public class ContentPanelController : AbstractScreenReader {
         if (!finished)
             CheckFotoidentificacaoButtons();
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (instructionInterface.activeSelf)
+                instructionInterface.SetActive(false);
+
+            audioButton.Select();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                instructionInterface.SetActive(true);
+                instructionInterface.GetComponentInChildren<Button>().Select();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F6))
+        {
+            first_button.Select();
+        }
+
         //Debug.Log(Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
         //    && Parameters.ISPONTADONE && Parameters.ISRISCOSDONE);
-	}
-    
-    
+    }
+
+    public void Initialize()
+    {
+        SetWhalePhoto();
+
+        ReadText(descriptionText);
+        // randomize the indexes
+        System.Random r = new System.Random();
+        whaleIndexes = whaleIndexes.OrderBy(x => r.Next()).ToArray();
+
+        index = 0;
+
+        first_button.Select();
+    }
+
     private void OnEnable()
     {
         if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
@@ -209,6 +251,10 @@ public class ContentPanelController : AbstractScreenReader {
 
         Debug.Log(whale.image_path);
 
+        // read the tail description
+        ReadText(whale.description);
+        Debug.Log(whale.description);
+
         // set the image to all panels
         //panelImage.sprite = Resources.Load<Sprite>(whale.image_path);
         whaleImages.SetPhotographedWhaleImage(whale.image_path);
@@ -248,5 +294,98 @@ public class ContentPanelController : AbstractScreenReader {
     public void ReturnToShip()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+    }
+
+    public void ReadButton(TextMeshProUGUI buttonText)
+    {
+        switch (buttonText.text.ToLower())
+        {
+            case "pigmentação":
+                if(Parameters.ISPIGMENTACAODONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "manchas":
+                if (Parameters.ISMANCHASDONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "riscos":
+                if(Parameters.ISRISCOSDONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "marcas":
+                if(Parameters.ISMARCASDONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "entalhe":
+                if(Parameters.ISENTALHEDONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "borda":
+                if(Parameters.ISBORDADONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            case "ponta":
+                if(Parameters.ISPONTADONE)
+                {
+                    ReadText("Característica identificada. " + buttonText.text);
+                    Debug.Log("Característica identificada. " + buttonText.text);
+                }
+                else
+                {
+                    ReadText(buttonText.text);
+                    Debug.Log(buttonText.text);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
