@@ -27,10 +27,9 @@ public class SimpleMovementController : MonoBehaviour {
     {
         //hidingTime  = TIMER;
         //showingTime = TIMER;
-        if (isWhale)    audioSource = GetComponent<AudioSource>();
-
         if (isWhale)
         {
+            audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
             StartCoroutine(WhaleAnimationCoroutine());
         }
@@ -46,20 +45,20 @@ public class SimpleMovementController : MonoBehaviour {
     {
         if (isWhale)
         {
-            if (spriteRenderer.sprite.name.Equals(spriteFinalName))
-            {
-                //Debug.Log("waiting....");
-                spriteRenderer.enabled = false;
-                sphereCollider.enabled = false;
-                Parameters.ISWHALEONCAMERA = false;
+            //if (spriteRenderer.sprite.name.Equals(spriteFinalName))
+            //{
+            //    //Debug.Log("waiting....");
+            //    spriteRenderer.enabled = false;
+            //    sphereCollider.enabled = false;
+            //    Parameters.ISWHALEONCAMERA = false;
 
-                if (audioSource.isPlaying) audioSource.Stop();
-            }
-            else
-            {
-                spriteRenderer.enabled = true;
-                sphereCollider.enabled = true;
-            }
+            //    //if (audioSource.isPlaying) audioSource.Stop();
+            //}
+            //else
+            //{
+            //    spriteRenderer.enabled = true;
+            //    sphereCollider.enabled = true;
+            //}
         }
     }
 
@@ -118,7 +117,10 @@ public class SimpleMovementController : MonoBehaviour {
     {
         while(true)
         {
-            if (!audioSource.isPlaying) audioSource.Play();
+            if (spriteRenderer.enabled)
+                audioSource.Play();
+
+            Debug.Log(audioSource.isPlaying);
             float rand = Random.Range(5, 15);
             //Debug.Log("set trigger");
             animator.SetTrigger("trigger");
