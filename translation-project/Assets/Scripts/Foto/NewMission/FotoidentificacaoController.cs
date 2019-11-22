@@ -39,7 +39,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Lisa","Pouco Áspera","Áspera","","","","","",""},
+        {"Lisa","Áspera", "", "","","","","",""},
         {"Arredondada","Aguda","","","","","","",""},
         {"Forma de V","Forma de U","","","","","","",""},
     };
@@ -145,7 +145,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
             PlayerPreferences.M004_FotoIdentificacao = true;
 
             // enable and select the next button
-            nextButton.gameObject.SetActive(true);
+            nextButton.interactable = true;
             nextButton.Select();
         }
         else
@@ -180,7 +180,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
     public void RoundSettings(int roundIndex)
     {
         // next button starts unactive
-        nextButton.gameObject.SetActive(false);
+        nextButton.interactable = false;
 
         // set the roundIndex
         this.roundIndex = roundIndex;
