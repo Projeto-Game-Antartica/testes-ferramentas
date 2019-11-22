@@ -30,7 +30,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public GameObject memoryCardBackText;
 
     public GameObject cardImage;
-
+    
     private void Start()
     {
         state = VIRADA_BAIXO;
@@ -83,7 +83,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
         }
         //state = 1;
 
-        flipCard();
+        //flipCard();
 
         _init = true;
     }
@@ -182,16 +182,24 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void OnSelect(BaseEventData eventData)
     {
-        //Debug.Log(state);
+        string objectName = CardsDescription.GetCardText(gameObject.name);
 
-        if (state == VIRADA_BAIXO || state == VIRADA_CIMA && !isText)
+        Debug.Log(state);
+
+        if ((state == VIRADA_BAIXO) && !isText) // carta virada pra baixo sem ser texto
         {
-            //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
-            ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+            Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18");
+            ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18");
         }
-        else
+        else if (state == 2) // ja foi encontrado o par da carta selecionada
         {
-            string objectName = CardsDescription.GetCardText(gameObject.name);
+            Debug.Log("Carta já combinada.");
+            ReadText("Carta já combinada.");
+            
+            ReadAndDebugCardText(objectName);
+        }
+        else // cartas de texto
+        {
             ReadAndDebugCardText(objectName);
         }
     }
@@ -199,8 +207,13 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public void ReadAndDebugCardText(string objectName)
     {
         // numero da carta + descrição ou numero da carta + nome do animal
-        //Debug.Log(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
-        ReadText(objectName != null ? (gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + ": " + objectName) : gameObject.name);
+        string resultText  = gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18" + ": " + objectName;
+
+        // numero da carta
+        string resultImage = gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18" + gameObject.name.Substring(gameObject.name.IndexOf(":"));
+
+        Debug.Log(objectName != null ? resultText : resultImage);
+        ReadText(objectName != null ? resultText : resultImage);
     }
 
     public void ChangeDisabledCardColor(Button button, Color color)

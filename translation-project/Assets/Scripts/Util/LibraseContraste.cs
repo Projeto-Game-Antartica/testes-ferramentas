@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-public class LibraseContraste : MonoBehaviour {
+public class LibraseContraste : AbstractScreenReader {
 
     public VideoPlayer videoPlayer;
     public RawImage rawImage;
     public GameObject moldura;
+    public HighContrastSettings hcsettings;
 
     public void PlayVideo()
     {
@@ -20,6 +21,7 @@ public class LibraseContraste : MonoBehaviour {
 
     IEnumerator StartVideo()
     {
+        ReadText("Vídeo de libras aberto");
         videoPlayer.Prepare();
         
         while(!videoPlayer.isPrepared)
@@ -39,15 +41,17 @@ public class LibraseContraste : MonoBehaviour {
 
         Debug.Log("Done Playing Video");
         moldura.SetActive(false);
+
+        ReadText("Vídeo de libras fechado");
     }
 
     public void SetHighContrastParameter()
     {
-        if (Parameters.HIGH_CONTRAST)
-            Parameters.HIGH_CONTRAST = false;
-        else
-            Parameters.HIGH_CONTRAST = true;
+        hcsettings.SetHighAccessibility();
 
-        Debug.Log("HC " + Parameters.HIGH_CONTRAST);
+        if (Parameters.HIGH_CONTRAST)
+            ReadText("Alto contraste ativado");
+        else
+            ReadText("Alto contraste desativado");
     }
 }

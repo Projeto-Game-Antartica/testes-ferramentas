@@ -23,7 +23,6 @@ public class ReadableTexts : MonoBehaviour
     private void Awake()
     {
         LoadReadableTexts();
-        DontDestroyOnLoad(this.gameObject);
     }
 
     // create a dictionary with the readable texts in ptbr and en

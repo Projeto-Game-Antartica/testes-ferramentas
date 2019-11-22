@@ -19,6 +19,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public TextMeshProUGUI whaleCountText;
 
     public GameObject WinImage;
+    public AudioClip victoryClip;
+    public AudioSource audioSource;
 
     private int count = 0;
     
@@ -140,7 +142,11 @@ public class ContentPanelMissionController : AbstractScreenReader {
     {
         WinImage.SetActive(true);
 
-        yield return new WaitForSeconds(7);
+        audioSource.PlayOneShot(victoryClip);
+
+        yield return new WaitWhile(() => audioSource.isPlaying);
+
+        yield return new WaitForSeconds(4f);
 
         ReturnToShip();
     }

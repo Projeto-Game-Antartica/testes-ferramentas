@@ -4,9 +4,10 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class FontSizeText : MonoBehaviour {
+public class FontSizeText : AbstractScreenReader
+{
 
-    public static GameObject[] texts;
+    public static TextMeshProUGUI[] texts;
     //public RectTransform[] rectTransforms;
 
     private readonly int maxSize = 36;
@@ -15,44 +16,63 @@ public class FontSizeText : MonoBehaviour {
     void Start()
     {
         //texts = FindObjectsOfType<TextMeshProUGUI>(); too expensive
-        texts = GameObject.FindGameObjectsWithTag("text-hc");
-        //rectTransforms = FindObjectsOfType<RectTransform>();
+        FindTexts();
+
+        if (Parameters.BOLD)
+            SetToBold();
+    }
+
+    public void FindTexts()
+    {
+        //texts = GameObject.FindGameObjectsWithTag("text-hc");
+        texts = Resources.FindObjectsOfTypeAll(typeof(TextMeshProUGUI)) as TextMeshProUGUI[];
     }
 
     public void IncreaseFontSize()
     {
-        foreach (GameObject text in texts) {
-            text.GetComponentInChildren<TextMeshProUGUI>().fontSize += 1;
+        foreach (TextMeshProUGUI text in texts)
+        {
+            text.fontSize += 1;
             //text.GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Bold;
             //text.rectTransform.sizeDelta = new Vector2(text.fontSize*2f,text.fontSize*2f);
-            if (text.GetComponentInChildren<TextMeshProUGUI>().fontSize >= maxSize) text.GetComponentInChildren<TextMeshProUGUI>().fontSize = maxSize;
+            //if (text.GetComponentInChildren<TextMeshProUGUI>().fontSize >= maxSize) text.GetComponentInChildren<TextMeshProUGUI>().fontSize = maxSize;
+            if (text.fontSize >= maxSize) text.fontSize = maxSize;
         }
     }
 
     public void DecreseFontSize()
     {
-        foreach (GameObject text in texts)
+        foreach (TextMeshProUGUI text in texts)
         {
-            text.GetComponentInChildren<TextMeshProUGUI>().fontSize -= 1;
+            text.fontSize -= 1;
             //text.rectTransform.sizeDelta = new Vector2(text.fontSize * 1, text.fontSize *1);
-            if (text.GetComponentInChildren<TextMeshProUGUI>().fontSize <= minSize) text.GetComponentInChildren<TextMeshProUGUI>().fontSize = minSize;
+            if (text.fontSize <= minSize) text.fontSize = minSize;
         }
     }
 
     public void SetToBold()
     {
-        foreach (GameObject text in texts)
+        foreach (TextMeshProUGUI text in texts)
         {
-            var tmp = text.GetComponentInChildren<TextMeshProUGUI>().text;
+            var tmp = text.text;
 
             if (tmp.Contains("<b>"))
             {
+                Parameters.BOLD = false;
                 tmp = tmp.Replace("<b>", "");
                 tmp = tmp.Replace("</b>", "");
-                text.GetComponentInChildren<TextMeshProUGUI>().text = tmp;
+                text.text = tmp;
             }
             else
-                text.GetComponentInChildren<TextMeshProUGUI>().text = "<b>" + tmp + "</b>";
+            {
+                Parameters.BOLD = true;
+                text.text = "<b>" + tmp + "</b>";
+            }
         }
+
+        if (Parameters.BOLD)
+            ReadText("Texto em negrito ativado");
+        else
+            ReadText("Texto em negrito desativado");
     }
 }

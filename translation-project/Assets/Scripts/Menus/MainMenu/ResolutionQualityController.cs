@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class ResolutionQualityController : MonoBehaviour
+public class ResolutionQualityController : AbstractScreenReader
 {
     // Called on dropdown OnValueChange event
     public void SetResolution(int value)
@@ -52,5 +53,11 @@ public class ResolutionQualityController : MonoBehaviour
                 QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel());
                 break;
         }
+    }
+
+    // read drop down
+    public void ReadDropDown(TMP_Dropdown dropdown)
+    {
+        ReadText(dropdown.name + " " + dropdown.options[dropdown.value].text);
     }
 }

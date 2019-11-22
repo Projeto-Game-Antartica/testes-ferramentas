@@ -22,6 +22,13 @@ public class ShipSceneManagement : AbstractScreenReader {
     public TextMeshProUGUI dialogueInterfaceText;
     public TextMeshProUGUI dialogueInterfacePlayerName;
 
+    // instruction settings
+    public GameObject instructionInterface;
+    public TextMeshProUGUI missionName;
+    public TextMeshProUGUI descriptionText;
+
+    public string sceneDescription;
+
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
     public void Start()
@@ -42,25 +49,30 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     private void Update()
     {
-
         if (isTrigger && Input.GetKeyDown(KeyCode.Return))
         {
             positionSceneChange = new Vector3(transform.position.x, transform.position.y);
             // save the position when loading another scene
             character.SavePosition(positionSceneChange);
 
-            //if (colliderControl.name.Equals("cabine principal"))
-            //    SceneManager.LoadScene("ShipInsideScene");
-            //else 
+
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
                 SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
 
-        //if (character.isWalking && warningText.text == initialInstruction)
-        //{
-        //    warningInterface.SetActive(false);
-        //    ReadText("Painel de instruções iniciais fechado.");
-        //}
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                ReadSceneDescription();
+            }
+        }
+    }
+
+    public void ReadSceneDescription()
+    {
+        ReadText(sceneDescription);
+        Debug.Log(sceneDescription);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -87,10 +99,10 @@ public class ShipSceneManagement : AbstractScreenReader {
                 dialogueInterfacePlayerName.text = "Turistas";
                 
                 dialogueInterfaceText.text = "Olá, nós também somos turistas e estamos participando do Ciência Cidadã de " +
-                    "identificação de baleias.Para você participar, você ainda precisa" + "Finalize os seguintes minijogos: " +
-                    (PlayerPreferences.M004_FotoIdentificacao == false ? "Fotoidentificação de baleias; " : "") +
-                    (PlayerPreferences.M004_Memoria == false ? "Animais antárticos; " : "") +
-                    (PlayerPreferences.M004_TeiaAlimentar == false ? "Teia Alimentar; " : "") +
+                    "identificação de baleias. Para você participar, você ainda precisa conquistar a " +
+                    (PlayerPreferences.M004_Memoria == false ? "Câmera fotográfica " : "") +
+                    (PlayerPreferences.M004_TeiaAlimentar == false ? "Lente Zoom; " : "") +
+                    (PlayerPreferences.M004_FotoIdentificacao == false ? " E conhecer sobre o processo de fotoidentificação de baleias; " : "") +
                     "Volte aqui depois para concluir a missão!!";
             }
 
@@ -109,12 +121,4 @@ public class ShipSceneManagement : AbstractScreenReader {
 
         colliderControl = null;
     }
-
-    //private void InitialInstruction()
-    //{
-    //    ReadText("Painel de instruções iniciais aberto");
-    //    warningInterface.SetActive(true);
-    //    warningText.text = initialInstruction;
-    //    ReadText(warningText.text);
-    //}
 }

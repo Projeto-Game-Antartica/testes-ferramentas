@@ -39,7 +39,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
         {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Lisa","Pouco Áspera","Áspera","","","","","",""},
+        {"Lisa","Áspera", "", "","","","","",""},
         {"Arredondada","Aguda","","","","","","",""},
         {"Forma de V","Forma de U","","","","","","",""},
     };
@@ -57,12 +57,21 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private int attempts = 0;
     public GameObject LoseImage;
 
+    public AudioSource audioSource;
+    public AudioClip loseClip;
+    public AudioClip correctClip;
+    public AudioClip wrongClip;
+
     public TextMeshProUGUI attemptsText;
+
+    public GameObject instructionInterface;
+    public Button audioButton;
+    public LifeExpController lifeExpController;
 
     /*
      *  Set the GameObjects on the inspector according to the view. Answers options in line or in rows.
      *  For row option: with design purposes, the order of columns is 1,0,2.
-     */ 
+     */
     public GameObject[] options;
     public GameObject[] whale_images;
     public TextMeshProUGUI questionText;
@@ -77,6 +86,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
         //RoundSettings(roundIndex);
         //SetOptionActiveInactive(roundIndex);
         //SetOptionSprites(roundIndex);
+
+        audioSource = GetComponent<AudioSource>();
         attempts = 0;
     }
 
@@ -84,46 +95,100 @@ public class FotoidentificacaoController : AbstractScreenReader {
     {
         // not the best way but works
         whaleData = whaleController.getWhaleById(Parameters.WHALE_ID);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (instructionInterface.activeSelf)
+                instructionInterface.SetActive(false);
+
+            audioButton.Select();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (!instructionInterface.activeSelf)
+            {
+                instructionInterface.SetActive(true);
+                instructionInterface.GetComponentInChildren<Button>().Select();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            options[0].GetComponentInChildren<Button>().Select();
+        }
     }
 
     public void CheckAnswer(GameObject option)
     {
-        if(isCorrect(option.GetComponentInChildren<Text>(), roundIndex))
+        if(isCorrect(option.GetComponentInChildren<TextMeshProUGUI>(), roundIndex))
         {
-            Debug.Log(option.GetComponentInChildren<Text>().text);
-            // enable the next button
-            nextButton.gameObject.SetActive(true);
+            audioSource.PlayOneShot(correctClip);
+
+            Debug.Log(option.GetComponentInChildren<TextMeshProUGUI>().text);
+            
             // needed to check after enabling gameobject
             if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
             ChangeBackgroundColor(option, Color.green);
 
             PlayerPreferences.M004_FotoIdentificacao = true;
+
+            // enable and select the next button
+            nextButton.interactable = true;
+            nextButton.Select();
         }
         else
         {
+            audioSource.PlayOneShot(wrongClip);
             attempts++;
             attemptsText.text = "Erros: " + attempts;
 
             Debug.Log(attempts);
             ChangeBackgroundColor(option, Color.red);
+
             if (attempts > 3)
             {
-                LoseImage.SetActive(true);
-                StartCoroutine(ReturnToShipCoroutine());
+                StartCoroutine(EndGame());
             }
         }
+    }
+
+    public IEnumerator EndGame()
+    {
+        LoseImage.SetActive(true);
+
+        audioSource.PlayOneShot(loseClip);
+
+        yield return new WaitWhile(() => audioSource.isPlaying);
+
+        ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+
+        StartCoroutine(ReturnToShipCoroutine());
     }
 
     public void RoundSettings(int roundIndex)
     {
         // next button starts unactive
-        nextButton.gameObject.SetActive(false);
+        nextButton.interactable = false;
 
         // set the roundIndex
         this.roundIndex = roundIndex;
 
         // set the question
         questionText.text = questions[roundIndex];
+
+        ReadText(questionText.text);
         
         // show the needed buttons for round
         SetOptionActiveInactive(roundIndex);
@@ -137,9 +202,11 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {
             if (options[i].activeSelf)
             {
-                options[i].GetComponentInChildren<Text>().text = result[i];
+                options[i].GetComponentInChildren<TextMeshProUGUI>().text = result[i];
             }
         }
+
+        options[0].GetComponentInChildren<Button>().Select();
     }
     
     public void ChangeBackgroundColor(GameObject option, Color color)
@@ -278,7 +345,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         return Resources.Load<Sprite>(path);
     }
 
-    public bool isCorrect(Text answer, int roundIndex)
+    public bool isCorrect(TextMeshProUGUI answer, int roundIndex)
     {
         // compare the answer with the respective field on json file.
         // compare the texts with lower case.
@@ -288,77 +355,57 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.pigmentacao);
                 if (answer.text.ToLower().Equals(whaleData.pigmentacao.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISPIGMENTACAODONE = true;
                     return true;
                 }
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.MANCHAS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.manchas);
                 if (answer.text.ToLower().Equals(whaleData.manchas.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISMANCHASDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.RISCOS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.riscos);
                 if (answer.text.ToLower().Equals(whaleData.riscos.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISRISCOSDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.MARCAS:
                 Debug.Log(whaleData.image_path + ": " + answer.text + " " + whaleData.marcas);
                 if (answer.text.ToLower().Equals(whaleData.marcas.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISMARCASDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.BORDA:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.borda);
                 if (answer.text.ToLower().Equals(whaleData.borda.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISBORDADONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.PONTAS:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.ponta);
                 if (answer.text.ToLower().Equals(whaleData.ponta.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISPONTADONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             case Parameters.ENTALHE:
                 Debug.Log(whaleData.image_path +": " + answer.text + " " + whaleData.entalhe);
                 if (answer.text.ToLower().Equals(whaleData.entalhe.ToLower()))
                 {
-                    ReadText("Resposta certa.");
                     Parameters.ISENTALHEDONE = true;
                     return true;
                 }
-
-                ReadText("Resposta errada.");
                 return false;
             default:
                 return false;
@@ -419,8 +466,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

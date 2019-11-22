@@ -27,6 +27,7 @@ public class WhaleController : MonoBehaviour {
     private Dictionary<int, string> riscos;
     private Dictionary<int, string> marcas;
     private Dictionary<int, string> pigmentacao;
+    private Dictionary<int, string> description;
 
     // Use this for initialization
     void Start ()
@@ -51,6 +52,7 @@ public class WhaleController : MonoBehaviour {
         riscos      = new Dictionary<int, string>();
         marcas      = new Dictionary<int, string>();
         pigmentacao = new Dictionary<int, string>();
+        description = new Dictionary<int, string>();
 
         if (File.Exists(filePath))
         {
@@ -73,6 +75,7 @@ public class WhaleController : MonoBehaviour {
                 riscos.Add(whaleArray.items[i].id_whale, whaleArray.items[i].riscos);
                 marcas.Add(whaleArray.items[i].id_whale, whaleArray.items[i].marcas);
                 pigmentacao.Add(whaleArray.items[i].id_whale, whaleArray.items[i].pigmentacao);
+                description.Add(whaleArray.items[i].id_whale, whaleArray.items[i].description);
             }
         }
         else
@@ -95,7 +98,8 @@ public class WhaleController : MonoBehaviour {
             manchas = manchas[id],
             riscos = riscos[id],
             marcas = marcas[id],
-            pigmentacao = pigmentacao[id]
+            pigmentacao = pigmentacao[id],
+            description = description[id]
         };
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class MemoryManager : AbstractScreenReader {
 
-    private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
+    //private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
     
     // round 0
     public Sprite[] cardFace0;
@@ -31,6 +31,7 @@ public class MemoryManager : AbstractScreenReader {
     public int[] index; 
     private int matches = 9;
     private int miss = 0;
+    private int tries = 3;
 
     private bool init;
 
@@ -44,6 +45,9 @@ public class MemoryManager : AbstractScreenReader {
 
     public AudioClip correctAudio;
     public AudioClip wrongAudio;
+    public AudioClip selectAudio;
+    public AudioClip victoryAudio;
+    public AudioClip loseAudio;
 
     private List<int> c;
 
@@ -75,7 +79,7 @@ public class MemoryManager : AbstractScreenReader {
 
         //Debug.Log(Parameters.MEMORY_ROUNDINDEX);
 
-        ReadText(instructions);
+        //ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
 
@@ -92,9 +96,19 @@ public class MemoryManager : AbstractScreenReader {
             checkCards();
         }
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
+            if (instructionInterface.activeSelf)
+                instructionInterface.SetActive(false);
+
             audioButton.Select();
+        }
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+            ReadText("Faltam " + matches + " restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
+            Debug.Log("Faltam " + matches + " restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
         }
 
         if(Input.GetKeyDown(KeyCode.F6))
@@ -117,8 +131,6 @@ public class MemoryManager : AbstractScreenReader {
                 instructionInterface.SetActive(true);
                 instructionInterface.GetComponentInChildren<Button>().Select();
             }
-            else
-                instructionInterface.SetActive(false);
         }
 
         //else
@@ -143,7 +155,6 @@ public class MemoryManager : AbstractScreenReader {
 
         backButton.interactable = true;
         resetButton.interactable = true;
-
     }
 
     public void CallHintMethod()
@@ -200,7 +211,7 @@ public class MemoryManager : AbstractScreenReader {
         {
             init = true;
             cards[0].GetComponent<Button>().Select();
-            StartCoroutine(ReadCards());
+            //StartCoroutine(ReadCards());
         }
     }
 
@@ -227,10 +238,11 @@ public class MemoryManager : AbstractScreenReader {
         {
             if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
-                Debug.Log("carta adicionada >> " + cards[i]);
+                //Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
-                Debug.Log("após adicionar carta >> " + c.Count);
-                
+                audioSource.PlayOneShot(selectAudio);
+                //Debug.Log("após adicionar carta >> " + c.Count);
+
                 if (c.Count == 2)
                 {
                     // block the comparison of two text cards
@@ -242,10 +254,16 @@ public class MemoryManager : AbstractScreenReader {
                     //}
                     //else
                     //{
-                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
-                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
 
-                        confirmarButton.Select();
+                    Debug.Log("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
+                        "outras cartas.");
+                    ReadText("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
+                        "outras cartas.");
+
+                    StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
+                    StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
+
+                    confirmarButton.Select();
                     //}
                 }
             }
@@ -301,7 +319,7 @@ public class MemoryManager : AbstractScreenReader {
             if (matches == 0)
             {
                 PlayerPreferences.M004_Memoria = true;
-                EndGame(true);
+                StartCoroutine(EndGame(true));
             }
         }
         else
@@ -314,9 +332,9 @@ public class MemoryManager : AbstractScreenReader {
             miss++;
             missText.text = "Tentativas incorretas: " + miss;
 
-            if(miss >= 3)
+            if(miss >= tries)
             {
-                EndGame(false);
+                StartCoroutine(EndGame(false));
                 // 0 or 1
                 Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
             }
@@ -329,10 +347,12 @@ public class MemoryManager : AbstractScreenReader {
         }
 
         c.Clear();
-        cards[0].GetComponent<Button>().Select();
+
+        // select the next card that does not have a match yet
+        if (matches != 0) cards[FindIndexNextCard()].GetComponent<Button>().Select();
     }
 
-    public void EndGame(bool win)
+    public IEnumerator EndGame(bool win)
     {
         if (win)
         {
@@ -342,13 +362,21 @@ public class MemoryManager : AbstractScreenReader {
             if (!PlayerPreferences.M004_TeiaAlimentar)
             {
                 WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
+
+                audioSource.PlayOneShot(victoryAudio);
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
                 ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
             }
             else
             {
-                WinText.text = "Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+                WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
                     "contribuir com as pesquisas da Ciência Cidadã.";
-                ReadText("Parabéns! Você ganhou a câmera fotográfica .Agora você pode fotografar caudas de baleias jubarte e " +
+
+                audioSource.PlayOneShot(victoryAudio);
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
                     "contribuir com as pesquisas da Ciência Cidadã.");
             }
 
@@ -358,7 +386,12 @@ public class MemoryManager : AbstractScreenReader {
         else
         {
             LoseImage.SetActive(true);
-            ReadText("Você não conseguiu completar o minijogo. Tente novamente.");
+
+            audioSource.PlayOneShot(loseAudio);
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
             resetButton.Select();
             lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
@@ -453,6 +486,20 @@ public class MemoryManager : AbstractScreenReader {
         return true;
     }
 
+    // find the index of next card that does not have a match
+    public int FindIndexNextCard()
+    {
+        int index = 0;
+
+        // state == 2 is when card have a match
+        while (cards[index].GetComponent<Card>().state == 2)
+        {
+            index++;
+        }
+
+        return index;
+    }
+
     public IEnumerator showCards()
     {
         for (int i = 0; i < cards.Length; i++)
@@ -470,7 +517,7 @@ public class MemoryManager : AbstractScreenReader {
 
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
     }

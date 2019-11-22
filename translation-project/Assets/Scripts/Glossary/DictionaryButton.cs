@@ -10,10 +10,13 @@ public class DictionaryButton : AbstractScreenReader
     public TMPro.TextMeshProUGUI keyLabel;
     public DictionaryController dictionaryController;
     public AudioSource audioSource;
-    public static bool contentButton;
+    //public static bool contentButton;
 
     // key for playing the audio clip
     public static string keyAudio;
+
+    public bool first = false;
+    public bool last = false;
 
     // Use this for initialization
     void Start()
@@ -45,13 +48,20 @@ public class DictionaryButton : AbstractScreenReader
         return isPlaying;
     }
 
-    public void SetContentButton(bool content)
-    {
-        contentButton = content;
-    }
+    //public void SetContentButton(bool content)
+    //{
+    //    contentButton = content;
+    //}
 
     public void ReadButton()
     {
         ReadText(keyLabel.text);
+
+        if (first && last)
+            ReadText("Único item da lista");
+        else if (first)
+            ReadText("Primeiro item da lista");
+        else if (last)
+            ReadText("Último item da lista");
     }
 }

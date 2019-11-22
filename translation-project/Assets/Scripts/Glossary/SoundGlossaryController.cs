@@ -51,7 +51,7 @@ public class SoundGlossaryController : AbstractScreenReader {
     void Start()
     {
         LoadDictionary();
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
@@ -155,6 +155,7 @@ public class SoundGlossaryController : AbstractScreenReader {
 
         foreach (string key in list)
         {
+            // create a new button
             GameObject newButton = buttonObjectPool.GetObject();
             newButton.name = key + "Button";
             newButton.transform.SetParent(contentPanel);
@@ -166,31 +167,40 @@ public class SoundGlossaryController : AbstractScreenReader {
             buttonList.Add(soundButton);
             m_buttons.Add(soundButton.buttonComponent);
         }
+
+        // set bool value to first and last item for audiodescription
+        buttonList.First().first = true;
+        buttonList.Last().last = true;
     }
 
     public void ShowAllButtons()
     {
         ResetVerticalPositionScrollRect();
+        ResetFirstLastElements(buttonList);
+
         foreach (SoundButton b in buttonList)
         {
             b.gameObject.SetActive(true);
         }
+
+        // set bool value to first and last item for audiodescription
+        SetFirstElement(buttonList.First());
+        SetLastElement(buttonList.Last());
 
         buttonList[0].buttonComponent.Select();
     }
 
     public void ShowButtonStartingWithLetter(string letter)
     {
-        bool first = true;
-        int index = 0;
+        ResetFirstLastElements(buttonList);
+        List<SoundButton> list = new List<SoundButton>();
 
         foreach (SoundButton b in buttonList)
         {
             if (b.keyLabel.text.ToLower().StartsWith(letter))
             {
-                if (first) index = buttonList.IndexOf(b);
+                list.Add(b);
                 b.buttonComponent.gameObject.SetActive(true);
-                first = false;
             }
             else
             {
@@ -198,7 +208,9 @@ public class SoundGlossaryController : AbstractScreenReader {
             }
         }
 
-        buttonList[index].buttonComponent.Select();
+        SetFirstElement(list.First());
+        SetLastElement(list.Last());
+        list.First().buttonComponent.Select();
     }
 
     public void RemoveAllButtons()
@@ -235,5 +247,24 @@ public class SoundGlossaryController : AbstractScreenReader {
     {
         m_verticalPosition = 1f;
         m_index = 0;
+    }
+
+    public void SetFirstElement(SoundButton db)
+    {
+        db.first = true;
+    }
+
+    public void SetLastElement(SoundButton db)
+    {
+        db.last = true;
+    }
+
+    public void ResetFirstLastElements(List<SoundButton> list)
+    {
+        foreach (SoundButton db in list)
+        {
+            db.first = false;
+            db.last = false;
+        }
     }
 }

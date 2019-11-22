@@ -7,19 +7,15 @@ public class HelpMenu : AbstractScreenReader {
 
     public UnityEngine.UI.Button firstButton;
 
-    public FontSizeText fontSizeText;
-
-    public AudioClip selectClip;
-
-    public void Awake()
+    private void Start()
     {
-        TolkUtil.Load();
         firstButton.Select();
     }
 
     private void OnEnable()
     {
-        FontSizeText.texts = GameObject.FindGameObjectsWithTag("text-hc");
+        //FontSizeText.texts = GameObject.FindGameObjectsWithTag("text-hc");
+        //firstButton.Select();
     }
 
     public void ManualAluno()
@@ -34,11 +30,13 @@ public class HelpMenu : AbstractScreenReader {
 
     public void GlossarioLibras()
     {
+        ReadText("Carregando glossário de libras");
         SceneManager.LoadScene(ScenesNames.Glossary);
     }
 
     public void GlossarioSons()
     {
+        ReadText("Carregando áudios do jogo");
         SceneManager.LoadScene(ScenesNames.GlossarySound);
     }
 
@@ -50,18 +48,5 @@ public class HelpMenu : AbstractScreenReader {
     public void Voltar()
     {
         SceneManager.LoadScene(ScenesNames.Menu);
-    }
-
-    public void PlaySelectionAudio()
-    {
-        if (GetComponent<AudioSource>() == null)
-        {
-            gameObject.AddComponent<AudioSource>();
-
-            UnityEngine.Audio.AudioMixer audioMixer = Resources.Load("Audio/AudioMixer") as UnityEngine.Audio.AudioMixer;
-            GetComponent<AudioSource>().outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[0];
-        }
-
-        PlaySelectAudio(GetComponent<AudioSource>(), selectClip);
     }
 }

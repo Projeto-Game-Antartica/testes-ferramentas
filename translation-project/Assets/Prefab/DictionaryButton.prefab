@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114963743467716930}
   - component: {fileID: 114847405014421474}
   - component: {fileID: 114874363295098230}
-  - component: {fileID: 114733329241339844}
+  - component: {fileID: 114486381479379614}
   m_Layer: 0
   m_Name: DictionaryButton
   m_TagString: Untagged
@@ -105,8 +105,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3429b2f7b5b8979419796665678dc21c, type: 2}
-  m_sharedMaterial: {fileID: 21369271637530536, guid: e3975931dccc0f0428b6d570f92aae6b,
+  m_fontAsset: {fileID: 11400000, guid: 7346cd3a80a9c75479ffb0a7144bcf60, type: 2}
+  m_sharedMaterial: {fileID: 21813760295313158, guid: 3429b2f7b5b8979419796665678dc21c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 114317280669073324}
-    characterCount: 5
+    characterCount: 4
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -198,6 +198,47 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114486381479379614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623939323325094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlaySelectionAudio
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 114847405014421474}
+          m_MethodName: ReadButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!114 &114638737176920240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -265,17 +306,6 @@ MonoBehaviour:
   m_canvasRenderer: {fileID: 222072061824348900}
   m_TextComponent: {fileID: 114317280669073324}
   m_materialReferenceIndex: 1
---- !u!114 &114733329241339844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1623939323325094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a87737bc3d94a148a349571ca4de443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114847405014421474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,6 +321,8 @@ MonoBehaviour:
   keyLabel: {fileID: 114317280669073324}
   dictionaryController: {fileID: 0}
   audioSource: {fileID: 0}
+  first: 0
+  last: 0
 --- !u!114 &114865624975622608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -441,8 +473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 336.88266, y: -35}
-  m_SizeDelta: {x: 673.7653, y: 70}
+  m_AnchoredPosition: {x: 483.95456, y: -35}
+  m_SizeDelta: {x: 967.9091, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224648724858920216
 RectTransform:

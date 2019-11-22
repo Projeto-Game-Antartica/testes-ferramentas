@@ -4,23 +4,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TeiaAlimentarScene : MonoBehaviour {
+public class TeiaAlimentarScene : AbstractScreenReader {
 
     public Text timer;
-
-    public Slider audioSlider;
-
+    
     // timer settings
     private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
     
     public GameObject LoseImage;
+    public TMPro.TextMeshProUGUI LoseText;
 
     public LifeExpController lifeExpController;
 
+    public Button audioButton;
     public Button resetButton;
     public Button backButton;
 
     private bool started = false;
+    private bool finished = false;
 
     private float timerCount;
     private float timeInSeconds;
@@ -28,9 +29,14 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public GameObject instructionInterface;
 
+    public MinijogosDicas dicas;
+
+    public AudioSource audioSource;
+    public AudioClip loseClip;
+
     public void StartTimer()
     {
-        initialMinutes = 9f;
+        initialMinutes = 2f;
         initialSeconds = 59f;
 
         timerCount = 0;
@@ -39,11 +45,14 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
         resetButton.interactable = true;
         backButton.interactable = true;
+
+        // start afther time seconds and repeat at repeatRate rate
+        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
     }
 
     private void Update()
     {
-        if(started) HandleTimer();
+        if(started && !finished) HandleTimer();
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -51,6 +60,16 @@ public class TeiaAlimentarScene : MonoBehaviour {
                 instructionInterface.SetActive(true);
             else
                 instructionInterface.SetActive(false);
+        }
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            ReadMJMenu();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            audioButton.Select();
         }
     }
 
@@ -61,10 +80,15 @@ public class TeiaAlimentarScene : MonoBehaviour {
 
     public void RestartTimer()
     {
-        initialMinutes = 9f;
+        initialMinutes = 2f;
         initialSeconds = 59f;
 
-        timer.text = "10:00";
+        timer.text = "2:00";
+    }
+
+    public void CallHintMethod()
+    {
+        dicas.StartHints();
     }
 
     public void HandleTimer()
@@ -82,13 +106,27 @@ public class TeiaAlimentarScene : MonoBehaviour {
         // time is over
         if (elapsedMinutes < 0 || elapsedSeconds < 0)
         {
-            timer.text = "00:00";
-            // do something
-            LoseImage.SetActive(true);
-            lifeExpController.AddEXP(0.0001f);
-
-            StartCoroutine(ReturnToShipCoroutine()); // volta para o navio
+            finished = true;
+            StartCoroutine(EndGameCoroutine());
         }
+    }
+
+    IEnumerator EndGameCoroutine()
+    {
+        Debug.Log("Coroutine.");
+        timer.text = "00:00";
+        // do something
+        LoseImage.SetActive(true);
+
+        lifeExpController.AddEXP(0.0001f);
+
+        audioSource.PlayOneShot(loseClip);
+
+        yield return new WaitWhile(() => audioSource.isPlaying);
+
+        ReadText(LoseText);
+
+        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio
     }
 
     void OnEnable()
@@ -112,28 +150,23 @@ public class TeiaAlimentarScene : MonoBehaviour {
         RestartTimer();
     }
 
+    public void ReadMJMenu()
+    {
+        lifeExpController.ReadHPandEXP();
+        Debug.Log("Restam " + timer.text + " para finalizar o minijogo.");
+        ReadText("Restam " + timer.text + " para finalizar o minijogo.");
+    }
+
     public void ReturnToShip()
     {
         if (!PlayerPreferences.M004_TeiaAlimentar) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
         SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 
-    public void ActivateAudioSlider()
-    {
-        if(audioSlider.IsActive())  
-        {
-            audioSlider.gameObject.SetActive(false);
-        }
-        else
-        {
-            audioSlider.gameObject.SetActive(true);
-        }
-    }
-
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 }

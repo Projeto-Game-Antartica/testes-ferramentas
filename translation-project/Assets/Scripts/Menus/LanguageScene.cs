@@ -22,7 +22,7 @@ public class LanguageScene : AbstractScreenReader {
 
         //TolkUtil.Load();
 
-        TolkUtil.Instructions();
+        //TolkUtil.Instructions();
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_languagemenu_instructions, "locales_ptbr.json"));
 
         brButton.Select();  

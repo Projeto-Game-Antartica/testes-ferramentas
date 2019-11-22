@@ -10,12 +10,7 @@ public abstract class DragAndDropController : AbstractScreenReader
     // settings.
     public int NRO_CELLS;
     public AudioSource audioSource;
-
-    // set on inspector
-    public GameObject WinImage;
-    public GameObject firstItem;
-    public Button audioButton;
-
+    
     // cells
     public GameObject[] cells;
     public static int cellIndex = 0;
@@ -94,7 +89,7 @@ public abstract class DragAndDropController : AbstractScreenReader
 
         currentItem = currentItem.KeyboardDrag();
 
-        cells[0].GetComponent<Selectable>().Select();
+        cells[FindNextEmptyCell()].GetComponent<Selectable>().Select();
     }
 
     public void ResetConditions()
@@ -107,5 +102,23 @@ public abstract class DragAndDropController : AbstractScreenReader
     public GameObject ReturnFirstCell()
     {
         return cells[0];
+    }
+
+    public GameObject ReturnNextEmptyCell()
+    {
+        return cells[FindNextEmptyCell()];
+    }
+
+    // return the index of cell that is empty.
+    public int FindNextEmptyCell()
+    {
+        int index = 0;
+
+        while (cells[index].GetComponentInChildren<DragAndDropItem>() != null)
+        {
+            index++;
+        }
+
+        return index;
     }
 }

@@ -57,7 +57,7 @@ public class DictionaryController : AbstractScreenReader {
     void Start()
     {
         LoadDictionary();
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
@@ -150,7 +150,7 @@ public class DictionaryController : AbstractScreenReader {
                     description_ptbrvideo.Add(loadedData.items[i].key_ptbr, loadedData.items[i].video_path);
                     audio_ptbr.Add(loadedData.items[i].key_ptbr, loadedData.items[i].audio_path);
                 }
-                AddButton(keys_ptbr);
+                AddButtons(keys_ptbr);
         }
         else
         {
@@ -162,7 +162,7 @@ public class DictionaryController : AbstractScreenReader {
                 description_enimage.Add(loadedData.items[i].key_en, loadedData.items[i].image_path);
                 audio_en.Add(loadedData.items[i].key_en, loadedData.items[i].audio_path);
             }
-            AddButton(keys_en);
+            AddButtons(keys_en);
         }
     }
         else
@@ -171,12 +171,13 @@ public class DictionaryController : AbstractScreenReader {
         }
     }
 
-    public void AddButton(List<string> list)
+    public void AddButtons(List<string> list)
     {
         list.Sort();
 
         foreach (string key in list)
         {
+            // create a new button
             GameObject newButton = buttonObjectPool.GetObject();
             newButton.name = key + "Button";
             newButton.transform.SetParent(contentPanel);
@@ -188,17 +189,27 @@ public class DictionaryController : AbstractScreenReader {
             buttonList.Add(dictionaryButton);
             m_buttons.Add(dictionaryButton.buttonComponent);
         }
+
+        // set bool value to first and last item for audiodescription
+        SetFirstElement(buttonList.First());
+        SetLastElement(buttonList.Last());
     }
 
     public void ShowAllButtons()
     {
         RemoveDescriptionComponent();
         ResetVerticalPositionScrollRect();
+        ResetFirstLastElements(buttonList);
 
         foreach (DictionaryButton b in buttonList)
         {
             b.gameObject.SetActive(true);
         }
+
+
+        // set bool value to first and last item for audiodescription
+        SetFirstElement(buttonList.First());
+        SetLastElement(buttonList.Last());
 
         buttonList[0].buttonComponent.Select();
     }
@@ -207,16 +218,16 @@ public class DictionaryController : AbstractScreenReader {
     {
         RemoveDescriptionComponent();
         ResetVerticalPositionScrollRect();
-        bool first = true;
-        int index = 0;
+        ResetFirstLastElements(buttonList);
+
+        List<DictionaryButton> list = new List<DictionaryButton>();
         
         foreach(DictionaryButton b in buttonList)
         {
             if (b.keyLabel.text.ToLower().StartsWith(letter))
             {
-                if (first) index = buttonList.IndexOf(b);
+                list.Add(b);
                 b.buttonComponent.gameObject.SetActive(true);
-                first = false;
             }
             else
             {
@@ -224,7 +235,9 @@ public class DictionaryController : AbstractScreenReader {
             }
         }
 
-        buttonList[index].buttonComponent.Select();
+        SetFirstElement(list.First());
+        SetLastElement(list.Last());
+        list.First().buttonComponent.Select();
     }
 
     public void ShowDescriptionContent(string key)
@@ -294,7 +307,6 @@ public class DictionaryController : AbstractScreenReader {
     public void RemoveAllButtons()
     {
         foreach (DictionaryButton b in buttonList)
-    
         {
             b.buttonComponent.gameObject.SetActive(false);
         }
@@ -355,4 +367,23 @@ public class DictionaryController : AbstractScreenReader {
         return audioClip;
     }
 
+
+    public void SetFirstElement(DictionaryButton db)
+    {
+        db.first = true;
+    }
+
+    public void SetLastElement(DictionaryButton db)
+    {
+        db.last = true;
+    }
+
+    public void ResetFirstLastElements(List<DictionaryButton> list)
+    {
+        foreach(DictionaryButton db in list)
+        {
+            db.first = false;
+            db.last = false;
+        }
+    }
 }

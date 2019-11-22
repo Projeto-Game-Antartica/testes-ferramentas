@@ -34,7 +34,7 @@ public class SimpleCharacterController : AbstractScreenReader {
     public AudioClip impactWoodAudio;
     public AudioClip impactRockAudio;
 
-    public ReadableTexts readableTexts;
+    //public ReadableTexts readableTexts;
 
     // VIDEPlayer attributes
 
@@ -51,8 +51,7 @@ public class SimpleCharacterController : AbstractScreenReader {
     //Crazy cap NPC in the demo has items you can collect
     public List<string> demo_Items = new List<string>();
     public List<string> demo_ItemInventory = new List<string>();
-
-    public GameObject inGameOptions;
+    
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -107,51 +106,19 @@ public class SimpleCharacterController : AbstractScreenReader {
     // Update is called once per frame
     void Update ()
     {
-        if (!VD.isActive)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (!inGameOption.activeSelf)
-                {
-                    ReadText("Menu de opções aberto");
-                    inGameOption.SetActive(true);
-                }
-                else
-                {
-                    ReadText("Menu de opções fechado");
-                    inGameOption.SetActive(false);
-                }
-
-                if (instructionInterface.activeSelf)
-                {
-                    ReadText("Menu de instruções fechado");
-                    instructionInterface.SetActive(false);
-                    inGameOption.SetActive(false);
-                }
-            }
-
-            if(Input.GetKeyDown(KeyCode.F1))
-            {
-                if (!instructionInterface.activeSelf)
-                {
-                    ReadText("Menu de instruções aberto");
-                    instructionInterface.SetActive(true);
-                }
-                else
-                {
-                    ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-                }
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.Return))
         {
             TryInteract();
         }
 
-        if (VD.isActive && Input.GetKey(KeyCode.Escape))
+        if (VD.isActive)
         {
-            diagUI.EndDialogue(VD.nodeData);
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                //Debug.Log("SimpleCharacter");
+                //diagUI.EndDialogue(VD.nodeData);
+                //inGameOption.SetActive(false);
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// class to help with screen reader
 public abstract class AbstractScreenReader : MonoBehaviour {
 
     // receive the UI TextMeshPro
@@ -41,7 +42,7 @@ public abstract class AbstractScreenReader : MonoBehaviour {
     }
 
     // verify if the acessibility parameter is TRUE, is so read the text, if not do nothing.
-    public static void ReadText(string text)
+    public void ReadText(string text)
     {
         if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
     }

@@ -16,7 +16,7 @@ public class PlayMenu : AbstractScreenReader {
         readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         minigame2 = GameObject.Find("Minigame2").GetComponent<Button>();
 
-        TolkUtil.Instructions();
+        //TolkUtil.Instructions();
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_playmenu_instructions, LocalizationManager.instance.GetLozalization()));
 
         minigame2.Select();
