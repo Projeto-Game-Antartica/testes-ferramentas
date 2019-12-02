@@ -30,6 +30,8 @@ public class MinijogosDicas : AbstractScreenReader {
             // select a random number between 0 and hints.lenght-1
             int index = Random.Range(0, hints.Length - 1);
 
+            Debug.Log(hints.Length);
+
             dicas.SetActive(true);
             //Debug.Log("showing hint number " + index);
             ReadText("Nova dica: " + hints[index]);
