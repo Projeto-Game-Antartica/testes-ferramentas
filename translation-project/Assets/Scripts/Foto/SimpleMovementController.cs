@@ -23,6 +23,8 @@ public class SimpleMovementController : MonoBehaviour {
 
     Animator animator;
 
+    public bool visible = false;
+
     private void Start()
     {
         //hidingTime  = TIMER;
@@ -117,15 +119,23 @@ public class SimpleMovementController : MonoBehaviour {
     {
         while(true)
         {
-            if (spriteRenderer.enabled)
-                audioSource.Play();
-
             Debug.Log(audioSource.isPlaying);
             float rand = Random.Range(5, 15);
             //Debug.Log("set trigger");
-            animator.SetTrigger("trigger");
-            
-            yield return new WaitForSeconds(rand);
+            animator.SetBool("visible", visible);
+
+            if (visible)
+            {
+                audioSource.Play(); // executa o som da baleia
+                yield return new WaitForSeconds(2f); // tempo de execucao de uma animacao
+            }
+            else
+            {
+                audioSource.Stop();
+                yield return new WaitForSeconds(rand); // tempo aleatorio
+            }
+
+            visible = !visible;
         }
     }
 }

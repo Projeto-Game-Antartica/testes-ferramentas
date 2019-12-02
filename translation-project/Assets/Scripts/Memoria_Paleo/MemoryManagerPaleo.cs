@@ -13,9 +13,10 @@ public class MemoryManagerPaleo : AbstractScreenReader {
     // round 0
     public Sprite[] cardFace0;
     public Sprite[] cardText0;
+
     // round 1
-    public Sprite[] cardFace1;
-    public Sprite[] cardText1;
+    //public Sprite[] cardFace1;
+    //public Sprite[] cardText1;
 
     public Sprite cardBack;
 
@@ -63,6 +64,8 @@ public class MemoryManagerPaleo : AbstractScreenReader {
     private bool _first;
 
     private enum Operation { correct, confirm, wrong }
+
+    public string missionName;
     
     private void Start()
     {
@@ -85,7 +88,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
     // Update is called once per frame
     void Update () {
         
-        if (!_first && (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !CardPaleo.DO_NOT)
+        if (!_first && (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !Card.DO_NOT)
         {
             Debug.Log("Checando cartas....");
             checkCards();
@@ -103,7 +106,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
 
         if (c != null && c.Count >= 2)
         {
-            CardPaleo.DO_NOT = true;
+            Card.DO_NOT = true;
             cancelarButton.interactable = true;
             confirmarButton.interactable = true;
             Debug.Log(c.Count);
@@ -160,16 +163,16 @@ public class MemoryManagerPaleo : AbstractScreenReader {
             while (!test)
             {
                 choice = UnityEngine.Random.Range(0, cards.Length);
-                test = !(cards[choice].GetComponent<CardPaleo>().initialized);
+                test = !(cards[choice].GetComponent<Card>().initialized);
             }
 
-            cards[choice].GetComponent<CardPaleo>().cardValue = i;
-            cards[choice].GetComponent<CardPaleo>().initialized = true;
+            cards[choice].GetComponent<Card>().cardValue = i;
+            cards[choice].GetComponent<Card>().initialized = true;
 
 
             //Debug.Log(choice);
             
-            cards[choice].GetComponent<CardPaleo>().setupGraphics(CARDFACE);
+            cards[choice].GetComponent<Card>().setupGraphics(CARDFACE);
 
         }
 
@@ -181,17 +184,17 @@ public class MemoryManagerPaleo : AbstractScreenReader {
             while (!test)
             {
                 choice = UnityEngine.Random.Range(0, cards.Length);
-                test = !(cards[choice].GetComponent<CardPaleo>().initialized);
+                test = !(cards[choice].GetComponent<Card>().initialized);
             }
 
-            cards[choice].GetComponent<CardPaleo>().cardValue = i;
-            cards[choice].GetComponent<CardPaleo>().initialized = true;
+            cards[choice].GetComponent<Card>().cardValue = i;
+            cards[choice].GetComponent<Card>().initialized = true;
 
             //cards[choice].gameObject.name = getCardText(choice).name;
 
             //Debug.Log(choice);
 
-            cards[choice].GetComponent<CardPaleo>().setupGraphics(CARDTEXT);
+            cards[choice].GetComponent<Card>().setupGraphics(CARDTEXT);
         }
 
 
@@ -210,12 +213,12 @@ public class MemoryManagerPaleo : AbstractScreenReader {
 
     public Sprite getCardFace(int i)
     {
-        return Parameters.MEMORY_ROUNDINDEX == 0 ? cardFace0[i-1] : cardFace1[i-1];
+        return Parameters.MEMORY_ROUNDINDEX == 0 ? cardFace0[i-1] : null;
     }
 
     public Sprite getCardText(int i)
     {
-        return Parameters.MEMORY_ROUNDINDEX == 0 ? cardText0[i-1] : cardText1[i-1];
+        return Parameters.MEMORY_ROUNDINDEX == 0 ? cardText0[i - 1] : null;
     }
 
     void checkCards()
@@ -224,7 +227,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
 
         for (int i = 0; i < cards.Length; i++)
         {
-            if (cards[i].GetComponent<CardPaleo>().state == CardPaleo.VIRADA_CIMA && !_first)
+            if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
                 Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
@@ -246,8 +249,8 @@ public class MemoryManagerPaleo : AbstractScreenReader {
                         //BigImage2.SetActive(true);
                         //BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
 
-                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardPaleo>().BGImage, (int)Operation.confirm));
-                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardPaleo>().BGImage, (int)Operation.confirm));
+                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
+                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
 
                         confirmarButton.Select();
                     //}
@@ -275,13 +278,13 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         //BigImage1.SetActive(false);
         //BigImage2.SetActive(false);
 
-        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardPaleo>().BGImage, -1));
-        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardPaleo>().BGImage, -1));
+        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, -1));
+        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, -1));
 
         for (int i = 0; i < c.Count; i++)
         {
-            cards[c[i]].GetComponent<CardPaleo>().state = CardPaleo.VIRADA_BAIXO;
-            cards[c[i]].GetComponent<CardPaleo>().turnCardDown();
+            cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+            cards[c[i]].GetComponent<Card>().turnCardDown();
         }
 
         c.Clear();
@@ -294,16 +297,16 @@ public class MemoryManagerPaleo : AbstractScreenReader {
 
     void cardComparison(List<int> c)
     {
-        CardPaleo.DO_NOT = true;
+        Card.DO_NOT = true;
 
         int x = 0;
 
-        if(cards[c[0]].GetComponent<CardPaleo>().cardValue == cards[c[1]].GetComponent<CardPaleo>().cardValue)
+        if(cards[c[0]].GetComponent<Card>().cardValue == cards[c[1]].GetComponent<Card>().cardValue)
         {
             audioSource.PlayOneShot(correctAudio);
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardPaleo>().BGImage, (int)Operation.correct));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardPaleo>().BGImage, (int)Operation.correct));
+            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.correct));
+            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.correct));
 
             x = 2;
             matches--;
@@ -320,8 +323,8 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         {
             audioSource.PlayOneShot(wrongAudio);
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardPaleo>().BGImage, (int)Operation.wrong));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardPaleo>().BGImage, (int)Operation.wrong));
+            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.wrong));
+            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.wrong));
 
             miss++;
             missText.text = "Tentativas incorretas: " + miss;
@@ -332,14 +335,14 @@ public class MemoryManagerPaleo : AbstractScreenReader {
                 ReadText("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
                 EndGame(false);
                 // 0 or 1
-                Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
+                //Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
             }
         }
 
         for(int i = 0; i<c.Count; i++)
         {
-            cards[c[i]].GetComponent<CardPaleo>().state = x;
-            cards[c[i]].GetComponent<CardPaleo>().falseCheck();
+            cards[c[i]].GetComponent<Card>().state = x;
+            cards[c[i]].GetComponent<Card>().falseCheck();
         }
 
         c.Clear();
@@ -401,7 +404,22 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         // imprime e le o conteudo a cada meio segundo (tempo que as cartas ficarão abertas no início)
         for (int i = 0; i < tmpCards.Length; i++)
         {
-            string objectName = CardsDescriptionPaleo.GetCardDescriptionPaleo(tmpCards[i].name);
+            string objectName;
+
+            switch (missionName)
+            {
+                case "baleias":
+                    objectName = CardsDescription.GetCardText(tmpCards[i].name);
+                    break;
+                case "paleo":
+                    objectName = CardsDescriptionPaleo.GetCardDescriptionPaleo(tmpCards[i].name);
+                    break;
+                default:
+                    objectName = "";
+                    Debug.Log("check mission name");
+                    break;
+            }
+
             //Debug.Log(objectName != null ? (tmpCards[i].name.Substring(0, tmpCards[i].name.IndexOf(":")) + ": " + objectName) : tmpCards[i].gameObject.name);
 
             //tmpCards[i].GetComponent<Button>().Select();
@@ -450,9 +468,9 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         }
     }
 
-    public bool ContainJustText(List<CardPaleo> list)
+    public bool ContainJustText(List<Card> list)
     {
-        foreach(CardPaleo c in list)
+        foreach(Card c in list)
         {
             if (!c.isText)
                 return false;
@@ -466,9 +484,9 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         for (int i = 0; i < cards.Length; i++)
         {
             //if (!cards[i].GetComponent<Card>().isText)
-            cards[i].GetComponent<CardPaleo>().state = CardPaleo.VIRADA_BAIXO;
+            cards[i].GetComponent<Card>().state = Card.VIRADA_BAIXO;
 
-            cards[i].GetComponent<CardPaleo>().turnCardDown();
+            cards[i].GetComponent<Card>().turnCardDown();
         }
 
         yield return new WaitForSeconds(4);
