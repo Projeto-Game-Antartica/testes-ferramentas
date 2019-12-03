@@ -30,6 +30,8 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public GameObject memoryCardBackText;
 
     public GameObject cardImage;
+
+    public string missionName;
     
     private void Start()
     {
@@ -53,6 +55,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
         if (choice == MemoryManager.CARDFACE)
         {
+            Debug.Log("card face");
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
             cardText = null;
             gameObject.name += ": " + cardFace.name;
@@ -79,7 +82,19 @@ public class Card : AbstractScreenReader, ISelectHandler {
             // set the card to prefab's child due the selectable
             transform.SetParent(obj.transform, true);
             // add the corresponding text
-            obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescription.GetCardText(cardText.name);
+
+            switch(missionName)
+            {
+                case "baleias":
+                    obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescription.GetCardText(cardText.name);
+                    break;
+                case "paleo":
+                    obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescriptionPaleo.GetCardDescriptionPaleo(cardText.name);
+                    break;
+                default:
+                    Debug.Log("check mission name");
+                    break;
+            }
         }
         //state = 1;
 
@@ -127,7 +142,21 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
             if (_init)
             {
-                string objectName = CardsDescription.GetCardText(gameObject.name);
+                string objectName;
+
+                switch (missionName)
+                {
+                    case "baleias":
+                        objectName = CardsDescription.GetCardText(gameObject.name);
+                        break;
+                    case "paleo":
+                        objectName = CardsDescriptionPaleo.GetCardDescriptionPaleo(gameObject.name);
+                        break;
+                    default:
+                        objectName = "";
+                        Debug.Log("check mission name");
+                        break;
+                }
 
                 ReadAndDebugCardText(objectName);
             }
@@ -182,7 +211,21 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void OnSelect(BaseEventData eventData)
     {
-        string objectName = CardsDescription.GetCardText(gameObject.name);
+        string objectName = "";
+
+        switch (missionName)
+        {
+            case "baleias":
+                objectName = CardsDescription.GetCardText(gameObject.name);
+                break;
+            case "paleo":
+                objectName = CardsDescriptionPaleo.GetCardDescriptionPaleo(gameObject.name);
+                break;
+            default:
+                objectName = "";
+                Debug.Log("check mission name");
+                break;
+        }
 
         Debug.Log(state);
 

@@ -68,6 +68,8 @@ public class MemoryManager : AbstractScreenReader {
     private bool _first;
 
     private enum Operation { correct, confirm, wrong }
+
+    public string missionName;
     
     private void Start()
     {
@@ -75,7 +77,7 @@ public class MemoryManager : AbstractScreenReader {
         resetButton.interactable = false;
 
         init = false;
-        _first = true;        
+        _first = true;
 
         //Debug.Log(Parameters.MEMORY_ROUNDINDEX);
 
@@ -164,8 +166,8 @@ public class MemoryManager : AbstractScreenReader {
 
     public void initializeCards()
     {
-        // first 9 cards with images
-        for (int i = 1; i < 10; i++)
+        // first half cards with images
+        for (int i = 1; i < (cards.Length / 2 + 1); i++)
         {
             bool test = false;
             int choice = 0;
@@ -185,8 +187,8 @@ public class MemoryManager : AbstractScreenReader {
 
         }
 
-        // last 9 images with text
-        for (int i = 1; i < 10; i++)
+        // last half images with text
+        for (int i = 1; i < (cards.Length / 2 + 1); i++)
         {
             bool test = false;
             int choice = 0;
