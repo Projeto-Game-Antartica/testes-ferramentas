@@ -248,8 +248,7 @@ public class ErasPaleoController : DragAndDropController
 
         foreach (GameObject g in draggedItems)
         {
-
-            Debug.Log("cont: " + contador + " g.name:" + g.name + "Cell:" + draggedCell[contador].name);
+            Debug.Log("cont: " + contador + " g.name: " + g.name + "Cell: " + draggedCell[contador].name);
 
             if (draggedCell[contador].name == g.name + "Cell")
                 Debug.Log("Acerto");
@@ -270,16 +269,35 @@ public class ErasPaleoController : DragAndDropController
 
         //remover.Reverse();
 
+        //foreach (GameObject g in draggedItems)
+        //    Debug.Log("dg " + g.name);
+
+        //foreach (GameObject g in draggedCell)
+        //    Debug.Log("dc " + g.name);
+
+        //foreach (GameObject g in draggedLocal)
+        //    Debug.Log("dl " + g.name);
+
+        
         foreach (GameObject re in remover)
         {
             Debug.Log("antes: " + re);
+            // remove o item que foi dropado
             draggedItems.Remove(re);
             //Debug.Log("depois: " + re);
-            draggedCell.Remove(re);
-            draggedLocal.Remove(re);
-            
+
+            // re nao esta nessas duas listas
+            //draggedCell.Remove(re);
+            //draggedLocal.Remove(re);
         }
-        
+
+        // clean all lists
+        remover.Clear();
+        draggedCell.Clear();
+        draggedItems.Clear();
+        draggedLocal.Clear();
+        passar_itens.Clear();
+
         yield return new WaitForSeconds(1.2f);
         /* RemoveAllItems();
          draggedItems.Clear();
@@ -353,9 +371,19 @@ public class ErasPaleoController : DragAndDropController
         Debug.Log("Guardo local: " + local.name);
         draggedLocal.Add(local);
 
+
+        //foreach (GameObject g in draggedItems)
+        //    Debug.Log("dg " + g.name);
+
+        //foreach (GameObject g in draggedCell)
+        //    Debug.Log("dc " + g.name);
+
+        //foreach (GameObject g in draggedLocal)
+        //    Debug.Log("dl " + g.name);
+        
         //Debug.Log(passa.item);
 
-       // passa.sourceCell.PlaceItem(passa.item);
+        // passa.sourceCell.PlaceItem(passa.item);
     }
     
     public void CheckEndGame()

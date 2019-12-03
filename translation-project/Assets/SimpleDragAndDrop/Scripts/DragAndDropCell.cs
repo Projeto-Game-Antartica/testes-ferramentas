@@ -211,6 +211,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 	{
 		if (item != null)
 		{
+            //Debug.Log("Place Item: " + item.name);
 			DestroyItem();                                            	// Remove current item from this cell
 			myDadItem = null;
 			DragAndDropCell cell = item.GetComponentInParent<DragAndDropCell>();
