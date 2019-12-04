@@ -132,8 +132,8 @@ public class SimpleCharacterController : AbstractScreenReader {
         if (collision.gameObject.GetComponent<VIDE_Assign>() != null)
         {
             inTrigger = collision.gameObject.GetComponent<VIDE_Assign>();
+            TryInteract();
         }
-        TryInteract();
 
         switch (collision.gameObject.tag)
         {

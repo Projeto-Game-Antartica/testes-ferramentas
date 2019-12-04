@@ -58,4 +58,16 @@ public class InGameOptions : AbstractScreenReader {
             Debug.Log("Tolk isnt running: " + e.StackTrace);
         }
     }
+
+    public void ReadToggle(Toggle toggle)
+    {
+        var tmp = "";
+
+        if (toggle.isOn)
+            tmp = "ativado";
+        else
+            tmp = "desativado";
+
+        ReadText(toggle.name + "" + tmp);
+    }
 }
