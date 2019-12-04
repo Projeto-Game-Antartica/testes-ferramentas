@@ -51,7 +51,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private WhaleData whaleData;
     public WhaleController whaleController;
     public Button nextButton;
-    public GameObject whalesCatalogPanel;
     public GameObject fotoidentificacaoPanel;
     public Image whalesCatalogImage;
     private int attempts = 0;
