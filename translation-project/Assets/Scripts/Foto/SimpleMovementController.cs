@@ -126,11 +126,13 @@ public class SimpleMovementController : MonoBehaviour {
 
             if (visible)
             {
+                sphereCollider.enabled = true;
                 audioSource.Play(); // executa o som da baleia
                 yield return new WaitForSeconds(2f); // tempo de execucao de uma animacao
             }
             else
             {
+                sphereCollider.enabled = false;
                 audioSource.Stop();
                 yield return new WaitForSeconds(rand); // tempo aleatorio
             }

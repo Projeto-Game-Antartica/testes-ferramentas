@@ -38,6 +38,12 @@ public class HUDController : AbstractScreenReader {
 
     public SimpleCharacterController simpleCharacterController;
 
+    public AudioSource audioSource;
+
+    public AudioClip closeClip;
+    public AudioClip openBagClip;
+    public AudioClip closeBagClip;
+
     private void Start()
     {
         // "InstructionInterface" set on the main menu script
@@ -89,16 +95,19 @@ public class HUDController : AbstractScreenReader {
                 {
                     ReadText("Menu de opções aberto");
                     inGameOption.SetActive(true);
+                    inGameOption.GetComponentInChildren<Button>().Select();
                 }
                 else
                 {
-                    ReadText("Menu de opções fechado");
+                    //ReadText("Menu de opções fechado");
+                    audioSource.PlayOneShot(closeClip);
                     inGameOption.SetActive(false);
                 }
 
                 if (instructionInterface.activeSelf)
                 {
-                    ReadText("Menu de instruções fechado");
+                    //ReadText("Menu de instruções fechado");
+                    audioSource.PlayOneShot(closeClip);
                     instructionInterface.SetActive(false);
                     inGameOption.SetActive(false);
                 }
@@ -133,9 +142,15 @@ public class HUDController : AbstractScreenReader {
         //StartCoroutine(HandleBagBar());
 
         if (bar.fillAmount == 0)
+        {
             StartCoroutine(FillImage(bar, BAG));
-        else if(bar.fillAmount == 1)
+            audioSource.PlayOneShot(openBagClip);
+        }
+        else if (bar.fillAmount == 1)
+        {
             StartCoroutine(UnfillImage(bar, BAG));
+            audioSource.PlayOneShot(closeBagClip);
+        }
     }
 
     public void HandleInfoBar()
@@ -159,7 +174,7 @@ public class HUDController : AbstractScreenReader {
         while (img.fillAmount < 1)
         {
             Debug.Log("openning");
-            img.fillAmount += 0.1f;
+            img.fillAmount += 0.05f;
 
             if ((img.fillAmount > 0.4f && img.fillAmount < 0.6f) && op == BAG) // its float numbers
                 StartCoroutine(ShowInvItems());
@@ -188,7 +203,7 @@ public class HUDController : AbstractScreenReader {
         {
             Debug.Log("closing");
 
-            img.fillAmount -= 0.1f;
+            img.fillAmount -= 0.05f;
 
             if ((img.fillAmount > 0.5f && img.fillAmount < 0.7f) && op == BAG) // its float numbers
                 StartCoroutine(CoverInvItems());

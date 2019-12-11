@@ -30,11 +30,9 @@ public class MentorController : MonoBehaviour {
 
         //Debug.Log(mentorName);
 
-        if (Parameters.ACCESSIBILITY)
+        if (Parameters.ACCESSIBILITY && !VD.isActive)
         {
-            audioSource.playOnAwake = true;
-            audioSource.Play();
-            audioSource.loop = true;
+            PlayAcessibilityAudio();
         }
 
         HandleMinijogoBalloonColor(mentorName);
@@ -42,9 +40,9 @@ public class MentorController : MonoBehaviour {
 
     private void Update()
     {
-        if (Parameters.ACCESSIBILITY)
+        if (Parameters.ACCESSIBILITY && !VD.isActive)
             PlayAcessibilityAudio();
-        else if (audioSource.isPlaying)
+        else
             audioSource.Stop();
     }
 
@@ -71,7 +69,9 @@ public class MentorController : MonoBehaviour {
     private void PlayAcessibilityAudio()
     {
         audioSource.playOnAwake = true;
+        
         if (!audioSource.isPlaying) audioSource.Play();
+
         audioSource.loop = true;
     }
 

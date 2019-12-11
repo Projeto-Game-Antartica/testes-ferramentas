@@ -11,6 +11,9 @@ public class InGameOptions : AbstractScreenReader {
     public Animator charAnimator;
     public GameObject confirmQuit;
 
+    public AudioSource audioSource;
+    public AudioClip warningClip;
+
     private void Start()
     {
         toggle.isOn = Parameters.ACCESSIBILITY;    
@@ -32,6 +35,7 @@ public class InGameOptions : AbstractScreenReader {
     public void TryQuitGame()
     {
         confirmQuit.SetActive(true);
+        audioSource.PlayOneShot(warningClip);
         ReadText("Tem certeza que deseja sair do jogo?");
         confirmQuit.GetComponentInChildren<Button>().Select();
     }

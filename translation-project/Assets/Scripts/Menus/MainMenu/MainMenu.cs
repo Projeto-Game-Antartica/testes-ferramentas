@@ -21,6 +21,10 @@ public class MainMenu : AbstractScreenReader
     public TMPro.TextMeshProUGUI loadingText;
     AsyncOperation async;
 
+    public AudioSource audioSource;
+    public AudioClip warningClip;
+    public AudioClip loadingClip;
+
     // player preferences hp and exp
     private float HP = 1f;
     private float EXP = 0f;
@@ -67,6 +71,9 @@ public class MainMenu : AbstractScreenReader
     {
         confirmQuit.SetActive(true);
         ReadText("Tem certeza que deseja sair do jogo?");
+
+        audioSource.PlayOneShot(warningClip);
+
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 
@@ -108,15 +115,16 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
-        //async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
-        async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
+        async = SceneManager.LoadSceneAsync(ScenesNames.M004Fotoidentification);
+        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
 
         loadScreenObject.SetActive(true);
 
-        ReadText("O jogo está carregando...");
+        //ReadText("O jogo está carregando...");
 
         while (!async.isDone)
         {
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(loadingClip);
             float progress = Mathf.Clamp01(async.progress / .9f);
 
             loadingSlider.value = progress;
@@ -127,5 +135,6 @@ public class MainMenu : AbstractScreenReader
 
             yield return null;
         }
+        audioSource.Stop();
     }
 }

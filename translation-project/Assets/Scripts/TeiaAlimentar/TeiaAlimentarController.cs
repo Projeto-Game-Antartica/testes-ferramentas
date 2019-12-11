@@ -14,6 +14,8 @@ public class TeiaAlimentarController : DragAndDropController
     private int correctAnswer = 0;
     private int wrongAnswer = 0;
     private bool WIN = false;
+
+    public bool started = false;
     
     public AudioClip correctClip;
     public AudioClip wrongClip;
@@ -53,107 +55,114 @@ public class TeiaAlimentarController : DragAndDropController
     
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(started)
         {
-            try
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
+                if (!isPositioning)
                 {
-                    OnButtonClick();
-                    audioSource.PlayOneShot(selectTeia);
-                    isPositioning = true;
+                    try
+                    {
+                        if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
+                        {
+                            OnButtonClick();
+                            audioSource.PlayOneShot(selectTeia);
+                            isPositioning = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
+                    }
                 }
-            } catch (Exception e)
-            {
-                Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
-            }
-        }
-
-        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
-                                    Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
-        {
-            GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
-
-            if (currentItem != null)
-            {
-                DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
-            }
-
-            if (isCell)
-            {
-                // navegando pelas celulas
-                nextCell.GetComponent<Selectable>().Select();
-
-                ReadCell(nextCell);
-            }
-            else
-            {
-                // navegando pelos itens
-                nextCell.GetComponent<Selectable>().Select();
-
-                ReadItem(nextCell);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            try
-            {
-                DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
-                currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
-
-                desc.item = currentItem;
-                desc.sourceCell = sourceCell;
-                desc.destinationCell = currentCell;
-                currentCell.SendRequest(desc);                      // Send drop request
-                StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
-
-                if (desc.permission == true)
+                else
                 {
-                    currentCell.PlaceItem(currentItem);
+                    try
+                    {
+                        DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
+                        currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
+
+                        desc.item = currentItem;
+                        desc.sourceCell = sourceCell;
+                        desc.destinationCell = currentCell;
+                        currentCell.SendRequest(desc);                      // Send drop request
+                        StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
+
+                        if (desc.permission == true)
+                        {
+                            currentCell.PlaceItem(currentItem);
+                        }
+
+                        currentCell.UpdateMyItem();
+                        currentCell.UpdateBackgroundState();
+                        sourceCell.UpdateMyItem();
+                        sourceCell.UpdateBackgroundState();
+
+                        // go to item
+                        items[FindNextItem()].GetComponent<Selectable>().Select();
+                        ReadItem(items[FindNextItem()]);
+
+                        audioSource.PlayOneShot(selectTeia);
+
+                        ResetConditions();
+
+                        isPositioning = false;
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                    }
+                }
+            }
+
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+                                        Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+            {
+                GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
+
+                if (currentItem != null)
+                {
+                    DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
                 }
 
-                currentCell.UpdateMyItem();
-                currentCell.UpdateBackgroundState();
-                sourceCell.UpdateMyItem();
-                sourceCell.UpdateBackgroundState();
+                if (isCell)
+                {
+                    // navegando pelas celulas
+                    nextCell.GetComponent<Selectable>().Select();
 
-                // go to item
-                items[FindNextItem()].GetComponent<Selectable>().Select();
-                ReadItem(items[FindNextItem()]);
+                    ReadCell(nextCell);
+                }
+                else
+                {
+                    // navegando pelos itens
+                    nextCell.GetComponent<Selectable>().Select();
 
-                audioSource.PlayOneShot(selectTeia);
-
-                ResetConditions();
-
-                isPositioning = false;
-
+                    ReadItem(nextCell);
+                }
             }
-            catch(Exception e)
+
+            if (Input.GetKeyDown(KeyCode.F6) && !isPositioning)
             {
-                Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                isCell = !isCell;
+
+                if (isCell)
+                {
+                    ReadText("Células");
+                    Debug.Log("Células");
+                    cells[FindNextEmptyCell()].GetComponent<Selectable>().Select();
+                    ReadCell(cells[FindNextEmptyCell()]);
+                }
+                else
+                {
+                    ReadText("Itens");
+                    Debug.Log("Itens");
+                    items[FindNextItem()].GetComponent<Selectable>().Select();
+                    ReadItem(items[FindNextItem()]);
+                }
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.F6) && !isPositioning)
-        {
-            isCell = !isCell;
-
-            if (isCell)
-            {
-                ReadText("Células");
-                Debug.Log("Células");
-                cells[FindNextEmptyCell()].GetComponent<Selectable>().Select();
-                ReadCell(cells[FindNextEmptyCell()]);
-            }
-            else
-            {
-                ReadText("Itens");
-                Debug.Log("Itens");
-                items[FindNextItem()].GetComponent<Selectable>().Select();
-                ReadItem(items[FindNextItem()]);
-            }
-        }
+        
     }
 
     public void SelectFirstItem()

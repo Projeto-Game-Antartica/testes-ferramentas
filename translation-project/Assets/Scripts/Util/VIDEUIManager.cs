@@ -34,8 +34,18 @@ public class VIDEUIManager : AbstractScreenReader
     public TextMeshProUGUI NPC_label;
     public Image NPCSprite;
     public GameObject playerChoicePrefab;
+    public GameObject playerChoiceHolder;
     public Image playerSprite;
     public TextMeshProUGUI playerLabel;
+
+    public TextMeshProUGUI NPC_Text2;
+
+    public Image xpIcon;
+
+    public AudioClip xpClip;
+    public AudioClip dialogueBlipClip;
+
+    public AudioSource audioSource;
 
     bool dialoguePaused = false; //Custom variable to prevent the manager from calling VD.Next
     bool animatingText = false; //Will help us know when text is currently being animated
@@ -184,12 +194,17 @@ public class VIDEUIManager : AbstractScreenReader
                 //Color the Player options. Blue for the selected one
                 for (int i = 0; i < currentChoices.Count; i++)
                 {
-                    currentChoices[i].color = Color.white;
+                    //currentChoices[i].color = Color.white;
+                    //Debug.Log(currentChoices[i].gameObject.GetComponentInParent<Image>().name);
+                    // desabilita a imagem de fundo do texto
+                    currentChoices[i].gameObject.GetComponentInParent<Image>().enabled = false;
                     if (i == data.commentIndex)
                     {
-                        currentChoices[i].color = Color.yellow;
-                        Debug.Log("Opção " + data.commentIndex + " de " + (currentChoices.Count - 1).ToString() + " " + data.comments[data.commentIndex]);
-                        ReadText("Opção " + data.commentIndex + " de " + (currentChoices.Count - 1).ToString() + " " + data.comments[data.commentIndex]);
+                        //currentChoices[i].color = Color.yellow;
+                        // habilita a imagem do fundo do texto que foi selecionado
+                        currentChoices[i].gameObject.GetComponentInParent<Image>().enabled = true;
+                        Debug.Log("Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
+                        ReadText("Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
                     }
                 }
             }
@@ -236,11 +251,36 @@ public class VIDEUIManager : AbstractScreenReader
     {
         if (flagEXP)
         {
-            lifeExpController.AddEXP(0.0005f);
+            audioSource.PlayOneShot(xpClip);
+
+            StartCoroutine(HandlexpIcon());
+
+            //lifeExpController.AddEXP(0.0005f);
+            lifeExpController.AddEXP(0.05f);
             Debug.Log("exp gained");
             flagEXP = false;
         }
     }
+
+    public IEnumerator HandlexpIcon()
+    {
+        xpIcon.fillClockwise = true;
+
+        while (xpIcon.fillAmount < 1f)
+        {
+            xpIcon.fillAmount += 0.05f;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        xpIcon.fillClockwise = false;
+        while (xpIcon.fillAmount > 0)
+        {
+            xpIcon.fillAmount -= 0.05f;
+            yield return new WaitForSeconds(0.05f);
+        }
+        }
 
     public void HandleAlertDialog(bool open)
     {
@@ -259,9 +299,10 @@ public class VIDEUIManager : AbstractScreenReader
         //Reset some variables
         //Destroy the current choices
         foreach (TextMeshProUGUI op in currentChoices)
-            Destroy(op.gameObject);
+            Destroy(op.gameObject.transform.parent.parent.gameObject); // detroy o prefab (prefab > imagem > texto)
+            //Destroy(op.gameObject);
         currentChoices = new List<TextMeshProUGUI>();
-        NPC_Text.text = "";
+        //NPC_Text.text = "";
         NPC_Container.SetActive(false);
         playerContainer.SetActive(false);
         playerSprite.sprite = null;
@@ -296,6 +337,9 @@ public class VIDEUIManager : AbstractScreenReader
             //Set node sprite if there's any, otherwise try to use default sprite
             if (data.sprite != null)
             {
+                //dialogueContainer.GetComponent<Image>().enabled = true;
+                
+
                 //For NPC sprite, we'll first check if there's any "sprite" key
                 //Such key is being used to apply the sprite only when at a certain comment index
                 //Check CrazyCap dialogue for reference
@@ -324,6 +368,9 @@ public class VIDEUIManager : AbstractScreenReader
             else
                 NPC_label.text = VD.assigned.alias;
 
+            dialogueContainer.GetComponent<Image>().enabled = true;
+            playerChoiceHolder.transform.parent.gameObject.SetActive(false);
+
             //Sets the NPC container on
             NPC_Container.SetActive(true);
            
@@ -334,19 +381,34 @@ public class VIDEUIManager : AbstractScreenReader
     //It first cleans, then it instantiates new choices
     public void SetOptions(string[] choices)
     {
+        playerChoiceHolder.transform.parent.gameObject.SetActive(true);
+        dialogueContainer.GetComponent<Image>().enabled = false;
+
         //Create the choices. The prefab comes from a dummy gameobject in the scene
         //This is a generic way of doing it. You could instead have a fixed number of choices referenced.
         for (int i = 0; i < choices.Length; i++)
         {
             GameObject newOp = Instantiate(playerChoicePrefab.gameObject, playerChoicePrefab.transform.position, Quaternion.identity) as GameObject;
-            newOp.transform.SetParent(playerChoicePrefab.transform.parent, true);
+            //newOp.transform.SetParent(playerChoicePrefab.transform.parent, true);
+            newOp.transform.SetParent(playerChoiceHolder.transform, true);
+            
             newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
             newOp.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             //newOp.GetComponent<UnityEngine.UI.Text>().text = choices[i];
+            //newOp.GetComponent<TMPro.TextMeshProUGUI>().text = choices[i];
+
+            // o texto de fato sera mostrado neste componente
+            newOp.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1].text = (i+1) + ". " + choices[i];
+
+            // esse texto serve para gerar o tamanho do gameobject para que ele se adeque ao layout
             newOp.GetComponent<TMPro.TextMeshProUGUI>().text = choices[i];
+
+            NPC_Text2.text = NPC_Text.text;
+
             newOp.SetActive(true);
 
-            currentChoices.Add(newOp.GetComponent<TextMeshProUGUI>());
+            // adiciono a lista o texto que eh utilizado
+            currentChoices.Add(newOp.GetComponentsInChildren<TextMeshProUGUI>()[1]);
         }
     }
 
@@ -532,12 +594,18 @@ public class VIDEUIManager : AbstractScreenReader
 
     IEnumerator DrawText(string text, float time)
     {
+        // while drwaing play the audio clip clip
+        audioSource.PlayOneShot(dialogueBlipClip);
+        audioSource.loop = true;
+
         animatingText = true;
 
         string[] words = text.Split(' ');
 
         char[] letters = text.ToCharArray();
 
+        NPC_Text.text = "";
+        NPC_Text2.text = "";
 
         for(int i = 0; i<letters.Length; i++)
         {
@@ -572,6 +640,10 @@ public class VIDEUIManager : AbstractScreenReader
         ReadText(NPC_label.text);
         ReadText(NPC_Text.text);
 
+        // stop when finishes
+        audioSource.Stop();
+        audioSource.loop = false;
+
         animatingText = false;
     }
 
@@ -583,6 +655,10 @@ public class VIDEUIManager : AbstractScreenReader
         // Make screenreader read the text after cutting the animation
         ReadText(NPC_label.text);
         ReadText(NPC_Text.text);
+
+        // stop if cut animation
+        audioSource.Stop();
+        audioSource.loop = false;
 
         animatingText = false;
     }

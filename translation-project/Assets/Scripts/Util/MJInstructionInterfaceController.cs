@@ -11,6 +11,9 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
     public TextMeshProUGUI minijogoName;
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
+
+    public AudioSource audioSource;
+    public AudioClip closeClip;
     
     // Use this for initialization
 	void Start ()

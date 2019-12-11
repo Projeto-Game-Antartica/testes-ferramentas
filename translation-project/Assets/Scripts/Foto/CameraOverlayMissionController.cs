@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CameraOverlayMissionController : AbstractScreenReader {
     
@@ -23,10 +24,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public Image panelImage;
     public Button saveButton;
     public Button cadastrarButton;
-    public Text date;
-    public Text latitude;
-    public Text longitude;
-    public InputField nameInputField;
+    public TextMeshProUGUI date;
+    public TextMeshProUGUI latitude;
+    public TextMeshProUGUI longitude;
+    public TMP_InputField nameInputField;
 
     public Sprite cenario;
 
@@ -53,7 +54,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // feedback texts
     private const string NEGATIVE_FB = "A fotografia não ficou muito legal. Tente novamente.";
     private const string POSITIVE_FB = "A fotografia ficou ótima!";
-
+    
     private void Start()
     {
         readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();

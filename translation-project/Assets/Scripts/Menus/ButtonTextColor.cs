@@ -46,4 +46,15 @@ public class ButtonTextColor : MonoBehaviour, ISelectHandler, IPointerEnterHandl
     {
         if(!ButtonContrast) text.color = Color.white;
     }
+
+    public void ChangeButtonColor(bool value)
+    {
+        if (!ButtonContrast)
+        {
+            if(value)
+                text.color = color;
+            else
+                text.color = Color.white;
+        }
+    }
 }

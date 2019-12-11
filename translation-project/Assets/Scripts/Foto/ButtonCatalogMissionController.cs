@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ButtonCatalogMissionController : MonoBehaviour {
+public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
 
     [SerializeField]
     private WhaleController whaleController;
@@ -13,7 +14,7 @@ public class ButtonCatalogMissionController : MonoBehaviour {
     [SerializeField]   
     private Image whaleSprite;
     [SerializeField]
-    private InputField inputField;
+    private TMPro.TMP_InputField inputField;
 
     public Button nova_baleia;
     public GameObject[] buttons;
@@ -72,5 +73,10 @@ public class ButtonCatalogMissionController : MonoBehaviour {
         {
             b.GetComponent<Image>().color = Color.white;
         }
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log(eventData.selectedObject.name);
     }
 }
