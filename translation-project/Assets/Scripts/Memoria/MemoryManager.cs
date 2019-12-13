@@ -448,6 +448,7 @@ public class MemoryManager : AbstractScreenReader {
 
         audioSource.PlayOneShot(avisoClip);
 
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 

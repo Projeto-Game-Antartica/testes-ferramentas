@@ -98,14 +98,23 @@ public class TeiaAlimentarController : DragAndDropController
                         sourceCell.UpdateMyItem();
                         sourceCell.UpdateBackgroundState();
 
-                        // go to item
-                        items[FindNextItem()].GetComponent<Selectable>().Select();
-                        ReadItem(items[FindNextItem()]);
+                        try
+                        {
+                            // go to item
+                            items[FindNextItem()].GetComponent<Selectable>().Select();
+                            ReadItem(items[FindNextItem()]);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log("Não há mais itens. StackTrace >> " + ex.StackTrace);
+                        }
 
                         audioSource.PlayOneShot(selectTeia);
 
                         ResetConditions();
 
+                        desc.item.ResetConditions();
+                        
                         isPositioning = false;
 
                     }
@@ -123,6 +132,8 @@ public class TeiaAlimentarController : DragAndDropController
 
                 if (currentItem != null)
                 {
+                    //Debug.Log(nextCell.name);
+                    Debug.Log(DragAndDropItem.icon.name);
                     DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
                 }
 
@@ -244,7 +255,7 @@ public class TeiaAlimentarController : DragAndDropController
                 {
                     Debug.Log("Successful drop " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
                     //Debug.Log("ITEM: " + desc.item.name + ". DESTINATION CELL: " + desc.destinationCell.name);
-                    PlayAudioClip(correctClip);
+                    audioSource.PlayOneShot(correctClip);
                     correctAnswer++;
                     if (correctAnswer >= NRO_CELLS) WIN = true;
                     StartCoroutine(CheckEndGame());
@@ -252,7 +263,7 @@ public class TeiaAlimentarController : DragAndDropController
                 else                                                            // If drop unsuccessful (was denied before)
                 {
                     Debug.Log("Denied drop " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
-                    PlayAudioClip(wrongClip);
+                    audioSource.PlayOneShot(wrongClip);
                     wrongAnswer++;
                 }
                 break;

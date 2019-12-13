@@ -23,8 +23,6 @@ public class InGameOptions : AbstractScreenReader {
     {
         // runs idle animation when the ingameoption is active
         charAnimator.SetFloat("Magnitude", 0);
-
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
     }
 
     public void ReturnToMainMenu()

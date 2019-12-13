@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TeiaAlimentarScene : AbstractScreenReader {
 
-    public Text timer;
+    public TMPro.TextMeshProUGUI timer;
     
     // timer settings
     private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
@@ -50,6 +50,11 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
     public IEnumerator StartTimer()
     {
+        // read audiodescription
+
+        ReadText("");
+
+        // start counting time
         yield return new WaitForSeconds(0.5f);
 
         initialMinutes = 2f;
@@ -122,7 +127,6 @@ public class TeiaAlimentarScene : AbstractScreenReader {
             {
                 TryReturnToShip();
             }
-
         }
 
         // caso o usuario navege pelo tab e encontre uma célula ou item, o jogo despausa automaticamente.
@@ -225,6 +229,8 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         paused = true;
 
         confirmQuit.SetActive(true);
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();
 
         audioSource.PlayOneShot(avisoClip);

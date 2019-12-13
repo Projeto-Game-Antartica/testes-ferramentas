@@ -16,6 +16,9 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public AudioClip photoAudioClip;
     public AudioClip loadingAudioClip;
     public AudioClip turningOffAudioClip;
+    public AudioClip zoomInClip;
+    public AudioClip zoomOutClip;
+    public AudioClip avisoClip;
 
     // content panel objects
     public GameObject panelInstruction;
@@ -24,6 +27,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public Image panelImage;
     public Button saveButton;
     public Button cadastrarButton;
+    public Button okButton;
     public TextMeshProUGUI date;
     public TextMeshProUGUI latitude;
     public TextMeshProUGUI longitude;
@@ -64,6 +68,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         whaleIndexes = whaleIndexes.OrderBy(x => r.Next()).ToArray();
 
         index = 0;
+
+        Parameters.WHALE_ID = -1;
     }
 
     // Update is called once per frame
@@ -153,17 +159,23 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         }
         else
         {
+            Parameters.WHALE_ID = -1;
+
             // whale is not on the camera, take a screenshot
             //StartCoroutine(captureScreenshot());
             warningInterface.SetActive(true);
+
+            warningInterface.GetComponentInChildren<Button>().Select();
+
+            Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
+
+            audioSource.PlayOneShot(avisoClip);
 
             // set the screenshot on panel image
             panelImage.sprite = cenario;
 
             // negative feedback
             ReadText(NEGATIVE_FB);
-
-            Parameters.WHALE_ID = -1;
         }
 
         if (Parameters.ACCESSIBILITY)
@@ -192,7 +204,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
             camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
         else
+        {
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(zoomInClip);
             camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
+        }
     }
 
     public void ZoomOut()
@@ -200,7 +215,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
             camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
         else
+        {
             camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(zoomOutClip);
+        }
     }
 
     // retrieve whale info according to WhaleData class
@@ -247,6 +265,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         else
             cadastrarButton.interactable = true;
         //Debug.Log(index);
+
+        panelContent.GetComponent<ContentPanelMissionController>().ReadWhaleInfo(whale);
     }
 
     // screenshot coroutine

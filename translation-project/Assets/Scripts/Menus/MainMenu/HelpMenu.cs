@@ -12,12 +12,6 @@ public class HelpMenu : AbstractScreenReader {
         firstButton.Select();
     }
 
-    private void OnEnable()
-    {
-        //FontSizeText.texts = GameObject.FindGameObjectsWithTag("text-hc");
-        //firstButton.Select();
-    }
-
     public void ManualAluno()
     {
         // TO DO

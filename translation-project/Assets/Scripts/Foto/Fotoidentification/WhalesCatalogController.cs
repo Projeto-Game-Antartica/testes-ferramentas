@@ -20,9 +20,4 @@ public class WhalesCatalogController : MonoBehaviour {
         whaleCatalogPanel.SetActive(false);
         Parameters.ISWHALEIDENTIFIED = true;
     }
-
-    private void OnEnable()
-    {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
-    }
 }

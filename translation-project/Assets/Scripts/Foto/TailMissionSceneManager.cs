@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TailMissionSceneManager : MonoBehaviour
+public class TailMissionSceneManager : AbstractScreenReader
 {
 
     public GameObject instructionInterface;
@@ -76,6 +76,8 @@ public class TailMissionSceneManager : MonoBehaviour
         audioSource.PlayOneShot(avisoClip);
 
         confirmQuit.SetActive(true);
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 // not used
 public class ContentPanelMissionController : AbstractScreenReader {
@@ -38,7 +39,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
         //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
         
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         ReadInstructions();
         saveButton.Select();
     }
@@ -60,6 +61,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
             }
             else
             {
+                // audiodescricao da baleia e suas info
                 ReadWhaleInfo(whale);
                 onWhaleCatalog = false;
             }
@@ -74,25 +76,33 @@ public class ContentPanelMissionController : AbstractScreenReader {
     
     private void OnEnable()
     {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
 
-        // se a foto foi tirada corretamente, faz a leitura
-        if(Parameters.WHALE_ID != -1)
-        {
-            whale = whaleController.getWhaleById(Parameters.WHALE_ID);
-            ReadWhaleInfo(whale);
-        }
+        //Debug.Log(Parameters.WHALE_ID);
+        //// se a foto foi tirada corretamente, faz a leitura
+        //if(Parameters.WHALE_ID != -1)
+        //{
+        //    whale = whaleController.getWhaleById(Parameters.WHALE_ID);
+        //    ReadWhaleInfo(whale);
+        //}
     }
 
     public void ReadWhaleInfo(WhaleData whaleData)
     {
-        //string audiodescricao = "";
+        try
+        {
+            //string audiodescricao = "";
 
-        string result = "Informações referente à baleia fotografada: " + "Data da foto " + dateText.text + " Organização ou Operador: INTERANTAR "
-            + " A Localização é: Latitude: " + whaleData.latitude + " Longitude: " + whaleData.longitude;
+            string result = "Informações referente à baleia fotografada: " + "Data da foto " + dateText.text + " Organização ou Operador: INTERANTAR "
+                + " A Localização é: Latitude: " + whaleData.latitude + " Longitude: " + whaleData.longitude;
 
-        ReadText(result);
-        Debug.Log(result);
+            ReadText(result);
+            Debug.Log(result);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Baleia não encontrada. Stacktrace >> " + ex.StackTrace);
+        }
+
     }
 
     public void ReadInstructions()
@@ -137,7 +147,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public void CheckWhaleName()
     {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
 
         string whale_name = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
 

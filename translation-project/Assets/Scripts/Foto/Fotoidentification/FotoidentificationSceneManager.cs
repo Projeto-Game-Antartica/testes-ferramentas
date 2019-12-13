@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class FotoidentificationSceneManager : MonoBehaviour
+public class FotoidentificationSceneManager : AbstractScreenReader
 {
     public GameObject instructionInterface;
     public Button audioButton;
@@ -70,13 +70,16 @@ public class FotoidentificationSceneManager : MonoBehaviour
         audioSource.PlayOneShot(avisoClip);
 
         confirmQuit.SetActive(true);
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 
     public void ReturnToShip()
     {
         confirmQuit.SetActive(false);
-        SceneManager.LoadScene("ShipScene");
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 
     public IEnumerator ReturnToShipCoroutine()

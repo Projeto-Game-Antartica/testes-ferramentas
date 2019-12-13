@@ -124,9 +124,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
             audioSource.PlayOneShot(correctClip);
 
             Debug.Log(option.GetComponentInChildren<TextMeshProUGUI>().text);
-            
-            // needed to check after enabling gameobject
-            if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
             ChangeBackgroundColor(option, Color.green);
 
             PlayerPreferences.M004_FotoIdentificacao = true;
@@ -143,6 +140,9 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
             Debug.Log(attempts);
             ChangeBackgroundColor(option, Color.red);
+
+            ReadText(attemptsText.text);
+            Debug.Log(attemptsText.text);
 
             if (attempts > 3)
             {
@@ -440,10 +440,4 @@ public class FotoidentificacaoController : AbstractScreenReader {
         return false;
     }
     */
-
-    private void OnEnable()
-    {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
-    }
-
 }

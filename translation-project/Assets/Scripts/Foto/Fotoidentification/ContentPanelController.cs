@@ -44,6 +44,7 @@ public class ContentPanelController : AbstractScreenReader {
     private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7 };
 
     private int index;
+    private bool isOnButtons = false;
 
     private void Start()
     {
@@ -62,13 +63,24 @@ public class ContentPanelController : AbstractScreenReader {
         
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
-            Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            //ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            //Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
         }
 
         if(Input.GetKeyDown(KeyCode.F6))
         {
-            first_button.Select();
+            if(!isOnButtons)
+            {
+                first_button.Select();
+                isOnButtons = true;
+            }
+            else
+            {
+                // leitura da audiodescricao da baleia...
+                ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+                Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            }
+
         }
 
         //Debug.Log(Parameters.ISBORDADONE && Parameters.ISENTALHEDONE && Parameters.ISMANCHASDONE && Parameters.ISMARCASDONE && Parameters.ISPIGMENTACAODONE
@@ -87,11 +99,6 @@ public class ContentPanelController : AbstractScreenReader {
         index = 0;
 
         first_button.Select();
-    }
-
-    private void OnEnable()
-    {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
     }
 
     public void ReadInstructions()

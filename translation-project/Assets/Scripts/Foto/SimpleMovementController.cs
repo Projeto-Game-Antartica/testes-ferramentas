@@ -134,6 +134,10 @@ public class SimpleMovementController : MonoBehaviour {
             {
                 sphereCollider.enabled = false;
                 audioSource.Stop();
+
+                // whale not on camera
+                Parameters.ISWHALEONCAMERA = false;
+
                 yield return new WaitForSeconds(rand); // tempo aleatorio
             }
 
