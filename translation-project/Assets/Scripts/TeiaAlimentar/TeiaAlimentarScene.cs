@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TeiaAlimentarScene : AbstractScreenReader {
 
-    public Text timer;
+    public TMPro.TextMeshProUGUI timer;
     
     // timer settings
     private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
@@ -20,23 +21,43 @@ public class TeiaAlimentarScene : AbstractScreenReader {
     public Button resetButton;
     public Button backButton;
 
+    private bool isOnMenu = false;
+
     private bool started = false;
     private bool finished = false;
+    private bool paused = false;
 
     private float timerCount;
     private float timeInSeconds;
     private int timeInMinutes;
 
     public GameObject instructionInterface;
+    public GameObject confirmQuit;
 
     public MinijogosDicas dicas;
 
     public AudioSource audioSource;
     public AudioClip loseClip;
+    public AudioClip closeClip;
+    public AudioClip avisoClip;
 
-    public void StartTimer()
+    public TeiaAlimentarController teiaAlimentarController;
+
+    public void InitializeGame()
     {
-        initialMinutes = 2f;
+        StartCoroutine(StartTimer());
+    }
+
+    public IEnumerator StartTimer()
+    {
+        // read audiodescription
+
+        ReadText("");
+
+        // start counting time
+        yield return new WaitForSeconds(0.5f);
+
+        initialMinutes = 6f;
         initialSeconds = 59f;
 
         timerCount = 0;
@@ -47,29 +68,80 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         backButton.interactable = true;
 
         // start afther time seconds and repeat at repeatRate rate
-        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
+        //InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
+
+        teiaAlimentarController.started = true;
+        teiaAlimentarController.SelectFirstItem();
     }
 
     private void Update()
     {
-        if(started && !finished) HandleTimer();
+        //if(started && !finished && !paused) HandleTimer();
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
             if (!instructionInterface.activeSelf)
+            {
                 instructionInterface.SetActive(true);
-            else
-                instructionInterface.SetActive(false);
+                paused = true;
+            }
+            //else
+            //{
+            //    // Read Instructions
+            //}
         }
 
-        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             ReadMJMenu();
         }
 
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            if (!isOnMenu)
+            {
+                audioButton.Select();
+                isOnMenu = true;
+                paused = true;
+            }
+            else
+            {
+                teiaAlimentarController.SelectFirstItem();
+                paused = false;
+                isOnMenu = false;
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            audioButton.Select();
+            if (instructionInterface.activeSelf)
+            {
+                instructionInterface.SetActive(false);
+                audioSource.PlayOneShot(closeClip);
+
+                teiaAlimentarController.SelectFirstItem();
+
+                paused = false;
+            }
+            else
+            {
+                TryReturnToShip();
+            }
+        }
+
+        // caso o usuario navege pelo tab e encontre uma célula ou item, o jogo despausa automaticamente.
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if(EventSystem.current.currentSelectedGameObject.name.Contains("Animal") 
+                || EventSystem.current.currentSelectedGameObject.name.Contains("Cell"))
+            {
+                paused = false;
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.F3))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
         }
     }
 
@@ -118,6 +190,8 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // do something
         LoseImage.SetActive(true);
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
+
         lifeExpController.AddEXP(0.0001f);
 
         audioSource.PlayOneShot(loseClip);
@@ -157,10 +231,36 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         ReadText("Restam " + timer.text + " para finalizar o minijogo.");
     }
 
+    public void TryReturnToShip()
+    {
+        paused = true;
+
+        confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        confirmQuit.GetComponentInChildren<Button>().Select();
+
+        audioSource.PlayOneShot(avisoClip);
+    }
+
     public void ReturnToShip()
     {
+        confirmQuit.SetActive(false);
+
         if (!PlayerPreferences.M004_TeiaAlimentar) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+
         SceneManager.LoadScene(ScenesNames.M004Ship);
+    }
+
+    public void ReturnToMJ()
+    {
+        confirmQuit.SetActive(false);
+
+        teiaAlimentarController.SelectFirstItem();
+
+        paused = false;
     }
 
     public IEnumerator ReturnToShipCoroutine()

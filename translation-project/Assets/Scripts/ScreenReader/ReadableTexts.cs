@@ -18,10 +18,23 @@ public class ReadableTexts : MonoBehaviour
     private Dictionary<string, string> readabletext_ptbr;
     private Dictionary<string, string> readabletext_en;
 
+    public static ReadableTexts instance; 
+
     TextDataArray loadedData;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         LoadReadableTexts();
     }
 
@@ -30,11 +43,11 @@ public class ReadableTexts : MonoBehaviour
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, dataFilename);
         
-
         // pt-br information
         readabletext_ptbr = new Dictionary<string, string>();
         // en information
         readabletext_en = new Dictionary<string, string>();
+
         if (File.Exists(filePath))
         {
             // leitura do JSON
@@ -71,27 +84,60 @@ public class ReadableTexts : MonoBehaviour
     /*
      * Keys to JSON readabletexts file
      */
-    public static string key_languagemenu_instructions = "languagemenu_instructions";
-
-    public static string key_mainmenu_instructions = "mainmenu_instructions";
-
-    public static string key_optionmenu_instructions = "optionmenu_instructions";
     
+        // prejogo
+    public static string key_prejogo_menu = "prejogo_menu"; 
+    public static string key_prejogo_config = "prejogo_config"; 
+    public static string key_prejogo_ajuda = "prejogo_ajuda"; 
+    public static string key_prejogo_sons = "prejogo_sons"; 
+    public static string key_prejogo_menu_carregamento = "prejogo_menu_carregamento";
+    public static string key_prejogo_aviso = "prejogo_aviso";
+
+    // gameplay
+    public static string key_gameplay_ingamemenu = "gameplay_ingamemenu";
+    public static string key_gameplay_aviso = "gameplay_aviso"; 
+    public static string key_gameplay_aviso_botoes = "gameplay_aviso_botoes"; 
+
+    // dialogo
+    public static string key_dialogo_player = "dialogo_player"; 
+    public static string key_dialogo_npc = "dialogo_npc";
+
+    // M004 - Baleias
+    public static string key_m004_navio_instrucao = "m004_navio_instrucao"; 
+    public static string key_m004_navio = "m004_navio"; 
+    public static string key_m004_memoria_instrucao = "m004_memoria_instrucao"; 
+    public static string key_m004_memoria = "m004_memoria"; 
+    public static string key_m004_memoria_derrota = "m004_memoria_derrota"; 
+    public static string key_m004_memoria_vitoria = "m004_memoria_vitoria"; 
+    public static string key_m004_fotoidentificacao_instrucao = "m004_fotoidentificacao_instrucao"; 
+    public static string key_m004_fotoidentificacao = "m004_fotoidentificacao"; 
+    public static string key_m004_fotoidentificacao_pigmentacao = "m004_fotoidentificacao_pigmentacao"; 
+    public static string key_m004_fotoidentificacao_mancha = "m004_fotoidentificacao_mancha"; 
+    public static string key_m004_fotoidentificacao_riscos = "m004_fotoidentificacao_riscos"; 
+    public static string key_m004_fotoidentificacao_marcas = "m004_fotoidentificacao_marcas"; 
+    public static string key_m004_fotoidentificacao_entalhe = "m004_fotoidentificacao_entalhe"; 
+    public static string key_m004_fotoidentificacao_borda = "m004_fotoidentificacao_borda"; 
+    public static string key_m004_fotoidentificacao_ponta = "m004_fotoidentificacao_ponta"; 
+    public static string key_m004_fotoidentificacao_derrota = "m004_fotoidentificacao_derrota"; 
+    public static string key_m004_fotoidentificacao_vitoria = "m004_fotoidentificacao_vitoria"; 
+    public static string key_m004_teia_instrucao = "m004_teia_instrucao"; 
+    public static string key_m004_teia = "m004_teia"; 
+    public static string key_m004_teia_vitoria = "m004_teia_vitoria"; 
+    public static string key_m004_teia_derrota = "m004_teia_derrota";
+
+
+
+    // old keys
+    public static string key_languagemenu_instructions = "languagemenu_instructions";
+    public static string key_mainmenu_instructions = "mainmenu_instructions";
+    public static string key_optionmenu_instructions = "optionmenu_instructions";
     public static string key_playmenu_instructions = "playmenu_instructions";
-
     public static string key_glossary_instructions = "glossary_instructions";
-
     public static string key_soundglossary_instructions = "soundglossary_instructions";
-
     public static string key_navio_instructions = "navio_instructions";
-
     public static string key_foto_instructions = "foto_instructions";
-
     public static string key_foto_identification = "foto_identification";
-
     public static string key_foto_sceneDescription = "foto_sceneDescription";
-
     public static string key_foto_catalogDescription = "foto_catalogDescription";
-
-    public static string key_quiz_instructions = "quiz_instructions ";
+    public static string key_quiz_instructions = "quiz_instructions";
 }

@@ -61,10 +61,10 @@ public class DragAndDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             //    icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(teiaAlimentarController.GetNextCell().transform.position);
             //}
 
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                ResetConditions();
-            }
+            //if (Input.GetKeyDown(KeyCode.Return))
+            //{
+            //    ResetConditions();
+            //}
         }
     }
 

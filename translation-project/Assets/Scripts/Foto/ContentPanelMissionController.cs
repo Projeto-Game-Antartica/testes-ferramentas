@@ -3,26 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 // not used
 public class ContentPanelMissionController : AbstractScreenReader {
     
     public Button saveButton;
-    public InputField whaleNameInput;
+    public TMP_InputField whaleNameInput;
     public WhaleController whaleController;
     public GameObject confirmFoto;
 
     private ReadableTexts readableTexts;
 
     public TextMeshProUGUI confirmText;
-
     public TextMeshProUGUI whaleCountText;
+    public TextMeshProUGUI dateText;
 
     public GameObject WinImage;
     public AudioClip victoryClip;
+    public AudioClip avisoClip;
     public AudioSource audioSource;
 
+    public TailMissionSceneManager tailMissionSceneManager;
+
+    public ButtonCatalogMissionController buttonCatalogMission;
+
+    WhaleData whale;
+
     private int count = 0;
+
+    private bool onWhaleCatalog = false;
     
     private void Start()
     {
@@ -30,7 +40,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
         //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
         
-        readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
+        //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
         ReadInstructions();
         saveButton.Select();
     }
@@ -43,6 +53,21 @@ public class ContentPanelMissionController : AbstractScreenReader {
             ReadInstructions();
         }
 
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            if(!onWhaleCatalog)
+            {
+                buttonCatalogMission.buttons[0].GetComponent<Button>().Select();
+                onWhaleCatalog = true;
+            }
+            else
+            {
+                // audiodescricao da baleia e suas info
+                ReadWhaleInfo(whale);
+                onWhaleCatalog = false;
+            }
+        }
+
         // not the best way
         //if (Parameters.ISWHALEIDENTIFIED)
         //{
@@ -52,7 +77,33 @@ public class ContentPanelMissionController : AbstractScreenReader {
     
     private void OnEnable()
     {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
+
+        //Debug.Log(Parameters.WHALE_ID);
+        //// se a foto foi tirada corretamente, faz a leitura
+        //if(Parameters.WHALE_ID != -1)
+        //{
+        //    whale = whaleController.getWhaleById(Parameters.WHALE_ID);
+        //    ReadWhaleInfo(whale);
+        //}
+    }
+
+    public void ReadWhaleInfo(WhaleData whaleData)
+    {
+        try
+        {
+            //string audiodescricao = "";
+
+            string result = "Informações referente à baleia fotografada: " + "Data da foto " + dateText.text + " Organização ou Operador: INTERANTAR "
+                + " A Localização é: Latitude: " + whaleData.latitude + " Longitude: " + whaleData.longitude;
+
+            ReadText(result);
+            Debug.Log(result);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Baleia não encontrada. Stacktrace >> " + ex.StackTrace);
+        }
+
     }
 
     public void ReadInstructions()
@@ -72,6 +123,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
         else
         {
             whaleController.getWhaleById(Parameters.WHALE_ID).whale_name = whaleNameInput.text;
+
+            audioSource.PlayOneShot(avisoClip);
+
             confirmFoto.SetActive(true);
 
             count++;
@@ -97,7 +151,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public void CheckWhaleName()
     {
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
 
         string whale_name = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
 
@@ -125,11 +178,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
         whaleNameInput.text = string.Empty;
     }
 
-    public void ReturnToShip()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
-    }
-
     public IEnumerator BackToPhotoCoroutine()
     {
         yield return new WaitForSeconds(2);
@@ -148,6 +196,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
         yield return new WaitForSeconds(4f);
 
-        ReturnToShip();
+        tailMissionSceneManager.ReturnToShip();
     }
 }

@@ -11,15 +11,21 @@ public class MainMenu : AbstractScreenReader
     public Slider slider;
     private Button playButton;
 
-    //private ReadableTexts readableTexts;
-
     public GameObject loadScreenObject;
     public Slider loadingSlider;
+
+    public GameObject optionMenu;
+    public GameObject helpMenu;
+
 
     public GameObject confirmQuit;
 
     public TMPro.TextMeshProUGUI loadingText;
     AsyncOperation async;
+
+    public AudioSource audioSource;
+    public AudioClip warningClip;
+    public AudioClip loadingClip;
 
     // player preferences hp and exp
     private float HP = 1f;
@@ -38,25 +44,25 @@ public class MainMenu : AbstractScreenReader
         // set the volume value as slider value
         slider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
 
-        //readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
-
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
 
         //TolkUtil.Load();
 
         //TolkUtil.Instructions();
-        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-        ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+
+        //Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+        //ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
 
         playButton.Select();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
+        if(Input.GetKeyDown(KeyCode.F1) && !helpMenu.activeSelf && !optionMenu.activeSelf)
         {
-            //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-            ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+            //ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
         }
 
         //if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
@@ -66,7 +72,13 @@ public class MainMenu : AbstractScreenReader
     public void TryQuitGame()
     {
         confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_aviso, LocalizationManager.instance.GetLozalization()));
+
         ReadText("Tem certeza que deseja sair do jogo?");
+
+        audioSource.PlayOneShot(warningClip);
+
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 
@@ -102,21 +114,24 @@ public class MainMenu : AbstractScreenReader
     {
         StartCoroutine(LoadingScreen());
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu_carregamento, LocalizationManager.instance.GetLozalization()));
+
         PlayerPrefs.SetFloat("HealthPoints", HP);
         PlayerPrefs.SetFloat("Experience", EXP);
     }
 
     public IEnumerator LoadingScreen()
     {
-        //async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
+        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Fotoidentification);
         async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
 
         loadScreenObject.SetActive(true);
 
-        ReadText("O jogo está carregando...");
+        //ReadText("O jogo está carregando...");
 
         while (!async.isDone)
         {
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(loadingClip);
             float progress = Mathf.Clamp01(async.progress / .9f);
 
             loadingSlider.value = progress;
@@ -127,5 +142,6 @@ public class MainMenu : AbstractScreenReader
 
             yield return null;
         }
+        audioSource.Stop();
     }
 }

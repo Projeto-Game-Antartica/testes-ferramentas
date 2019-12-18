@@ -76,12 +76,6 @@ public abstract class DragAndDropController : AbstractScreenReader
         }
     }
 
-    public void PlayAudioClip(AudioClip audioClip)
-    {
-        if (!audioSource.isPlaying)
-            audioSource.PlayOneShot(audioClip);
-    }
-
     public void OnButtonClick()
     {
         sourceCell = EventSystem.current.currentSelectedGameObject.GetComponentInParent<DragAndDropCell>();
