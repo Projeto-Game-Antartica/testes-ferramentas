@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HighContrastText : MonoBehaviour {
+public class HighContrastText : AbstractScreenReader {
 
     /*
      * Hexadecimal colors:
@@ -33,18 +33,21 @@ public class HighContrastText : MonoBehaviour {
         originalTextColor = text.color;
         originalFont = text.font;
         bgImage = GetComponent<Image>();
-        Debug.Log(bgImage.name);
+        //Debug.Log(bgImage.name);
     }
 
+    // need to find a better way to do that. Its not efficient
     private void Update()
     {
         ChangeHighContrast();
+        SetToBold();
     }
 
     public void ChangeHighContrast()
     {
         if (Parameters.HIGH_CONTRAST)
         {
+            Debug.Log("ChangeHighContrast");
             var tempColor = bgImage.color;
             tempColor = Color.black;
             tempColor.a = 1f;
@@ -52,7 +55,8 @@ public class HighContrastText : MonoBehaviour {
 
             //text.font = arialFont;
 
-            text.color = Color.white;
+            if(!Parameters.BUTTONCONTRAST)
+                text.color = Color.white;
         }
         else
         {
@@ -61,7 +65,40 @@ public class HighContrastText : MonoBehaviour {
             bgImage.color = tempColor;
 
             text.font = originalFont;
-            text.color = originalTextColor;
+
+            if (!Parameters.BUTTONCONTRAST)
+                text.color = originalTextColor;
+        }
+    }
+
+    public void SetToBold()
+    {
+        string tmp = text.text;
+
+        if (!Parameters.BOLD)
+        {
+            Parameters.BOLD = false;
+
+            if (text.text.Contains("<b>"))
+            {
+                tmp = tmp.Replace("<b>", "");
+                tmp = tmp.Replace("</b>", "");
+
+                text.text = tmp;
+
+                //ReadText("Texto em negrito desativado");
+            }
+        }
+        else
+        {
+            Parameters.BOLD = true;
+
+            if (!text.text.Contains("<b>"))
+            {
+                text.text = "<b>" + tmp + "</b>";
+                //ReadText("Texto em negrito ativado");
+            }
+
         }
     }
 }

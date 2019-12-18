@@ -163,6 +163,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
             // whale is not on the camera, take a screenshot
             //StartCoroutine(captureScreenshot());
+            audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
 
             warningInterface.GetComponentInChildren<Button>().Select();
@@ -177,9 +178,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             // negative feedback
             ReadText(NEGATIVE_FB);
         }
-
-        if (Parameters.ACCESSIBILITY)
-            panelContent.GetComponent<ContentPanelController>().ReadInstructions();
 
         saveButton.Select();
 

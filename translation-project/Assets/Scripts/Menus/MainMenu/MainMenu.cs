@@ -11,10 +11,12 @@ public class MainMenu : AbstractScreenReader
     public Slider slider;
     private Button playButton;
 
-    //private ReadableTexts readableTexts;
-
     public GameObject loadScreenObject;
     public Slider loadingSlider;
+
+    public GameObject optionMenu;
+    public GameObject helpMenu;
+
 
     public GameObject confirmQuit;
 
@@ -42,25 +44,25 @@ public class MainMenu : AbstractScreenReader
         // set the volume value as slider value
         slider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
 
-        //readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
-
         playButton = GameObject.Find("PlayButton").GetComponent<Button>();
 
         //TolkUtil.Load();
 
         //TolkUtil.Instructions();
-        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-        ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+
+        //Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+        //ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
 
         playButton.Select();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1))
+        if(Input.GetKeyDown(KeyCode.F1) && !helpMenu.activeSelf && !optionMenu.activeSelf)
         {
-            //ReadText(readableTexts.GetReadableText(ReadableTexts.key_mainmenu_instructions, LocalizationManager.instance.GetLozalization()));
-            ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
+            //ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
         }
 
         //if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
@@ -70,6 +72,9 @@ public class MainMenu : AbstractScreenReader
     public void TryQuitGame()
     {
         confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_aviso, LocalizationManager.instance.GetLozalization()));
+
         ReadText("Tem certeza que deseja sair do jogo?");
 
         audioSource.PlayOneShot(warningClip);
@@ -108,6 +113,8 @@ public class MainMenu : AbstractScreenReader
     public void LoadGame()
     {
         StartCoroutine(LoadingScreen());
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu_carregamento, LocalizationManager.instance.GetLozalization()));
 
         PlayerPrefs.SetFloat("HealthPoints", HP);
         PlayerPrefs.SetFloat("Experience", EXP);

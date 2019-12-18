@@ -288,6 +288,9 @@ public class TeiaAlimentarController : DragAndDropController
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
 
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_vitoria, LocalizationManager.instance.GetLozalization()));
+
+
             if (!PlayerPreferences.M004_Memoria)
             {
                 WinText.text = "Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.";
@@ -376,11 +379,11 @@ public class TeiaAlimentarController : DragAndDropController
             case "cetaceosCell":
                 return  "serve de alimento para a célula " + (int)Cells.bentosCell;
             case "zooplanctonsCell":
-                return  "serve de alimento para a célula " + (int)Cells.bentosCell;
+                return  "serve de alimento para as células " + (int)Cells.bentosCell + " e " + (int)Cells.peixesCell;
             case "bacteriasCell":
                 return  "serve de alimento para as células " + (int)Cells.zooplanctonsCell + " e " + (int)Cells.protozariosCell;
             case "algasCell":
-                return  "serve de alimento para as células " + (int)Cells.bacteriasCell + " e " + (int)Cells.bentosCell + " e " + (int)Cells.protozariosCell;
+                return  "serve de alimento para as células " + (int)Cells.bacteriasCell + " e " + (int)Cells.bentosCell + " e " + (int)Cells.protozariosCell + " e " + (int)Cells.zooplanctonsCell;
             default:
                 return null;
 

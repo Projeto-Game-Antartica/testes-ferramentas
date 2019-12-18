@@ -57,7 +57,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // start counting time
         yield return new WaitForSeconds(0.5f);
 
-        initialMinutes = 2f;
+        initialMinutes = 6f;
         initialSeconds = 59f;
 
         timerCount = 0;
@@ -68,7 +68,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         backButton.interactable = true;
 
         // start afther time seconds and repeat at repeatRate rate
-        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
+        //InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
 
         teiaAlimentarController.started = true;
         teiaAlimentarController.SelectFirstItem();
@@ -76,7 +76,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
     private void Update()
     {
-        if(started && !finished && !paused) HandleTimer();
+        //if(started && !finished && !paused) HandleTimer();
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -138,6 +138,11 @@ public class TeiaAlimentarScene : AbstractScreenReader {
                 paused = false;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.F3))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
+        }
     }
 
     public void ResetGameObjects()
@@ -185,6 +190,8 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // do something
         LoseImage.SetActive(true);
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
+
         lifeExpController.AddEXP(0.0001f);
 
         audioSource.PlayOneShot(loseClip);
@@ -229,6 +236,8 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         paused = true;
 
         confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();

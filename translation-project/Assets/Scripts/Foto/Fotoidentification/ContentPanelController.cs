@@ -26,8 +26,6 @@ public class ContentPanelController : AbstractScreenReader {
     public TextMeshProUGUI bordaTMPro;
     public TextMeshProUGUI pontaTMPro;
 
-    private ReadableTexts readableTexts;
-
     public GameObject WinImage;
     public TextMeshProUGUI winText;
 
@@ -61,13 +59,18 @@ public class ContentPanelController : AbstractScreenReader {
         if (!finished)
             CheckFotoidentificacaoButtons();
         
-        if (Input.GetKeyDown(KeyCode.F2))
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        //    Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        //}
+
+        if(Input.GetKeyDown(KeyCode.F3))
         {
-            //ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
-            //Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao, LocalizationManager.instance.GetLozalization()));
         }
 
-        if(Input.GetKeyDown(KeyCode.F6))
+        if (Input.GetKeyDown(KeyCode.F6))
         {
             if(!isOnButtons)
             {
@@ -89,6 +92,8 @@ public class ContentPanelController : AbstractScreenReader {
 
     public void Initialize()
     {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao, LocalizationManager.instance.GetLozalization()));
+        
         SetWhalePhoto();
 
         ReadText(descriptionText);
@@ -99,11 +104,6 @@ public class ContentPanelController : AbstractScreenReader {
         index = 0;
 
         first_button.Select();
-    }
-
-    public void ReadInstructions()
-    {
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
     }
 
     public void Save()
@@ -128,8 +128,18 @@ public class ContentPanelController : AbstractScreenReader {
     {
         gameObject.SetActive(false);
         panelFotoidentificacao.SetActive(true);
-        
-        switch(type.text.ToLower())
+
+        if (type.text.Contains("<b>"))
+        {
+            var tmp = type.text;
+
+            tmp = tmp.Replace("<b>", "");
+            tmp = tmp.Replace("</b>", "");
+
+            type.text = tmp;
+        }
+
+        switch (type.text.ToLower())
         {
             case "pigmentação":
                 fotoidentificacaoController.RoundSettings(Parameters.PIGMENTACAO);
@@ -257,6 +267,8 @@ public class ContentPanelController : AbstractScreenReader {
         // wins the game
         PlayerPreferences.M004_FotoIdentificacao = true;
         WinImage.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_vitoria, LocalizationManager.instance.GetLozalization()));
 
         audioSource.PlayOneShot(victoryClip);
         

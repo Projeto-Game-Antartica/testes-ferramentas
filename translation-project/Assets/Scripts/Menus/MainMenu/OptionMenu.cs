@@ -6,28 +6,31 @@ using UnityEngine.UI;
 using TMPro;
 
 public class OptionMenu : AbstractScreenReader {
+    
+    public GameObject helpMenu;
 
     public Slider slider;
     public Toggle ScreenReaderToggle;
     public Toggle HighContrastToggle;
     public HighContrastSettings hcsettings;
 
-    private ReadableTexts readableTexts;
-
     void Start()
     {
-        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
         //TolkUtil.Instructions();
 
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_config, LocalizationManager.instance.GetLozalization()));
         
         //TolkUtil.Load();
 
         slider.Select();
+        
         ScreenReaderToggle.isOn = Parameters.ACCESSIBILITY;
+
+        Debug.Log("HC - B: " + Parameters.HIGH_CONTRAST);
+
         HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
 
-        Debug.Log(Parameters.HIGH_CONTRAST);
+        Debug.Log("HC: " + Parameters.HIGH_CONTRAST);
     }
 
     private void OnEnable()
@@ -54,9 +57,9 @@ public class OptionMenu : AbstractScreenReader {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F1) && !helpMenu.activeSelf)
         {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_optionmenu_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_config, LocalizationManager.instance.GetLozalization()));
         }
     }
 
@@ -77,9 +80,9 @@ public class OptionMenu : AbstractScreenReader {
         }
     }
 
-    public void SetHighContrastParameter()
+    public void SetHighContrastParameter(bool isOn)
     {
-        hcsettings.SetHighAccessibility();
+        hcsettings.SetHighAccessibility(isOn);
 
         if (Parameters.HIGH_CONTRAST)
             ReadText("Alto contraste ativado");

@@ -45,9 +45,9 @@ public class LibraseContraste : AbstractScreenReader {
         ReadText("Vídeo de libras fechado");
     }
 
-    public void SetHighContrastParameter()
+    public void SetHighContrastParameter(bool isOn)
     {
-        hcsettings.SetHighAccessibility();
+        hcsettings.SetHighAccessibility(isOn);
 
         if (Parameters.HIGH_CONTRAST)
             ReadText("Alto contraste ativado");

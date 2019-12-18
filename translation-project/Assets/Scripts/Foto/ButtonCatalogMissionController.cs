@@ -15,6 +15,12 @@ public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
     private Image whaleSprite;
     [SerializeField]
     private TMPro.TMP_InputField inputField;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip correctClip;
+    [SerializeField]
+    private AudioClip wrongClip;
 
     public Button nova_baleia;
     public GameObject[] buttons;
@@ -36,6 +42,7 @@ public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
 
         if (Parameters.WHALE_ID != -1 && whale_image.Equals(whaleController.getWhaleById(whale_id).image_path))
         {
+            audioSource.PlayOneShot(correctClip);
             GetComponent<Image>().color = Color.green;
             nova_baleia.interactable = true;
             inputField.text = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
@@ -45,6 +52,7 @@ public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
         }
         else
         {
+            audioSource.PlayOneShot(wrongClip);
             GetComponent<Image>().color = Color.red;
         }
     }

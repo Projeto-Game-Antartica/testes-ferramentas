@@ -71,6 +71,8 @@ public class FotoidentificationSceneManager : AbstractScreenReader
 
         confirmQuit.SetActive(true);
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
         confirmQuit.GetComponentInChildren<Button>().Select();

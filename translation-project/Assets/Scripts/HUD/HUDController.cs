@@ -72,6 +72,17 @@ public class HUDController : AbstractScreenReader {
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F3))
+        {
+            if (instructionInterface.activeSelf)
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_instrucao, LocalizationManager.instance.GetLozalization()));
+            else if (!instructionInterface.activeSelf && !inGameOption.activeSelf)
+                ReadShipAudioDescription();
+            else if (inGameOption.activeSelf)
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
+        }
+
+
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             if (!instructionInterface.activeSelf)
@@ -94,6 +105,7 @@ public class HUDController : AbstractScreenReader {
                 if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
                 {
                     ReadText("Menu de opções aberto");
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
                     inGameOption.SetActive(true);
                     inGameOption.GetComponentInChildren<Button>().Select();
                 }
@@ -238,8 +250,14 @@ public class HUDController : AbstractScreenReader {
     {
         ReadText(missionTitle.text);
         ReadText(missionDescription.text);
+
         Debug.Log(missionTitle.text);
         Debug.Log(missionDescription.text);
+    }
+
+    public void ReadShipAudioDescription()
+    {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio, LocalizationManager.instance.GetLozalization()));
     }
 
     public void ChangeMission(TextMeshProUGUI missionName)

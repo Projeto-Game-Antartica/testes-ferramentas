@@ -96,10 +96,15 @@ public class FotoidentificacaoController : AbstractScreenReader {
         whaleData = whaleController.getWhaleById(Parameters.WHALE_ID);
 
         
-        if (Input.GetKeyDown(KeyCode.F2))
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        //    Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.F3))
         {
-            ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
-            Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+            ReadCharacteristics(roundIndex);
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -107,6 +112,10 @@ public class FotoidentificacaoController : AbstractScreenReader {
             if (!buttonSelected)
             {
                 undentifiedButton.Select();
+
+                ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+                Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+
                 buttonSelected = true;
             }
             else
@@ -154,6 +163,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
     public IEnumerator EndGame()
     {
         LoseImage.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
         audioSource.PlayOneShot(loseClip);
 
@@ -268,7 +279,6 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public void SetOptionSprites(int roundIndex)
     {
-
         switch(roundIndex)
         {
             case Parameters.PIGMENTACAO:
@@ -278,6 +288,9 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 whale_images[3].GetComponent<Image>().sprite = LoadSprite(path_pigmentacao + "3");
                 whale_images[4].GetComponent<Image>().sprite = LoadSprite(path_pigmentacao + "4");
                 whale_images[5].GetComponent<Image>().sprite = LoadSprite(path_pigmentacao + "5");
+
+                ReadCharacteristics(Parameters.PIGMENTACAO);
+                Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
                 break;
             case Parameters.MANCHAS:
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_manchas + "mancha_esquerda");
@@ -288,6 +301,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 whale_images[5].GetComponent<Image>().sprite = LoadSprite(path_manchas + "mancha_centro_direita");
                 whale_images[6].GetComponent<Image>().sprite = LoadSprite(path_manchas + "mancha_amarelada");
                 whale_images[7].GetComponent<Image>().sprite = LoadSprite(path_manchas + "sem");
+
+                ReadCharacteristics(Parameters.MANCHAS);
                 break;
             case Parameters.RISCOS:
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_riscos + "risco_esquerda");
@@ -298,6 +313,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 whale_images[5].GetComponent<Image>().sprite = LoadSprite(path_riscos + "risco_centro_direita");
                 whale_images[6].GetComponent<Image>().sprite = LoadSprite(path_riscos + "risco");
                 whale_images[7].GetComponent<Image>().sprite = LoadSprite(path_riscos + "sem");
+
+                ReadCharacteristics(Parameters.RISCOS);
                 break;
             case Parameters.MARCAS:
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_marcas + "marca_esquerda");
@@ -308,19 +325,57 @@ public class FotoidentificacaoController : AbstractScreenReader {
                 whale_images[5].GetComponent<Image>().sprite = LoadSprite(path_marcas + "marca_centro_direita");
                 whale_images[6].GetComponent<Image>().sprite = LoadSprite(path_marcas + "marca");
                 whale_images[7].GetComponent<Image>().sprite = LoadSprite(path_marcas + "sem");
+
+                ReadCharacteristics(Parameters.MARCAS);
                 break;
             case Parameters.BORDA:
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_borda + "lisa");
-                whale_images[1].GetComponent<Image>().sprite = LoadSprite(path_borda + "poucoaspera");
+                //whale_images[1].GetComponent<Image>().sprite = LoadSprite(path_borda + "poucoaspera");
                 whale_images[2].GetComponent<Image>().sprite = LoadSprite(path_borda + "aspera");
+                ReadCharacteristics(Parameters.BORDA);
                 break;
             case Parameters.PONTAS:
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_pontas + "arredondada");
                 whale_images[1].GetComponent<Image>().sprite = LoadSprite(path_pontas + "aguda");
+
+                ReadCharacteristics(Parameters.PONTAS);
                 break;
             case Parameters.ENTALHE: 
                 whale_images[0].GetComponent<Image>().sprite = LoadSprite(path_entalhe + "v_final");
                 whale_images[1].GetComponent<Image>().sprite = LoadSprite(path_entalhe + "u_final");
+
+                ReadCharacteristics(Parameters.ENTALHE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ReadCharacteristics(int type)
+    {
+        switch(type)
+        {
+            case Parameters.PIGMENTACAO:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
+                Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.MANCHAS:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_mancha, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.RISCOS:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_riscos, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.MARCAS:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_marcas, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.BORDA:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_borda, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.PONTAS:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_ponta, LocalizationManager.instance.GetLozalization()));
+                break;
+            case Parameters.ENTALHE:
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_entalhe, LocalizationManager.instance.GetLozalization()));
                 break;
             default:
                 break;

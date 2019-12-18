@@ -157,6 +157,11 @@ public class MemoryManager : AbstractScreenReader {
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+        }
+
         //else
         //{
         //    confirmarButton.interactable = false;
@@ -173,7 +178,7 @@ public class MemoryManager : AbstractScreenReader {
             initializeCards();
         
         // start afther dicas.time seconds and repeat at dicas.repeatRate rate
-        InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
+        //InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
         
         StartCoroutine(showCards());
 
@@ -402,6 +407,8 @@ public class MemoryManager : AbstractScreenReader {
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+
             if (!PlayerPreferences.M004_TeiaAlimentar)
             {
                 WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
@@ -430,6 +437,8 @@ public class MemoryManager : AbstractScreenReader {
         {
             LoseImage.SetActive(true);
 
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+
             audioSource.PlayOneShot(loseAudio);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
@@ -445,6 +454,8 @@ public class MemoryManager : AbstractScreenReader {
     public void TryReturnToShip()
     {
         confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
         audioSource.PlayOneShot(avisoClip);
 

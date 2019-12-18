@@ -6,7 +6,12 @@ using TMPro;
 
 public class FontSizeText : AbstractScreenReader
 {
-
+    public void SetTextBold(bool isOn)
+    {
+        Parameters.BOLD = isOn;
+    }
+    
+    /*
     public static TextMeshProUGUI[] texts;
     //public RectTransform[] rectTransforms;
 
@@ -75,4 +80,6 @@ public class FontSizeText : AbstractScreenReader
         else
             ReadText("Texto em negrito desativado");
     }
+
+    */
 }

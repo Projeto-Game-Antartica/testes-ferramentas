@@ -139,10 +139,6 @@ public class CameraOverlayController : AbstractScreenReader {
             ReadText(NEGATIVE_FB);
         }
 
-
-        if (Parameters.ACCESSIBILITY)
-            panelContent.GetComponent<ContentPanelController>().ReadInstructions();
-
         buttonPanelContent.Select();
 
         ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
@@ -259,7 +255,7 @@ public class CameraOverlayController : AbstractScreenReader {
         // activate the content panel and speak the instructions (accessibility only)
         // set the button inactive
         panelContent.SetActive(true);
-        if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
+        //if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelController>().ReadInstructions();
         buttonPanelContent.Select();
 
         // set the screenshot on panel image

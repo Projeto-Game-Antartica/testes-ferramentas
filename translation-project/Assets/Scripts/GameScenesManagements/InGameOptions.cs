@@ -34,7 +34,11 @@ public class InGameOptions : AbstractScreenReader {
     {
         confirmQuit.SetActive(true);
         audioSource.PlayOneShot(warningClip);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
         ReadText("Tem certeza que deseja sair do jogo?");
+
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 

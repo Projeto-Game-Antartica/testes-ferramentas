@@ -21,6 +21,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public GameObject WinImage;
     public AudioClip victoryClip;
+    public AudioClip avisoClip;
     public AudioSource audioSource;
 
     public TailMissionSceneManager tailMissionSceneManager;
@@ -122,6 +123,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
         else
         {
             whaleController.getWhaleById(Parameters.WHALE_ID).whale_name = whaleNameInput.text;
+
+            audioSource.PlayOneShot(avisoClip);
+
             confirmFoto.SetActive(true);
 
             count++;

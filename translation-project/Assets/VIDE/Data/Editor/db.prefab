@@ -4,7 +4,8 @@
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 499132}
@@ -18,9 +19,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &499132
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -31,9 +33,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11416270
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146666}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -55,9 +58,9 @@ MonoBehaviour:
   S_playerDiags:
   - commentCount: 1
     s_comment:
-    - text: "Oi turista!\r\nVoc\xEA j\xE1 est\xE1 sabendo que a nossa miss\xE3o \xE9
+    - text: "Oi turista!\r \nVoc\xEA j\xE1 est\xE1 sabendo que a nossa miss\xE3o \xE9
         identificar as baleias jubarte, n\xE9?\r\nObrigado por voc\xEA estar disposto
-        a nos ajudar!"
+        a nos ajudar!\r"
       extraData: ExtraData
       inputSetIndex: 0
       outputNodeIndex: 1
@@ -68,7 +71,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 81
+        height: 80
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -78,12 +81,14 @@ MonoBehaviour:
       x: 4900
       y: 720
       width: 349
-      height: 181
+      height: 296
     pTag: 
-    expand: 0
+    expand: 1
     sprite: {fileID: 0}
-    vars: []
-    varKeys: []
+    vars:
+    - NPC
+    varKeys:
+    - ReadAudioDescription
     isPlayer: 0
   - commentCount: 2
     s_comment:
@@ -98,7 +103,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 29
+        height: 28
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -112,9 +117,9 @@ MonoBehaviour:
       outRect:
         serializedVersion: 2
         x: 302
-        y: 89
+        y: 88
         width: 30
-        height: 55
+        height: 54
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -124,12 +129,14 @@ MonoBehaviour:
       x: 5340
       y: 700
       width: 349
-      height: 185
+      height: 299
     pTag: 
-    expand: 0
+    expand: 1
     sprite: {fileID: 0}
-    vars: []
-    varKeys: []
+    vars:
+    - Player
+    varKeys:
+    - ReadAudioDescription
     isPlayer: 1
   - commentCount: 1
     s_comment:
@@ -146,7 +153,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 81
+        height: 80
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -156,7 +163,7 @@ MonoBehaviour:
       x: 5780
       y: 570
       width: 349
-      height: 181
+      height: 180
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -177,7 +184,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 68
+        height: 67
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -187,7 +194,7 @@ MonoBehaviour:
       x: 6220
       y: 580
       width: 349
-      height: 168
+      height: 167
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -200,7 +207,7 @@ MonoBehaviour:
         Os pesquisadores as utilizam para identificar baleias, fazer uma estimativa
         populacional, verificar o crescimento m\xE9dio anual e estudar o  movimento
         migrat\xF3rio desses animais. N\xE3o \xE9 incr\xEDvel voc\xEA poder contribuir
-        para todo este estudo! Quer aprender o processo?\r"
+        para todo este estudo! Quer aprender o processo?"
       extraData: ExtraData
       inputSetIndex: 4
       outputNodeIndex: 5
@@ -211,7 +218,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 159
+        height: 158
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -221,7 +228,7 @@ MonoBehaviour:
       x: 6660
       y: 590
       width: 349
-      height: 259
+      height: 258
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -274,7 +281,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 120
+        height: 119
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -284,7 +291,7 @@ MonoBehaviour:
       x: 7530
       y: 630
       width: 349
-      height: 220
+      height: 219
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -334,7 +341,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 42
+        height: 41
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -344,7 +351,7 @@ MonoBehaviour:
       x: 8440
       y: 660
       width: 349
-      height: 142
+      height: 141
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -361,10 +368,10 @@ MonoBehaviour:
       showmore: 0
       outRect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
+        x: 302
+        y: 59
+        width: 30
+        height: 28
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -402,17 +409,17 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 81
+        height: 80
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
     ID: 10
     rect:
       serializedVersion: 2
-      x: 5780
-      y: 900
+      x: 5750
+      y: 890
       width: 349
-      height: 181
+      height: 180
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -463,7 +470,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 42
+        height: 41
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -473,7 +480,7 @@ MonoBehaviour:
       x: 6660
       y: 970
       width: 349
-      height: 142
+      height: 141
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -494,7 +501,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 55
+        height: 54
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -504,7 +511,7 @@ MonoBehaviour:
       x: 7090
       y: 1010
       width: 349
-      height: 155
+      height: 154
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -525,7 +532,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 42
+        height: 41
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -535,7 +542,7 @@ MonoBehaviour:
       x: 7500
       y: 1050
       width: 349
-      height: 142
+      height: 141
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -555,7 +562,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 29
+        height: 28
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -565,7 +572,7 @@ MonoBehaviour:
       x: 7930
       y: 1070
       width: 349
-      height: 129
+      height: 128
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -586,7 +593,7 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 55
+        height: 54
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
@@ -596,7 +603,7 @@ MonoBehaviour:
       x: 8370
       y: 1070
       width: 349
-      height: 155
+      height: 154
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -605,286 +612,3 @@ MonoBehaviour:
     isPlayer: 0
   S_actionNodes: []
   S_selNodes: []
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outRect.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[0].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[1].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[1].outRect.y
-      value: 62
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[1].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[1].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[2].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[2].outRect.y
-      value: 82
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[2].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].s_comment.Array.data[2].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].rect.width
-      value: 322
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[0].rect.height
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outRect.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[0].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outRect.y
-      value: 62
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].s_comment.Array.data[1].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].rect.width
-      value: 322
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[1].rect.height
-      value: 84
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outRect.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[0].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[1].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[1].outRect.y
-      value: 62
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[1].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[1].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[2].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[2].outRect.y
-      value: 82
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[2].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].s_comment.Array.data[2].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].rect.width
-      value: 322
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[2].rect.height
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outRect.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[0].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[1].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[1].outRect.y
-      value: 62
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[1].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].s_comment.Array.data[1].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].rect.width
-      value: 322
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[3].rect.height
-      value: 95
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outRect.x
-      value: 287
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outRect.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outRect.width
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].s_comment.Array.data[0].outRect.height
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].rect.width
-      value: 322
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_playerDiags.Array.data[4].rect.height
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[0].rect.width
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[0].rect.height
-      value: 82
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[1].rect.width
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[1].rect.height
-      value: 82
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[2].rect.width
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[2].rect.height
-      value: 82
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[3].rect.height
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[4].rect.height
-      value: 145
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[5].rect.height
-      value: 93
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[6].rect.width
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[6].rect.height
-      value: 93
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[7].rect.height
-      value: 184
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[8].rect.width
-      value: 304
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: S_npcDiags.Array.data[8].rect.height
-      value: 82
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 146666}
-  m_IsPrefabAsset: 1

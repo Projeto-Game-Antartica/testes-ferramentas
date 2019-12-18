@@ -14,12 +14,16 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
 
     public AudioSource audioSource;
     public AudioClip closeClip;
+
+    public string audiodescriptionKey;
     
     // Use this for initialization
 	void Start ()
     {
         iniciarButton.gameObject.SetActive(true);
         voltarButton.gameObject.SetActive(false);
+
+        ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
         ReadInstructions();
 
@@ -32,13 +36,24 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
         {
             ReadInstructions();
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
+        }
+    }
+
+    private void OnEnable()
+    {
+        ReadInstructions();
+    }
 
     public void ReadInstructions()
     {
         ReadText(minijogoName.text);
         ReadText(title.text);
         ReadText(description.text);
+
         Debug.Log(minijogoName.text);
         Debug.Log(title.text);
         Debug.Log(description.text);

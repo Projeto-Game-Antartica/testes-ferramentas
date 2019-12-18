@@ -7,9 +7,21 @@ public class HelpMenu : AbstractScreenReader {
 
     public UnityEngine.UI.Button firstButton;
 
+    public GameObject optionMenu;
+
     private void Start()
     {
         firstButton.Select();
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_ajuda, LocalizationManager.instance.GetLozalization()));
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F1) && !optionMenu.activeSelf)
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_ajuda, LocalizationManager.instance.GetLozalization()));
+        }
     }
 
     public void ManualAluno()

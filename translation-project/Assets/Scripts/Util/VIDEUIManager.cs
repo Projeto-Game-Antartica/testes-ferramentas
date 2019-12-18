@@ -68,6 +68,7 @@ public class VIDEUIManager : AbstractScreenReader
 
     public LifeExpController lifeExpController;
     private bool flagEXP;
+    private bool flagRead;
 
     #endregion
 
@@ -242,9 +243,27 @@ public class VIDEUIManager : AbstractScreenReader
                 AddExperience();
                 mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
             }
+
+            if(data.extraVars.ContainsKey("ReadAudioDescription"))
+            {
+                ReadAudioDescription((string)data.extraVars["ReadAudioDescrpition"]);
+            }
         }
 
         //Note you could also use Unity's Navi system
+    }
+
+    public void ReadAudioDescription(string type)
+    {
+        if(flagRead)
+        {
+            if (type.Equals("Player"))
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_dialogo_player, LocalizationManager.instance.GetLozalization()));
+            else
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_dialogo_npc, LocalizationManager.instance.GetLozalization()));
+            flagRead = false;
+        }
+
     }
 
     public void AddExperience()
