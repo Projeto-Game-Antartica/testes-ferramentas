@@ -49,6 +49,7 @@ public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
             inputField.interactable = false;
 
             saveButton.interactable = true;
+            saveButton.Select();
         }
         else
         {

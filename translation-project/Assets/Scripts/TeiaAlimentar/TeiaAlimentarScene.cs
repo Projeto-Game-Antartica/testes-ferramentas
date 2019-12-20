@@ -34,7 +34,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
     public GameObject instructionInterface;
     public GameObject confirmQuit;
 
-    public MinijogosDicas dicas;
+    //public MinijogosDicas dicas;
 
     public AudioSource audioSource;
     public AudioClip loseClip;
@@ -158,10 +158,10 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         timer.text = "2:00";
     }
 
-    public void CallHintMethod()
-    {
-        dicas.StartHints();
-    }
+    //public void CallHintMethod()
+    //{
+    //    dicas.StartHints();
+    //}
 
     public void HandleTimer()
     {
@@ -220,7 +220,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
     {
         Debug.Log("Level Loaded");
         Debug.Log(scene.name);
-        Debug.Log(mode);
+    
         RestartTimer();
     }
 
