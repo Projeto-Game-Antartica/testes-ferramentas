@@ -151,7 +151,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public void CheckWhaleName()
     {
-
         string whale_name = whaleController.getWhaleById(Parameters.WHALE_ID).whale_name;
 
         Debug.Log(whale_name);

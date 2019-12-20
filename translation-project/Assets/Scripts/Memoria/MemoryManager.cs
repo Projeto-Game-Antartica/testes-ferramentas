@@ -60,7 +60,7 @@ public class MemoryManager : AbstractScreenReader {
     public GameObject BigImage2;
 
     // hint settings
-    public MinijogosDicas dicas;
+    //public MinijogosDicas dicas;
 
     public LifeExpController lifeExpController;
 
@@ -185,10 +185,10 @@ public class MemoryManager : AbstractScreenReader {
         resetButton.interactable = true;
     }
 
-    public void CallHintMethod()
-    {
-        dicas.StartHints();
-    }
+    //public void CallHintMethod()
+    //{
+    //    dicas.StartHints();
+    //}
 
     public void initializeCards()
     {
