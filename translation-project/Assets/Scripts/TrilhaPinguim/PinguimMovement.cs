@@ -8,6 +8,9 @@ public class PinguimMovement : MonoBehaviour {
 
     public PinguimController pinguimController;
 
+    public AudioSource audioSource;
+    public AudioClip pinguimFonteClip;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Object: " + gameObject.name + " Hitted: " + collision.name);
@@ -30,6 +33,7 @@ public class PinguimMovement : MonoBehaviour {
             pinguimController.adeliaFinished = true;
             pinguimController.pinguim_adelia.SetActive(false);
             peixe.gameObject.GetComponentsInChildren<SpriteRenderer>()[1].color = new Color(0.4575472f, 1f, 0.4743936f);
+            audioSource.PlayOneShot(pinguimFonteClip);
         }
 
         if (pinguim.Equals("pinguim_antartico") && peixe.name.Equals("peixe_antartico"))
@@ -37,6 +41,7 @@ public class PinguimMovement : MonoBehaviour {
             pinguimController.antarticoFinished = true;
             pinguimController.pinguim_antartico.SetActive(false);
             peixe.gameObject.GetComponentsInChildren<SpriteRenderer>()[1].color = new Color(0.4575472f, 1f, 0.4743936f);
+            audioSource.PlayOneShot(pinguimFonteClip);
         }
 
         if (pinguim.Equals("pinguim_papua") && peixe.name.Equals("peixe_papua"))
@@ -44,6 +49,7 @@ public class PinguimMovement : MonoBehaviour {
             pinguimController.papuaFinished = true;
             pinguimController.pinguim_papua.SetActive(false);
             peixe.gameObject.GetComponentsInChildren<SpriteRenderer>()[1].color = new Color(0.4575472f, 1f, 0.4743936f);
+            audioSource.PlayOneShot(pinguimFonteClip);
         }
 
         if(peixe.name.Contains("peixe"))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class EinsteinCard : AbstractScreenReader, ISelectHandler
 {
@@ -28,6 +29,7 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
     private bool _init = false;
 
     public GameObject proccessTextPrefab;
+    
 
     private void Start()
     {
@@ -117,10 +119,21 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
     {
         //Debug.Log(state);
 
+        string cardNumber = gameObject.name.Substring(0, gameObject.name.IndexOf(":"));
+        string text = GetComponentInChildren<TextMeshProUGUI>().text;
+
         if (state == VIRADA_BAIXO || state == VIRADA_CIMA)
         {
-            //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
-            ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+            if(added)
+            {
+                Debug.Log(cardNumber + " já adicionada: " + text);
+                ReadText(cardNumber + " já adicionada: " + text);
+            }
+            else
+            {
+                Debug.Log(cardNumber + " " + text);
+                ReadText(cardNumber + " " + text);
+            }
         }
         //else
         //{

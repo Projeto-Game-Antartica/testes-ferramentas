@@ -33,13 +33,24 @@ public class PinguimController : DragAndDropController {
     private const int LEFT   = 3;
     private const int RANDOM = 4;
 
+    public LifeExpController lifeExpController;
+
     public GameObject WinImage;
     public GameObject LoseImage;
+    public GameObject confirmQuit;
+
+    public AudioClip closeClip;
+    public AudioClip avisoClip;
+    public AudioClip victoryClip;
+    public AudioClip loseClip;
+    public AudioClip pinguimAndandoClip;
 
     public GameObject instruction_interface;
 
+    public Selectable firstItem;
+
     public Button resetButton;
-    public Button firstItem;
+    public Button audioButton;
 
     public void initializeGame()
     {
@@ -60,6 +71,8 @@ public class PinguimController : DragAndDropController {
         timer.fillAmount = 1f;
 
         resetButton.interactable = true;
+
+        firstItem.Select();
     }
 
     private void Update()
@@ -71,58 +84,75 @@ public class PinguimController : DragAndDropController {
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            instruction_interface.SetActive(false);
+            if (instruction_interface.activeSelf)
+            {
+                instruction_interface.SetActive(false);
+                audioSource.PlayOneShot(closeClip);
+            }
+            else
+            {
+                TryReturnToUshuaia();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            try
-            {
-                if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
-                {
-                    OnButtonClick();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
-            }
-        }
 
-        if (timer.fillAmount <= 0f)
-            LoseImage.SetActive(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            try
+            if (!isPositioning)
             {
-                DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
-                currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
-
-                desc.item = currentItem;
-                desc.sourceCell = sourceCell;
-                desc.destinationCell = currentCell;
-                currentCell.SendRequest(desc);                      // Send drop request
-                StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
-
-                if (desc.permission == true)
+                try
                 {
-                    currentCell.PlaceItem(currentItem);
+                    if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
+                    {
+                        OnButtonClick();
+                        isPositioning = true;
+                    }
                 }
-
-                currentCell.UpdateMyItem();
-                currentCell.UpdateBackgroundState();
-                sourceCell.UpdateMyItem();
-                sourceCell.UpdateBackgroundState();
-
-                // go to item
-                //firstItem.GetComponent<Selectable>().Select();
-
-                //ResetConditions();
+                catch (Exception e)
+                {
+                    Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                try
+                {
+                    DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
+                    currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
+
+                    desc.item = currentItem;
+                    desc.sourceCell = sourceCell;
+                    desc.destinationCell = currentCell;
+                    currentCell.SendRequest(desc);                      // Send drop request
+                    StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
+
+                    if (desc.permission == true)
+                    {
+                        currentCell.PlaceItem(currentItem);
+                    }
+
+                    currentCell.UpdateMyItem();
+                    currentCell.UpdateBackgroundState();
+                    sourceCell.UpdateMyItem();
+                    sourceCell.UpdateBackgroundState();
+
+                    // go to item
+                    //firstItem.GetComponent<Selectable>().Select();
+
+                    ResetConditions();
+                    desc.item.ResetConditions();
+
+                    isPositioning = false;
+                    firstItem.Select();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                }
             }
         }
 
@@ -155,6 +185,11 @@ public class PinguimController : DragAndDropController {
             }
         }
 
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            audioButton.Select();
+        }
+
         if (Input.GetKeyDown(KeyCode.F6))
         {
             isCell = !isCell;
@@ -173,10 +208,26 @@ public class PinguimController : DragAndDropController {
             }
         }
 
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+            //ReadText("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
+            //Debug.Log("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            // audiodescricao
+        }
+
+        // loses the game
+        if (timer.fillAmount <= 0f)
+            StartCoroutine(EndGame(false));
+
+        // wins the game
         if (adeliaFinished && antarticoFinished && papuaFinished)
         {
-            WinImage.SetActive(true);
-            StartCoroutine(ReturnToUshuaiaCoroutine());
+            StartCoroutine(EndGame(true));
         }
     }
 
@@ -225,6 +276,7 @@ public class PinguimController : DragAndDropController {
     
     public IEnumerator GoCoroutine()
     {
+        audioSource.PlayOneShot(pinguimAndandoClip);
         foreach (GameObject g in draggedItems)
         {
             CountTime(0.01f);  
@@ -273,6 +325,9 @@ public class PinguimController : DragAndDropController {
             pinguim_antarticoAnimator.SetBool("isMoving", false);
         if (pinguim_papua.activeSelf)
             pinguim_papuaAnimator.SetBool("isMoving", false);
+
+        if (audioSource.isPlaying)
+            audioSource.Stop();
     }
 
     public void goUp()
@@ -457,16 +512,22 @@ public class PinguimController : DragAndDropController {
         switch (name)
         {
             case "adelia":
+                Debug.Log("Pinguim Adelia selecionado");
+                ReadText("Pinguim Adelia selecionado");
                 pinguim_adelia.transform.GetChild(0).gameObject.SetActive(true);
                 pinguim_antartico.transform.GetChild(0).gameObject.SetActive(false);
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(false);
                 break;
             case "antartico":
+                Debug.Log("Pinguim Antártico selecionado");
+                ReadText("Pinguim Antártico selecionado");
                 pinguim_adelia.transform.GetChild(0).gameObject.SetActive(false);
                 pinguim_antartico.transform.GetChild(0).gameObject.SetActive(true);
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(false);
                 break;
             case "papua":
+                Debug.Log("Pinguim Papua selecionado");
+                ReadText("Pinguim Papua selecionado");
                 pinguim_adelia.transform.GetChild(0).gameObject.SetActive(false);
                 pinguim_antartico.transform.GetChild(0).gameObject.SetActive(false);
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(true);
@@ -504,6 +565,54 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.GetComponent<SpriteRenderer>().flipX = left;
                 break;
         }
+    }
+
+    public IEnumerator EndGame(bool win)
+    {
+        if (win)
+        {
+            WinImage.SetActive(true);
+            //WinImage.GetComponentInChildren<Button>().Select();
+
+            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+            
+            audioSource.PlayOneShot(victoryClip);
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            ReadText("");
+
+            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+            lifeExpController.AddEXP(0.0002f); // ganhou o item
+        }
+        else
+        {
+            LoseImage.SetActive(true);
+
+            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+
+            audioSource.PlayOneShot(loseClip);
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+            resetButton.Select();
+            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+        }
+
+        StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+    }
+
+    public void TryReturnToUshuaia()
+    {
+        confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        audioSource.PlayOneShot(avisoClip);
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        confirmQuit.GetComponentInChildren<Button>().Select();
     }
 
     public void ReturnToUshuaia()
