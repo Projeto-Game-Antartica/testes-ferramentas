@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -9,6 +9,14 @@ using UnityEngine.SceneManagement;
 
 public class Homeostase : AbstractCardManager
 {
+    public AudioSource audioSource;
+
+    public AudioClip closeClip;
+    public AudioClip avisoClip;
+    public AudioClip victoryClip;
+    public AudioClip loseClip;
+    public AudioClip selectClip;
+
     public Image kcalBar;
 
     public Transform alimentos;
@@ -28,29 +36,79 @@ public class Homeostase : AbstractCardManager
     private List<GameObject> alimentosCestaList;
 
     public Button satisfeitoButton;
-
     public Button resetButton;
     public Button backButton;
+    public Button audioButton;
+    public Button cestaButton;
+
+    private bool isOnLikeButton;
+
     public GameObject confirmQuit;
 
     public GameObject instruction_interface;
 
+    public LifeExpController lifeExpController;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             instruction_interface.SetActive(true);
         }
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            instruction_interface.SetActive(false);
+            if (instruction_interface.activeSelf)
+            {
+                audioSource.PlayOneShot(closeClip);
+                instruction_interface.SetActive(false);
+            }
+            else
+            {
+                TryReturnToCasaUshuaia();
+            }
+        }
+
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            audioButton.Select();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            if (!isOnLikeButton)
+            {
+                likeButton.Select();
+                isOnLikeButton = true;
+            }
+            else
+            {
+                cestaButton.Select();
+                isOnLikeButton = false;
+            }
+        }
+
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            // audiodescricao
+        }
+
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        {
+            ReadCard(cardIndex);
         }
     }
 
     // initialize after button click on instruction
     public void Initialize()
     {
+        isOnLikeButton = true;
+
         alimentosCestaList = new List<GameObject>();
 
         cardIndex = 0;
@@ -80,10 +138,14 @@ public class Homeostase : AbstractCardManager
 
         resetButton.interactable = true;
         backButton.interactable = true;
+
+        likeButton.Select();
     }
 
     override public void CheckLike()
     {
+        audioSource.PlayOneShot(selectClip);
+
         // do something
         Transform cardImage = currentImage.GetComponentInChildren<Image>().transform;
 
@@ -107,7 +169,7 @@ public class Homeostase : AbstractCardManager
                 alimentosCesta[i].GetComponentInChildren<Button>().interactable = true;
                 alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = true;
                 alimentosCesta[i].gameObject.name = currentImage.name;
-
+                
                 //Debug.Log("adicionado na pos: " + i);
                 // exit for loop
                 i = alimentosCestaIndex + 1;
@@ -116,12 +178,18 @@ public class Homeostase : AbstractCardManager
 
         CheckCalories(currentImage.name, true);
         NextCard();
+
+        likeButton.Select();
     }
 
     override public void CheckDislike()
     {
+        audioSource.PlayOneShot(selectClip);
+
         // do something else
         NextCard();
+
+        likeButton.Select();
     }
 
     public void CheckCalories(string cardName, bool add)
@@ -278,10 +346,14 @@ public class Homeostase : AbstractCardManager
 
     public void RemoverAlimentoCesta(int index)
     {
+        // som de descarte
+        //audioSource.PlayOneShot(descarteClip);
+
         alimentosCesta[index].GetComponentsInChildren<Image>()[1].sprite = null;
         alimentosCesta[index].GetComponentsInChildren<Image>()[1].color = new Color(1, 1, 1, 0);
         alimentosCesta[index].GetComponentInChildren<Button>().interactable = false;
         alimentosCesta[index].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
+        alimentosCesta[index].gameObject.name = "alimentoItem " + index;
 
         try
         {
@@ -289,7 +361,7 @@ public class Homeostase : AbstractCardManager
             var result = alimentosCestaList.Find(x => x.name.Contains(alimentosCesta[index].gameObject.name));
             Debug.Log("resultado da lista: " + result.name);
             result.GetComponent<Image>().enabled = false;
-
+            
             CheckCalories(result.name, false);
 
             alimentosCestaList.Remove(result);
@@ -310,13 +382,19 @@ public class Homeostase : AbstractCardManager
         //ShiftArray(index);
     }
 
-    public void ShiftArray(int index)
+    public void ReadCard(int index)
     {
-        for (int i = index - 1; i < alimentosCestaIndex - 1; i--)
-        {
-            alimentosCesta[i] = alimentosCesta[i + 1];
-        }
+        Debug.Log(currentImage.name);
+        ReadText(currentImage.name);
     }
+
+    //public void ShiftArray(int index)
+    //{
+    //    for (int i = index - 1; i < alimentosCestaIndex - 1; i--)
+    //    {
+    //        alimentosCesta[i] = alimentosCesta[i + 1];
+    //    }
+    //}
 
     public void ResetScene()
     {
@@ -326,5 +404,25 @@ public class Homeostase : AbstractCardManager
     public void ReturnToUshuaia()
     {
         SceneManager.LoadScene(ScenesNames.M002CasaUshuaia);
+    }
+    
+    public IEnumerator ReturnToCasaUshuaiaCoroutine()
+    {
+        yield return new WaitForSeconds(4f);
+
+        SceneManager.LoadScene(ScenesNames.M002CasaUshuaia);
+    }
+
+    public void TryReturnToCasaUshuaia()
+    {
+        audioSource.PlayOneShot(avisoClip);
+
+        confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
+        confirmQuit.GetComponentInChildren<Button>().Select();
     }
 }

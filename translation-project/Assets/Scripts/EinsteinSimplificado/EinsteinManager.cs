@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,15 +22,22 @@ public class EinsteinManager : AbstractScreenReader
     public Button audioButton;
     public Button confirmarButton;
     public Button cancelButton;
-
+    
     public int[] index;
 
     private bool init;
 
     private AudioSource audioSource;
 
+    public GameObject confirmQuit;
+
     public AudioClip correctAudio;
     public AudioClip wrongAudio;
+    public AudioClip closeClip;
+    public AudioClip avisoClip;
+    public AudioClip selectClip;
+    public AudioClip victoryClip;
+    public AudioClip loseClip;
 
     private List<int> c;
 
@@ -70,12 +77,14 @@ public class EinsteinManager : AbstractScreenReader
 
     private int attempts = 3;
     private int tries = 0;
+    private bool isOnCards;
 
     public TMPro.TextMeshProUGUI attemptsText;
 
     private void Start()
     {
         resetButton.interactable = false;
+        isOnCards = false;
 
         init = false;
 
@@ -109,7 +118,16 @@ public class EinsteinManager : AbstractScreenReader
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            cards[0].GetComponent<Button>().Select();
+            if (!isOnCards)
+            {
+                cards[0].GetComponent<Button>().Select();
+                isOnCards = true;
+            }
+            else
+            {
+                processDropDown.Select();
+                isOnCards = false;
+            }
         }
 
         if (c != null && c.Count >= GetRemainingOptions(GetDropDownValue()))
@@ -137,13 +155,40 @@ public class EinsteinManager : AbstractScreenReader
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            instruction_interface.SetActive(false);
+            if (instruction_interface.activeSelf)
+            {
+                audioSource.PlayOneShot(closeClip);
+                instruction_interface.SetActive(false);
+            }
+            else
+            {
+                TryReturnToUshuaia();
+            }
+        }
+
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            audioButton.Select();
+        }
+
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            // audiodescricao
+        }
+
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        {
         }
 
         if (remainingOptionsGreen == 0 && remainingOptionsBlue == 0 && remainingOptionsOrange == 0 
             && remainingOptionsPurple == 0 && remainingOptionsRed == 0)
         {
-            EndGame(true);
+            StartCoroutine(EndGame(true));
         }
     }
 
@@ -193,7 +238,8 @@ public class EinsteinManager : AbstractScreenReader
         if (!init)
         {
             init = true;
-            cards[0].GetComponent<Button>().Select();
+            //cards[0].GetComponent<Button>().Select();
+            processDropDown.Select();
             StartCoroutine(ReadCards());
         }
     }
@@ -216,11 +262,17 @@ public class EinsteinManager : AbstractScreenReader
             if (card.state == EinsteinCard.VIRADA_CIMA && !card.added)
             {
                 Debug.Log("carta adicionada >> " + cards[i]);
+
+                audioSource.PlayOneShot(selectClip);
+
                 c.Add(i);
                 //Debug.Log("após adicionar carta >> " + c.Count);
 
                 card.BGImage.color = GetColor(GetDropDownValue());
                 card.added = true;
+
+                if (c.Count == GetRemainingOptions(GetDropDownValue()))
+                    confirmarButton.Select();
             }
         }
 
@@ -320,8 +372,15 @@ public class EinsteinManager : AbstractScreenReader
             }
             else
             {
-                Debug.Log("wrong >> " + card);
+                // card#: content
+                string wrongCard = card.name.Substring(0, card.name.IndexOf(":")) + ": " + card.GetComponentInChildren<TextMeshProUGUI>().text;
+                
+                //Debug.Log("wrong >> " + card);
+                Debug.Log("Carta selecionada errada: " + wrongCard);
+                ReadText("Carta selecionada errada: " + wrongCard);
+
                 StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.wrong));
+
                 wrong = true;
                 // wrong answer, can add card to the list again
                 card.added = false;
@@ -333,26 +392,42 @@ public class EinsteinManager : AbstractScreenReader
 
         if (wrong)
         {
+            audioSource.PlayOneShot(wrongAudio);
             tries++;
             attemptsText.text = "Tentativas restantes: " + tries + "/" + attempts;
+
+            ReadText("Tentativa " + tries + " de " + attempts);
+            Debug.Log("Tentativa " + tries + " de " + attempts);
         }
+        else
+            audioSource.PlayOneShot(correctAudio);
 
         // loses the game
         if (tries > attempts)
         {
-            EndGame(false);
+            StartCoroutine(EndGame(false));
         }
 
         processDropDown.interactable = true;
         return correct;
     }
 
-    public void EndGame(bool win)
+    public IEnumerator EndGame(bool win)
     {
         if (win)
         {
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
+
+            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            if (!PlayerPreferences.M004_TeiaAlimentar)
+            {
+                audioSource.PlayOneShot(victoryClip);
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
+            }
 
             lifeExpController.AddEXP(0.001f); // finalizou o minijogo
             lifeExpController.AddEXP(0.0002f); // ganhou o item
@@ -360,10 +435,19 @@ public class EinsteinManager : AbstractScreenReader
         else
         {
             LoseImage.SetActive(true);
+
+            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+
+            audioSource.PlayOneShot(loseClip);
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+            resetButton.Select();
             lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
 
-        StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o ushuaia perdendo ou ganhando o minijogo
     }
 
     public void ReturnToUshuaia()
@@ -560,7 +644,38 @@ public class EinsteinManager : AbstractScreenReader
         EinsteinCard.DO_NOT = false;
 
         processDropDown.GetComponent<Image>().color = GetColor(dropdownValue);
-    }   
+
+        Debug.Log(processDropDown.options[processDropDown.value].text);
+
+        foreach (GameObject ec in cards)
+        {
+            if (!ec.GetComponent<EinsteinCard>().added)
+            {
+                ec.GetComponent<Button>().Select();
+                Debug.Log(ec.name + " selected");
+                isOnCards = true;
+                break;
+            }
+        }
+    }
+
+    public void ReadDropDown(TextMeshProUGUI option)
+    {
+        Debug.Log(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
+    }
+
+    public void TryReturnToUshuaia()
+    {
+        audioSource.PlayOneShot(avisoClip);
+
+        confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
+        confirmQuit.GetComponentInChildren<Button>().Select();
+    }
 
     public IEnumerator ReturnToUshuaiaCoroutine()
     {
