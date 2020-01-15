@@ -6,7 +6,8 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EinsteinManager : AbstractScreenReader
+
+public class EinsteinVegManager : AbstractScreenReader
 {
     private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
@@ -73,6 +74,16 @@ public class EinsteinManager : AbstractScreenReader
 
     public TMPro.TextMeshProUGUI attemptsText;
 
+    //My code -----
+
+    public enum TokensTypes {Briofitas = 1, Liquens = 2, Algas = 3, Angiospermas = 4}
+
+    public String[] tokensText = new String[20];
+    public TokensTypes[] tokensType = new TokensTypes[20];
+
+
+
+
     private void Start()
     {
         resetButton.interactable = false;
@@ -96,7 +107,7 @@ public class EinsteinManager : AbstractScreenReader
         //    c = new List<int>();
         //}
 
-        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !EinsteinCard.DO_NOT)
+        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !EinsteinVegCard.DO_NOT)
         {
             //Debug.Log("Checando cartas....");
             checkCards();
@@ -114,7 +125,7 @@ public class EinsteinManager : AbstractScreenReader
 
         if (c != null && c.Count >= GetRemainingOptions(GetDropDownValue()))
         {
-            EinsteinCard.DO_NOT = true;
+            EinsteinVegCard.DO_NOT = true;
             confirmarButton.interactable = true;
             cancelButton.interactable = true;
             //Debug.Log(c.Count);
@@ -169,33 +180,45 @@ public class EinsteinManager : AbstractScreenReader
         dicas.StartHints();
     }
 
-    public void initializeCards()
-    {
-        for (int i = 1; i < cards.Length+1; i++)
-        {
-            bool test = false;
-            int choice = 0;
-            while (!test)
-            {
-                choice = UnityEngine.Random.Range(0, cards.Length);
-                test = !(cards[choice].GetComponent<EinsteinCard>().initialized);
-            }
-
-            cards[choice].GetComponent<EinsteinCard>().cardValue = i;
-            cards[choice].GetComponent<EinsteinCard>().initialized = true;
-
-
-            //Debug.Log(choice);
-
-            cards[choice].GetComponent<EinsteinCard>().setupGraphics();
+    public void initializeCards() {
+        for (int i = 0; i < cards.Length; i++) {
+            cards[i].GetComponent<EinsteinVegCard>().cardValue = i;
+            cards[i].GetComponent<EinsteinVegCard>().cardText = tokensText[i];
+            cards[i].GetComponent<EinsteinVegCard>().initialized = true;
+            cards[i].GetComponent<EinsteinVegCard>().cardBack = getCardFace(i);
+            cards[i].GetComponent<EinsteinVegCard>().cardFace = getCardFace(i);
+            cards[i].GetComponent<EinsteinVegCard>().setupGraphics();
         }
+
+        init = true;
+        cards[0].GetComponent<Button>().Select();
+        StartCoroutine(ReadCards());
+
+        // for (int i = 1; i < cards.Length+1; i++)
+        // {
+        //     bool test = false;
+        //     int choice = 0;
+        //     while (!test)
+        //     {
+        //         choice = UnityEngine.Random.Range(0, cards.Length);
+        //         test = !(cards[choice].GetComponent<EinsteinVegCard>().initialized);
+        //     }
+
+        //     cards[choice].GetComponent<EinsteinVegCard>().cardValue = i;
+        //     cards[choice].GetComponent<EinsteinVegCard>().initialized = true;
+
+
+        //     //Debug.Log(choice);
+
+        //     cards[choice].GetComponent<EinsteinVegCard>().setupGraphics();
+        // }
         
-        if (!init)
-        {
-            init = true;
-            cards[0].GetComponent<Button>().Select();
-            StartCoroutine(ReadCards());
-        }
+        // if (!init)
+        // {
+        //     init = true;
+        //     cards[0].GetComponent<Button>().Select();
+        //     StartCoroutine(ReadCards());
+        // }
     }
 
     public Sprite getCardBack()
@@ -205,15 +228,15 @@ public class EinsteinManager : AbstractScreenReader
 
     public Sprite getCardFace(int i)
     {
-        return cardFace[i - 1];
+        return cardFace[i];
     }
 
     void checkCards()
     {
         for (int i = 0; i < cards.Length; i++)
         {
-            var card = cards[i].GetComponent<EinsteinCard>();
-            if (card.state == EinsteinCard.VIRADA_CIMA && !card.added)
+            var card = cards[i].GetComponent<EinsteinVegCard>();
+            if (card.state == EinsteinVegCard.VIRADA_CIMA && !card.added)
             {
                 Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
@@ -241,10 +264,10 @@ public class EinsteinManager : AbstractScreenReader
         
         for (int i = 0; i < c.Count; i++)
         {
-            cards[c[i]].GetComponent<EinsteinCard>().state = EinsteinCard.VIRADA_BAIXO;
-            cards[c[i]].GetComponent<EinsteinCard>().turnCardDown();
-            cards[c[i]].GetComponent<EinsteinCard>().BGImage.color = GetColor(-1);
-            cards[c[i]].GetComponent<EinsteinCard>().added = false;
+            cards[c[i]].GetComponent<EinsteinVegCard>().state = EinsteinCard.VIRADA_BAIXO;
+            cards[c[i]].GetComponent<EinsteinVegCard>().turnCardDown();
+            cards[c[i]].GetComponent<EinsteinVegCard>().BGImage.color = GetColor(-1);
+            cards[c[i]].GetComponent<EinsteinVegCard>().added = false;
         }
 
         c.Clear();
@@ -289,7 +312,7 @@ public class EinsteinManager : AbstractScreenReader
         
         for (int i = 0; i < GetRemainingOptions(GetDropDownValue()); i++)
         {
-            cards[c[i]].GetComponent<EinsteinCard>().falseCheck();
+            cards[c[i]].GetComponent<EinsteinVegCard>().falseCheck();
         }
 
         Debug.Log("correct answers >> " + correct);
@@ -309,7 +332,7 @@ public class EinsteinManager : AbstractScreenReader
 
         for (int i = 0; i < lenght; i++)
         {
-            var card = cards[c[i]].GetComponent<EinsteinCard>();
+            var card = cards[c[i]].GetComponent<EinsteinVegCard>();
             x = 0;
             if (card.name.Contains(cardType))
             {
@@ -557,7 +580,7 @@ public class EinsteinManager : AbstractScreenReader
 
     public void ChangeDropDownColor(int dropdownValue)
     {
-        EinsteinCard.DO_NOT = false;
+        EinsteinVegCard.DO_NOT = false;
 
         processDropDown.GetComponent<Image>().color = GetColor(dropdownValue);
     }   

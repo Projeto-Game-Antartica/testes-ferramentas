@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class EinsteinCard : AbstractScreenReader, ISelectHandler
+public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
 {
 
     public const int VIRADA_BAIXO = 0;
@@ -16,12 +16,14 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
     public int state { get; set; }
     public int cardValue { get; set; }
+
+    public string cardText {get; set;}
     public bool initialized { get; set; }
 
-    private Sprite cardBack;
+    public Sprite cardBack;
     public Sprite cardFace;
 
-    public EinsteinManager einsteinManager;
+    public EinsteinVegManager einsteinManager;
 
     public Image BGImage;
 
@@ -44,13 +46,32 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         flipCard();
     }
 
-    public void setupGraphics()
-    {
-        //cardBack = einsteinManager.getCardBack();
-        cardBack = einsteinManager.getCardFace(cardValue);
-        cardFace = einsteinManager.getCardFace(cardValue);
+    // public void setupGraphics()
+    // {
+    //     //cardBack = einsteinManager.getCardBack();
+    //     cardBack = einsteinManager.getCardFace(cardValue);
+    //     cardFace = einsteinManager.getCardFace(cardValue);
 
-        CreateText(cardFace.name);
+    //     CreateText(cardFace.name);
+
+    //     GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+    //     gameObject.name += ": " + cardFace.name;
+
+    //     flipCard();
+
+    //     _init = true;
+    // }
+
+    public void setupGraphics() {
+        //cardBack = einsteinManager.getCardBack();
+        //cardBack = einsteinManager.getCardFace(cardValue);
+        //cardFace = einsteinManager.getCardFace(cardValue);
+        
+        GameObject text = Instantiate(proccessTextPrefab);
+        text.transform.SetParent(transform, false);
+        text.GetComponent<TMPro.TextMeshProUGUI>().text = cardText;
+
 
         GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
@@ -74,7 +95,7 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         }
         else if (state == VIRADA_CIMA && !DO_NOT)
         {
-            GetComponent<Image>().sprite = cardFace;
+            //GetComponent<Image>().sprite = cardFace;123
 
             //if (_init)
             //{
@@ -107,7 +128,7 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         }
         else if (state == VIRADA_CIMA)
         {
-            GetComponent<Image>().sprite = cardFace;
+            //GetComponent<Image>().sprite = cardFace; 123
         }
 
         DO_NOT = false;
@@ -149,6 +170,6 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         GameObject text = Instantiate(proccessTextPrefab);
         text.transform.SetParent(transform, false);
 
-        text.GetComponent<TMPro.TextMeshProUGUI>().text = EinsteinCardContent.GetText(cardName);
+        text.GetComponent<TMPro.TextMeshProUGUI>().text = EinsteinVegCardContent.GetText(cardName);
     }
 }

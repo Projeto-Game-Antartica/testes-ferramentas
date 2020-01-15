@@ -254,8 +254,7 @@ public class Vegetacao : AbstractCardManager
 
     public void ResetScene()
     {
-        SceneManager.LoadScene(ScenesNames.M010TiposVegetacaoScene);
-        //precisa descobrir de onde isso
+        //SceneManager.LoadScene(ScenesNames.M010TiposVegetacaoScene);
     }
 
     public void ReturnToUshuaia()
