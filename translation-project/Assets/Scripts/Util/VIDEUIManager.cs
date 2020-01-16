@@ -70,6 +70,14 @@ public class VIDEUIManager : AbstractScreenReader
     private bool flagEXP;
     private bool flagRead;
 
+    public GameObject listaItem;
+
+    public Image ticket_pt1;
+    public Image ticket_pt2;
+    public Image ticket_pt3;
+    public Image ticket;
+    public Button close;
+
     #endregion
 
     #region MAIN
@@ -241,7 +249,68 @@ public class VIDEUIManager : AbstractScreenReader
             if(data.extraVars.ContainsKey("AddEXP"))
             {
                 AddExperience();
+
+                string dialogueName = (string)data.extraVars["AddEXP"];
+
+                Debug.Log(dialogueName);
+
+                // set the dialogue to read (whitout puzzle)
+                if (PlayerPrefs.HasKey(dialogueName))
+                {
+                    Debug.Log(dialogueName + " atualizado.");
+                    PlayerPrefs.SetInt(dialogueName, 1);
+                }
+                else
+                {
+                    Debug.Log("Player prefs dont have key >> " + dialogueName);
+                }
+
+                // the tird component on hierarchy is the dialogue/minijogo balloon
                 mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
+            }
+
+            if(data.extraVars.ContainsKey("OpenLista"))
+            {
+                listaItem.SetActive(true);
+            }
+
+            if(data.extraVars.ContainsKey("Ticket"))
+            {
+                close.gameObject.SetActive(true);
+                close.Select();
+
+                switch((string)data.extraVars["Ticket"])
+                {
+                    case "pt1":
+                        ticket_pt1.gameObject.SetActive(true);
+
+                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                            ticket_pt2.gameObject.SetActive(true);
+
+                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                            ticket_pt3.gameObject.SetActive(true);
+                        break;
+                    case "pt2":
+                        ticket_pt2.gameObject.SetActive(true);
+                        
+                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                            ticket_pt1.gameObject.SetActive(true);
+
+                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                            ticket_pt3.gameObject.SetActive(true);
+                        break;
+                    case "inteiro":
+                        ticket_pt3.gameObject.SetActive(true);
+
+                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                            ticket_pt1.gameObject.SetActive(true);
+
+                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                            ticket_pt2.gameObject.SetActive(true);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if(data.extraVars.ContainsKey("ReadAudioDescription"))
@@ -273,9 +342,9 @@ public class VIDEUIManager : AbstractScreenReader
             audioSource.PlayOneShot(xpClip);
 
             StartCoroutine(HandlexpIcon());
+            
+            lifeExpController.AddEXP(0.02f);
 
-            //lifeExpController.AddEXP(0.0005f);
-            lifeExpController.AddEXP(0.05f);
             Debug.Log("exp gained");
             flagEXP = false;
         }

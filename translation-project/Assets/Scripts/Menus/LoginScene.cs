@@ -1,17 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class LoginScene : AbstractScreenReader {
 
-    public UnityEngine.UI.Button firstButton;
+    public Button criarContaButton;
+    public Button facebookButton;
+    public Button emailButton;
+    
+    public GameObject emailLoginHolder;
 
-    public AudioClip selectClip;
+    [SerializeField]
+    private TMP_InputField emailInput;
+    [SerializeField]
+    private TMP_InputField passwordInput;
+
 
     private void Start()
     {
-        firstButton.Select();
+        criarContaButton.Select();
     }
 
     public void CreateAccount()
@@ -27,20 +37,38 @@ public class LoginScene : AbstractScreenReader {
 
     public void LoginEmail()
     {
-        // TO DO
-        SceneManager.LoadScene(ScenesNames.Menu);
+        emailLoginHolder.SetActive(true);
+        //SetButtonsInteractable(false);
     }
 
-    public void PlaySelectionAudio()
+    public void TryLoginEmail()
     {
-        if (GetComponent<AudioSource>() == null)
+        Debug.Log("trying to log in...");
+
+        if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
+            StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, LoginSuccessfull));
+        else
+            Debug.Log("Wrong Credentials");
+    }
+
+    public void LoginSuccessfull(bool success)
+    {
+        Debug.Log(success);
+        if (success)
         {
-            gameObject.AddComponent<AudioSource>();
-
-            UnityEngine.Audio.AudioMixer audioMixer = Resources.Load("Audio/AudioMixer") as UnityEngine.Audio.AudioMixer;
-            GetComponent<AudioSource>().outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[0];
+            Debug.Log("Log in successful");
+            SceneManager.LoadScene(ScenesNames.Menu);
         }
+        else
+        {
+            Debug.Log("Wrong Credentials");
+        }
+    }
 
-        PlaySelectAudio(GetComponent<AudioSource>(), selectClip);
+    public void SetButtonsInteractable(bool value)
+    {
+        criarContaButton.interactable = value;
+        emailButton.interactable = value;
+        facebookButton.interactable = value;
     }
 }

@@ -33,6 +33,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
     private int count = 0;
 
     private bool onWhaleCatalog = false;
+
+    public LifeExpController lifeExpController;
     
     private void Start()
     {
@@ -188,6 +190,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public IEnumerator FinishMissionCoroutine()
     {
         WinImage.SetActive(true);
+
+        lifeExpController.AddEXP(PlayerPreferences.XPwinMission); // finalizou a missão
+        lifeExpController.AddHP(PlayerPreferences.HPwinMission); 
 
         audioSource.PlayOneShot(victoryClip);
 

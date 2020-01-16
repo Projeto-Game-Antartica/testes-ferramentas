@@ -12,6 +12,14 @@ public class PinguimController : DragAndDropController {
     public GameObject pinguim_antartico;
     public GameObject pinguim_papua;
 
+    public Button adeliaButton;
+    public Button antarticoButton;
+    public Button papuaButton;
+
+    public Image adeliaIcon;
+    public Image antarticoIcon;
+    public Image papuaIcon;
+
     private Animator pinguim_adeliaAnimator;
     private Animator pinguim_antarticoAnimator;
     private Animator pinguim_papuaAnimator;
@@ -287,22 +295,22 @@ public class PinguimController : DragAndDropController {
 
             switch(g.name)
             {
-                case "down-item":
+                case "baixo":
                     Debug.Log("Moving down");
                     goDown(); // the selected go in this direction
                     goRandomDirection(); // the others go in random direction
                     break;
-                case "up-item":
+                case "cima":
                     Debug.Log("Moving up");
                     goUp(); // the selected go in this direction
                     goRandomDirection(); // the others go in random direction
                     break;
-                case "right-item":
+                case "direita":
                     Debug.Log("Moving right");
                     goRight(); // the selected go in this direction
                     goRandomDirection(); // the others go in random direction
                     break;
-                case "left-item":
+                case "esquerda":
                     Debug.Log("Moving left");
                     goLeft(); // the selected go in this direction
                     goRandomDirection(); // the others go in random direction
@@ -571,6 +579,8 @@ public class PinguimController : DragAndDropController {
     {
         if (win)
         {
+            PlayerPreferences.M002_Pinguim = true;
+
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
@@ -580,10 +590,10 @@ public class PinguimController : DragAndDropController {
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("");
+            ReadText("Parabéns, você conseguiu mais alguns dos itens necessários para sua aventura na Antártica!");
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(4*PlayerPreferences.XPwinItem); // ganhou o item
         }
         else
         {
@@ -597,7 +607,7 @@ public class PinguimController : DragAndDropController {
 
             ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
             resetButton.Select();
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo

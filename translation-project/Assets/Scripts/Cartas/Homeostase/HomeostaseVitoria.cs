@@ -36,6 +36,10 @@ public class HomeostaseVitoria : AbstractScreenReader {
     public string algodaoHint;
     public string fleeceHint;
 
+    public Image heartImage;
+    public Image starImage;
+    public Image antarticaImage;
+
     public GameObject instruction_interface;
 
     private GameObject clickedCard = null;
@@ -45,6 +49,10 @@ public class HomeostaseVitoria : AbstractScreenReader {
     // Use this for initialization
     void Start ()
     {
+        heartImage.fillAmount = PlayerPrefs.GetFloat("MJHealthPoints");
+        starImage.fillAmount = PlayerPrefs.GetFloat("MJExperience");
+        antarticaImage.fillAmount = PlayerPrefs.GetFloat("MJAntartica");
+
         isOnLikeButton = true;
         minijogoDicas.ShowIsolatedHint(initialHint);
 	}
@@ -144,15 +152,22 @@ public class HomeostaseVitoria : AbstractScreenReader {
         if (win)
         {
             winImage.SetActive(true);
-            
+
+            PlayerPreferences.M002_Homeostase = true;
+
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
             ReadText("Parabéns, você conseguiu mais alguns itens necessários para sua aventura na antártica!");
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
+
+            // add the heart points in hp points
+            lifeExpController.AddHP(5000f / heartImage.fillAmount);
+            // add the antartica and star points to xp points
+            lifeExpController.AddEXP(5000f / ((0.6f * starImage.fillAmount) + (0.4f * antarticaImage.fillAmount)));
         }
         else
         {
@@ -164,7 +179,7 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
             ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }
 
         StartCoroutine(ReturnToCasaUshuaiaCoroutine());

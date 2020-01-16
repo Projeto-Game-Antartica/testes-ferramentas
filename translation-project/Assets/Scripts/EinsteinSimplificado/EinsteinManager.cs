@@ -55,24 +55,21 @@ public class EinsteinManager : AbstractScreenReader
 
     private enum Operation { correct, wrong }
 
-    private enum DropDownColors { blue = 1, orange, purple, green, red }
+    private enum DropDownColors { blue = 1, orange, green, red }
 
     private Color blue = new Color(0, 0.361f, 0.624f);
     private Color orange = new Color(0.788f, 0.576f, 0.427f);
-    private Color purple = new Color(0.69f, 0.09f, 0.78f);
     private Color green = new Color(0.353f, 0.698f, 0.459f);
     private Color red = new Color(0.792f, 0.435f, 0.431f);
 
     private int remainingOptionsBlue = 4;
     private int remainingOptionsOrange = 4;
-    private int remainingOptionsPurple = 4;
     private int remainingOptionsGreen = 4;
     private int remainingOptionsRed = 4;
 
     public Sprite blue_ret;
     public Sprite green_ret;
     public Sprite orange_ret;
-    public Sprite purple_ret;
     public Sprite red_ret;
 
     private int attempts = 3;
@@ -185,8 +182,7 @@ public class EinsteinManager : AbstractScreenReader
         {
         }
 
-        if (remainingOptionsGreen == 0 && remainingOptionsBlue == 0 && remainingOptionsOrange == 0 
-            && remainingOptionsPurple == 0 && remainingOptionsRed == 0)
+        if (remainingOptionsGreen == 0 && remainingOptionsBlue == 0 && remainingOptionsOrange == 0 && remainingOptionsRed == 0)
         {
             StartCoroutine(EndGame(true));
         }
@@ -322,10 +318,6 @@ public class EinsteinManager : AbstractScreenReader
                 correct = CheckCombination(c, dropDownValue, remainingOptionsOrange, "laranja");
                 break;
 
-            case (int)DropDownColors.purple:
-                correct = CheckCombination(c, dropDownValue, remainingOptionsPurple, "roxo");
-                break;
-
             case (int)DropDownColors.green:
                 correct = CheckCombination(c, dropDownValue, remainingOptionsGreen, "verde");
                 break;
@@ -393,6 +385,9 @@ public class EinsteinManager : AbstractScreenReader
         if (wrong)
         {
             audioSource.PlayOneShot(wrongAudio);
+
+            lifeExpController.AddEXP(PlayerPreferences.XPwrongTry);
+
             tries++;
             attemptsText.text = "Tentativas restantes: " + tries + "/" + attempts;
 
@@ -417,20 +412,20 @@ public class EinsteinManager : AbstractScreenReader
         if (win)
         {
             WinImage.SetActive(true);
+
+            PlayerPreferences.M002_ProcessoPesquisa = true;
+
             //WinImage.GetComponentInChildren<Button>().Select();
 
             //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
-            if (!PlayerPreferences.M004_TeiaAlimentar)
-            {
-                audioSource.PlayOneShot(victoryClip);
-                yield return new WaitWhile(() => audioSource.isPlaying);
+            audioSource.PlayOneShot(victoryClip);
+            yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
-            }
+            ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(5*PlayerPreferences.XPwinItem); // ganhou o item
         }
         else
         {
@@ -444,7 +439,7 @@ public class EinsteinManager : AbstractScreenReader
 
             ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
             resetButton.Select();
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o ushuaia perdendo ou ganhando o minijogo
@@ -501,9 +496,6 @@ public class EinsteinManager : AbstractScreenReader
             case (int)DropDownColors.green:
                 sprite = green_ret;
                 break;
-            case (int)DropDownColors.purple:
-                sprite = purple_ret;
-                break;
             case (int)DropDownColors.orange:
                 sprite = orange_ret;
                 break;
@@ -524,9 +516,6 @@ public class EinsteinManager : AbstractScreenReader
                 break;
             case (int)DropDownColors.orange:
                 color = orange;
-                break;
-            case (int)DropDownColors.purple:
-                color = purple;
                 break;
             case (int)DropDownColors.green:
                 color = green;
@@ -557,9 +546,6 @@ public class EinsteinManager : AbstractScreenReader
             case (int)DropDownColors.orange:
                 result = remainingOptionsOrange;
                 break;
-            case (int)DropDownColors.purple:
-                result = remainingOptionsPurple;
-                break;
             case (int)DropDownColors.green:
                 result = remainingOptionsGreen;
                 break;
@@ -583,9 +569,6 @@ public class EinsteinManager : AbstractScreenReader
                 break;
             case (int)DropDownColors.orange:
                 remainingOptionsOrange = value;
-                break;
-            case (int)DropDownColors.purple:
-                remainingOptionsPurple = value;
                 break;
             case (int)DropDownColors.green:
                 remainingOptionsGreen = value;

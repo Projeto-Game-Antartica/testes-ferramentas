@@ -34,10 +34,16 @@ public class Regras : AbstractCardManager {
     public Button resetButton;
     public Button backButton;
 
+    public Image heartImage;
+    public Image starImage;
+    public Image antarticaImage;
+
     public GameObject textPrefab;
     public GameObject confirmQuit;
 
     public LifeExpController lifeExpController;
+
+    public MinijogoIconsController iconsController;
 
     private void Update()
     {
@@ -146,6 +152,8 @@ public class Regras : AbstractCardManager {
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         CardCount.text = "Regras escolhidas: " + likeCount + "/" + rulesNumber;
 
+        cardsPoints(currentImage.name);
+
         // card is selected
         if(cardIndex >= 0 && cardIndex < totalCards)
             selectedCards[cardIndex] = true;
@@ -175,64 +183,94 @@ public class Regras : AbstractCardManager {
         switch (cardName.ToLower())
         {
             case "regra1":
+                iconsController.AddPoints(0f, 0.04f, 0.5f);
                 break;
             case "regra2":
+                iconsController.AddPoints(0f, 0.04f, 0.5f);
                 break;
             case "regra3":
+                iconsController.AddPoints(0.08f, 0.04f, 0f);
                 break;
             case "regra4":
+                iconsController.AddPoints(0.06f, 0.05f, 0f);
                 break;
             case "regra5":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra6":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra7":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra8":
+                iconsController.AddPoints(0.08f, 0.04f, 0f);
                 break;
             case "regra9":
+                iconsController.AddPoints(0.08f, 0.03f, 0f);
                 break;
             case "regra10":
+                iconsController.AddPoints(0.08f, 0.03f, 0f);
                 break;
             case "regra11":
+                iconsController.AddPoints(0.08f, 0.03f, 0f);
                 break;
             case "regra12":
+                iconsController.AddPoints(0.0f, 0.05f, 0f);
                 break;
             case "regra13":
+                iconsController.AddPoints(0.08f, 0.03f, 0);
                 break;
             case "regra14":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra15":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra16":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra17":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra18":
+                iconsController.AddPoints(0.08f, 0.04f, 0f);
                 break;
             case "regra19":
+                iconsController.AddPoints(0.06f, 0f, 0f);
                 break;
             case "regra20":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra21":
+                iconsController.AddPoints(0f, 0.04f, 0f);
                 break;
             case "regra22":
+                iconsController.AddPoints(0.08f, 0f, 0f);
                 break;
             case "regra23":
+                iconsController.AddPoints(0.08f, 0f, 0f);
                 break;
             case "regra24":
+                iconsController.AddPoints(0f, 0.05f, 0f);
                 break;
             case "regra25":
+                iconsController.AddPoints(0.08f, 0f, 0f);
                 break;
             case "regra26":
+                iconsController.AddPoints(0f, 0.03f, 0f);
                 break;
             case "regra27":
+                iconsController.AddPoints(0.06f, 0f, 0f);
                 break;
             case "regra28":
+                iconsController.AddPoints(0f, 0.03f, 0f);
                 break;
             case "regra29":
+                iconsController.AddPoints(0f, 0.03f, 0f);
                 break;
             case "regra30":
+                iconsController.AddPoints(0.05f, 0.04f, 0f);
                 break;
             default:
                 break;
@@ -306,6 +344,7 @@ public class Regras : AbstractCardManager {
 
             winImage.SetActive(true);
 
+            PlayerPreferences.M002_Regras = true;
 
             audioSource.PlayOneShot(victoryClip);
 
@@ -313,8 +352,13 @@ public class Regras : AbstractCardManager {
             
             ReadText("Parabéns, você conseguiu mais alguns itens necessários para sua aventura na antártica!");
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
+
+            // add the heart points in hp points
+            lifeExpController.AddHP(5000f / heartImage.fillAmount);
+            // add the antartica and star points to xp points
+            lifeExpController.AddEXP(5000f / ((0.6f * starImage.fillAmount) + (0.4f * antarticaImage.fillAmount)));
         }
         else
         {
@@ -330,7 +374,7 @@ public class Regras : AbstractCardManager {
 
             resetButton.Select();
 
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine());

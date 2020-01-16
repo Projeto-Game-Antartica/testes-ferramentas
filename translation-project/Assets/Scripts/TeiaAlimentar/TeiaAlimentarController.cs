@@ -263,6 +263,7 @@ public class TeiaAlimentarController : DragAndDropController
                 else                                                            // If drop unsuccessful (was denied before)
                 {
                     Debug.Log("Denied drop " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
+                    lifeExpController.AddEXP(PlayerPreferences.XPwrongTry);
                     audioSource.PlayOneShot(wrongClip);
                     wrongAnswer++;
                 }
@@ -283,8 +284,8 @@ public class TeiaAlimentarController : DragAndDropController
     {
         if (WIN)
         {
-            lifeExpController.AddEXP(0.001f); // concluiu o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou um item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // concluiu o minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou um item
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
 

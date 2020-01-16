@@ -18,8 +18,13 @@ public class Homeostase : AbstractCardManager
     public AudioClip selectClip;
 
     public Image kcalBar;
+    public Image heartIcon;
+    public Image starIcon;
+    public Image antarticaIcon;
 
     public Transform alimentos;
+
+    public MinijogoIconsController iconsController;
 
     //private int cardIndex;
 
@@ -198,123 +203,243 @@ public class Homeostase : AbstractCardManager
         {
             case "abacate":
                 if (add)
+                {
                     kcal += 160;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 160;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "ameixa seca":
                 if (add)
+                {
                     kcal += 240;
+                    iconsController.AddPoints(0.02f, -0.02f, 0.08f);
+                }
                 else
+                {
                     kcal -= 240;
+                    iconsController.AddPoints(-0.02f, 0.02f, +0.08f);
+                }
                 break;
             case "amendoas":
                 if (add)
+                {
                     kcal += 579;
+                    iconsController.AddPoints(0.02f, -0.02f, 0.08f);
+                }
                 else
+                {
                     kcal -= 579;
+                    iconsController.AddPoints(-0.02f, 0.02f, +0.08f);
+                }
                 break;
             case "banana":
                 if (add)
+                {
                     kcal += 98;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 98;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "barrinha de cereal":
                 if (add)
+                {
                     kcal += 86;
+                    iconsController.AddPoints(0.05f, -0.02f, -0.08f);
+                }
                 else
+                {
                     kcal -= 86;
+                    iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
+                }
                 break;
             case "batata doce":
                 if (add)
+                {
                     kcal += 86;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 86;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "cenoura":
                 if (add)
+                {
                     kcal += 36;
+                    iconsController.AddPoints(0.05f, -0.04f, 0.08f);
+                }
                 else
+                {
                     kcal -= 36;
+                    iconsController.AddPoints(0.05f, -0.04f, 0.08f);
+                }
                 break;
             case "chocolate":
                 if (add)
+                {
                     kcal += 139;
+                    iconsController.AddPoints(0.05f, -0.04f, -0.08f);
+                }
                 else
+                {
                     kcal -= 139;
+                    iconsController.AddPoints(-0.05f, 0.04f, 0.08f);
+                }
                 break;
             case "figo":
                 if (add)
+                {
                     kcal += 249;
+                    iconsController.AddPoints(0.02f, -0.02f, 0.08f);
+                }
                 else
+                {
                     kcal -= 249;
+                    iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
+                }
                 break;
             case "agua":
                 if (add)
+                {
                     kcal += 0;
+                    iconsController.AddPoints(0.05f, 0.08f, -0.08f);
+                }
                 else
+                {
                     kcal -= 0;
+                    iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
+                }
                 break;
             case "laranja":
                 if (add)
+                {
                     kcal += 47;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 47;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "leite de soja":
                 if (add)
+                {
                     kcal += 82;
+                    iconsController.AddPoints(0.05f, 0.08f, -0.08f);
+                }
                 else
+                {
                     kcal -= 82;
+                    iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
+                }
                 break;
             case "leite desnatado":
                 if (add)
+                {
                     kcal += 63;
+                    iconsController.AddPoints(0.05f, 0.08f, -0.08f);
+                }
                 else
+                {
                     kcal -= 63;
+                    iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
+                }
                 break;
             case "maca":
                 if (add)
+                {
                     kcal += 52;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 52;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "melancia":
                 if (add)
+                {
                     kcal += 30;
+                    iconsController.AddPoints(0.05f, -0.04f, 0.08f);
+                }
                 else
+                {
                     kcal -= 30;
+                    iconsController.AddPoints(-0.05f, 0.04f, -0.08f);
+                }
                 break;
             case "pao":
                 if (add)
+                {
                     kcal += 126.5f;
+                    iconsController.AddPoints(0.05f, 0.08f, 0.08f);
+                }
                 else
+                {
                     kcal -= 126.5f;
+                    iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
+                }
                 break;
             case "queijo cheddar":
                 if (add)
+                {
                     kcal += 402.66f;
+                    iconsController.AddPoints(0.05f, -0.02f, -0.08f);
+                }
                 else
+                {
                     kcal -= 402.66f;
+                    iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
+                }
                 break;
             case "queijo mussarela":
                 if (add)
+                {
                     kcal += 318;
+                    iconsController.AddPoints(0.05f, -0.02f, -0.08f);
+                }
                 else
+                {
                     kcal -= 318;
+                    iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
+                }
                 break;
             case "semente de abobora":
                 if (add)
+                {
                     kcal += 559;
+                    iconsController.AddPoints(0.02f, -0.02f, 0.08f);
+                }
                 else
+                {
                     kcal -= 559;
+                    iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
+                }
                 break;
             case "suco laranja":
                 if (add)
+                {
                     kcal += 54.45f;
+                    iconsController.AddPoints(0.05f, 0.08f, -0.08f);
+                }
                 else
+                {
                     kcal -= 54.45f;
+                    iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
+                }
                 break;
             default:
                     kcal += 0;

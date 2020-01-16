@@ -371,6 +371,8 @@ public class MemoryManager : AbstractScreenReader {
         }
         else
         {
+            lifeExpController.AddEXP(PlayerPreferences.XPwrongTry);
+
             audioSource.PlayOneShot(wrongAudio);
 
             StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.wrong));
@@ -430,8 +432,8 @@ public class MemoryManager : AbstractScreenReader {
                     "contribuir com as pesquisas da Ciência Cidadã.");
             }
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou o item
         }
         else
         {
@@ -445,7 +447,7 @@ public class MemoryManager : AbstractScreenReader {
 
             ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
             resetButton.Select();
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }
 
         StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
