@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EinsteinCardContent {
 
-    private const string azul1 = "Objeto de estudo: Baleias Jubarte.";
+    private const string azul1 = "Objeto de estudo: Baleias.";
     private const string azul2 = "Metodologia: Captura e análise de fotos.";
     private const string azul3 = "Objetivo: Mapear o comportamento e migração das baleias.";
     private const string azul4 = "Materiais necessários: Câmera fotográfica, zoom e catálogo de fotos.";
