@@ -34,8 +34,8 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
     private void Start()
     {
         state = VIRADA_BAIXO;
-        initialized = false;
-        added = false;
+        //initialized = false;
+        //added = false;
         StartCoroutine(showCards());
     }
 
@@ -84,25 +84,23 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
 
     public void flipCard()
     {
-        if (state == VIRADA_BAIXO && !DO_NOT)
+        if(DO_NOT)
+            return;
+
+        if (state == VIRADA_BAIXO) {
             state = VIRADA_CIMA;
-        else if (state == VIRADA_CIMA && !DO_NOT)
+            GetComponent<Image>().sprite = cardBack;
+
+        } else if (state == VIRADA_CIMA) {
             state = VIRADA_BAIXO;
 
-        if (state == VIRADA_BAIXO && !DO_NOT)
-        {
-            GetComponent<Image>().sprite = cardBack;
-        }
-        else if (state == VIRADA_CIMA && !DO_NOT)
-        {
-            //GetComponent<Image>().sprite = cardFace;123
+            GetComponent<Image>().sprite = cardFace;
 
-            //if (_init)
-            //{
-            //    string objectName = CardsDescription.GetCardText(gameObject.name);
+            if (_init){
+               string objectName = CardsDescription.GetCardText(gameObject.name);
+               ReadAndDebugCardText(objectName);
+            }
 
-            //    ReadAndDebugCardText(objectName);
-            //}
         }
     }
 
@@ -128,7 +126,7 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         }
         else if (state == VIRADA_CIMA)
         {
-            //GetComponent<Image>().sprite = cardFace; 123
+            GetComponent<Image>().sprite = cardFace;
         }
 
         DO_NOT = false;
