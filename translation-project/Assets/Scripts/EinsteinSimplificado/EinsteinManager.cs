@@ -75,6 +75,7 @@ public class EinsteinManager : AbstractScreenReader
     private int attempts = 3;
     private int tries = 0;
     private bool isOnCards;
+    private bool finished = false;
 
     public TMPro.TextMeshProUGUI attemptsText;
 
@@ -117,7 +118,7 @@ public class EinsteinManager : AbstractScreenReader
         {
             if (!isOnCards)
             {
-                cards[0].GetComponent<Button>().Select();
+                SelectNextAvailableCard();
                 isOnCards = true;
             }
             else
@@ -281,6 +282,8 @@ public class EinsteinManager : AbstractScreenReader
     public void CompareCards()
     {
         cardComparison(c);
+
+        SelectNextAvailableCard();
     }
 
     public void Cancel()
@@ -419,7 +422,12 @@ public class EinsteinManager : AbstractScreenReader
 
             //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
-            audioSource.PlayOneShot(victoryClip);
+            if (!finished)
+            {
+                finished = true;
+                audioSource.PlayOneShot(victoryClip);
+            }
+
             yield return new WaitWhile(() => audioSource.isPlaying);
 
             ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
@@ -630,6 +638,11 @@ public class EinsteinManager : AbstractScreenReader
 
         Debug.Log(processDropDown.options[processDropDown.value].text);
 
+        SelectNextAvailableCard();
+    }
+
+    public void SelectNextAvailableCard()
+    {
         foreach (GameObject ec in cards)
         {
             if (!ec.GetComponent<EinsteinCard>().added)
@@ -642,11 +655,42 @@ public class EinsteinManager : AbstractScreenReader
         }
     }
 
-    public void ReadDropDown(TextMeshProUGUI option)
+    public void ReadDropDown()
     {
         Debug.Log(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
+        ReadText(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
     }
 
+    public void ReadDropDownItem(TextMeshProUGUI item)
+    {
+        string result = "";
+
+        switch (item.text)
+        {
+            case "A metodologia desta Ciência Cidadã é a Fotoidentificação.":
+                if (GetRemainingOptions((int)DropDownColors.blue) == 0) result += " pistas já encontradas. ";
+                result += item.text;
+                break;
+            case "O objetivo desta pesquisa brasileira é investigar o passado biológico na Antártica.":
+                if (GetRemainingOptions((int)DropDownColors.orange) == 0) result += " pistas já encontradas. ";
+                result += item.text;
+                break;
+            case "Para colaborar com esta Ciência Cidadã é necessário binóculos e catálogo de imagens.":
+                                if (GetRemainingOptions((int)DropDownColors.green) == 0) result += " pistas já encontradas. ";
+                result += item.text;
+                break;
+            case "Esta pesquisa brasileira estuda a Vegetação Antártica.":
+                                if (GetRemainingOptions((int)DropDownColors.red) == 0) result += " pistas já encontradas. ";
+                result += item.text;
+                break;
+            default:
+                result += item.text;
+                break;
+        }
+
+        Debug.Log(result);
+        ReadText(result);
+    }
     public void TryReturnToUshuaia()
     {
         audioSource.PlayOneShot(avisoClip);

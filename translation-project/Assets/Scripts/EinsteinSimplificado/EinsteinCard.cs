@@ -124,22 +124,16 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
 
         if (state == VIRADA_BAIXO || state == VIRADA_CIMA)
         {
-            if(added)
-            {
-                Debug.Log(cardNumber + " já adicionada: " + text);
-                ReadText(cardNumber + " já adicionada: " + text);
-            }
-            else
-            {
-                Debug.Log(cardNumber + " " + text);
-                ReadText(cardNumber + " " + text);
-            }
+            Debug.Log(cardNumber + " " + text);
+            ReadText(cardNumber + " " + text);
         }
-        //else
-        //{
-        //    string objectName = CardsDescription.GetCardText(gameObject.name);
-        //    ReadAndDebugCardText(objectName);
-        //}
+        else
+        {
+            Debug.Log(cardNumber + " já adicionada: " + text);
+            ReadText(cardNumber + " já adicionada: " + text);
+            //string objectName = CardsDescription.GetCardText(gameObject.name);
+            //ReadAndDebugCardText(objectName);
+        }
     }
 
     public void ReadAndDebugCardText(string objectName)
@@ -162,6 +156,6 @@ public class EinsteinCard : AbstractScreenReader, ISelectHandler
         GameObject text = Instantiate(proccessTextPrefab);
         text.transform.SetParent(transform, false);
 
-        text.GetComponent<TMPro.TextMeshProUGUI>().text = EinsteinCardContent.GetText(cardName);
+        text.GetComponentInChildren<TextMeshProUGUI>().text = EinsteinCardContent.GetText(cardName);
     }
 }
