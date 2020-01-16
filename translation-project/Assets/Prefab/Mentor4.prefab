@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4793639689783144}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &212670987228992740
 SpriteRenderer:
@@ -363,6 +363,7 @@ Transform:
   m_Children:
   - {fileID: 4796883957009206}
   - {fileID: 4352771387896540}
+  - {fileID: 218153957724501175}
   - {fileID: 4885977896585040}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -385,23 +386,11 @@ MonoBehaviour:
   - M002_Casinha_Mentor4_Dialogue1
   - M002_Mentor1_Dialogue1
   - M002_Mentor1_Dialogue2
-  - M002_Mentor1_Dialogue3
-  - M002_Mentor1_Dialogue4
-  - M002_Mentor1_Dialogue5
   - M002_Mentor2_Dialogue1
   - M002_Mentor2_Dialogue2
-  - M002_Mentor2_Dialogue3
-  - M002_Mentor2_Dialogue4
-  - M002_Mentor2_Dialogue5
   - M002_Mentor3_Dialogue1
   - M002_Mentor3_Dialogue2
-  - M002_Mentor3_Dialogue3
-  - M002_Mentor3_Dialogue4
-  - M002_Mentor3_Dialogue5
   - M002_Mentor4_Dialogue1
-  - M002_Mentor4_Dialogue2
-  - M002_Mentor4_Dialogue3
-  - M002_Mentor4_Dialogue4
   - M004_Mentor0_Dialogue
   - M004_Mentor1_Dialogue
   - M004_Mentor2_Dialogue
@@ -416,7 +405,7 @@ MonoBehaviour:
   - MrCube
   - NPCOnly
   - Witch
-  assignedIndex: 18
+  assignedIndex: -1
   assignedID: 75467
   assignedDialogue: M002_Mentor4_Dialogue1
   interactionCount: 0
@@ -582,6 +571,7 @@ MonoBehaviour:
   audioSource: {fileID: 82662523116964856}
   missionNumber: M002
   minijogoBalloon: {fileID: 212670987228992740}
+  dialogueBalloon: {fileID: 93223615898066958}
   spriteRenderer:
   - {fileID: 212504389785449586}
   - {fileID: 212881277728425086}
@@ -601,3 +591,99 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 80, y: 0.0001}
   m_Direction: 0
+--- !u!1 &6059091243102451243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 218153957724501175}
+  - component: {fileID: 93223615898066958}
+  - component: {fileID: 5024504121875869164}
+  m_Layer: 0
+  m_Name: dialogue-balloon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &218153957724501175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059091243102451243}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.3, y: 12.8, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4793639689783144}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &93223615898066958
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059091243102451243}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: f1263cd496a855f4c8250e651a32fc28, type: 3}
+  m_Color: {r: 0.29803923, g: 0.69803923, b: 1, a: 1}
+  m_FlipX: 1
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.7, y: 3.17}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &5024504121875869164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059091243102451243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aac7ef1c93f1f14ea33c6a28fad3180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: 100
+  runOnlyOnce: 1

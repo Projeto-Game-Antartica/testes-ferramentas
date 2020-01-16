@@ -5,29 +5,24 @@ using UnityEngine;
 public class EinsteinCardContent {
 
     private const string azul1 = "Objeto de estudo: Baleias Jubarte.";
-    private const string azul2 = "Objetivo: Fotoidentificação.";
-    private const string azul3 = "Materiais: Câmera fotográfica, zoom e catálogo de fotos.";
-    private const string azul4 = "Cuidados do cientista cidadão: Não tirar fotos borradas; categorizar corretamente o animal (identificado ou não identificado).";
+    private const string azul2 = "Metodologia: Captura e análise de fotos.";
+    private const string azul3 = "Objetivo: Mapear o comportamento e migração das baleias.";
+    private const string azul4 = "Materiais necessários: Câmera fotográfica, zoom e catálogo de fotos.";
 
-    private const string laranja1 = "Objeto de estudo: Gelo";
-    private const string laranja2 = "Objetivo: Compreender as propriedades físicas dos gelos marinhos, sua interação com a atmosfera e os processos biológicos.";
-    private const string laranja3 = "Materiais: Câmera fotográfica; imagens de referência.";
-    private const string laranja4 = "Cuidados do cientista cidadão: qualidade das fotos, precisãodas análises, evitar contaminação com metais.";
+    private const string laranja1 = "Objeto de estudo: Paleontologia.";
+    private const string laranja2 = "Metodologia: Escavação e identificação de material fossilizado.";
+    private const string laranja3 = "Objetivo: Investigar as características geológicas e biológicas do passado.";
+    private const string laranja4 = "Materiais necessários: Martelo geológico e pincel.";
 
-    private const string roxo1 = "Objeto de estudo: Aves Antárticas";
-    private const string roxo2 = "Objetivo: Documentar a distribuição, a abundância, o uso do habitat e as tendências comportamentais desses animais.";
-    private const string roxo3 = "Metodologia: Fotografar, identificar a espécie, realizar contagem e registrar a localização.";
-    private const string roxo4 = "Cuidados do cientista cidadão: qualidade das fotos, registrar localização e realizar a contagem dos animais no mesmo horário diariamente.";
+    private const string verde1 = "Objeto de estudo: Aves Austrais.";
+    private const string verde2 = "Metodologia: Observar e analisar.";
+    private const string verde3 = "Objetivo: Compreender a distribuição, a abundância e o uso do habitat.";
+    private const string verde4 = "Materiais necessários: Binóculos e catálogo de imagens.";
 
-    private const string verde1 = "Objeto de estudo: Plânctons.";
-    private const string verde2 = "Objetivo: Monitorar a abundância desses organismos nos fiordes da península antártica.";
-    private const string verde3 = "Materiais: Rede de Coleta, Garrafas, bombas e filtro.";
-    private const string verde4 = "Cuidados do cientista cidadão: medir a transparência da água, evitar a queda de objetos no mar.";
-
-    private const string vermelho1 = "Objeto de estudo: Pinguins.";
-    private const string vermelho2 = "Objetivo: Entender a dinâmica populacional das espécies, para guiar os esforços de conservação.";
-    private const string vermelho3 = "Metodologia: analisar imagens de satélite, identificar e registrar a presença de pinguins.";
-    private const string vermelho4 = "Materiais: Computador com acesso a internet; Imagens de referência.";
+    private const string vermelho1 = "Objeto de estudo: Vegetação.";
+    private const string vermelho2 = "Metodologia: Coletar amostras para análise em laboratório e observação local.";
+    private const string vermelho3 = "Objetivo: Caracterizar a diversidade e vegetal e reconhecer seus padrões de distribuição em gradientes ambientais.";
+    private const string vermelho4 = "Materiais necessários: Sacos de papel, quadrante, espátula e GPS.";
 
     public static string GetText(string cardName)
     {
@@ -50,15 +45,6 @@ public class EinsteinCardContent {
                 return laranja3;
             case "laranja4":
                 return laranja4;
-
-            case "roxo1":
-                return roxo1;
-            case "roxo2":
-                return roxo2;
-            case "roxo3":
-                return roxo3;
-            case "roxo4":
-                return roxo4;
 
             case "verde1":
                 return verde1;

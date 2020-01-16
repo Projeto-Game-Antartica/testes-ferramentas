@@ -192,7 +192,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
 
-        lifeExpController.AddEXP(0.0001f);
+        lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle);
 
         audioSource.PlayOneShot(loseClip);
 

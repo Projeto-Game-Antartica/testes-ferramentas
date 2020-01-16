@@ -37,6 +37,8 @@ public class ContentPanelController : AbstractScreenReader {
 
     public FotoidentificationSceneManager sceneManager;
 
+    public LifeExpController lifeExpController;
+
     // array containing the 8 indexes for photo
     // sort the array for randomization
     private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7 };
@@ -269,6 +271,8 @@ public class ContentPanelController : AbstractScreenReader {
         WinImage.SetActive(true);
 
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_vitoria, LocalizationManager.instance.GetLozalization()));
+
+        lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle);
 
         audioSource.PlayOneShot(victoryClip);
         

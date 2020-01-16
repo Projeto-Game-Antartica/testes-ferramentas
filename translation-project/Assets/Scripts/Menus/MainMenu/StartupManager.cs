@@ -27,8 +27,8 @@ public class StartupManager : MonoBehaviour {
         }
 
         Debug.Log("loaded");
-        //SceneManager.LoadScene(ScenesNames.Login);
-        SceneManager.LoadScene(ScenesNames.Menu);
+        SceneManager.LoadScene(ScenesNames.Login);
+        //SceneManager.LoadScene(ScenesNames.Menu);
     }
 
 }

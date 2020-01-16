@@ -43,24 +43,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268dc70b105993846a123be43345df63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileIndex: 26
+  fileIndex: 3
   skinIndex: 0
   loadTag: 
   startID: 0
   curFocusID: 0
-  currentID: 90009
+  currentID: 8363
   autosave: 1
   previewPanning: 0
-  currentDiag: 26
+  currentDiag: 3
   locEdit: 0
   pNodeID: 3
   aNodeID: 2
   S_playerDiags:
   - commentCount: 1
     s_comment:
-    - text: "Oi turista!\r \nVoc\xEA j\xE1 est\xE1 sabendo que a nossa miss\xE3o \xE9
-        identificar as baleias jubarte, n\xE9?\r\nObrigado por voc\xEA estar disposto
-        a nos ajudar!\r"
+    - text: "\xC9 muito importante que voc\xEA esteja bem preparada para a sua aventura
+        no continente congelado! Voc\xEA vai precisar de itens especiais para que
+        se sinta confort\xE1vel e saud\xE1vel!! Voc\xEA j\xE1 sabe quais s\xE3o os
+        itens indispens\xE1veis para sua viagem? "
       extraData: ExtraData
       inputSetIndex: 0
       outputNodeIndex: 1
@@ -71,44 +72,26 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 80
+        height: 106
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
     ID: 0
     rect:
       serializedVersion: 2
-      x: 4900
-      y: 720
+      x: 110
+      y: 340
       width: 349
-      height: 296
+      height: 206
     pTag: 
-    expand: 1
+    expand: 0
     sprite: {fileID: 0}
-    vars:
-    - NPC
-    varKeys:
-    - ReadAudioDescription
+    vars: []
+    varKeys: []
     isPlayer: 0
   - commentCount: 2
     s_comment:
-    - text: "N\xE3o sei ao certo... Como eu poderia ajudar?"
-      extraData: ExtraData
-      inputSetIndex: 1
-      outputNodeIndex: 10
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 28
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    - text: "Mas, voc\xEA acha mesmo que eu posso ajudar? Sou apenas uma turista querendo
-        conhecer a Ant\xE1rtica. Como fa\xE7o isso?"
+    - text: Sei sim, obrigada!
       extraData: ExtraData
       inputSetIndex: 1
       outputNodeIndex: 2
@@ -117,53 +100,64 @@ MonoBehaviour:
       outRect:
         serializedVersion: 2
         x: 302
-        y: 88
+        y: 59
         width: 30
-        height: 54
+        height: 21
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
-    ID: 1
-    rect:
-      serializedVersion: 2
-      x: 5340
-      y: 700
-      width: 349
-      height: 299
-    pTag: 
-    expand: 1
-    sprite: {fileID: 0}
-    vars:
-    - Player
-    varKeys:
-    - ReadAudioDescription
-    isPlayer: 1
-  - commentCount: 1
-    s_comment:
-    - text: "Os turistas podem participar de projetos de Ci\xEAncia Cidad\xE3! Nesta
-        miss\xE3o voc\xEA ir\xE1 contribuir com pesquisas cient\xEDficas sobre as
-        baleias jubarte tirando fotos de suas caudas. "
+    - text: "N\xE3o. Poderia me dizer por favor?"
       extraData: ExtraData
-      inputSetIndex: 2
+      inputSetIndex: 1
       outputNodeIndex: 3
       outActionIndex: -1
       showmore: 0
       outRect:
         serializedVersion: 2
         x: 302
-        y: 59
+        y: 81
         width: 30
-        height: 80
+        height: 21
+      sprites: {fileID: 0}
+      audios: {fileID: 0}
+      visible: 1
+    ID: 1
+    rect:
+      serializedVersion: 2
+      x: 610
+      y: 350
+      width: 349
+      height: 143
+    pTag: 
+    expand: 0
+    sprite: {fileID: 0}
+    vars: []
+    varKeys: []
+    isPlayer: 1
+  - commentCount: 1
+    s_comment:
+    - text: "Legal, estou aqui a disposi\xE7\xE3o."
+      extraData: ExtraData
+      inputSetIndex: 2
+      outputNodeIndex: -1
+      outActionIndex: -1
+      showmore: 0
+      outRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
     ID: 2
     rect:
       serializedVersion: 2
-      x: 5780
-      y: 570
+      x: 1070
+      y: 240
       width: 349
-      height: 180
+      height: 121
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -172,8 +166,7 @@ MonoBehaviour:
     isPlayer: 0
   - commentCount: 1
     s_comment:
-    - text: "Que incr\xEDvel poder participar de uma pesquisa cient\xEDfica mesmo
-        n\xE3o sendo uma pesquisadora. Mas o que voc\xEAs fazem com essas fotos?"
+    - text: Aqui vai uma lista de itens para a sua viagem
       extraData: ExtraData
       inputSetIndex: 3
       outputNodeIndex: 4
@@ -184,30 +177,28 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 67
+        height: 28
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
     ID: 3
     rect:
       serializedVersion: 2
-      x: 6220
-      y: 580
+      x: 1070
+      y: 500
       width: 349
-      height: 167
+      height: 128
     pTag: 
     expand: 0
     sprite: {fileID: 0}
     vars: []
     varKeys: []
-    isPlayer: 1
+    isPlayer: 0
   - commentCount: 1
     s_comment:
-    - text: "As fotos s\xE3o depositadas em um banco de dados de pesquisa cient\xEDfica.
-        Os pesquisadores as utilizam para identificar baleias, fazer uma estimativa
-        populacional, verificar o crescimento m\xE9dio anual e estudar o  movimento
-        migrat\xF3rio desses animais. N\xE3o \xE9 incr\xEDvel voc\xEA poder contribuir
-        para todo este estudo! Quer aprender o processo?"
+    - text: "Uma nova tela surge com a lista \r\nde itens de viagem.\r\nNeste documento
+        consta a lista que vai aparecer no di\xE1logo\r\nhttps://docs.google.com/document/d/1pgQdmMuZ_GpfLNGry_lXPy-0xEv05dIvm6eT7F26c5I/edit?folder=1xD47aBpY3J39Ack1FDbBaUs-pzLspqKo
+        \r\n(essas explica\xE7\xF5es n\xE3o fazem parte do di\xE1logo)"
       extraData: ExtraData
       inputSetIndex: 4
       outputNodeIndex: 5
@@ -218,17 +209,17 @@ MonoBehaviour:
         x: 302
         y: 59
         width: 30
-        height: 158
+        height: 145
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
     ID: 4
     rect:
       serializedVersion: 2
-      x: 6660
-      y: 590
+      x: 1510
+      y: 500
       width: 349
-      height: 258
+      height: 245
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -237,171 +228,12 @@ MonoBehaviour:
     isPlayer: 0
   - commentCount: 1
     s_comment:
-    - text: Eu quero!! O que tenho de fazer?
+    - text: "Agora que tal, antes de sua viagem,  voc\xEA aprender um pouco mais sobre
+        as pesquisas realizadas na Ant\xE1rtica e quem sabe encontrar os itens que
+        precisa? "
       extraData: ExtraData
       inputSetIndex: 5
       outputNodeIndex: 6
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 21
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 5
-    rect:
-      serializedVersion: 2
-      x: 7090
-      y: 620
-      width: 349
-      height: 121
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 1
-  - commentCount: 1
-    s_comment:
-    - text: "Voc\xEA deve tirar fotos, observar as caracter\xEDsticas das nadadeiras
-        caudais e cadastrar as fotos e os dados no nosso banco de dados! Cada baleia
-        tem um padr\xE3o \xFAnico na sua nadadeira caudal. Ent\xE3o, saber o que procurar
-        em uma foto \xE9 a chave para identificar uma baleia!"
-      extraData: ExtraData
-      inputSetIndex: 6
-      outputNodeIndex: 7
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 119
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 6
-    rect:
-      serializedVersion: 2
-      x: 7530
-      y: 630
-      width: 349
-      height: 219
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 0
-  - commentCount: 1
-    s_comment:
-    - text: 'Parece complicado... '
-      extraData: ExtraData
-      inputSetIndex: 7
-      outputNodeIndex: 8
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 21
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 7
-    rect:
-      serializedVersion: 2
-      x: 8000
-      y: 650
-      width: 349
-      height: 121
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 1
-  - commentCount: 1
-    s_comment:
-    - text: "Nem tanto... Mas voc\xEA pode treinar, participando desse desafio... "
-      extraData: ExtraData
-      inputSetIndex: 8
-      outputNodeIndex: 9
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 41
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 8
-    rect:
-      serializedVersion: 2
-      x: 8440
-      y: 660
-      width: 349
-      height: 141
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 0
-  - commentCount: 1
-    s_comment:
-    - text: 
-      extraData: ExtraData
-      inputSetIndex: 9
-      outputNodeIndex: -1
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 28
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 9
-    rect:
-      serializedVersion: 2
-      x: 8960
-      y: 780
-      width: 349
-      height: 281
-    pTag: 
-    expand: 1
-    sprite: {fileID: 0}
-    vars:
-    - M004FotoidentificationScene
-    - 
-    - 
-    varKeys:
-    - LoadScene
-    - SavePosition
-    - AddEXP
-    isPlayer: 0
-  - commentCount: 1
-    s_comment:
-    - text: "Por meio da Ci\xEAncia Cidad\xE3! Nela, pessoas leigas como voc\xEA podem
-        contribuir! Por exemplo, voc\xEA pode tirar fotos de caudas de baleias, que
-        ser\xE3o usadas para identific\xE1-las. "
-      extraData: ExtraData
-      inputSetIndex: 10
-      outputNodeIndex: 11
       outActionIndex: -1
       showmore: 0
       outRect:
@@ -413,11 +245,11 @@ MonoBehaviour:
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
-    ID: 10
+    ID: 5
     rect:
       serializedVersion: 2
-      x: 5750
-      y: 890
+      x: 1980
+      y: 560
       width: 349
       height: 180
     pTag: 
@@ -426,12 +258,12 @@ MonoBehaviour:
     vars: []
     varKeys: []
     isPlayer: 0
-  - commentCount: 1
+  - commentCount: 2
     s_comment:
-    - text: 'Por que das caudas? '
+    - text: "Talvez, mas n\xE3o agora"
       extraData: ExtraData
-      inputSetIndex: 11
-      outputNodeIndex: 12
+      inputSetIndex: 6
+      outputNodeIndex: 7
       outActionIndex: -1
       showmore: 0
       outRect:
@@ -443,13 +275,28 @@ MonoBehaviour:
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
-    ID: 11
+    - text: "Acho uma \xF3tima ideia"
+      extraData: ExtraData
+      inputSetIndex: 6
+      outputNodeIndex: 8
+      outActionIndex: -1
+      showmore: 0
+      outRect:
+        serializedVersion: 2
+        x: 302
+        y: 81
+        width: 30
+        height: 21
+      sprites: {fileID: 0}
+      audios: {fileID: 0}
+      visible: 1
+    ID: 6
     rect:
       serializedVersion: 2
-      x: 6220
-      y: 910
+      x: 2390
+      y: 530
       width: 349
-      height: 121
+      height: 143
     pTag: 
     expand: 0
     sprite: {fileID: 0}
@@ -458,157 +305,65 @@ MonoBehaviour:
     isPlayer: 1
   - commentCount: 1
     s_comment:
-    - text: "A cauda de cada baleia \xE9 como a nossa impress\xE3o digital. \xC9 \xFAnica!!
-        Cada baleia tem um padr\xE3o. "
+    - text: Sempre que precisar, viajante!
       extraData: ExtraData
-      inputSetIndex: 12
-      outputNodeIndex: 13
+      inputSetIndex: 7
+      outputNodeIndex: -1
       outActionIndex: -1
       showmore: 0
       outRect:
         serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 41
+        x: 0
+        y: 0
+        width: 0
+        height: 0
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
-    ID: 12
+    ID: 7
     rect:
       serializedVersion: 2
-      x: 6660
-      y: 970
+      x: 2800
+      y: 440
       width: 349
-      height: 141
+      height: 215
     pTag: 
-    expand: 0
+    expand: 1
     sprite: {fileID: 0}
     vars: []
     varKeys: []
     isPlayer: 0
   - commentCount: 1
     s_comment:
-    - text: "Deve ser bem dif\xEDcil... nem consigo imaginar...  Existe um cat\xE1logo
-        dessas \"impress\xF5es digitais\"?"
+    - text: 
       extraData: ExtraData
-      inputSetIndex: 13
-      outputNodeIndex: 14
+      inputSetIndex: 8
+      outputNodeIndex: -1
       outActionIndex: -1
       showmore: 0
       outRect:
         serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 54
+        x: 0
+        y: 0
+        width: 0
+        height: 0
       sprites: {fileID: 0}
       audios: {fileID: 0}
       visible: 1
-    ID: 13
+    ID: 8
     rect:
       serializedVersion: 2
-      x: 7090
-      y: 1010
+      x: 2800
+      y: 690
       width: 349
-      height: 154
+      height: 237
     pTag: 
-    expand: 0
+    expand: 1
     sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 1
-  - commentCount: 1
-    s_comment:
-    - text: "Sim, as caudas das baleias t\xEAm sido catalogadas em todo o mundo ao
-        longo dos anos. "
-      extraData: ExtraData
-      inputSetIndex: 14
-      outputNodeIndex: 15
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 41
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 14
-    rect:
-      serializedVersion: 2
-      x: 7500
-      y: 1050
-      width: 349
-      height: 141
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 0
-  - commentCount: 1
-    s_comment:
-    - text: "Que interessante. E como fa\xE7o para identific\xE1-las?"
-      extraData: ExtraData
-      inputSetIndex: 15
-      outputNodeIndex: 16
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 28
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 15
-    rect:
-      serializedVersion: 2
-      x: 7930
-      y: 1070
-      width: 349
-      height: 128
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
-    isPlayer: 1
-  - commentCount: 1
-    s_comment:
-    - text: "Aceite esse desafio e voc\xEA vai aprender todos os detalhes da fotoidentifica\xE7\xE3o
-        de caudas de baleias."
-      extraData: ExtraData
-      inputSetIndex: 16
-      outputNodeIndex: 9
-      outActionIndex: -1
-      showmore: 0
-      outRect:
-        serializedVersion: 2
-        x: 302
-        y: 59
-        width: 30
-        height: 54
-      sprites: {fileID: 0}
-      audios: {fileID: 0}
-      visible: 1
-    ID: 16
-    rect:
-      serializedVersion: 2
-      x: 8370
-      y: 1070
-      width: 349
-      height: 154
-    pTag: 
-    expand: 0
-    sprite: {fileID: 0}
-    vars: []
-    varKeys: []
+    vars:
+    - M002EinsteinSimplificado
+    varKeys:
+    - LoadScene
     isPlayer: 0
   S_actionNodes: []
   S_selNodes: []
