@@ -27,4 +27,10 @@ public class InputKeys : MonoBehaviour {
 
     // Pausar MJ e direciona para o Menu
     public static KeyCode MJMENU_KEY = KeyCode.P;
+
+    // repetir acesso via teclado
+    public static KeyCode REPEAT_KEY = KeyCode.F2;
+
+    // repetir audiodescricao
+    public static KeyCode AUDIODESCRICAO_KEY = KeyCode.F3;
 }

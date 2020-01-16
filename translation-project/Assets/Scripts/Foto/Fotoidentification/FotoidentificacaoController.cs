@@ -76,6 +76,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public bool buttonSelected = false;
 
+    public LifeExpController lifeExpController;
+
     private void Start()
     {
         // index from whale of photo for first round
@@ -143,6 +145,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
         }
         else
         {
+            lifeExpController.AddEXP(PlayerPreferences.XPwrongTry);
+
             audioSource.PlayOneShot(wrongClip);
             attempts++;
             attemptsText.text = "Erros: " + attempts;
@@ -167,6 +171,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
         audioSource.PlayOneShot(loseClip);
+
+        lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle);
 
         yield return new WaitWhile(() => audioSource.isPlaying);
 

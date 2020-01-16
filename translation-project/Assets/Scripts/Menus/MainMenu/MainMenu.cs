@@ -33,11 +33,6 @@ public class MainMenu : AbstractScreenReader
 
     void Start()
     {
-        // set the parameter to show the instruction interface when loading the game
-        PlayerPrefs.SetInt("InstructionInterface", 0);
-        // set the saved position int to 0
-        PlayerPrefs.SetInt("Saved", 0);
-
         //// localization
         //LocalizationManager.instance.LoadLocalizedText("locales_ptbr.json");
         
@@ -122,8 +117,8 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
-        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Fotoidentification);
-        async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
+        async = SceneManager.LoadSceneAsync(ScenesNames.M002Einstein);
+        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
 
         loadScreenObject.SetActive(true);
 
