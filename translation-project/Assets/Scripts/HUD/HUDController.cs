@@ -44,6 +44,11 @@ public class HUDController : AbstractScreenReader {
     public AudioClip openBagClip;
     public AudioClip closeBagClip;
 
+    public GameObject map;
+    public TextMeshProUGUI mapText;
+
+    public string missionNumber;
+
     private void Start()
     {
         // "InstructionInterface" set on the main menu script
@@ -140,6 +145,25 @@ public class HUDController : AbstractScreenReader {
         if(Input.GetKeyDown(InputKeys.INVENTORY_KEY))
         {
             HandleBagBar();
+        }
+
+        if (Input.GetKeyDown(InputKeys.MAP_KEY))
+        {
+            if (map.activeSelf)
+                map.SetActive(false);
+            else
+            {
+                map.SetActive(true);
+                switch(mapText.text)
+                {
+                    case "M002":
+                        ReadText("");
+                        break;
+                    case "M004":
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
+                        break;
+                }
+            }
         }
     }
 

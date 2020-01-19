@@ -19,6 +19,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public AudioClip zoomInClip;
     public AudioClip zoomOutClip;
     public AudioClip avisoClip;
+    public AudioClip closeClip;
 
     // content panel objects
     public GameObject panelInstruction;
@@ -47,9 +48,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // camera
     public new Camera camera;
 
-    // instructions texts
-    private ReadableTexts readableTexts;
-
     // array containing the 8 indexes for photo
     // sort the array for randomization
     private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7};
@@ -61,7 +59,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     
     private void Start()
     {
-        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
 
         // randomize the indexes
         System.Random r = new System.Random();
@@ -101,17 +98,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             HandlePhoto();
         }
 
-        // close the catalog panel
-        if(Input.GetKeyDown(KeyCode.Escape) && panelContent.activeSelf)
-        {
-            panelContent.SetActive(false);
-            ReadText("Catálogo fechado");
-        }
-
         // repeat instructions
-        if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !panelContent.activeSelf)
         {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_camera, LocalizationManager.instance.GetLozalization()));
         }
 
         // zoom only when overlay is enabled
@@ -126,8 +116,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         panelInstruction.SetActive(false);
         backButton.interactable = true;
         //resetButton.interactable = true;
-        ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
-        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
+        //ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_camera, LocalizationManager.instance.GetLozalization()));
     }
 
     public void HandlePhoto()
@@ -168,9 +158,11 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
             warningInterface.GetComponentInChildren<Button>().Select();
 
-            Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
+            //Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
 
             audioSource.PlayOneShot(avisoClip);
+
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_aviso, LocalizationManager.instance.GetLozalization()));
 
             // set the screenshot on panel image
             panelImage.sprite = cenario;
@@ -180,8 +172,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         }
 
         saveButton.Select();
-
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
     }
 
     private void HandleCameraZoom()
@@ -323,7 +313,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         // activate the content panel and speak the instructions (accessibility only)
         // set the button inactive
         panelContent.SetActive(true);
-        if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelMissionController>().ReadInstructions();
+
         saveButton.Select();
 
         // set the screenshot on panel image

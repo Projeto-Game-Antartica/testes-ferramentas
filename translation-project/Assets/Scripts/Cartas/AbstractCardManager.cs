@@ -102,17 +102,15 @@ public abstract class AbstractCardManager : AbstractScreenReader {
     public void NextCard()
     {
         cardIndex++;
-
-        if(minijogosDicas.hints.Length > 0)
-            minijogosDicas.SetHintByIndex(cardIndex);
-
+        
         if (cardIndex < sprites.Length)
         {
             currentImage.sprite = nextImage.sprite;
             currentImage.name = sprites[cardIndex].name;
             cardName.text = currentImage.name;
 
-            Debug.Log(cardName.text);
+            Debug.Log("Novo alimento: " + cardName.text);
+            ReadText("Novo alimento: " + cardName.text);
 
             if (cardIndex < sprites.Length - 1)
             {
@@ -127,6 +125,10 @@ public abstract class AbstractCardManager : AbstractScreenReader {
                 nextImage.name = sprites[cardIndex+1].name;
             }
         }
+
+        // read the hint
+        if (minijogosDicas.hints.Length > 0)
+            minijogosDicas.SetHintByIndex(cardIndex);
 
         ResetPosition();
     }

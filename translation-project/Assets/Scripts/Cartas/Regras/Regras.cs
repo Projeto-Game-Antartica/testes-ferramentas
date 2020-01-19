@@ -13,7 +13,7 @@ public class Regras : AbstractCardManager {
     private int totalCards = 30;
     private int cardsNumber;
 
-    private bool[] selectedCards;
+    //private bool[] selectedCards;
 
     public AudioSource audioSource;
 
@@ -96,11 +96,11 @@ public class Regras : AbstractCardManager {
     {
         cardIndex = 0;
 
-        selectedCards = new bool[sprites.Length];
+        //selectedCards = new bool[sprites.Length];
 
         // selectedCards starts with false value
-        for (int i = 0; i < selectedCards.Length; i++)
-            selectedCards[i] = false;
+        //for (int i = 0; i < selectedCards.Length; i++)
+        //    selectedCards[i] = false;
 
         cardsNumber = sprites.Length;
 
@@ -133,8 +133,8 @@ public class Regras : AbstractCardManager {
     {
         cardCount++;
 
-        if (cardCount == totalCards || cardCount == cardsNumber)
-            cardCount = 0;
+        //if (cardCount == totalCards || cardCount == cardsNumber)
+        //    cardCount = 0;
         
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         
@@ -146,8 +146,8 @@ public class Regras : AbstractCardManager {
         cardCount++;
         likeCount++;
 
-        if (cardCount == totalCards || cardCount == cardsNumber)
-            cardCount = 0;
+        //if (cardCount == totalCards || cardCount == cardsNumber)
+        //    cardCount = 0;
 
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         CardCount.text = "Regras escolhidas: " + likeCount + "/" + rulesNumber;
@@ -155,27 +155,29 @@ public class Regras : AbstractCardManager {
         cardsPoints(currentImage.name);
 
         // card is selected
-        if(cardIndex >= 0 && cardIndex < totalCards)
-            selectedCards[cardIndex] = true;
+        //if(cardIndex >= 0 && cardIndex < totalCards)
+        //    selectedCards[cardIndex] = true;
 
         NextCard();
 
+        Debug.Log(likeCount);
+
         if (likeCount >= rulesNumber)
         {
-            EndGame(true);
+            StartCoroutine(EndGame(true));
         }
     }
 
-    private int GetCardsLeft()
-    {
-        int result = 0;
+    //private int GetCardsLeft()
+    //{
+    //    int result = 0;
 
-        for (int i = 0; i < selectedCards.Length; i++)
-            if (selectedCards[i] == false)
-                result++;
+    //    for (int i = 0; i < selectedCards.Length; i++)
+    //        if (selectedCards[i] == false)
+    //            result++;
 
-        return result - 1;
-    }
+    //    return result - 1;
+    //}
 
     // set the experience points
     public void cardsPoints(string cardName)
@@ -279,17 +281,20 @@ public class Regras : AbstractCardManager {
 
     public new void NextCard()
     {
+        if (cardIndex == -1)
+            StartCoroutine(EndGame(true));
+
         cardIndex++;
 
         // find next not selected card (if card was selected, its index is true)
-        while (selectedCards[cardIndex] == true)
-        {
-            cardIndex++;
+        //while (selectedCards[cardIndex] == true)
+        //{
+        //    cardIndex++;
 
-            // check if cardIndex have finished
-            if (cardIndex > sprites.Length - 1)
-                cardIndex = 0;
-        }
+        //    // check if cardIndex have finished
+        //    if (cardIndex > sprites.Length - 1)
+        //        cardIndex = 0;
+        //}
 
         ReadCard(cardIndex);
 
@@ -319,8 +324,8 @@ public class Regras : AbstractCardManager {
                 //nextImage.name = sprites[cardIndex+1].name;
                 nextImage.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
-                cardsNumber = GetCardsLeft();
-                Debug.Log(cardsNumber);
+                //cardsNumber = GetCardsLeft();
+                //Debug.Log(cardsNumber);
             }
         }
 
@@ -331,8 +336,8 @@ public class Regras : AbstractCardManager {
 
     public void ReadCard(int index)
     {
-        Debug.Log(RegrasText.GetRegra(index));
-        ReadText(RegrasText.GetRegra(index));
+        Debug.Log("Nova Regra: " + RegrasText.GetRegra(index));
+        ReadText("Nova Regra: " + RegrasText.GetRegra(index));
     }
 
     public IEnumerator EndGame(bool win)

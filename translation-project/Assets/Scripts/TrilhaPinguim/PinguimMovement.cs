@@ -13,6 +13,10 @@ public class PinguimMovement : AbstractScreenReader {
     public AudioClip pinguimFonteClip;
     public AudioClip bloqueioClip;
 
+    public SpriteRenderer adeliaIcon;
+    public SpriteRenderer antarticoIcon;
+    public SpriteRenderer papuaIcon;
+
     private int pinguimPosition = 0;
 
     private void Update()
@@ -50,7 +54,7 @@ public class PinguimMovement : AbstractScreenReader {
             pinguimController.adeliaFinished = true;
             pinguimController.adeliaButton.interactable = false;
             pinguimController.pinguim_adelia.SetActive(false);
-            pinguimController.adeliaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+            adeliaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
             audioSource.PlayOneShot(pinguimFonteClip);
         }
 
@@ -59,7 +63,7 @@ public class PinguimMovement : AbstractScreenReader {
             pinguimController.antarticoFinished = true;
             pinguimController.antarticoButton.interactable = false;
             pinguimController.pinguim_antartico.SetActive(false);
-            pinguimController.antarticoIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+            antarticoIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
             audioSource.PlayOneShot(pinguimFonteClip);
         }
 
@@ -68,7 +72,7 @@ public class PinguimMovement : AbstractScreenReader {
             pinguimController.papuaFinished = true;
             pinguimController.papuaButton.interactable = false;
             pinguimController.pinguim_papua.SetActive(false);
-            pinguimController.papuaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+            papuaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
             audioSource.PlayOneShot(pinguimFonteClip);
         }
 
@@ -101,7 +105,7 @@ public class PinguimMovement : AbstractScreenReader {
         }
     }
 
-    private void ReadPinguimPosition()
+    public void ReadPinguimPosition()
     {
         string pinguimName = gameObject.name.Replace("_", " ");
 

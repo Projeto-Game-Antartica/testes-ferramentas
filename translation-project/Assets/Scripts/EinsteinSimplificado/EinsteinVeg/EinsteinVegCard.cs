@@ -70,7 +70,7 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         
         GameObject text = Instantiate(proccessTextPrefab);
         text.transform.SetParent(transform, false);
-        text.GetComponent<TMPro.TextMeshProUGUI>().text = cardText;
+        text.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cardText;
 
 
         GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -168,6 +168,6 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         GameObject text = Instantiate(proccessTextPrefab);
         text.transform.SetParent(transform, false);
 
-        text.GetComponent<TMPro.TextMeshProUGUI>().text = EinsteinVegCardContent.GetText(cardName);
+        text.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = EinsteinVegCardContent.GetText(cardName);
     }
 }

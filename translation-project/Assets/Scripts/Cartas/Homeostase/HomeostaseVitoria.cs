@@ -55,6 +55,9 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
         isOnLikeButton = true;
         minijogoDicas.ShowIsolatedHint(initialHint);
+
+        Debug.Log(initialHint);
+        ReadText(initialHint);
 	}
 	
 	// Update is called once per frame

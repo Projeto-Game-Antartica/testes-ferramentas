@@ -36,6 +36,7 @@ public class Homeostase : AbstractCardManager
 
     private int alimentosCestaIndex = 20;
 
+    public GameObject cestaAberta;
     public GameObject alimentoCestaPrefab;
 
     private List<GameObject> alimentosCestaList;
@@ -61,17 +62,24 @@ public class Homeostase : AbstractCardManager
             instruction_interface.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (instruction_interface.activeSelf)
             {
                 audioSource.PlayOneShot(closeClip);
                 instruction_interface.SetActive(false);
             }
+            else if (cestaAberta.activeSelf)
+            {
+                audioSource.PlayOneShot(closeClip);
+                cestaAberta.SetActive(false);
+            }
             else
             {
+                Debug.Log("por aqui");
                 TryReturnToCasaUshuaia();
             }
+
         }
 
         if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
@@ -125,7 +133,7 @@ public class Homeostase : AbstractCardManager
         currentImage.name = sprites[cardIndex].name;
         cardName.text = currentImage.name;
 
-        Debug.Log(cardName.text);
+        //Debug.Log(cardName.text);
 
         nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
         nextImage.name = sprites[cardIndex + 1].name;
@@ -137,6 +145,8 @@ public class Homeostase : AbstractCardManager
         {
             alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
         }
+
+        ReadCard(cardIndex);
 
         // show first hint
         minijogosDicas.SetHintByIndex(cardIndex);
@@ -199,257 +209,273 @@ public class Homeostase : AbstractCardManager
 
     public void CheckCalories(string cardName, bool add)
     {
+        float alimentoKcal = 0;
+
         switch (cardName.ToLower())
         {
             case "abacate":
                 if (add)
                 {
-                    kcal += 160;
+                    alimentoKcal = 160;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 160;
+                    alimentoKcal = -160;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "ameixa seca":
                 if (add)
                 {
-                    kcal += 240;
+                    alimentoKcal = 240;
                     iconsController.AddPoints(0.02f, -0.02f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 240;
+                    alimentoKcal = -240;
                     iconsController.AddPoints(-0.02f, 0.02f, +0.08f);
                 }
                 break;
             case "amendoas":
                 if (add)
                 {
-                    kcal += 579;
+                    alimentoKcal = 579;
                     iconsController.AddPoints(0.02f, -0.02f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 579;
+                    alimentoKcal = -579;
                     iconsController.AddPoints(-0.02f, 0.02f, +0.08f);
                 }
                 break;
             case "banana":
                 if (add)
                 {
-                    kcal += 98;
+                    alimentoKcal = 98;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 98;
+                    alimentoKcal = -98;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "barrinha de cereal":
                 if (add)
                 {
-                    kcal += 86;
+                    alimentoKcal = 86;
                     iconsController.AddPoints(0.05f, -0.02f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 86;
+                    alimentoKcal = -86;
                     iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
                 }
                 break;
             case "batata doce":
                 if (add)
                 {
-                    kcal += 86;
+                    alimentoKcal = 86;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 86;
+                    alimentoKcal = -86;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "cenoura":
                 if (add)
                 {
-                    kcal += 36;
+                    alimentoKcal = 36;
                     iconsController.AddPoints(0.05f, -0.04f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 36;
+                    alimentoKcal = -36;
                     iconsController.AddPoints(0.05f, -0.04f, 0.08f);
                 }
                 break;
             case "chocolate":
                 if (add)
                 {
-                    kcal += 139;
+                    alimentoKcal = 139;
                     iconsController.AddPoints(0.05f, -0.04f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 139;
+                    alimentoKcal = -139;
                     iconsController.AddPoints(-0.05f, 0.04f, 0.08f);
                 }
                 break;
             case "figo":
                 if (add)
                 {
-                    kcal += 249;
+                    alimentoKcal = 249;
                     iconsController.AddPoints(0.02f, -0.02f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 249;
+                    alimentoKcal = -249;
                     iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
                 }
                 break;
             case "agua":
                 if (add)
                 {
-                    kcal += 0;
+                    alimentoKcal = 0;
                     iconsController.AddPoints(0.05f, 0.08f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 0;
+                    alimentoKcal = 0;
                     iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
                 }
                 break;
             case "laranja":
                 if (add)
                 {
-                    kcal += 47;
+                    alimentoKcal = 47;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 47;
+                    alimentoKcal = -47;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "leite de soja":
                 if (add)
                 {
-                    kcal += 82;
+                    alimentoKcal = 82;
                     iconsController.AddPoints(0.05f, 0.08f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 82;
+                    alimentoKcal = -82;
                     iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
                 }
                 break;
             case "leite desnatado":
                 if (add)
                 {
-                    kcal += 63;
+                    alimentoKcal = 63;
                     iconsController.AddPoints(0.05f, 0.08f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 63;
+                    alimentoKcal = -63;
                     iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
                 }
                 break;
             case "maca":
                 if (add)
                 {
-                    kcal += 52;
+                    alimentoKcal = 52;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 52;
+                    alimentoKcal = -52;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "melancia":
                 if (add)
                 {
-                    kcal += 30;
+                    alimentoKcal = 30;
                     iconsController.AddPoints(0.05f, -0.04f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 30;
+                    alimentoKcal = -30;
                     iconsController.AddPoints(-0.05f, 0.04f, -0.08f);
                 }
                 break;
             case "pao":
                 if (add)
                 {
-                    kcal += 126.5f;
+                    alimentoKcal = 126.5f;
                     iconsController.AddPoints(0.05f, 0.08f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 126.5f;
+                    alimentoKcal = -126.5f;
                     iconsController.AddPoints(-0.05f, -0.08f, -0.08f);
                 }
                 break;
             case "queijo cheddar":
                 if (add)
                 {
-                    kcal += 402.66f;
+                    alimentoKcal = 402.66f;
                     iconsController.AddPoints(0.05f, -0.02f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 402.66f;
+                    alimentoKcal = -402.66f;
                     iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
                 }
                 break;
             case "queijo mussarela":
                 if (add)
                 {
-                    kcal += 318;
+                    alimentoKcal = 318;
                     iconsController.AddPoints(0.05f, -0.02f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 318;
+                    alimentoKcal = -318;
                     iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
                 }
                 break;
             case "semente de abobora":
                 if (add)
                 {
-                    kcal += 559;
+                    alimentoKcal = 559;
                     iconsController.AddPoints(0.02f, -0.02f, 0.08f);
                 }
                 else
                 {
-                    kcal -= 559;
+                    alimentoKcal = -559;
                     iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
                 }
                 break;
             case "suco laranja":
                 if (add)
                 {
-                    kcal += 54.45f;
+                    alimentoKcal = 54.45f;
                     iconsController.AddPoints(0.05f, 0.08f, -0.08f);
                 }
                 else
                 {
-                    kcal -= 54.45f;
+                    alimentoKcal = -54.45f;
                     iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
                 }
                 break;
             default:
-                    kcal += 0;
+                    alimentoKcal = 0;
                 break;
         }
+        
+        if(alimentoKcal >= 0)
+        {
+            Debug.Log("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
+            ReadText("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
+        }
+        else
+        {
+            Debug.Log("Removido alimento com " + alimentoKcal + " calorias a cesta");
+            ReadText("Removido alimento com " + alimentoKcal + " calorias a cesta");
+        }
+
+        kcal += alimentoKcal;
 
         // normalize
         kcalBar.fillAmount = kcal / MAX_KCAL;
 
-        Debug.Log("Você está levando " + kcal + "/" + MAX_KCAL + " kcal");
+        Debug.Log("Você está levando " + kcal + " kcal na cesta.");
+        ReadText("Você está levando " + kcal + " kcal na cesta.");
 
         // cesta cheia, não pode colocar mais comida.
         if (kcalBar.fillAmount == 1)
@@ -457,8 +483,10 @@ public class Homeostase : AbstractCardManager
             isDone = true;
             //likeButton.interactable = false;
             Debug.Log("Atingido o máximo de calorias");
+            ReadText("Atingido o máximo de calorias");
 
             satisfeitoButton.interactable = true;
+            satisfeitoButton.Select();
         }
         else
             satisfeitoButton.interactable = false;
@@ -478,8 +506,7 @@ public class Homeostase : AbstractCardManager
         alimentosCesta[index].GetComponentsInChildren<Image>()[1].color = new Color(1, 1, 1, 0);
         alimentosCesta[index].GetComponentInChildren<Button>().interactable = false;
         alimentosCesta[index].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
-        alimentosCesta[index].gameObject.name = "alimentoItem " + index;
-
+        
         try
         {
             Debug.Log("alimento: " + alimentosCesta[index].gameObject.name);
@@ -490,6 +517,8 @@ public class Homeostase : AbstractCardManager
             CheckCalories(result.name, false);
 
             alimentosCestaList.Remove(result);
+
+            alimentosCesta[index].gameObject.name = "alimentoItem " + index;
         }
         catch (Exception ex)
         {

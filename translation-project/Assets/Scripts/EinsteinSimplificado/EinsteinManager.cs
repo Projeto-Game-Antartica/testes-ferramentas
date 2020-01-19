@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class EinsteinManager : AbstractScreenReader
 {
-    private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
+    //private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
     // round 0
     public Sprite[] cardFace;
@@ -74,7 +74,10 @@ public class EinsteinManager : AbstractScreenReader
 
     private int attempts = 3;
     private int tries = 0;
-    private bool isOnCards;
+
+    private int selectedArea;
+    private bool isOnMenu;
+
     private bool finished = false;
 
     public TMPro.TextMeshProUGUI attemptsText;
@@ -82,11 +85,12 @@ public class EinsteinManager : AbstractScreenReader
     private void Start()
     {
         resetButton.interactable = false;
-        isOnCards = false;
+        selectedArea = 0;
+        isOnMenu = false;
 
         init = false;
 
-        ReadText(instructions);
+        //ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
 
@@ -111,20 +115,33 @@ public class EinsteinManager : AbstractScreenReader
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            audioButton.Select();
+            if (!isOnMenu)
+                audioButton.Select();
+            else
+                SelectNextAvailableCard();
+
+            isOnMenu = !isOnMenu;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            if (!isOnCards)
+            selectedArea = (selectedArea + 1) % 3;
+
+            if (selectedArea == 0)
             {
                 SelectNextAvailableCard();
-                isOnCards = true;
+            }
+            else if (selectedArea == 1 && processDropDown.interactable)
+            {
+                processDropDown.Select();
+            }
+            else if (selectedArea == 2 && cancelButton.interactable)
+            {
+                cancelButton.Select();
             }
             else
             {
-                processDropDown.Select();
-                isOnCards = false;
+                selectedArea = (selectedArea + 1) % 3;
             }
         }
 
@@ -398,7 +415,10 @@ public class EinsteinManager : AbstractScreenReader
             Debug.Log("Tentativa " + tries + " de " + attempts);
         }
         else
+        {
             audioSource.PlayOneShot(correctAudio);
+
+        }
 
         // loses the game
         if (tries > attempts)
@@ -414,26 +434,29 @@ public class EinsteinManager : AbstractScreenReader
     {
         if (win)
         {
-            WinImage.SetActive(true);
-
-            PlayerPreferences.M002_ProcessoPesquisa = true;
-
-            //WinImage.GetComponentInChildren<Button>().Select();
-
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
-
             if (!finished)
             {
                 finished = true;
+                WinImage.SetActive(true);
+
+                PlayerPreferences.M002_ProcessoPesquisa = true;
+
+                //WinImage.GetComponentInChildren<Button>().Select();
+
+                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            
+                
                 audioSource.PlayOneShot(victoryClip);
+            
+
+                yield return new WaitWhile(() => audioSource.isPlaying);
+
+                ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
+
+                lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+                lifeExpController.AddEXP(5*PlayerPreferences.XPwinItem); // ganhou o item
             }
-
-            yield return new WaitWhile(() => audioSource.isPlaying);
-
-            ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
-
-            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
-            lifeExpController.AddEXP(5*PlayerPreferences.XPwinItem); // ganhou o item
         }
         else
         {
@@ -649,7 +672,7 @@ public class EinsteinManager : AbstractScreenReader
             {
                 ec.GetComponent<Button>().Select();
                 Debug.Log(ec.name + " selected");
-                isOnCards = true;
+                selectedArea = 0;
                 break;
             }
         }
@@ -661,30 +684,51 @@ public class EinsteinManager : AbstractScreenReader
         ReadText(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
     }
 
-    public void ReadDropDownItem(TextMeshProUGUI item)
+    public void ReadDropDownItem(RectTransform item)
     {
         string result = "";
+        string itemText = item.GetComponentInChildren<TextMeshProUGUI>().text;
 
-        switch (item.text)
+        switch (itemText)
         {
             case "A metodologia desta Ciência Cidadã é a Fotoidentificação.":
-                if (GetRemainingOptions((int)DropDownColors.blue) == 0) result += " pistas já encontradas. ";
-                result += item.text;
+                if (GetRemainingOptions((int)DropDownColors.blue) == 0)
+                {
+                    result += " pistas já encontradas. ";
+                    item.GetComponentInChildren<Image>().color = blue;
+                }
+                result += itemText;
                 break;
             case "O objetivo desta pesquisa brasileira é investigar o passado biológico na Antártica.":
-                if (GetRemainingOptions((int)DropDownColors.orange) == 0) result += " pistas já encontradas. ";
-                result += item.text;
+                if (GetRemainingOptions((int)DropDownColors.orange) == 0)
+                {
+                    result += " pistas já encontradas. ";
+                    item.GetComponentInChildren<Image>().color = orange;
+                }
+
+                result += itemText;
                 break;
             case "Para colaborar com esta Ciência Cidadã é necessário binóculos e catálogo de imagens.":
-                                if (GetRemainingOptions((int)DropDownColors.green) == 0) result += " pistas já encontradas. ";
-                result += item.text;
+                if (GetRemainingOptions((int)DropDownColors.green) == 0)
+                {
+                    result += " pistas já encontradas. ";
+                    item.GetComponentInChildren<Image>().color = green;
+                }
+
+                result += itemText;
                 break;
             case "Esta pesquisa brasileira estuda a Vegetação Antártica.":
-                                if (GetRemainingOptions((int)DropDownColors.red) == 0) result += " pistas já encontradas. ";
-                result += item.text;
+                if (GetRemainingOptions((int)DropDownColors.red) == 0)
+                {
+                    result += " pistas já encontradas. ";
+                    item.GetComponentInChildren<Image>().color = red;
+                }
+
+                result += itemText;
                 break;
             default:
-                result += item.text;
+                item.GetComponentInChildren<Image>().color = Color.white;
+                result += itemText;
                 break;
         }
 
