@@ -29,7 +29,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
     public Button audioButton;
 
     public int[] index; 
-    private int matches = 6;
+    private int matches = 9;
     private int miss = 0;
 
     private bool init;
@@ -156,7 +156,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
     public void initializeCards()
     {
         // first 9 cards with images
-        for (int i = 1; i < 7; i++)
+        for (int i = 1; i < 10; i++)
         {
             bool test = false;
             int choice = 0;
@@ -177,7 +177,7 @@ public class MemoryManagerPaleo : AbstractScreenReader {
         }
 
         // last 9 images with text
-        for (int i = 1; i < 7; i++)
+        for (int i = 1; i < 10; i++)
         {
             bool test = false;
             int choice = 0;

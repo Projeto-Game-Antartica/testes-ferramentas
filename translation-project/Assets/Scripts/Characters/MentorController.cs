@@ -37,7 +37,7 @@ public class MentorController : MonoBehaviour {
             audioSource.loop = true;
         }
 
-        HandleMinijogoBalloonColor(mentorName);
+        HandleMinijogoBalloonColor(mentorName, missionNumber);
     }
 
     private void Update()
@@ -48,23 +48,42 @@ public class MentorController : MonoBehaviour {
             audioSource.Stop();
     }
 
-    private void HandleMinijogoBalloonColor(string mentorName)
+    private void HandleMinijogoBalloonColor(string mentorName, string missionNumber)
     {
         // mentores com minijogos
-        switch(mentorName)
+        switch(missionNumber)
         {
-            case "Mentor0":
-                if (PlayerPreferences.M004_Memoria) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
-                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
-                break;
-            case "Mentor2":
-                if (PlayerPreferences.M004_TeiaAlimentar) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
-                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
-                break;
-            case "Mentor4":
-                if (PlayerPreferences.M004_FotoIdentificacao) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
-                else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
-                break;
+            case "M004":
+                switch(mentorName)
+                {
+                    case "Mentor0":
+                        if (PlayerPreferences.M004_Memoria) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor2":
+                        if (PlayerPreferences.M004_TeiaAlimentar) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                }
+            break;
+
+            case "M009":
+                switch(mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPreferences.M009_Memoria) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor2":
+                        if (PlayerPreferences.M009_Itens) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor3":
+                        if (PlayerPreferences.M009_Eras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                }
+            break;
         }
     }
 

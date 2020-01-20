@@ -117,7 +117,7 @@ public class EinsteinManager : AbstractScreenReader
             EinsteinCard.DO_NOT = true;
             confirmarButton.interactable = true;
             cancelButton.interactable = true;
-            //Debug.Log(c.Count);
+            Debug.Log(c.Count);
         }
         else if (c != null && c.Count > 0)
         {
@@ -254,6 +254,7 @@ public class EinsteinManager : AbstractScreenReader
 
     void cardComparison(List<int> c)
     {
+        Debug.Log("carta:" +c);
         Card.DO_NOT = true;
         
         int dropDownValue = GetDropDownValue();

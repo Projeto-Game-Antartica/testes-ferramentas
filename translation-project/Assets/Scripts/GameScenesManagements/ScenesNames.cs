@@ -30,5 +30,8 @@ public class ScenesNames {
     /* M009 Paleo */
     public const string M009MemoryGame = "M009MemoryGameScene";
     public const string M009Camp = "M009CampaScene";
+    public const string M009Eras = "M009ErasScene";
+    public const string M009Itens = "M009ItensPaleoScene";
+    public const string M009Desafio = "M009DesafioScene";
 
 }

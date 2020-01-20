@@ -1,0 +1,761 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
+
+
+public class AcampamentoCartas : AbstractCardManager
+{
+    public GameObject WinImage;
+    public TMPro.TextMeshProUGUI WinText;
+    public GameObject LoseImage;
+
+    public Button resetButton;
+    public Button backButton;
+
+    public LifeExpController lifeExpController;
+
+    public GameObject instruction_interface;
+
+    public AudioClip victoryAudio;
+    public AudioClip loseAudio;
+    public AudioClip closeClip;
+    public AudioClip avisoClip;
+
+    public Image fill;
+
+    public Image fills;
+
+    public Image fillm;
+
+    private float coracao;
+
+    private float estrela;
+
+    private float mapa;
+
+    private readonly int MAX_COR = 100;
+    private readonly int MAX_EST = 100;
+    private readonly int MAX_MAP = 100;
+    // Use this for initialization
+
+    private void Start()
+    {
+        resetButton.interactable = false;
+        backButton.interactable = false;
+
+        if (instruction_interface.activeSelf)
+            instruction_interface.GetComponentInChildren<Button>().Select();
+	}
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            instruction_interface.SetActive(true);
+        }
+
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            instruction_interface.SetActive(false);
+        }
+    }
+
+    public void InitializeGame()
+    {
+        cardIndex = 0;
+
+        fill.fillAmount = 0.5f;
+        fills.fillAmount = 0.5f;
+        fillm.fillAmount = 0.5f;
+
+        currentImage.sprite = sprites[cardIndex];
+        currentImage.name = sprites[cardIndex].name;
+        cardName.text = currentImage.name;
+
+        Debug.Log(cardName.text);
+
+        nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
+        nextImage.name = sprites[cardIndex + 1].name;
+
+        initialPosition = currentImage.transform.parent.position;
+
+        resetButton.interactable = true;
+        backButton.interactable = true;
+    }
+
+    public override void CheckLike()
+    {
+        Debug.Log(cardIndex);
+        // do something
+        //cardname
+        switch (currentImage.name.ToLower())
+        {
+            case "abridor de latas":
+                estrela = -1;
+                coracao = 0;
+                mapa = 1;
+                break;
+            case "bandeira":
+                estrela = 3;
+                coracao = 0;
+                mapa = -1;
+                break;
+            case "barraca deposito":
+                estrela = 3;
+                coracao = 2;
+                mapa = 3;
+                break;
+            case "barraca individual":
+                coracao = 1;
+                estrela = 3;
+                mapa = 2;
+                break;
+            case "barraca polar haven":
+                coracao = 1;
+                estrela = 3;
+                mapa = 3;
+                break;
+            case "benjamin T":
+                coracao = -1;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "cadeiras de praia":
+                coracao = 0;
+                estrela = -2;
+                mapa = -1;
+                break;
+            case "cafeteira":
+                coracao = -3;
+                estrela = -2;
+                mapa = -3;
+                break;
+            case "caixas de suprimento":
+                coracao = 2;
+                estrela = 3;
+                mapa = 1;
+                break;
+            case "capa de chuva":
+                coracao = 0;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "carreta de carga":
+                coracao = -1;
+                estrela = 3;
+                mapa = -1;
+                break;
+            case "celular":
+                coracao = 0;
+                estrela = 2;
+                mapa = 0;
+                break;
+            case "chinelo":
+                coracao = 0;
+                estrela = -2;
+                mapa = 0;
+                break;
+            case "combustivel":
+                coracao = 2;
+                estrela = 4;
+                mapa = -2;
+                break;
+            case "copos descartaveis":
+                coracao = -3;
+                estrela = -1;
+                mapa = -3;
+                break;
+            case "detergente":
+                coracao = 3;
+                estrela = -1;
+                mapa = -3;
+                break;
+            case "espelho":
+                coracao = 0;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "espetos":
+                coracao = -2;
+                estrela = -2;
+                mapa = -2;
+                break;
+            case "esponja":
+                coracao = 2;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "estação meteorológica":
+                coracao = 0;
+                estrela = 3;
+                mapa = 0;
+                break;
+            case "fita adesiva":
+                coracao = 0;
+                estrela = 1;
+                mapa = -1;
+                break;
+            case "garrafa témica":
+                coracao = 2;
+                estrela = 4;
+                mapa = 2;
+                break;
+            case "gerador":
+                coracao = 0;
+                estrela = 3;
+                mapa = -1;
+                break;
+            case "guarda-sol":
+                coracao = 0;
+                estrela = -2;
+                mapa = -2;
+                break;
+            case "guardanapos":
+                coracao = 2;
+                estrela = -1;
+                mapa = -2;
+                break;
+            case "gás":
+                coracao = -1;
+                estrela = -2;
+                mapa = -2;
+                break;
+            case "lanterna e pilhas":
+                coracao = 1;
+                estrela = 2;
+                mapa = -2;
+                break;
+            case "lençois e cobertas":
+                coracao = -1;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "luminária":
+                coracao = 1;
+                estrela = 2;
+                mapa = 1;
+                break;
+            case "luvas de protrção":
+                coracao = 2;
+                estrela = 4;
+                mapa = 3;
+                break;
+            case "martelete":
+                coracao = 2;
+                estrela = 4;
+                mapa = -1;
+                break;
+            case "martelo":
+                coracao = 2;
+                estrela = 4;
+                mapa = -1;
+                break;
+            case "mesa":
+                coracao = -1;
+                estrela = -2;
+                mapa = 0;
+                break;
+            case "panela":
+                coracao = -2;
+                estrela = -2;
+                mapa = 0;
+                break;
+            case "papel aluminio":
+                coracao = 2;
+                estrela = 2;
+                mapa = 2;
+                break;
+            case "papel higiênico":
+                coracao = 2;
+                estrela = 2;
+                mapa = -1;
+                break;
+            case "pincel":
+                coracao = 2;
+                estrela = 4;
+                mapa = 2;
+                break;
+            case "pratos":
+                coracao = 1;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "protetor solar":
+                coracao = -2;
+                estrela = 1;
+                mapa = -1;
+                break;
+            case "quadriciclo":
+                coracao = -1;
+                estrela = 3;
+                mapa = -1;
+                break;
+            case "repelente":
+                coracao = 0;
+                estrela = -2;
+                mapa = -3;
+                break;
+            case "sabonete":
+                coracao = 2;
+                estrela = -1;
+                mapa = -1;
+                break;
+            case "saco de dormir":
+                coracao = -1;
+                estrela = 3;
+                mapa = 1;
+                break;
+            case "saco plástico":
+                coracao = 2;
+                estrela = 3;
+                mapa = 2;
+                break;
+            case "sacos para lixo":
+                coracao = 3;
+                estrela = 2;
+                mapa = 2;
+                break;
+            case "talhadeira":
+                coracao = 2;
+                estrela = 4;
+                mapa = -1;
+                break;
+            case "talheres":
+                coracao = 0;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "talheres descatavéis":
+                coracao = 2;
+                estrela = 4;
+                mapa = -1;
+                break;
+            case "tesoura":
+                coracao = 0;
+                estrela = 1;
+                mapa = 1;
+                break;
+            case "toalhas":
+                coracao = 1;
+                estrela = -2;
+                mapa = 0;
+                break;
+            case "tonel":
+                coracao = 2;
+                estrela = 3;
+                mapa = 3;
+                break;
+            case "travesseiros":
+                coracao = 0;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "ventilador pequeno":
+                coracao = 0;
+                estrela = -1;
+                mapa = 0;
+                break;
+            case "óculos de proteção":
+                coracao = 2;
+                estrela = 4;
+                mapa = 2;
+                break;
+
+            default:
+                coracao = 0;
+                estrela = 0;
+                mapa = 0;
+                break;
+        }
+
+        CheckCalories(coracao, estrela, mapa);
+        NextCard();
+    }
+
+    public override void CheckDislike()
+    {
+        switch (currentImage.name.ToLower())
+        {
+            case "abridor de latas":
+                estrela = 1;
+                coracao = 0;
+                mapa =-1;
+                break;
+            case "bandeira":
+                estrela =-3;
+                coracao = 0;
+                mapa = 1;
+                break;
+            case "barraca deposito":
+                estrela =-3;
+                coracao =-2;
+                mapa =-3;
+                break;
+            case "barraca individual":
+                coracao =-1;
+                estrela =-3;
+                mapa =-2;
+                break;
+            case "barraca polar haven":
+                coracao =-1;
+                estrela =-3;
+                mapa =-3;
+                break;
+            case "benjamin T":
+                coracao = 1;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "cadeiras de praia":
+                coracao = 0;
+                estrela = 2;
+                mapa = 1;
+                break;
+            case "cafeteira":
+                coracao = 3;
+                estrela = 2;
+                mapa = 3;
+                break;
+            case "caixas de suprimento":
+                coracao =-2;
+                estrela =-3;
+                mapa =-1;
+                break;
+            case "capa de chuva":
+                coracao = 0;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "carreta de carga":
+                coracao = 1;
+                estrela =-3;
+                mapa = 1;
+                break;
+            case "celular":
+                coracao = 0;
+                estrela =-2;
+                mapa = 0;
+                break;
+            case "chinelo":
+                coracao = 0;
+                estrela = 2;
+                mapa = 0;
+                break;
+            case "combustivel":
+                coracao =-2;
+                estrela =-4;
+                mapa = 2;
+                break;
+            case "copos descartaveis":
+                coracao = 3;
+                estrela = 1;
+                mapa = 3;
+                break;
+            case "detergente":
+                coracao =-3;
+                estrela = 1;
+                mapa = 3;
+                break;
+            case "espelho":
+                coracao = 0;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "espetos":
+                coracao = 2;
+                estrela = 2;
+                mapa = 2;
+                break;
+            case "esponja":
+                coracao =-2;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "estação meteorológica":
+                coracao = 0;
+                estrela =-3;
+                mapa = 0;
+                break;
+            case "fita adesiva":
+                coracao = 0;
+                estrela =-1;
+                mapa = 1;
+                break;
+            case "garrafa témica":
+                coracao =-2;
+                estrela =-4;
+                mapa =-2;
+                break;
+            case "gerador":
+                coracao = 0;
+                estrela =-3;
+                mapa = 1;
+                break;
+            case "guarda-sol":
+                coracao = 0;
+                estrela = 2;
+                mapa = 2;
+                break;
+            case "guardanapos":
+                coracao =-2;
+                estrela = 1;
+                mapa = 2;
+                break;
+            case "gás":
+                coracao = 1;
+                estrela = 2;
+                mapa = 2;
+                break;
+            case "lanterna e pilhas":
+                coracao =-1;
+                estrela =-2;
+                mapa = 2;
+                break;
+            case "lençois e cobertas":
+                coracao = 1;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "luminária":
+                coracao =-1;
+                estrela =-2;
+                mapa =-1;
+                break;
+            case "luvas de protrção":
+                coracao =-2;
+                estrela =-4;
+                mapa =-3;
+                break;
+            case "martelete":
+                coracao =-2;
+                estrela =-4;
+                mapa = 1;
+                break;
+            case "martelo":
+                coracao =-2;
+                estrela =-4;
+                mapa = 1;
+                break;
+            case "mesa":
+                coracao = 1;
+                estrela = 2;
+                mapa = 0;
+                break;
+            case "panela":
+                coracao = 2;
+                estrela = 2;
+                mapa = 0;
+                break;
+            case "papel aluminio":
+                coracao =-2;
+                estrela =-2;
+                mapa =-2;
+                break;
+            case "papel higiênico":
+                coracao =-2;
+                estrela =-2;
+                mapa = 1;
+                break;
+            case "pincel":
+                coracao =-2;
+                estrela =-4;
+                mapa =-2;
+                break;
+            case "pratos":
+                coracao =-1;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "protetor solar":
+                coracao = 2;
+                estrela =-1;
+                mapa = 1;
+                break;
+            case "quadriciclo":
+                coracao = 1;
+                estrela =-3;
+                mapa = 1;
+                break;
+            case "repelente":
+                coracao = 0;
+                estrela = 2;
+                mapa = 3;
+                break;
+            case "sabonete":
+                coracao =-2;
+                estrela = 1;
+                mapa = 1;
+                break;
+            case "saco de dormir":
+                coracao = 1;
+                estrela =-3;
+                mapa =-1;
+                break;
+            case "saco plástico":
+                coracao =-2;
+                estrela =-3;
+                mapa =-2;
+                break;
+            case "sacos para lixo":
+                coracao =-3;
+                estrela =-2;
+                mapa =-2;
+                break;
+            case "talhadeira":
+                coracao =-2;
+                estrela =-4;
+                mapa = 1;
+                break;
+            case "talheres":
+                coracao = 0;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "talheres descatavéis":
+                coracao =-2;
+                estrela =-4;
+                mapa = 1;
+                break;
+            case "tesoura":
+                coracao = 0;
+                estrela =-1;
+                mapa =-1;
+                break;
+            case "toalhas":
+                coracao =-1;
+                estrela = 2;
+                mapa = 0;
+                break;
+            case "tonel":
+                coracao =-2;
+                estrela =-3;
+                mapa =-3;
+                break;
+            case "travesseiros":
+                coracao = 0;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "ventilador pequeno":
+                coracao = 0;
+                estrela = 1;
+                mapa = 0;
+                break;
+            case "óculos de proteção":
+                coracao =-2;
+                estrela =-4;
+                mapa =-2;
+                break;
+
+            default:
+                coracao = 0;
+                estrela = 0;
+                mapa = 0;
+                break;
+        }
+
+        CheckCalories(coracao, estrela, mapa);
+        NextCard();
+    }
+
+    /* private void NextCard()
+    {
+        cardIndex++;
+
+        if (cardIndex < sprites.Length)
+        {
+            currentCard.sprite = nextCard.sprite;
+            currentCard.name = sprites[cardIndex].name;
+            cardName.text = currentCard.name;
+
+            if (cardIndex < sprites.Length - 1)
+            {
+                nextCard.sprite = sprites[cardIndex + 1];
+                nextCard.name = sprites[cardIndex + 1].name;
+            }
+        }
+        else
+        {
+            Debug.Log("fim das cartas");
+        }
+
+        ResetPosition();
+    }*/
+
+    public void CheckCalories(float coracao, float estrela, float mapa)
+    {
+        // normalize
+        fill.fillAmount += coracao / MAX_COR;
+
+        fills.fillAmount += estrela / MAX_EST;
+
+        fillm.fillAmount += mapa / MAX_MAP;
+    
+        if (fill.fillAmount <= 0.2)
+        {
+            minijogosDicas.GetComponent<MinijogosDicas>().ShowIsolatedHint("Cuidado com a limpeza do acampamento!!");
+            Debug.Log("Cuidado com a limpeza do acampamento!!");
+        }
+            
+        else if (fills.fillAmount <= 0.2)
+        {   
+            minijogosDicas.GetComponent<MinijogosDicas>().ShowIsolatedHint("Cuidado com seus pontos de experiência!!");
+                    //minijogosDicas.SetHintByIndex(1);
+
+            Debug.Log("Cuidado com seus pontos de experiência!!");
+        }
+
+        else if (fillm.fillAmount <= 0.2)
+        {
+            minijogosDicas.GetComponent<MinijogosDicas>().ShowIsolatedHint("A Antártica não pode sofrer mais danos!!");
+                    //minijogosDicas.SetHintByIndex(2);
+
+            Debug.Log("A Antártica não pode sofrer mais danos!");
+        }
+
+        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && cardIndex == 53)
+        {
+            WinImage.SetActive(true);
+
+            PlayerPreferences.M009_Itens = true;
+
+            //audioSource.PlayOneShot(victoryAudio);
+            //yield return new WaitWhile(() => audioSource.isPlaying);
+
+            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+            lifeExpController.AddEXP(0.0002f); // ganhou o item
+
+                                
+	    }
+
+        if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
+        {
+              LoseImage.SetActive(true);
+
+              //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+
+              //audioSource.PlayOneShot(loseAudio);
+
+              //yield return new WaitWhile(() => audioSource.isPlaying);
+
+              //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+              resetButton.Select();
+              lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+              Debug.Log("Zerou um marcador!");
+		}
+    }
+
+    public void ReturnToCamp()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+    }
+
+    public void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Itens);
+    }
+
+}
+ 
