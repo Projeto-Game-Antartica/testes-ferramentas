@@ -281,33 +281,36 @@ public class VIDEUIManager : AbstractScreenReader
                 textPanel.SetActive(true);
                 close.Select();
 
-                switch((string)data.extraVars["Ticket"])
+                switch ((string)data.extraVars["Ticket"])
                 {
                     case "pt1":
                         ticket_pt1.gameObject.SetActive(true);
+                        PlayerPrefs.SetInt("M002_Ticketpt1", 1);
 
-                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
                             ticket_pt2.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt3.gameObject.SetActive(true);
                         break;
                     case "pt2":
                         ticket_pt2.gameObject.SetActive(true);
-                        
-                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                        PlayerPrefs.SetInt("M002_Ticketpt2", 1);
+
+                        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
                             ticket_pt1.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt3.gameObject.SetActive(true);
                         break;
                     case "inteiro":
+                        PlayerPrefs.SetInt("M002_Ticketpt3", 1);
                         ticket_pt3.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
                             ticket_pt1.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt2.gameObject.SetActive(true);
                         break;
                     default:
@@ -329,7 +332,7 @@ public class VIDEUIManager : AbstractScreenReader
 
             if(data.extraVars.ContainsKey("CheckTicket"))
             {
-                if(PlayerPrefs.GetInt("Ticketpt1") == 1 && PlayerPrefs.GetInt("Ticketpt2") == 1)
+                if(PlayerPrefs.GetInt("M002_Ticketpt1") == 1 && PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
                 {
                     CallNext();
                 }

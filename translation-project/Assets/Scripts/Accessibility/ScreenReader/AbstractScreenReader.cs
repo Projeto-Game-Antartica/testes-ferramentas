@@ -47,6 +47,19 @@ public abstract class AbstractScreenReader : MonoBehaviour {
         if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
     }
 
+    // read toggle
+    public void ReadToggle(UnityEngine.UI.Toggle toggle)
+    {
+        var tmp = "";
+
+        if (toggle.isOn)
+            tmp = "verdadeiro";
+        else
+            tmp = "falso";
+
+        ReadText(toggle.name + "" + tmp);
+    }
+
     // play clip when selecting a button
     public static void PlaySelectAudio(AudioSource audioSource, AudioClip audioClip)
     {

@@ -57,7 +57,7 @@ public class CofreAnimation : MonoBehaviour
         closeButton.gameObject.SetActive(true);
         closeButton.Select();
 
-        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
             ticketPt1.gameObject.SetActive(true);
 
         ticketPt2.gameObject.SetActive(true);

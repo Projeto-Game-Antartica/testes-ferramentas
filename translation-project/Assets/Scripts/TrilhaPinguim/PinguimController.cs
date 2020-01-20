@@ -630,17 +630,21 @@ public class PinguimController : DragAndDropController {
         }
         else
         {
-            LoseImage.SetActive(true);
+            if(!finished)
+            {
+                finished = true;
+                LoseImage.SetActive(true);
 
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-            audioSource.PlayOneShot(loseClip);
+                audioSource.PlayOneShot(loseClip);
 
-            yield return new WaitWhile(() => audioSource.isPlaying);
+                yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
-            resetButton.Select();
-            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+                ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                resetButton.Select();
+                lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+            }
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo

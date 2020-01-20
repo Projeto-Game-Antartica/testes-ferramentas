@@ -168,9 +168,9 @@ public class HomeostaseVitoria : AbstractScreenReader {
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
 
             // add the heart points in hp points
-            lifeExpController.AddHP(5000f / heartImage.fillAmount);
+            lifeExpController.AddHP(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
             // add the antartica and star points to xp points
-            lifeExpController.AddEXP(5000f / ((0.6f * starImage.fillAmount) + (0.4f * antarticaImage.fillAmount)));
+            lifeExpController.AddEXP(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
         }
         else
         {

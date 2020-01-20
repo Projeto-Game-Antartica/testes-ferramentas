@@ -51,6 +51,10 @@ public class HUDController : AbstractScreenReader {
 
     private void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt1"));
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt2"));
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt3"));
+        
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
         {

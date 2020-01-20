@@ -45,6 +45,9 @@ public class Regras : AbstractCardManager {
 
     public MinijogoIconsController iconsController;
 
+    private bool isOnMJMenu = false;
+    private bool finished = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
@@ -68,11 +71,18 @@ public class Regras : AbstractCardManager {
         if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
+            ReadText("Você já escolheu " + likeCount + " regras e restam " + (cardsNumber - cardCount) + " regras para escolher");
+            Debug.Log("Você já escolheu " + likeCount + " regras e restam " + (cardsNumber - cardCount) + " regras para escolher");
         }
 
         if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
-            audioButton.Select();
+            if (!isOnMJMenu)
+                audioButton.Select();
+            else
+                likeButton.Select();
+
+            isOnMJMenu = !isOnMJMenu;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -281,8 +291,10 @@ public class Regras : AbstractCardManager {
 
     public new void NextCard()
     {
-        if (cardIndex == -1)
+        if (cardIndex == -1 && !finished)
+        {
             StartCoroutine(EndGame(true));
+        }
 
         cardIndex++;
 
@@ -342,6 +354,7 @@ public class Regras : AbstractCardManager {
 
     public IEnumerator EndGame(bool win)
     {
+        finished = true;
         if (win)
         {
             likeButton.interactable = false;
@@ -355,15 +368,18 @@ public class Regras : AbstractCardManager {
 
             yield return new WaitWhile(() => audioSource.isPlaying);
             
-            ReadText("Parabéns, você conseguiu mais alguns itens necessários para sua aventura na antártica!");
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: óculos escuros, filtro solar e a mochila.");
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
 
             // add the heart points in hp points
-            lifeExpController.AddHP(5000f / heartImage.fillAmount);
+            lifeExpController.AddHP(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
             // add the antartica and star points to xp points
-            lifeExpController.AddEXP(5000f / ((0.6f * starImage.fillAmount) + (0.4f * antarticaImage.fillAmount)));
+            lifeExpController.AddEXP(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
+
+            Debug.Log(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
+            Debug.Log(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
         }
         else
         {

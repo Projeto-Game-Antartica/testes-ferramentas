@@ -126,22 +126,26 @@ public class EinsteinManager : AbstractScreenReader
         if (Input.GetKeyDown(KeyCode.F6))
         {
             selectedArea = (selectedArea + 1) % 3;
+            
+            if (selectedArea == 1)
+            {
+                if (processDropDown.interactable)
+                    processDropDown.Select();
+                else
+                    selectedArea = 2;
+            }
+
+            if (selectedArea == 2)
+            {
+                if (cancelButton.interactable)
+                    cancelButton.Select();
+                else
+                    selectedArea = 0;
+            }
 
             if (selectedArea == 0)
             {
                 SelectNextAvailableCard();
-            }
-            else if (selectedArea == 1 && processDropDown.interactable)
-            {
-                processDropDown.Select();
-            }
-            else if (selectedArea == 2 && cancelButton.interactable)
-            {
-                cancelButton.Select();
-            }
-            else
-            {
-                selectedArea = (selectedArea + 1) % 3;
             }
         }
 
