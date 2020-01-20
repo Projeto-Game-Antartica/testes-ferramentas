@@ -28,36 +28,67 @@ public class PlayerPreferences : MonoBehaviour {
     public static float XPwinMission = 0.006f;
     public static float HPwinMission = 0.006f;
 
+    private int firstRun;
+
     private void Start()
     {
-        // set the parameter to show the instruction interface when loading the game
-        PlayerPrefs.SetInt("InstructionInterface", 0);
-        
-        // set the saved position int to 0
-        PlayerPrefs.SetInt("Saved", 0);
+        firstRun = PlayerPrefs.GetInt("firstRun", 0);
+        LoadAndSetPlayerPreferences(firstRun);
+    }
 
-        // ingame player preferences
-        PlayerPrefs.SetFloat("Experience", 0f);
-        PlayerPrefs.SetFloat("HealthPoints", 1f);
-        
-        // set the dialogues to not read (0)
-        // when the dialogue is read (1), the balloon change its color to green
-        
-        // M004
-        PlayerPrefs.SetInt("M004_Mentor1_Dialogue", 0);
-        PlayerPrefs.SetInt("M004_Mentor3_Dialogue", 0);
-        // M002
-        PlayerPrefs.SetInt("M002_Mentor1_Dialogue2", 0);
-        PlayerPrefs.SetInt("M002_Mentor2_Dialogue2", 0);
-        PlayerPrefs.SetInt("M002_Mentor3_Dialogue1", 0);
-        PlayerPrefs.SetInt("M002_Mentor4_Dialogue1", 0);
-        PlayerPrefs.SetInt("M002_Ticketpt1", 0);
-        PlayerPrefs.SetInt("M002_Ticketpt2", 0);
-        PlayerPrefs.SetInt("M002_Ticketpt3", 0);
+    private void LoadAndSetPlayerPreferences(int firstRun)
+    {
+        // first time playing the game, initialize with default values
+        if(firstRun == 0)
+        {
+            firstRun = 1;
+            
+            // set the parameter to show the instruction interface when loading the game
+            PlayerPrefs.SetInt("InstructionInterface", 0);
+
+            // set the saved position int to 0
+            PlayerPrefs.SetInt("Saved", 0);
+
+            // volume settings
+            PlayerPrefs.SetFloat("MusicVolume", 1f);
+
+            // ingame player preferences
+            PlayerPrefs.SetFloat("Experience", 0f);
+            PlayerPrefs.SetFloat("HealthPoints", 1f);
+
+            // set the dialogues to not read (0)
+            // when the dialogue is read (1), the balloon change its color to green
+
+            // M004
+            PlayerPrefs.SetInt("M004_Mentor1_Dialogue", 0);
+            PlayerPrefs.SetInt("M004_Mentor3_Dialogue", 0);
+            // M002
+            PlayerPrefs.SetInt("M002_Mentor1_Dialogue2", 0);
+            PlayerPrefs.SetInt("M002_Mentor2_Dialogue2", 0);
+            PlayerPrefs.SetInt("M002_Mentor3_Dialogue1", 0);
+            PlayerPrefs.SetInt("M002_Mentor4_Dialogue1", 0);
+            PlayerPrefs.SetInt("M002_Ticketpt1", 0);
+            PlayerPrefs.SetInt("M002_Ticketpt2", 0);
+            PlayerPrefs.SetInt("M002_Ticketpt3", 0);
+        }
+        else // not the first time, use the player prefs to load positions
+        {
+            // do something else
+        }
     }
 
     public static bool finishedAllM004Games()
     {
         return M004_FotoIdentificacao && M004_Memoria && M004_TeiaAlimentar;
+    }
+
+    public static float calculateMJExperiencePoints(float expPoints, float antarticaPoints)
+    {
+        return (0.6f * expPoints + 0.4f * antarticaPoints) / 5000f;
+    }
+
+    public static float calculateMJExperiencePoints(float heartPoints)
+    {
+        return heartPoints / 5000f;
     }
 }   

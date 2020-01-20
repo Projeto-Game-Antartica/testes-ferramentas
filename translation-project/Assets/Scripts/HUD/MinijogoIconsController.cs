@@ -21,6 +21,14 @@ public class MinijogoIconsController : AbstractScreenReader {
         AntarticaImage.fillAmount = PlayerPrefs.GetFloat("MJAntartica");
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            ReadHPandEXP();
+        }
+    }
+
     public void AddPoints(float heartPoints, float starPoints, float antarticaPoints)
     {
         HeartImage.fillAmount += heartPoints;

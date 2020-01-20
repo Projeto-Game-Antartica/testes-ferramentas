@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class CofreAnimation : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip cofreClip;
+
     public Animator animator;
     public SpriteRenderer ticketSprite;
     public CircleCollider2D circleCollider2D;
@@ -13,11 +16,15 @@ public class CofreAnimation : MonoBehaviour
     public Image ticketPt2;
     public Button closeButton;
 
+    private bool opened;
+
     int i = 0;
     
     // Start is called before the first frame update
     void Start()
     {
+        opened = false;
+
         animator.SetBool("open", false);
     }
 
@@ -25,7 +32,7 @@ public class CofreAnimation : MonoBehaviour
     void Update()
     {
         // condition to open the locker
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (PlayerPreferences.M002_Homeostase && !opened)
         {
             StartCoroutine(OpenLocker());
         }
@@ -33,7 +40,11 @@ public class CofreAnimation : MonoBehaviour
 
     private IEnumerator OpenLocker()
     {
+        opened = true;
+
         animator.SetBool("open", true);
+
+        audioSource.PlayOneShot(cofreClip);
 
         yield return new WaitForSeconds(1);
 
@@ -46,7 +57,7 @@ public class CofreAnimation : MonoBehaviour
         closeButton.gameObject.SetActive(true);
         closeButton.Select();
 
-        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
             ticketPt1.gameObject.SetActive(true);
 
         ticketPt2.gameObject.SetActive(true);

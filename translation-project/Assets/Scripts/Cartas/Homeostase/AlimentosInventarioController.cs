@@ -29,7 +29,12 @@ public class AlimentosInventarioController : AbstractScreenReader, ISelectHandle
         confirmPanel.SetActive(true);
 
         confirmText.text = "Tem certeza que deseja remover o (a) " + alimento.GetComponent<Image>().sprite.name + " da cesta?";
-        Debug.Log(alimento.GetComponent<Image>().sprite.name);
+
+        Debug.Log(confirmText.text);
+        ReadText(confirmText.text);
+
+        //Debug.Log(alimento.GetComponent<Image>().sprite.name);
+
         confirmImage.sprite = alimento.GetComponent<Image>().sprite;
 
         confirmPanel.GetComponentInChildren<Button>().Select();
@@ -43,9 +48,14 @@ public class AlimentosInventarioController : AbstractScreenReader, ISelectHandle
         Debug.Log("confirmar remover index: " + index);
         homeostase.RemoverAlimentoCesta(index);
 
+        Debug.Log("Alimento removido com sucesso.");
+        ReadText("Alimento removido com sucesso.");
+
         confirmPanel.SetActive(false);
 
         removeButton.onClick.RemoveAllListeners();
+
+        GetComponent<Selectable>().Select();
     }
 
     public void OnSelect(BaseEventData eventData)

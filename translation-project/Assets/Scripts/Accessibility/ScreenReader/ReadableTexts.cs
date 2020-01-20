@@ -84,8 +84,8 @@ public class ReadableTexts : MonoBehaviour
     /*
      * Keys to JSON readabletexts file
      */
-    
-        // prejogo
+
+    // prejogo
     public static string key_prejogo_menu = "prejogo_menu"; 
     public static string key_prejogo_config = "prejogo_config"; 
     public static string key_prejogo_ajuda = "prejogo_ajuda"; 
@@ -124,6 +124,12 @@ public class ReadableTexts : MonoBehaviour
     public static string key_m004_teia = "m004_teia"; 
     public static string key_m004_teia_vitoria = "m004_teia_vitoria"; 
     public static string key_m004_teia_derrota = "m004_teia_derrota";
+    public static string key_m004_desafio_instrucao = "m004_desafio_instrucao";
+    public static string key_m004_desafio_camera = "m004_desafio_camera";
+    public static string key_m004_desafio_catalogo = "m004_desafio_catalogo";
+    public static string key_m004_desafio_aviso = "m004_desafio_aviso";
+    public static string key_m004_desafio_sucesso = "m004_desafio_sucesso";
+    public static string key_m004_navio_mapa = "m004_navio_mapa";
 
 
 

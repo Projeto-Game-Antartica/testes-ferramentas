@@ -16,10 +16,6 @@ public class PinguimController : DragAndDropController {
     public Button antarticoButton;
     public Button papuaButton;
 
-    public Image adeliaIcon;
-    public Image antarticoIcon;
-    public Image papuaIcon;
-
     private Animator pinguim_adeliaAnimator;
     private Animator pinguim_antarticoAnimator;
     private Animator pinguim_papuaAnimator;
@@ -59,6 +55,10 @@ public class PinguimController : DragAndDropController {
 
     public Button resetButton;
     public Button audioButton;
+
+    private bool finished = false;
+
+    private int selectedArea = 1;
 
     public void initializeGame()
     {
@@ -200,19 +200,29 @@ public class PinguimController : DragAndDropController {
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            isCell = !isCell;
+            // number between 0 and 2
+            selectedArea = (selectedArea + 1) % 3;
 
-            if (isCell)
+            if (selectedArea == 1)
             {
                 ReadText("Células");
                 Debug.Log("Células");
                 cells[0].GetComponent<Selectable>().Select();
             }
-            else
+            else if (selectedArea == 2)
             {
                 ReadText("Itens");
                 Debug.Log("Itens");
                 firstItem.GetComponent<Selectable>().Select();
+            }
+            else
+            {
+                if (pinguim_adelia.activeSelf)
+                    adeliaButton.Select();
+                else if (pinguim_antartico.activeSelf)
+                    antarticoButton.Select();
+                else if (pinguim_papua.activeSelf)
+                    papuaButton.Select();
             }
         }
 
@@ -336,6 +346,8 @@ public class PinguimController : DragAndDropController {
 
         if (audioSource.isPlaying)
             audioSource.Stop();
+
+        ReadPinguimPosition();
     }
 
     public void goUp()
@@ -559,6 +571,22 @@ public class PinguimController : DragAndDropController {
             timer.fillAmount -= value;
     }
 
+    public void ReadPinguimPosition()
+    {
+        if (pinguim_adelia.activeSelf)
+            pinguim_adelia.GetComponent<PinguimMovement>().ReadPinguimPosition();
+        else
+            ReadText("O pinguim adélia já chegou a sua fonte de alimento");
+        if (pinguim_antartico.activeSelf)
+            pinguim_antartico.GetComponent<PinguimMovement>().ReadPinguimPosition();
+        else
+            ReadText("O pinguim antártico já chegou a sua fonte de alimento");
+        if (pinguim_papua.activeSelf)
+            pinguim_papua.GetComponent<PinguimMovement>().ReadPinguimPosition();
+        else
+            ReadText("O pinguim adélia já chegou a sua fonte de alimento");
+    }
+
     public void FlipPinguim(string name, bool left)
     {
         switch(name)
@@ -579,35 +607,44 @@ public class PinguimController : DragAndDropController {
     {
         if (win)
         {
-            PlayerPreferences.M002_Pinguim = true;
+            if (!finished)
+            {
+                finished = true;
+                Debug.Log("finished");
+                PlayerPreferences.M002_Pinguim = true;
 
-            WinImage.SetActive(true);
-            //WinImage.GetComponentInChildren<Button>().Select();
+                WinImage.SetActive(true);
+                //WinImage.GetComponentInChildren<Button>().Select();
 
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                
+                audioSource.PlayOneShot(victoryClip);
             
-            audioSource.PlayOneShot(victoryClip);
+                yield return new WaitWhile(() => audioSource.isPlaying);
 
-            yield return new WaitWhile(() => audioSource.isPlaying);
+                ReadText("Parabéns, você conseguiu mais alguns dos itens necessários para sua aventura na Antártica!");
 
-            ReadText("Parabéns, você conseguiu mais alguns dos itens necessários para sua aventura na Antártica!");
-
-            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
-            lifeExpController.AddEXP(4*PlayerPreferences.XPwinItem); // ganhou o item
+                lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+                lifeExpController.AddEXP(4*PlayerPreferences.XPwinItem); // ganhou o item
+            }
         }
         else
         {
-            LoseImage.SetActive(true);
+            if(!finished)
+            {
+                finished = true;
+                LoseImage.SetActive(true);
 
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-            audioSource.PlayOneShot(loseClip);
+                audioSource.PlayOneShot(loseClip);
 
-            yield return new WaitWhile(() => audioSource.isPlaying);
+                yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
-            resetButton.Select();
-            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+                ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                resetButton.Select();
+                lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+            }
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo

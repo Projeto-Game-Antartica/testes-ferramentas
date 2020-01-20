@@ -20,7 +20,7 @@ public class TailMissionSceneManager : AbstractScreenReader
     public GameObject confirmQuit;
 
     private bool isOnMenu = false;
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -56,7 +56,7 @@ public class TailMissionSceneManager : AbstractScreenReader
             lifeExpController.ReadHPandEXP();
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             if (!instructionInterface.activeSelf)
             {
@@ -76,6 +76,8 @@ public class TailMissionSceneManager : AbstractScreenReader
         audioSource.PlayOneShot(avisoClip);
 
         confirmQuit.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();

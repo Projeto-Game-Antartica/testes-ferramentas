@@ -33,4 +33,7 @@ public class InputKeys : MonoBehaviour {
 
     // repetir audiodescricao
     public static KeyCode AUDIODESCRICAO_KEY = KeyCode.F3;
+
+    // abrir mapa
+    public static KeyCode MAP_KEY = KeyCode.M;
 }

@@ -13,8 +13,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public WhaleController whaleController;
     public GameObject confirmFoto;
 
-    private ReadableTexts readableTexts;
-
     public TextMeshProUGUI confirmText;
     public TextMeshProUGUI whaleCountText;
     public TextMeshProUGUI dateText;
@@ -22,6 +20,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public GameObject WinImage;
     public AudioClip victoryClip;
     public AudioClip avisoClip;
+    public AudioClip closeClip;
     public AudioSource audioSource;
 
     public TailMissionSceneManager tailMissionSceneManager;
@@ -41,19 +40,16 @@ public class ContentPanelMissionController : AbstractScreenReader {
         whaleCountText.text = count.ToString();
         //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
-        
+
         //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
-        ReadInstructions();
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_catalogo, LocalizationManager.instance.GetLozalization()));
+
         saveButton.Select();
     }
 
     // Update is called once per frame
     void Update () {
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            ReadInstructions();
-        }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
@@ -68,6 +64,11 @@ public class ContentPanelMissionController : AbstractScreenReader {
                 ReadWhaleInfo(whale);
                 onWhaleCatalog = false;
             }
+        }
+
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_catalogo, LocalizationManager.instance.GetLozalization()));
         }
 
         // not the best way
@@ -106,11 +107,6 @@ public class ContentPanelMissionController : AbstractScreenReader {
             Debug.Log("Baleia não encontrada. Stacktrace >> " + ex.StackTrace);
         }
 
-    }
-
-    public void ReadInstructions()
-    {
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
     }
 
     public void Save()
@@ -197,6 +193,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
         audioSource.PlayOneShot(victoryClip);
 
         yield return new WaitWhile(() => audioSource.isPlaying);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_sucesso, LocalizationManager.instance.GetLozalization()));
 
         yield return new WaitForSeconds(4f);
 

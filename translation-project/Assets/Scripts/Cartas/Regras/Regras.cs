@@ -13,7 +13,7 @@ public class Regras : AbstractCardManager {
     private int totalCards = 30;
     private int cardsNumber;
 
-    private bool[] selectedCards;
+    //private bool[] selectedCards;
 
     public AudioSource audioSource;
 
@@ -45,6 +45,9 @@ public class Regras : AbstractCardManager {
 
     public MinijogoIconsController iconsController;
 
+    private bool isOnMJMenu = false;
+    private bool finished = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
@@ -68,11 +71,18 @@ public class Regras : AbstractCardManager {
         if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
+            ReadText("Você já escolheu " + likeCount + " regras e restam " + (cardsNumber - cardCount) + " regras para escolher");
+            Debug.Log("Você já escolheu " + likeCount + " regras e restam " + (cardsNumber - cardCount) + " regras para escolher");
         }
 
         if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
-            audioButton.Select();
+            if (!isOnMJMenu)
+                audioButton.Select();
+            else
+                likeButton.Select();
+
+            isOnMJMenu = !isOnMJMenu;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -96,11 +106,11 @@ public class Regras : AbstractCardManager {
     {
         cardIndex = 0;
 
-        selectedCards = new bool[sprites.Length];
+        //selectedCards = new bool[sprites.Length];
 
         // selectedCards starts with false value
-        for (int i = 0; i < selectedCards.Length; i++)
-            selectedCards[i] = false;
+        //for (int i = 0; i < selectedCards.Length; i++)
+        //    selectedCards[i] = false;
 
         cardsNumber = sprites.Length;
 
@@ -133,8 +143,8 @@ public class Regras : AbstractCardManager {
     {
         cardCount++;
 
-        if (cardCount == totalCards || cardCount == cardsNumber)
-            cardCount = 0;
+        //if (cardCount == totalCards || cardCount == cardsNumber)
+        //    cardCount = 0;
         
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         
@@ -146,8 +156,8 @@ public class Regras : AbstractCardManager {
         cardCount++;
         likeCount++;
 
-        if (cardCount == totalCards || cardCount == cardsNumber)
-            cardCount = 0;
+        //if (cardCount == totalCards || cardCount == cardsNumber)
+        //    cardCount = 0;
 
         CardLeft.text = "Regras restantes: " + (cardsNumber - cardCount);
         CardCount.text = "Regras escolhidas: " + likeCount + "/" + rulesNumber;
@@ -155,27 +165,29 @@ public class Regras : AbstractCardManager {
         cardsPoints(currentImage.name);
 
         // card is selected
-        if(cardIndex >= 0 && cardIndex < totalCards)
-            selectedCards[cardIndex] = true;
+        //if(cardIndex >= 0 && cardIndex < totalCards)
+        //    selectedCards[cardIndex] = true;
 
         NextCard();
 
+        Debug.Log(likeCount);
+
         if (likeCount >= rulesNumber)
         {
-            EndGame(true);
+            StartCoroutine(EndGame(true));
         }
     }
 
-    private int GetCardsLeft()
-    {
-        int result = 0;
+    //private int GetCardsLeft()
+    //{
+    //    int result = 0;
 
-        for (int i = 0; i < selectedCards.Length; i++)
-            if (selectedCards[i] == false)
-                result++;
+    //    for (int i = 0; i < selectedCards.Length; i++)
+    //        if (selectedCards[i] == false)
+    //            result++;
 
-        return result - 1;
-    }
+    //    return result - 1;
+    //}
 
     // set the experience points
     public void cardsPoints(string cardName)
@@ -279,17 +291,22 @@ public class Regras : AbstractCardManager {
 
     public new void NextCard()
     {
+        if (cardIndex == -1 && !finished)
+        {
+            StartCoroutine(EndGame(true));
+        }
+
         cardIndex++;
 
         // find next not selected card (if card was selected, its index is true)
-        while (selectedCards[cardIndex] == true)
-        {
-            cardIndex++;
+        //while (selectedCards[cardIndex] == true)
+        //{
+        //    cardIndex++;
 
-            // check if cardIndex have finished
-            if (cardIndex > sprites.Length - 1)
-                cardIndex = 0;
-        }
+        //    // check if cardIndex have finished
+        //    if (cardIndex > sprites.Length - 1)
+        //        cardIndex = 0;
+        //}
 
         ReadCard(cardIndex);
 
@@ -319,8 +336,8 @@ public class Regras : AbstractCardManager {
                 //nextImage.name = sprites[cardIndex+1].name;
                 nextImage.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
-                cardsNumber = GetCardsLeft();
-                Debug.Log(cardsNumber);
+                //cardsNumber = GetCardsLeft();
+                //Debug.Log(cardsNumber);
             }
         }
 
@@ -331,12 +348,13 @@ public class Regras : AbstractCardManager {
 
     public void ReadCard(int index)
     {
-        Debug.Log(RegrasText.GetRegra(index));
-        ReadText(RegrasText.GetRegra(index));
+        Debug.Log("Nova Regra: " + RegrasText.GetRegra(index));
+        ReadText("Nova Regra: " + RegrasText.GetRegra(index));
     }
 
     public IEnumerator EndGame(bool win)
     {
+        finished = true;
         if (win)
         {
             likeButton.interactable = false;
@@ -350,15 +368,18 @@ public class Regras : AbstractCardManager {
 
             yield return new WaitWhile(() => audioSource.isPlaying);
             
-            ReadText("Parabéns, você conseguiu mais alguns itens necessários para sua aventura na antártica!");
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: óculos escuros, filtro solar e a mochila.");
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
 
             // add the heart points in hp points
-            lifeExpController.AddHP(5000f / heartImage.fillAmount);
+            lifeExpController.AddHP(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
             // add the antartica and star points to xp points
-            lifeExpController.AddEXP(5000f / ((0.6f * starImage.fillAmount) + (0.4f * antarticaImage.fillAmount)));
+            lifeExpController.AddEXP(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
+
+            Debug.Log(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
+            Debug.Log(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
         }
         else
         {

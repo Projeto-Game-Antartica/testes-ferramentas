@@ -17,6 +17,8 @@ public class LoginScene : AbstractScreenReader {
     private TMP_InputField emailInput;
     [SerializeField]
     private TMP_InputField passwordInput;
+    [SerializeField]
+    private GameObject response;
 
 
     private void Start()
@@ -48,7 +50,11 @@ public class LoginScene : AbstractScreenReader {
         if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
             StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, LoginSuccessfull));
         else
+        {
             Debug.Log("Wrong Credentials");
+            response.SetActive(true);
+            response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
+        }
     }
 
     public void LoginSuccessfull(bool success)
@@ -62,6 +68,8 @@ public class LoginScene : AbstractScreenReader {
         else
         {
             Debug.Log("Wrong Credentials");
+            response.SetActive(true);
+            response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
         }
     }
 

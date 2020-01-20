@@ -72,6 +72,7 @@ public class VIDEUIManager : AbstractScreenReader
 
     public GameObject listaItem;
 
+    public GameObject textPanel;
     public Image ticket_pt1;
     public Image ticket_pt2;
     public Image ticket_pt3;
@@ -277,39 +278,68 @@ public class VIDEUIManager : AbstractScreenReader
             if(data.extraVars.ContainsKey("Ticket"))
             {
                 close.gameObject.SetActive(true);
+                textPanel.SetActive(true);
                 close.Select();
 
-                switch((string)data.extraVars["Ticket"])
+                switch ((string)data.extraVars["Ticket"])
                 {
                     case "pt1":
                         ticket_pt1.gameObject.SetActive(true);
+                        PlayerPrefs.SetInt("M002_Ticketpt1", 1);
 
-                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
                             ticket_pt2.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt3.gameObject.SetActive(true);
                         break;
                     case "pt2":
                         ticket_pt2.gameObject.SetActive(true);
-                        
-                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                        PlayerPrefs.SetInt("M002_Ticketpt2", 1);
+
+                        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
                             ticket_pt1.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt3") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt3.gameObject.SetActive(true);
                         break;
                     case "inteiro":
+                        PlayerPrefs.SetInt("M002_Ticketpt3", 1);
                         ticket_pt3.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt1") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
                             ticket_pt1.gameObject.SetActive(true);
 
-                        if (PlayerPrefs.GetInt("Ticketpt2") == 1)
+                        if (PlayerPrefs.GetInt("M002_Ticketpt3") == 1)
                             ticket_pt2.gameObject.SetActive(true);
                         break;
                     default:
                         break;
+                }
+
+                Debug.Log("Parabéns, você adquiriu parte do ticket para sua viagem!");
+                ReadText("Parabéns, você adquiriu parte do ticket para sua viagem!");
+            }
+
+            if (data.extraVars.ContainsKey("CloseTicket"))
+            {
+                close.gameObject.SetActive(false);
+                textPanel.SetActive(false);
+                ticket_pt1.gameObject.SetActive(false);
+                ticket_pt2.gameObject.SetActive(false);
+                ticket_pt3.gameObject.SetActive(false);
+            }
+
+            if(data.extraVars.ContainsKey("CheckTicket"))
+            {
+                if(PlayerPrefs.GetInt("M002_Ticketpt1") == 1 && PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
+                {
+                    CallNext();
+                }
+                else
+                {
+                    Debug.Log("Você não está apto...");
+                    EndDialogue(data);
                 }
             }
 

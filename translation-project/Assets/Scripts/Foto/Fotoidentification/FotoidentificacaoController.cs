@@ -363,7 +363,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {
             case Parameters.PIGMENTACAO:
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
-                Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
+                //Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
                 break;
             case Parameters.MANCHAS:
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_mancha, LocalizationManager.instance.GetLozalization()));

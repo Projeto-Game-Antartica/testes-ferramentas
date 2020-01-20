@@ -37,7 +37,7 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
             ReadInstructions();
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
         }
