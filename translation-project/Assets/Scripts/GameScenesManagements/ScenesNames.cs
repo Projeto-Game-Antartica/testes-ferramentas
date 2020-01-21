@@ -31,4 +31,8 @@ public class ScenesNames {
     public const string M009MemoryGame = "M009MemoryGameScene";
     public const string M009Camp = "M009CampaScene";
 
+    /* M010 Vegetação */
+    public const string M010TiposVegetacao = "M010TiposVegetacaoScene";
+    public const string M010AmostrasVegetacao = "M010AmostrasVegetacaoScene";
+
 }
