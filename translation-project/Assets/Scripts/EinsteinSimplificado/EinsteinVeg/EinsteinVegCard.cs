@@ -46,23 +46,6 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         flipCard();
     }
 
-    // public void setupGraphics()
-    // {
-    //     //cardBack = einsteinManager.getCardBack();
-    //     cardBack = einsteinManager.getCardFace(cardValue);
-    //     cardFace = einsteinManager.getCardFace(cardValue);
-
-    //     CreateText(cardFace.name);
-
-    //     GetComponent<Image>().color = new Color(1, 1, 1, 0);
-
-    //     gameObject.name += ": " + cardFace.name;
-
-    //     flipCard();
-
-    //     _init = true;
-    // }
-
     public void setupGraphics() {
         //cardBack = einsteinManager.getCardBack();
         //cardBack = einsteinManager.getCardFace(cardValue);
@@ -162,12 +145,4 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         button.colors = newCardColor;
     }
 
-    public void CreateText(string cardName)
-    {
-        //GameObject text = new GameObject();
-        GameObject text = Instantiate(proccessTextPrefab);
-        text.transform.SetParent(transform, false);
-
-        text.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = EinsteinVegCardContent.GetText(cardName);
-    }
 }
