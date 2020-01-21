@@ -33,8 +33,8 @@ public class EinsteinVegManager : AbstractScreenReader
     public AudioClip correctAudio;
     public AudioClip wrongAudio;
 
-    private List<int> tokensToCompare = new List<int>();
-    private List<EinsteinVegCard> tokensToCompare2 = new List<EinsteinVegCard>();
+    //private List<int> tokensToCompare = new List<int>();
+    private List<EinsteinVegCard> tokensToCompare = new List<EinsteinVegCard>();
 
     public GameObject WinImage;
     public GameObject LoseImage;
@@ -109,10 +109,10 @@ public class EinsteinVegManager : AbstractScreenReader
     void Update()
     {
         //Enable or disable components
-        processDropDown.interactable = tokensToCompare2.Count == 0;
+        processDropDown.interactable = tokensToCompare.Count == 0;
         cancelButton.interactable = !processDropDown.interactable;
-        confirmarButton.interactable = tokensToCompare2.Count > 0 && 
-            tokensToCompare2.Count == GetRemainingOptions(GetDropDownValue());
+        confirmarButton.interactable = tokensToCompare.Count > 0 && 
+            tokensToCompare.Count == GetRemainingOptions(GetDropDownValue());
         
         // if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))) {
         //         if(!EinsteinVegCard.DO_NOT)
@@ -191,14 +191,14 @@ public class EinsteinVegManager : AbstractScreenReader
 
         //Conditions to avoid select one card
         if(
-            tokensToCompare2.Contains(token) ||
+            tokensToCompare.Contains(token) ||
             doneTokens.Contains(token) ||
             GetRemainingOptions(GetDropDownValue()) <= 0 ||
-            tokensToCompare2.Count == GetRemainingOptions(GetDropDownValue())
+            tokensToCompare.Count == GetRemainingOptions(GetDropDownValue())
         )
             return;
 
-        tokensToCompare2.Add(token);
+        tokensToCompare.Add(token);
         token.BGImage.color = GetColor(GetDropDownValue());
     }
 
@@ -229,7 +229,7 @@ public class EinsteinVegManager : AbstractScreenReader
         else
             correct = CheckCombination(dropDownValue, colorNames[dropDownValue]);
         
-        foreach(EinsteinVegCard token in tokensToCompare2)
+        foreach(EinsteinVegCard token in tokensToCompare)
             token.falseCheck();
 
 
@@ -239,7 +239,7 @@ public class EinsteinVegManager : AbstractScreenReader
         SetRemainingOptions(dropDownValue, GetRemainingOptions(dropDownValue) - correct);
         Debug.Log(GetRemainingOptions(dropDownValue));
 
-        tokensToCompare2.Clear();
+        tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
 
         //Check if the current option is done:
@@ -250,10 +250,10 @@ public class EinsteinVegManager : AbstractScreenReader
 
     public void Cancel()
     {
-        foreach(EinsteinVegCard token in tokensToCompare2)
+        foreach(EinsteinVegCard token in tokensToCompare)
             token.BGImage.color = GetColor(-1);
 
-        tokensToCompare2.Clear();
+        tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
     }
 
@@ -263,7 +263,7 @@ public class EinsteinVegManager : AbstractScreenReader
         int correct = 0;
         bool wrong = false;
 
-        foreach(EinsteinVegCard card in tokensToCompare2) {
+        foreach(EinsteinVegCard card in tokensToCompare) {
             x = 0;
             if(tokensType[card.cardValue] == (TokensTypes)dropDownValue) {
                 doneTokens.Add(card);
