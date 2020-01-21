@@ -2056,8 +2056,6 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "Este \xE9 um grupo de plantas que possui flores."
       m_Image: {fileID: 0}
-    - m_Text: (empty)
-      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3768,14 +3766,15 @@ PrefabInstance:
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_text
-      value: "Objetivo: conhecer o processo cient\xEDfico de 5 projetos de Ci\xEAncia
-        Cidad\xE3 conduzidos na Ant\xE1rtica.\r\n\r\n1. Escolha uma das pistas que
-        consta na caixa de listas.\r\n2. Escolha as 4 cartas referentes \xE0 pista.\r\n3.
+      value: "Objetivo: Analisar as caracter\xEDsticas das Amostras que s\xE3o buscadas
+        pelos pesquisadores brasileiros\r\n\r\n1. Escolha uma das pistas que consta
+        na caixa de listas.\r\n2. Escolha as 5 cartas referentes \xE0 pista.\r\n3.
         Confirme as cartas selecionadas.\r\n4. Voc\xEA ter\xE1 3 tentativas para finalizar.
-        Caso n\xE3o consiga terminar, voc\xEA retornar\xE1 ao gameplay.\r\n5. O jogo
-        ser\xE1 conclu\xEDdo quando voc\xEA realizar todas as combina\xE7\xF5es de
-        cartas dos 5 projetos de Ci\xEAncia Cidad\xE3.\r\n\r\nPara acessar as instru\xE7\xF5es
-        deste minijogo tecle F1"
+        Caso n\xE3o\r\nconsiga terminar, voc\xEA retornar\xE1 ao gameplay.\r\n5. O
+        jogo ser\xE1 conclu\xEDdo quando voc\xEA realizar todas\r\nas combina\xE7\xF5es
+        de cartas dos 4 tipos de Amostras da Vegeta\xE7\xE3o.\r\n\r\nPara acessar
+        as instru\xE7\xF5es deste minijogo  tecle F1\r\nPara acessar e repetir a navega\xE7\xE3o
+        via teclado tecle F2\r\nPara repetir audiodescri\xE7\xE3o da tela tecle F3\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
@@ -3790,32 +3789,32 @@ PrefabInstance:
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 502
+      value: 616
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 81
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 80
+      value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_fontSize
-      value: 31.1
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 114829983266558300, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
@@ -3836,7 +3835,7 @@ PrefabInstance:
         type: 3}
       propertyPath: minijogoName
       value: 
-      objectReference: {fileID: 1624044484}
+      objectReference: {fileID: 0}
     - target: {fileID: 114422503658166282, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_Enabled
@@ -5286,7 +5285,6 @@ GameObject:
   - component: {fileID: 1163249654}
   - component: {fileID: 1163249653}
   - component: {fileID: 1163249652}
-  - component: {fileID: 1163249651}
   - component: {fileID: 1163249655}
   m_Layer: 5
   m_Name: Carta10
@@ -5314,23 +5312,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -6, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1163249651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163249649}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d0ac7364c5cfb4f9fc0e7620e5e924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardFace: {fileID: 0}
-  einsteinManager: {fileID: 1412044900}
-  BGImage: {fileID: 1268110962}
-  proccessTextPrefab: {fileID: 1705637707382252, guid: 3410ba0834cb5c44e8c8b91d2e94447c,
-    type: 3}
 --- !u!114 &1163249652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6075,10 +6056,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -6304,10 +6285,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -6741,8 +6722,14 @@ MonoBehaviour:
   confirmarButton: {fileID: 304864095}
   cancelButton: {fileID: 991976351}
   index: 
+  confirmQuit: {fileID: 0}
   correctAudio: {fileID: 8300000, guid: 0c3aa63f78fb1cd47806373a0350b4e4, type: 3}
   wrongAudio: {fileID: 8300000, guid: 9334914c91919bb4d828dd4a41bfe914, type: 3}
+  closeClip: {fileID: 0}
+  avisoClip: {fileID: 0}
+  selectClip: {fileID: 0}
+  victoryClip: {fileID: 0}
+  loseClip: {fileID: 0}
   WinImage: {fileID: 856963801}
   LoseImage: {fileID: 982091519}
   processDropDown: {fileID: 439741416}
@@ -6752,7 +6739,6 @@ MonoBehaviour:
   blue_ret: {fileID: 21300000, guid: 337663d83ee8b3f4881c9daf25f09eea, type: 3}
   green_ret: {fileID: 21300000, guid: aef2f5597d0489d47a01604fe7a45870, type: 3}
   orange_ret: {fileID: 21300000, guid: 5cd1f7a1ae134b34e8cc8561ddbe0c1e, type: 3}
-  purple_ret: {fileID: 21300000, guid: b7efe6435d5e8b3459de4e01a5985a29, type: 3}
   red_ret: {fileID: 21300000, guid: cb801c3d750f6f9429904109b3afa235, type: 3}
   attemptsText: {fileID: 1354076418}
 --- !u!4 &1412044901
@@ -6926,7 +6912,6 @@ MonoBehaviour:
   audioButton: {fileID: 429979618}
   confirmarButton: {fileID: 304864095}
   cancelButton: {fileID: 991976351}
-  index: 
   correctAudio: {fileID: 8300000, guid: 0c3aa63f78fb1cd47806373a0350b4e4, type: 3}
   wrongAudio: {fileID: 8300000, guid: 9334914c91919bb4d828dd4a41bfe914, type: 3}
   WinImage: {fileID: 856963801}
@@ -7350,18 +7335,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579108912}
   m_CullTransparentMesh: 0
---- !u!114 &1624044484 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-    type: 3}
-  m_PrefabInstance: {fileID: 1898478884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1672250935
 GameObject:
   m_ObjectHideFlags: 0
@@ -8921,7 +8894,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1412044900}
+      objectReference: {fileID: 1412044903}
     - target: {fileID: 114868318713983886, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -9311,6 +9284,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_text
+      value: "AMOSTRAS DA VEGETA\xC7\xC3O"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 212643011910586186, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 3}
