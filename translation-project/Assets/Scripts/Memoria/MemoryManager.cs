@@ -77,6 +77,7 @@ public class MemoryManager : AbstractScreenReader {
     private void Start()
     {
         resetButton.interactable = false;
+        backButton.interactable = false;
 
         init = false;
         _first = true;
@@ -183,6 +184,7 @@ public class MemoryManager : AbstractScreenReader {
         StartCoroutine(showCards());
 
         resetButton.interactable = true;
+        backButton.interactable = true;
     }
 
     //public void CallHintMethod()
@@ -272,7 +274,6 @@ public class MemoryManager : AbstractScreenReader {
             if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
                 //Debug.Log("carta adicionada >> " + cards[i]);
-                
                 c.Add(i);
                 audioSource.PlayOneShot(selectAudio);
                 //Debug.Log("após adicionar carta >> " + c.Count);
@@ -291,6 +292,7 @@ public class MemoryManager : AbstractScreenReader {
                     //}
                     //else
                     //{
+
                         Debug.Log("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
                         "outras cartas.");
                         ReadText("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
@@ -365,7 +367,15 @@ public class MemoryManager : AbstractScreenReader {
             matchesText.text = "Pares restantes: " + matches;
             if (matches == 0)
             {
-                PlayerPreferences.M004_Memoria = true;
+                switch (missionName)
+                    {
+                        case "baleias":
+                            PlayerPreferences.M004_Memoria = true;
+                            break;
+                        case "paleo":
+                            PlayerPreferences.M009_Memoria = true;
+                            break;
+                    }
                 StartCoroutine(EndGame(true));
             }
         }
@@ -404,53 +414,111 @@ public class MemoryManager : AbstractScreenReader {
 
     public IEnumerator EndGame(bool win)
     {
-        if (win)
-        {
-            WinImage.SetActive(true);
-            //WinImage.GetComponentInChildren<Button>().Select();
+        switch (missionName)
+                {
+                    case "baleias":
+                        if (win)
+                            {
+                            WinImage.SetActive(true);
+                            //WinImage.GetComponentInChildren<Button>().Select();
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
-            if (!PlayerPreferences.M004_TeiaAlimentar)
-            {
-                WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
+                            if (!PlayerPreferences.M004_TeiaAlimentar)
+                            {
+                                WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
 
-                audioSource.PlayOneShot(victoryAudio);
-                yield return new WaitWhile(() => audioSource.isPlaying);
+                                audioSource.PlayOneShot(victoryAudio);
+                                yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
-            }
-            else
-            {
-                WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                    "contribuir com as pesquisas da Ciência Cidadã.";
+                                ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
+                            }
+                            else
+                            {
+                                WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                    "contribuir com as pesquisas da Ciência Cidadã.";
 
-                audioSource.PlayOneShot(victoryAudio);
-                yield return new WaitWhile(() => audioSource.isPlaying);
+                                audioSource.PlayOneShot(victoryAudio);
+                                yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                    "contribuir com as pesquisas da Ciência Cidadã.");
-            }
+                                ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                    "contribuir com as pesquisas da Ciência Cidadã.");
+                            }
 
-            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // finalizou o minijogo
-            lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou o item
-        }
-        else
-        {
-            LoseImage.SetActive(true);
+                            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // finalizou o minijogo
+                            lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou o item
+                        }
+                        else
+                        {
+                            LoseImage.SetActive(true);
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-            audioSource.PlayOneShot(loseAudio);
+                            audioSource.PlayOneShot(loseAudio);
 
-            yield return new WaitWhile(() => audioSource.isPlaying);
+                            yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
-            resetButton.Select();
-            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
-        }
+                            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                            resetButton.Select();
+                            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+                        }
 
-        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+                        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+                                        break;
+
+                    case "paleo":
+                        if (win)
+                            {
+                                WinImage.SetActive(true);
+                                //WinImage.GetComponentInChildren<Button>().Select();
+
+                                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+
+                                if (!PlayerPreferences.M009_Memoria)
+                                {
+                                    WinText.text = "Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.";
+
+                                    audioSource.PlayOneShot(victoryAudio);
+                                    yield return new WaitWhile(() => audioSource.isPlaying);
+
+                                    //ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
+                                }
+                                else
+                                {//MUDAARR
+                                    WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                        "contribuir com as pesquisas da Ciência Cidadã.";
+
+                                    audioSource.PlayOneShot(victoryAudio);
+                                    yield return new WaitWhile(() => audioSource.isPlaying);
+
+                                    //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                        //"contribuir com as pesquisas da Ciência Cidadã.");
+                                }
+
+                                lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+                                lifeExpController.AddEXP(0.0002f); // ganhou o item
+                                }
+                                else
+                                {
+                                    LoseImage.SetActive(true);
+                                    //MUDAARR
+                                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+
+                                    audioSource.PlayOneShot(loseAudio);
+
+                                    yield return new WaitWhile(() => audioSource.isPlaying);
+
+                                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                                    resetButton.Select();
+                                    lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+                                }
+
+                                StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+                        break;
+                    default:
+         
+                        break;
+                } 
     }
 
     public void TryReturnToShip()
@@ -467,16 +535,42 @@ public class MemoryManager : AbstractScreenReader {
 
     public void ReturnToShip()
     {
-        confirmQuit.SetActive(false);
+        switch (missionName)
+                {
+                    case "baleias":
+                        confirmQuit.SetActive(false);
 
-        if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+                        if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+
+                    case "paleo":
+                        //confirmQuit.SetActive(false);
+                        if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+                        break;
+                    default:
+                        
+                        break;
+                }        
     }
 
     public void ResetScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004MemoryGame);
+        switch (missionName)
+                {
+                    case "baleias":
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004MemoryGame);
+                        break;
+
+                    case "paleo":
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009MemoryGame);
+                        break;
+                    default:
+                        
+                        break;
+                } 
+        
     }
 
     public IEnumerator ReadCards()
@@ -586,8 +680,22 @@ public class MemoryManager : AbstractScreenReader {
 
     public IEnumerator ReturnToShipCoroutine()
     {
-        yield return new WaitForSeconds(4f);
+        switch (missionName)
+                {
+                    case "baleias":
+                        yield return new WaitForSeconds(4f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+                        break;
+
+                    case "paleo":
+                        yield return new WaitForSeconds(4f);
+
+                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+                        break;
+                    default:
+                        
+                        break;
+                } 
     }
 }

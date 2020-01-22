@@ -134,7 +134,7 @@ public class Homeostase : AbstractCardManager
         cardIndex = 0;
         isDone = false;
 
-        kcalBar.fillAmount = 0f;
+        kcalBar.fillAmount = 0.5f;
 
         currentImage.sprite = sprites[cardIndex];
         currentImage.name = sprites[cardIndex].name;

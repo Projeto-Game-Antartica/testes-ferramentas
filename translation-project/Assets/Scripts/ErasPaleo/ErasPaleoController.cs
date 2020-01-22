@@ -10,6 +10,18 @@ public class ErasPaleoController : DragAndDropController
 {
     private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
 
+    public Button resetButton;
+
+    public TMPro.TextMeshProUGUI attemptsText;
+    private int attempts = 3;
+    private int total = 0;
+
+    public GameObject[] items;
+
+    public Button confirmaButton;
+
+    public GameObject LoseImage;
+
     // count the correct/wrong drops
     private int correctAnswer = 0;
     private int wrongAnswer = 0;
@@ -66,6 +78,7 @@ public class ErasPaleoController : DragAndDropController
     private void Start()
     {
 
+        confirmaButton.interactable = false;
 
         draggedItems = new List<GameObject>();
         draggedCell = new List<GameObject>();
@@ -244,14 +257,21 @@ public class ErasPaleoController : DragAndDropController
         */
 
         int contador = 0;
-        
+
+        int cont_erro = 0;
 
         foreach (GameObject g in draggedItems)
         {
-            Debug.Log("cont: " + contador + " g.name: " + g.name + "Cell: " + draggedCell[contador].name);
+            string nome = g.name; 
 
-            if (draggedCell[contador].name == g.name + "Cell")
+            Debug.Log("cont: " + contador + " g.name: " + g.name + "Cell: " + draggedCell[contador].name);
+            Debug.Log("Nome: " +nome + "cell: " + g.name);
+
+            if (nome.Contains(draggedCell[contador].name))
+            {
                 Debug.Log("Acerto");
+                correctAnswer++;
+            }
             else
             {
                 Debug.Log("Devolver: " + contador);
@@ -260,13 +280,17 @@ public class ErasPaleoController : DragAndDropController
                 remover.Add(g);
                 //draggedLocal.RemoveAt(contador);
 
-                
+                cont_erro++;
             }
-
-            contador++;                
-            
+            contador++;                  
         }
-
+        
+        if (cont_erro > 0)
+            {
+                wrongAnswer++;
+                attemptsText.text = "Tentativas restantes: " + wrongAnswer + "/" + attempts;
+                confirmaButton.interactable = false;
+            }
         //remover.Reverse();
 
         //foreach (GameObject g in draggedItems)
@@ -289,6 +313,8 @@ public class ErasPaleoController : DragAndDropController
             // re nao esta nessas duas listas
             //draggedCell.Remove(re);
             //draggedLocal.Remove(re);
+            total--;
+            Debug.Log("Total: " + total);
         }
 
         // clean all lists
@@ -297,6 +323,8 @@ public class ErasPaleoController : DragAndDropController
         draggedItems.Clear();
         draggedLocal.Clear();
         passar_itens.Clear();
+        
+        
 
         yield return new WaitForSeconds(1.2f);
         /* RemoveAllItems();
@@ -306,6 +334,36 @@ public class ErasPaleoController : DragAndDropController
          pinguim_adeliaAnimator.SetBool("isMoving", false);
          pinguim_antarticoAnimator.SetBool("isMoving", false);
          pinguim_papuaAnimator.SetBool("isMoving", false);    */
+
+        if(correctAnswer == 29)
+            {
+                EndGame(true);
+			}
+        if(wrongAnswer >= 3)
+            {
+                EndGame(false);
+			}
+    }
+
+    public void EndGame(bool win)
+    {
+        if (win)
+        {
+            WinImage.SetActive(true);
+            //WinImage.GetComponentInChildren<Button>().Select();
+
+            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            PlayerPreferences.M009_Eras = true;
+        }
+        else
+        {
+            LoseImage.SetActive(true);
+            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            resetButton.Select();
+        }
+
+        //StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
 
     public override void OnSimpleDragAndDropEvent(DragAndDropCell.DropEventDescriptor desc)
@@ -370,6 +428,13 @@ public class ErasPaleoController : DragAndDropController
 
         Debug.Log("Guardo local: " + local.name);
         draggedLocal.Add(local);
+
+        total++;
+        Debug.Log(total);
+
+        if(total == 29)
+            confirmaButton.interactable = true;
+
 
 
         //foreach (GameObject g in draggedItems)
@@ -492,5 +557,12 @@ public class ErasPaleoController : DragAndDropController
         yield return new WaitForSeconds(7f);
 
         SceneManager.LoadScene(ScenesNames.M004Ship);
+    }
+
+    public void SelectFirstItem()
+    {
+        items[0].GetComponent<Selectable>().Select();
+
+        //ReadItem(items[0]);
     }
 }

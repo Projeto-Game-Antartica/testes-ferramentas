@@ -56,6 +56,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
         if (choice == MemoryManager.CARDFACE)
         {
             Debug.Log("card face");
+            Debug.Log("card value: " +cardValue);
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
             cardText = null;
             gameObject.name += ": " + cardFace.name;
