@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CameraOverlayMissionController : AbstractScreenReader {
     
@@ -15,6 +16,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public AudioClip photoAudioClip;
     public AudioClip loadingAudioClip;
     public AudioClip turningOffAudioClip;
+    public AudioClip zoomInClip;
+    public AudioClip zoomOutClip;
+    public AudioClip avisoClip;
+    public AudioClip closeClip;
 
     // content panel objects
     public GameObject panelInstruction;
@@ -23,10 +28,11 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     public Image panelImage;
     public Button saveButton;
     public Button cadastrarButton;
-    public Text date;
-    public Text latitude;
-    public Text longitude;
-    public InputField nameInputField;
+    public Button okButton;
+    public TextMeshProUGUI date;
+    public TextMeshProUGUI latitude;
+    public TextMeshProUGUI longitude;
+    public TMP_InputField nameInputField;
 
     public Sprite cenario;
 
@@ -42,9 +48,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // camera
     public new Camera camera;
 
-    // instructions texts
-    private ReadableTexts readableTexts;
-
     // array containing the 8 indexes for photo
     // sort the array for randomization
     private int[] whaleIndexes = { 0, 1, 2, 3, 4, 5, 6, 7};
@@ -53,16 +56,17 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     // feedback texts
     private const string NEGATIVE_FB = "A fotografia não ficou muito legal. Tente novamente.";
     private const string POSITIVE_FB = "A fotografia ficou ótima!";
-
+    
     private void Start()
     {
-        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
 
         // randomize the indexes
         System.Random r = new System.Random();
         whaleIndexes = whaleIndexes.OrderBy(x => r.Next()).ToArray();
 
         index = 0;
+
+        Parameters.WHALE_ID = -1;
     }
 
     // Update is called once per frame
@@ -94,17 +98,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             HandlePhoto();
         }
 
-        // close the catalog panel
-        if(Input.GetKeyDown(KeyCode.Escape) && panelContent.activeSelf)
-        {
-            panelContent.SetActive(false);
-            ReadText("Catálogo fechado");
-        }
-
         // repeat instructions
-        if(Input.GetKeyDown(KeyCode.F1) && panelContent.activeSelf)
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !panelContent.activeSelf)
         {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_camera, LocalizationManager.instance.GetLozalization()));
         }
 
         // zoom only when overlay is enabled
@@ -119,8 +116,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         panelInstruction.SetActive(false);
         backButton.interactable = true;
         //resetButton.interactable = true;
-        ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
-        //ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
+        //ReadText("Início do jogo. Pressione F3 para repetir a descrição do cenário.");
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_camera, LocalizationManager.instance.GetLozalization()));
     }
 
     public void HandlePhoto()
@@ -152,25 +149,29 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         }
         else
         {
+            Parameters.WHALE_ID = -1;
+
             // whale is not on the camera, take a screenshot
             //StartCoroutine(captureScreenshot());
+            audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
+
+            warningInterface.GetComponentInChildren<Button>().Select();
+
+            //Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
+
+            audioSource.PlayOneShot(avisoClip);
+
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_aviso, LocalizationManager.instance.GetLozalization()));
 
             // set the screenshot on panel image
             panelImage.sprite = cenario;
 
             // negative feedback
             ReadText(NEGATIVE_FB);
-
-            Parameters.WHALE_ID = -1;
         }
 
-        if (Parameters.ACCESSIBILITY)
-            panelContent.GetComponent<ContentPanelController>().ReadInstructions();
-
         saveButton.Select();
-
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_catalogDescription, LocalizationManager.instance.GetLozalization()));
     }
 
     private void HandleCameraZoom()
@@ -191,7 +192,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         if (camera.orthographicSize <= Parameters.MIN_ORTHOSIZE)
             camera.orthographicSize = Parameters.MIN_ORTHOSIZE;
         else
+        {
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(zoomInClip);
             camera.orthographicSize -= Parameters.ZOOM_SPEED * Time.deltaTime;
+        }
     }
 
     public void ZoomOut()
@@ -199,7 +203,10 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         if (camera.orthographicSize >= Parameters.MAX_ORTHOSIZE)
             camera.orthographicSize = Parameters.MAX_ORTHOSIZE;
         else
+        {
             camera.orthographicSize += Parameters.ZOOM_SPEED * Time.deltaTime;
+            if (!audioSource.isPlaying) audioSource.PlayOneShot(zoomOutClip);
+        }
     }
 
     // retrieve whale info according to WhaleData class
@@ -246,6 +253,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         else
             cadastrarButton.interactable = true;
         //Debug.Log(index);
+
+        panelContent.GetComponent<ContentPanelMissionController>().ReadWhaleInfo(whale);
     }
 
     // screenshot coroutine
@@ -304,7 +313,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         // activate the content panel and speak the instructions (accessibility only)
         // set the button inactive
         panelContent.SetActive(true);
-        if (Parameters.ACCESSIBILITY) panelContent.GetComponent<ContentPanelMissionController>().ReadInstructions();
+
         saveButton.Select();
 
         // set the screenshot on panel image

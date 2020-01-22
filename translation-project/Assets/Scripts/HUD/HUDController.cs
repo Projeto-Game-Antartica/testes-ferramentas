@@ -38,8 +38,23 @@ public class HUDController : AbstractScreenReader {
 
     public SimpleCharacterController simpleCharacterController;
 
+    public AudioSource audioSource;
+
+    public AudioClip closeClip;
+    public AudioClip openBagClip;
+    public AudioClip closeBagClip;
+
+    public GameObject map;
+    public TextMeshProUGUI mapText;
+
+    public string missionNumber;
+
     private void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt1"));
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt2"));
+        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt3"));
+        
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
         {
@@ -66,6 +81,17 @@ public class HUDController : AbstractScreenReader {
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F3))
+        {
+            if (instructionInterface.activeSelf)
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_instrucao, LocalizationManager.instance.GetLozalization()));
+            else if (!instructionInterface.activeSelf && !inGameOption.activeSelf)
+                ReadShipAudioDescription();
+            else if (inGameOption.activeSelf)
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
+        }
+
+
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             if (!instructionInterface.activeSelf)
@@ -88,17 +114,21 @@ public class HUDController : AbstractScreenReader {
                 if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
                 {
                     ReadText("Menu de opções aberto");
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
                     inGameOption.SetActive(true);
+                    inGameOption.GetComponentInChildren<Button>().Select();
                 }
                 else
                 {
-                    ReadText("Menu de opções fechado");
+                    //ReadText("Menu de opções fechado");
+                    audioSource.PlayOneShot(closeClip);
                     inGameOption.SetActive(false);
                 }
 
                 if (instructionInterface.activeSelf)
                 {
-                    ReadText("Menu de instruções fechado");
+                    //ReadText("Menu de instruções fechado");
+                    audioSource.PlayOneShot(closeClip);
                     instructionInterface.SetActive(false);
                     inGameOption.SetActive(false);
                 }
@@ -120,6 +150,25 @@ public class HUDController : AbstractScreenReader {
         {
             HandleBagBar();
         }
+
+        if (Input.GetKeyDown(InputKeys.MAP_KEY))
+        {
+            if (map.activeSelf)
+                map.SetActive(false);
+            else
+            {
+                map.SetActive(true);
+                switch(mapText.text)
+                {
+                    case "M002":
+                        ReadText("");
+                        break;
+                    case "M004":
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
+                        break;
+                }
+            }
+        }
     }
 
     public void ActivateInstructionInterface()
@@ -133,9 +182,15 @@ public class HUDController : AbstractScreenReader {
         //StartCoroutine(HandleBagBar());
 
         if (bar.fillAmount == 0)
+        {
             StartCoroutine(FillImage(bar, BAG));
-        else if(bar.fillAmount == 1)
+            audioSource.PlayOneShot(openBagClip);
+        }
+        else if (bar.fillAmount == 1)
+        {
             StartCoroutine(UnfillImage(bar, BAG));
+            audioSource.PlayOneShot(closeBagClip);
+        }
     }
 
     public void HandleInfoBar()
@@ -159,7 +214,7 @@ public class HUDController : AbstractScreenReader {
         while (img.fillAmount < 1)
         {
             Debug.Log("openning");
-            img.fillAmount += 0.1f;
+            img.fillAmount += 0.05f;
 
             if ((img.fillAmount > 0.4f && img.fillAmount < 0.6f) && op == BAG) // its float numbers
                 StartCoroutine(ShowInvItems());
@@ -188,7 +243,7 @@ public class HUDController : AbstractScreenReader {
         {
             Debug.Log("closing");
 
-            img.fillAmount -= 0.1f;
+            img.fillAmount -= 0.05f;
 
             if ((img.fillAmount > 0.5f && img.fillAmount < 0.7f) && op == BAG) // its float numbers
                 StartCoroutine(CoverInvItems());
@@ -223,8 +278,14 @@ public class HUDController : AbstractScreenReader {
     {
         ReadText(missionTitle.text);
         ReadText(missionDescription.text);
+
         Debug.Log(missionTitle.text);
         Debug.Log(missionDescription.text);
+    }
+
+    public void ReadShipAudioDescription()
+    {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio, LocalizationManager.instance.GetLozalization()));
     }
 
     public void ChangeMission(TextMeshProUGUI missionName)

@@ -386,7 +386,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 44
+  m_firstOverflowCharacterIndex: 70
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
     linkCount: 0
     lineCount: 2
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -463,7 +463,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224117820506368316}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3355265, y: 0.30549467}
   m_AnchorMax: {x: 0.6646316, y: 0.7923405}
@@ -538,6 +538,7 @@ RectTransform:
   - {fileID: 224221101929261818}
   - {fileID: 224854357860073536}
   - {fileID: 224244167149618008}
+  - {fileID: 1323487328530182195}
   - {fileID: 224012944489866864}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -594,6 +595,7 @@ GameObject:
   - component: {fileID: 224595262849292740}
   - component: {fileID: 222828021532985866}
   - component: {fileID: 114737045792647296}
+  - component: {fileID: 4884125304396189479}
   m_Layer: 5
   m_Name: HighContrastText
   m_TagString: text-hc
@@ -657,6 +659,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4884125304396189479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658826134074198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8785d31f83eebb843a61f45de6479446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1870733305654158
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,3 +743,76 @@ MonoBehaviour:
   m_canvasRenderer: {fileID: 222133745916722348}
   m_TextComponent: {fileID: 114183685826081154}
   m_materialReferenceIndex: 1
+--- !u!1 &7342874626271607070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1323487328530182195}
+  - component: {fileID: 5616798198752415130}
+  - component: {fileID: 2185584002816851651}
+  m_Layer: 5
+  m_Name: facaImg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1323487328530182195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342874626271607070}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 89.999664}
+  m_LocalScale: {x: 0.5611579, y: 0.5611579, z: 0.80165696}
+  m_Children: []
+  m_Father: {fileID: 224117820506368316}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.3355265, y: 0.30549467}
+  m_AnchorMax: {x: 0.6646316, y: 0.7923405}
+  m_AnchoredPosition: {x: -210, y: -44.652}
+  m_SizeDelta: {x: 41.375153, y: 44.562775}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5616798198752415130
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342874626271607070}
+  m_CullTransparentMesh: 0
+--- !u!114 &2185584002816851651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342874626271607070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7c3adcb81b4492948bd0ec2f276e459a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

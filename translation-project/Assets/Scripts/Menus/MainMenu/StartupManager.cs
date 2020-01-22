@@ -8,9 +8,15 @@ public class StartupManager : MonoBehaviour {
     // Use this for initialization
     private IEnumerator Start () {
         
-        // accessibility and high contrast functions inactive
+        // accessibility parameters start disabled
         Parameters.ACCESSIBILITY = false;
         Parameters.HIGH_CONTRAST = false;
+        Parameters.BOLD = false;
+
+        // change button color
+        Parameters.BUTTONCONTRAST = true;
+
+        //TolkUtil.Load();
 
         yield return new WaitForSeconds(2f);
 
@@ -21,8 +27,8 @@ public class StartupManager : MonoBehaviour {
         }
 
         Debug.Log("loaded");
-        //SceneManager.LoadScene(ScenesNames.Login);
-        SceneManager.LoadScene(ScenesNames.Menu);
+        SceneManager.LoadScene(ScenesNames.Login);
+        //SceneManager.LoadScene(ScenesNames.Menu);
     }
 
 }

@@ -12,6 +12,7 @@ public class MentorController : MonoBehaviour {
     public string missionNumber;
     
     public SpriteRenderer minijogoBalloon;
+    public SpriteRenderer dialogueBalloon;
 
     public SpriteRenderer[] spriteRenderer;
 
@@ -22,29 +23,32 @@ public class MentorController : MonoBehaviour {
     {
         count = 0;
         mentorName = gameObject.name;
+
         mentorIndexes = new int[MentorDialogues.GetVectorLenght(missionNumber, mentorName)];
 
-        Debug.Log(mentorName + " " + MentorDialogues.GetVectorLenght(missionNumber, mentorName));
-        for (int i = 0; i < MentorDialogues.GetVectorLenght(missionNumber, mentorName); i++)
-            mentorIndexes[i] = i;
+        //Debug.Log(mentorName + " " + MentorDialogues.GetVectorLenght(missionNumber, mentorName));
 
+        for (int i = 0; i < MentorDialogues.GetVectorLenght(missionNumber, mentorName); i++)
+        {
+            mentorIndexes[i] = i;
+        }
+        
         //Debug.Log(mentorName);
 
-        if (Parameters.ACCESSIBILITY)
+        if (Parameters.ACCESSIBILITY && !VD.isActive)
         {
-            audioSource.playOnAwake = true;
-            audioSource.Play();
-            audioSource.loop = true;
+            PlayAcessibilityAudio();
         }
 
-        HandleMinijogoBalloonColor(mentorName, missionNumber);
+        HandleMinijogoBalloonColor(mentorName);
+        HandleDialogueBalloonColor(mentorName);
     }
 
     private void Update()
     {
-        if (Parameters.ACCESSIBILITY)
+        if (Parameters.ACCESSIBILITY && !VD.isActive)
             PlayAcessibilityAudio();
-        else if (audioSource.isPlaying)
+        else
             audioSource.Stop();
     }
 
@@ -64,9 +68,47 @@ public class MentorController : MonoBehaviour {
                         if (PlayerPreferences.M004_TeiaAlimentar) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
                         break;
+                    case "Mentor4":
+                        if (PlayerPreferences.M004_FotoIdentificacao) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    default:
+                        Debug.Log("check mentor name");
+                        break;
                 }
             break;
-
+            case "M002":
+                switch(mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPreferences.M002_ProcessoPesquisa) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor2":
+                        if (PlayerPreferences.M002_Pinguim) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor3":
+                        if (PlayerPreferences.M002_Regras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    default:
+                        Debug.Log("check mentor name");
+                        break;
+                }
+                break;
+            case "M002_Casinha":
+                switch(mentorName)
+                {
+                    case "Mentor4":
+                        if (PlayerPreferences.M002_Homeostase) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    default:
+                        Debug.Log("check mentor name");
+                        break;
+                }
+                break;
             case "M009":
                 switch(mentorName)
                 {
@@ -84,13 +126,75 @@ public class MentorController : MonoBehaviour {
                         break;
                 }
             break;
+            default:
+                Debug.Log("check mission number");
+                break;
+        }
+    }
+
+    private void HandleDialogueBalloonColor(string mentorName)
+    {
+        // mentores com dialogo
+        switch (missionNumber)
+        {
+            case "M004":
+                switch (mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPrefs.GetInt("M004_Mentor1_Dialogue") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor3":
+                        if (PlayerPrefs.GetInt("M004_Mentor3_Dialogue") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    default:
+                        Debug.Log("check mentor name");
+                        break;
+                }
+                break;
+            case "M002":
+                switch(mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPrefs.GetInt("M002_Mentor1_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor2":
+                        if (PlayerPrefs.GetInt("M002_Mentor2_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor3":
+                        if (PlayerPrefs.GetInt("M004_Mentor3_Dialogue1") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor4":
+                        if (PlayerPrefs.GetInt("M004_Mentor4_Dialogue1") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    default:
+                        Debug.Log("check mentor name");
+                        break;
+                }
+                break;
+          case "M009":
+            switch(mentorName)
+            {
+                // dialogue 
+            }
+            break;
+            default:
+                Debug.Log("check mission number");
+                break;
         }
     }
 
     private void PlayAcessibilityAudio()
     {
         audioSource.playOnAwake = true;
+        
         if (!audioSource.isPlaying) audioSource.Play();
+
         audioSource.loop = true;
     }
 

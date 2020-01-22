@@ -27,7 +27,10 @@ public class ShipSceneManagement : AbstractScreenReader {
     public TextMeshProUGUI missionName;
     public TextMeshProUGUI descriptionText;
 
-    public string sceneDescription;
+    //public string sceneDescription;
+
+    public AudioSource audioSource;
+    public AudioClip warningClip;
 
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
@@ -60,20 +63,20 @@ public class ShipSceneManagement : AbstractScreenReader {
                 SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
 
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            if (!instructionInterface.activeSelf)
-            {
-                ReadSceneDescription();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    if (!instructionInterface.activeSelf)
+        //    {
+        //        ReadSceneDescription();
+        //    }
+        //}
     }
 
-    public void ReadSceneDescription()
-    {
-        ReadText(sceneDescription);
-        Debug.Log(sceneDescription);
-    }
+    //public void ReadSceneDescription()
+    //{
+    //    ReadText(sceneDescription);
+    //    Debug.Log(sceneDescription);
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -90,8 +93,16 @@ public class ShipSceneManagement : AbstractScreenReader {
             if (PlayerPreferences.finishedAllM004Games())
             {
                 warningInterface.SetActive(true);
+
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso, LocalizationManager.instance.GetLozalization()));
+
                 warningText.text = "Parabéns!! Você já tem tudo o que precisa para fotografar caudas de baleias jubarte e contribuir com "
                     + "as pesquisas da Ciência Cidadã. Pressione ENTER para iniciar.";
+
+                audioSource.PlayOneShot(warningClip);
+
+                Debug.Log(warningText.text);
+                ReadText(warningText.text);
             }
             else
             {
@@ -104,6 +115,10 @@ public class ShipSceneManagement : AbstractScreenReader {
                     (PlayerPreferences.M004_TeiaAlimentar == false ? "Lente Zoom; " : "") +
                     (PlayerPreferences.M004_FotoIdentificacao == false ? " E conhecer sobre o processo de fotoidentificação de baleias; " : "") +
                     "Volte aqui depois para concluir a missão!!";
+
+                Debug.Log(dialogueInterfaceText.text);
+                ReadText(dialogueInterfaceText.text);
+
             }
 
         }

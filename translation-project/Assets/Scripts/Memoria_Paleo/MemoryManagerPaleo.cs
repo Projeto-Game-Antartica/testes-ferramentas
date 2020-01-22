@@ -148,10 +148,10 @@ public class MemoryManagerPaleo : AbstractScreenReader {
 
     }
 
-    public void CallHintMethod()
-    {
-        dicas.StartHints();
-    }
+    //public void CallHintMethod()
+    //{
+    //    dicas.StartHints();
+    //}
 
     public void initializeCards()
     {
