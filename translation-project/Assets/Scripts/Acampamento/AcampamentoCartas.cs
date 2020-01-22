@@ -14,6 +14,8 @@ public class AcampamentoCartas : AbstractCardManager
     public Button resetButton;
     public Button backButton;
 
+    private bool WinGame = false;
+
     public LifeExpController lifeExpController;
 
     public GameObject instruction_interface;
@@ -64,6 +66,7 @@ public class AcampamentoCartas : AbstractCardManager
 
     public void InitializeGame()
     {
+        WinGame = false;
         cardIndex = 0;
 
         fill.fillAmount = 0.5f;
@@ -361,6 +364,7 @@ public class AcampamentoCartas : AbstractCardManager
                 coracao = 2;
                 estrela = 4;
                 mapa = 2;
+                WinGame = true;
                 break;
 
             default:
@@ -647,6 +651,7 @@ public class AcampamentoCartas : AbstractCardManager
                 coracao =-2;
                 estrela =-4;
                 mapa =-2;
+                WinGame = true;
                 break;
 
             default:
@@ -715,7 +720,7 @@ public class AcampamentoCartas : AbstractCardManager
             Debug.Log("A Antártica não pode sofrer mais danos!");
         }
 
-        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && cardIndex == 53)
+        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
         {
             WinImage.SetActive(true);
 
