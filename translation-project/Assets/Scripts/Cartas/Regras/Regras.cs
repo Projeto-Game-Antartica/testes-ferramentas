@@ -24,6 +24,7 @@ public class Regras : AbstractCardManager {
 
     public TextMeshProUGUI CardLeft;
     public TextMeshProUGUI CardCount;
+    public TextMeshProUGUI instructionText;
 
     public GameObject winImage;
     public GameObject loseImage;
@@ -104,6 +105,8 @@ public class Regras : AbstractCardManager {
     // after instructions, initialize the game
     public void InitializeGame()
     {
+        ReadText(instructionText.text);
+
         cardIndex = 0;
 
         //selectedCards = new bool[sprites.Length];
@@ -348,8 +351,8 @@ public class Regras : AbstractCardManager {
 
     public void ReadCard(int index)
     {
-        Debug.Log("Nova Regra: " + RegrasText.GetRegra(index));
-        ReadText("Nova Regra: " + RegrasText.GetRegra(index));
+        Debug.Log(RegrasText.GetRegra(index));
+        ReadText(RegrasText.GetRegra(index));
     }
 
     public IEnumerator EndGame(bool win)

@@ -126,11 +126,13 @@ public class HomeostaseVitoria : AbstractScreenReader {
         {
             titleText.text = "Blusa de algodão";
             minijogoDicas.ShowIsolatedHint(algodaoHint);
+            ReadText(algodaoHint);
         }
         else if (clickedCard.name.Equals(fleeceCard.name))
         {
             titleText.text = "Blusa de fleece";
             minijogoDicas.ShowIsolatedHint(fleeceHint);
+            ReadText(fleeceHint);
         }
 
         likeButton.Select();
@@ -162,7 +164,7 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Parabéns, você conseguiu mais alguns itens necessários para sua aventura na antártica!");
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: blusa de fleece, camiseta segunda pele e colete salva-vidas.");
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item

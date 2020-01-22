@@ -48,6 +48,7 @@ public class Homeostase : AbstractCardManager
     public Button cestaButton;
 
     private bool isOnLikeButton;
+    private bool isOnMenu;
 
     public GameObject confirmQuit;
 
@@ -89,7 +90,12 @@ public class Homeostase : AbstractCardManager
 
         if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
-            audioButton.Select();
+            isOnMenu = !isOnMenu;
+
+            if (isOnMenu)
+                audioButton.Select();
+            else
+                likeButton.Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -121,6 +127,7 @@ public class Homeostase : AbstractCardManager
     public void Initialize()
     {
         isOnLikeButton = true;
+        isOnMenu = false;
 
         alimentosCestaList = new List<GameObject>();
 
