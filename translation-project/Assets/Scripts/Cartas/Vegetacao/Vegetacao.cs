@@ -13,8 +13,6 @@ public class Vegetacao : AbstractCardManager
 
     public Transform alimentos;
 
-    private int cardIndex;
-
     private float kcal;
 
     private readonly int MAX_KCAL = 2000;
@@ -85,6 +83,18 @@ public class Vegetacao : AbstractCardManager
         else
             throw new NotImplementedException("Question not implemented for " + sprites[cardIndex].name);
         cardName.text = questions[questionId];
+    }
+
+    private void clearQuestion() {
+        cardName.text = " ";
+    }
+
+    protected override void beforePositiveSwipe() {
+        clearQuestion();
+    }
+
+    protected override void beforeNegativeSwipe() {
+        clearQuestion();
     }
 
     // private void updateRandomQuestion() {
@@ -254,7 +264,7 @@ public class Vegetacao : AbstractCardManager
 
     public void ResetScene()
     {
-        //SceneManager.LoadScene(ScenesNames.M010TiposVegetacaoScene);
+        SceneManager.LoadScene(ScenesNames.M010TiposVegetacao);
     }
 
     public void ReturnToUshuaia()

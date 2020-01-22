@@ -33,7 +33,8 @@ public class EinsteinVegManager : AbstractScreenReader
     public AudioClip correctAudio;
     public AudioClip wrongAudio;
 
-    private List<int> tokensToCompare = new List<int>();
+    //private List<int> tokensToCompare = new List<int>();
+    private List<EinsteinVegCard> tokensToCompare = new List<EinsteinVegCard>();
 
     public GameObject WinImage;
     public GameObject LoseImage;
@@ -50,6 +51,8 @@ public class EinsteinVegManager : AbstractScreenReader
     private enum Operation { correct, wrong }
 
     private enum DropDownColors { white = 0, blue, orange, purple, green, red }
+
+    private List<EinsteinVegCard> doneTokens = new List<EinsteinVegCard>(); //List to store cards already done
 
     private Color[] colorsList = new Color[] {
         new Color(1, 1, 1, 1), //White
@@ -89,8 +92,6 @@ public class EinsteinVegManager : AbstractScreenReader
     public String[] tokensText = new String[20];
     public TokensTypes[] tokensType = new TokensTypes[20];
 
-
-
     private void Start()
     {
         resetButton.interactable = false;
@@ -107,31 +108,24 @@ public class EinsteinVegManager : AbstractScreenReader
     // Update is called once per frame
     void Update()
     {
+        //Enable or disable components
+        processDropDown.interactable = tokensToCompare.Count == 0;
+        cancelButton.interactable = !processDropDown.interactable;
+        confirmarButton.interactable = tokensToCompare.Count > 0 && 
+            tokensToCompare.Count == GetRemainingOptions(GetDropDownValue());
+        
+        // if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))) {
+        //         if(!EinsteinVegCard.DO_NOT)
+        //             checkCards();
+        // }
 
-        if ((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))) {
-                if(!EinsteinVegCard.DO_NOT)
-                    checkCards();
-        }
-
+        //Check keys press
         if (Input.GetKeyDown(KeyCode.P)) {
             audioButton.Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F6)) {
             cards[0].GetComponent<Button>().Select();
-        }
-
-        if (tokensToCompare.Count >= GetRemainingOptions(GetDropDownValue())) {
-            EinsteinVegCard.DO_NOT = true;
-            confirmarButton.interactable = true;
-            cancelButton.interactable = true;
-            //Debug.Log(tokensToCompare.Count);
-        } else if (tokensToCompare.Count > 0) {
-            processDropDown.interactable = false;
-            cancelButton.interactable = true;
-        } else {
-            confirmarButton.interactable = false;
-            cancelButton.interactable = false;
         }
 
         if (Input.GetKeyDown(KeyCode.F1)) {
@@ -141,7 +135,6 @@ public class EinsteinVegManager : AbstractScreenReader
         if (Input.GetKey(KeyCode.Escape)) {
             instruction_interface.SetActive(false);
         }
-
 
         //Checks if all the options are already done. If so, end the game
         bool allDone = true;
@@ -161,7 +154,6 @@ public class EinsteinVegManager : AbstractScreenReader
 
         backButton.interactable = true;
         resetButton.interactable = true;
-
     }
 
     public void CallHintMethod() {
@@ -196,22 +188,33 @@ public class EinsteinVegManager : AbstractScreenReader
 
 
     public void OnTokenClick(EinsteinVegCard token) {
-        token.flipCard();
+
+        //Conditions to avoid select one card
+        if(
+            tokensToCompare.Contains(token) ||
+            doneTokens.Contains(token) ||
+            GetRemainingOptions(GetDropDownValue()) <= 0 ||
+            tokensToCompare.Count == GetRemainingOptions(GetDropDownValue())
+        )
+            return;
+
+        tokensToCompare.Add(token);
+        token.BGImage.color = GetColor(GetDropDownValue());
     }
 
-    void checkCards() {
-        for (int i = 0; i < cards.Length; i++) {
-            EinsteinVegCard card = cards[i].GetComponent<EinsteinVegCard>();
-            if (card.state == EinsteinVegCard.VIRADA_CIMA && !tokensToCompare.Contains(i)) {
-                    Debug.Log("carta adicionada >> " + cards[i]);
-                    tokensToCompare.Add(i);
-                    Debug.Log("após adicionar carta >> " + tokensToCompare.Count);
+    // void checkCards() {
+    //     for (int i = 0; i < cards.Length; i++) {
+    //         EinsteinVegCard card = cards[i].GetComponent<EinsteinVegCard>();
+    //         if (card.state == EinsteinVegCard.VIRADA_CIMA && !tokensToCompare.Contains(i)) {
+    //                 Debug.Log("carta adicionada >> " + cards[i]);
+    //                 tokensToCompare.Add(i);
+    //                 Debug.Log("após adicionar carta >> " + tokensToCompare.Count);
 
-                    card.BGImage.color = GetColor(GetDropDownValue());
-            }
-        }
+    //                 card.BGImage.color = GetColor(GetDropDownValue());
+    //         }
+    //     }
 
-    }
+    // }
 
     public void CompareCards() {
         Card.DO_NOT = true;
@@ -225,13 +228,11 @@ public class EinsteinVegManager : AbstractScreenReader
             correct = 0;
         else
             correct = CheckCombination(dropDownValue, colorNames[dropDownValue]);
-
         
-        //for (int i = 0; i < GetRemainingOptions(GetDropDownValue()); i++) {
-        foreach(int tokenId in tokensToCompare) {
-            //cards[c[i]].GetComponent<EinsteinVegCard>().falseCheck();
-            cards[tokenId].GetComponent<EinsteinVegCard>().falseCheck();
-        }
+        foreach(EinsteinVegCard token in tokensToCompare)
+            token.falseCheck();
+
+
 
         Debug.Log("correct answers >> " + correct);
         // subtract 1 from remaining option
@@ -240,19 +241,20 @@ public class EinsteinVegManager : AbstractScreenReader
 
         tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
+
+        //Check if the current option is done:
+        if (GetRemainingOptions(dropDownValue) == 0) {
+            processDropDown.options[GetDropDownValue()].text += " (Finalizado)";
+        }
     }
 
     public void Cancel()
     {
-        foreach(int tokenId in tokensToCompare) {
-            cards[tokenId].GetComponent<EinsteinVegCard>().state = EinsteinCard.VIRADA_BAIXO;
-            cards[tokenId].GetComponent<EinsteinVegCard>().turnCardDown();
-            cards[tokenId].GetComponent<EinsteinVegCard>().BGImage.color = GetColor(-1);
-        }
+        foreach(EinsteinVegCard token in tokensToCompare)
+            token.BGImage.color = GetColor(-1);
 
         tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
-        processDropDown.interactable = true;
     }
 
     public int CheckCombination(int dropDownValue, string cardType) {
@@ -261,10 +263,10 @@ public class EinsteinVegManager : AbstractScreenReader
         int correct = 0;
         bool wrong = false;
 
-        foreach(int tokenId in tokensToCompare) {
-            EinsteinVegCard card = cards[tokenId].GetComponent<EinsteinVegCard>();
+        foreach(EinsteinVegCard card in tokensToCompare) {
             x = 0;
             if(tokensType[card.cardValue] == (TokensTypes)dropDownValue) {
+                doneTokens.Add(card);
                 Debug.Log("correct >> " + card);
                 StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.correct));
                 x = 2;
@@ -289,7 +291,6 @@ public class EinsteinVegManager : AbstractScreenReader
             EndGame(false);
         }
 
-        processDropDown.interactable = true;
         return correct;
 
 
@@ -320,7 +321,7 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void ResetScene() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Einstein);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010AmostrasVegetacao);
     }
 
     public IEnumerator ReadCards() {
@@ -425,6 +426,10 @@ public class EinsteinVegManager : AbstractScreenReader
     public int GetDropDownValue()
     {
         return processDropDown.value;
+    }
+
+    public void UpdateDropDownColor() {
+        ChangeDropDownColor(GetDropDownValue());
     }
 
     public void ChangeDropDownColor(int dropdownValue)
