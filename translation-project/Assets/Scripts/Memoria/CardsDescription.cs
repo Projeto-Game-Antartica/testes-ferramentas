@@ -7,7 +7,7 @@ public class CardsDescription
     private const string baleia_minke = "Esta baleia pode ser vista levantando a cabeça fora d'água.";
     private const string baleia_azul = "Esta é a maior baleia podendo atingir 30m. Atualmente, está em perigo de extinção.";
     private const string baleia_jubarte = "Esta baleia alimenta-se na Antártica no verão e procria em águas tropicais e subtropicais no  inverno.";
-    private const string baleia_fin = "Esta é a segunda maior baleia do mundo, podendo atingir 22 m. ";
+    private const string baleia_fin = "Esta é a segunda maior baleia do mundo, podendo atingir 22 m.";
     private const string krill = "É base da cadeia alimentar de muitos animais marinhos do oceano austral.";
     private const string algas = "Grupo de seres vivos capazes de produzir sua própria fonte de alimento.";
     private const string zooplancton = "Pequenos animais que estão passivamente a deriva do movimento da água.";

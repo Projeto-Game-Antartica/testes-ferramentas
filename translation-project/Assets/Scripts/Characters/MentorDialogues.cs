@@ -53,23 +53,19 @@ public class MentorDialogues {
     };
     public static string[] M002_Mentor1 =
     {
-        prefixom002 + "1" + sufixo + "1", prefixom002 + "1" + sufixo + "2", prefixom002 + "1" + sufixo + "3",
-        prefixom002 + "1" + sufixo + "4", prefixom002 + "1" + sufixo + "5"
+        prefixom002 + "1" + sufixo + "1", prefixom002 + "1" + sufixo + "2"
     };
     public static string[] M002_Mentor2 =
     {
-        prefixom002 + "2" + sufixo + "1", prefixom002 + "2" + sufixo + "2", prefixom002 + "2" + sufixo + "3",
-        prefixom002 + "2" + sufixo + "4", prefixom002 + "2" + sufixo + "5"
+        prefixom002 + "2" + sufixo + "1", prefixom002 + "2" + sufixo + "2"
     };
     public static string[] M002_Mentor3 =
     {
-        prefixom002 + "3" + sufixo + "1", prefixom002 + "3" + sufixo + "2", prefixom002 + "3" + sufixo + "3",
-        prefixom002 + "3" + sufixo + "4", prefixom002 + "3" + sufixo + "5"
+        prefixom002 + "3" + sufixo + "1", prefixom002 + "3" + sufixo + "2"
     };
     public static string[] M002_Mentor4 =
     {
-        prefixom002 + "4" + sufixo + "1", prefixom002 + "4" + sufixo + "2", prefixom002 + "4" + sufixo + "3",
-        prefixom002 + "4" + sufixo + "4"
+        prefixom002 + "4" + sufixo + "1"
     };
     public static string[] M002_Casinha_Mentor4 =
     {

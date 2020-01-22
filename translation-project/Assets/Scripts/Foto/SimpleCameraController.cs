@@ -188,8 +188,9 @@ public class SimpleCameraController : AbstractScreenReader {
         Parameters.ISWHALEONCAMERA = true;
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Debug.Log("trigger exit");
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("trigger exit");
+        Parameters.ISWHALEONCAMERA = false;
+    }
 }

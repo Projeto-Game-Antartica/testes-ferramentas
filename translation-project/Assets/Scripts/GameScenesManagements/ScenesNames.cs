@@ -34,4 +34,8 @@ public class ScenesNames {
     public const string M009Itens = "M009ItensPaleoScene";
     public const string M009Desafio = "M009DesafioScene";
 
+    /* M010 Vegetação */
+    public const string M010TiposVegetacao = "M010TiposVegetacaoScene";
+    public const string M010AmostrasVegetacao = "M010AmostrasVegetacaoScene";
+
 }

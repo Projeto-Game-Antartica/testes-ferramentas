@@ -38,6 +38,8 @@ public class SoundGlossaryController : AbstractScreenReader {
     public SimpleObjectPool buttonObjectPool;
     public Button backButton;
 
+    private bool isOnLetter;
+
     /*
     * Variáveis para controle do glossário
     */
@@ -46,14 +48,15 @@ public class SoundGlossaryController : AbstractScreenReader {
     private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
     private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
-    private ReadableTexts readableTexts;
-
     void Start()
     {
         LoadDictionary();
-        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
+
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
+        isOnLetter = true;
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_sons, LocalizationManager.instance.GetLozalization()));
+
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -89,18 +92,33 @@ public class SoundGlossaryController : AbstractScreenReader {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_soundglossary_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_sons, LocalizationManager.instance.GetLozalization()));
         }
 
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ResetVerticalPositionScrollRect();
-            buttonA.Select();
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    ResetVerticalPositionScrollRect();
+        //    buttonA.Select();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    backButton.Select();
+        //}
+
+        if(Input.GetKeyDown(KeyCode.F6))
         {
-            backButton.Select();
+            if (isOnLetter)
+            {
+                backButton.Select();
+                isOnLetter = false;
+            }
+            else
+            {
+                ResetVerticalPositionScrollRect();
+                buttonA.Select();
+                isOnLetter = true;
+            }
         }
     }
 

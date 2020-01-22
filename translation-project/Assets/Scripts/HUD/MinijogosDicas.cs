@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class MinijogosDicas : AbstractScreenReader {
 
     public TextMeshProUGUI targetText;
     public string[] hints;
 
+    private int[] hintIndexes;
+    private int index = 0;
+    
     private float waitTime = 5;
 
     public readonly float time = 10.0f;
@@ -17,6 +21,44 @@ public class MinijogosDicas : AbstractScreenReader {
 
     public GameObject dicas;
 
+    private void Start()
+    {
+        hintIndexes = new int[hints.Length];
+
+        for (int i = 0; i < hints.Length; i++)
+            hintIndexes[i] = i;
+        
+        // randomize the indexes
+        System.Random r = new System.Random();
+        hintIndexes = hintIndexes.OrderBy(x => r.Next()).ToArray();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            if (dicas.activeSelf)
+                ReadText("Dica: " + targetText.text);
+        }
+    }
+    
+    public void ShowHint()
+    {
+        dicas.SetActive(true);
+
+        targetText.text = hints[hintIndexes[index]];
+        index++;
+
+        if (index == hints.Length)
+            index = 0;
+
+        ReadText("Dica: " + targetText.text);
+
+        // lose exp points
+        // TO DO
+    }
+
+    
     public void StartHints()
     {
         if (isRandom)
@@ -40,12 +82,14 @@ public class MinijogosDicas : AbstractScreenReader {
 
             yield return new WaitForSeconds(waitTime);
 
+
             dicas.SetActive(false);
             targetText.text = string.Empty;
         }
         else
             yield return null;
     }
+
 
     public void SetHintByIndex(int index)
     {

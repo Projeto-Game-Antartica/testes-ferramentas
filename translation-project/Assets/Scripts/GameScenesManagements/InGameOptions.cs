@@ -11,6 +11,9 @@ public class InGameOptions : AbstractScreenReader {
     public Animator charAnimator;
     public GameObject confirmQuit;
 
+    public AudioSource audioSource;
+    public AudioClip warningClip;
+
     private void Start()
     {
         toggle.isOn = Parameters.ACCESSIBILITY;    
@@ -20,8 +23,6 @@ public class InGameOptions : AbstractScreenReader {
     {
         // runs idle animation when the ingameoption is active
         charAnimator.SetFloat("Magnitude", 0);
-
-        if (Parameters.HIGH_CONTRAST) HighContrastText.ChangeTextBackgroundColor();
     }
 
     public void ReturnToMainMenu()
@@ -32,7 +33,12 @@ public class InGameOptions : AbstractScreenReader {
     public void TryQuitGame()
     {
         confirmQuit.SetActive(true);
+        audioSource.PlayOneShot(warningClip);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
         ReadText("Tem certeza que deseja sair do jogo?");
+
         confirmQuit.GetComponentInChildren<Button>().Select();
     }
 
