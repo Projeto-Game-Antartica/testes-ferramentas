@@ -52,7 +52,7 @@ public class MentorController : MonoBehaviour {
             audioSource.Stop();
     }
 
-    private void HandleMinijogoBalloonColor(string mentorName, string missionNumber)
+    private void HandleMinijogoBalloonColor(string mentorName)
     {
         // mentores com minijogos
         switch(missionNumber)
