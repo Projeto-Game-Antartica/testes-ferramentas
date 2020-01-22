@@ -17,7 +17,9 @@ public class PlayerPreferences : MonoBehaviour {
 
     // M009
     public static bool M009_Memoria = false;
-
+    public static bool M009_Eras = false;
+    public static bool M009_Itens = false;
+  
     // puzzles points
     public static float XPwinPuzzle = 0.004f;
     public static float XPwinItem = 0.00004f;
@@ -81,7 +83,12 @@ public class PlayerPreferences : MonoBehaviour {
     {
         return M004_FotoIdentificacao && M004_Memoria && M004_TeiaAlimentar;
     }
-
+  
+    public static bool finishedAllM009Games()
+    {
+        return M009_Memoria && M009_Eras && M009_Itens;
+    }
+  
     public static float calculateMJExperiencePoints(float expPoints, float antarticaPoints)
     {
         return (0.6f * expPoints + 0.4f * antarticaPoints) / 5000f;

@@ -52,7 +52,7 @@ public class MentorController : MonoBehaviour {
             audioSource.Stop();
     }
 
-    private void HandleMinijogoBalloonColor(string mentorName)
+    private void HandleMinijogoBalloonColor(string mentorName, string missionNumber)
     {
         // mentores com minijogos
         switch(missionNumber)
@@ -76,7 +76,7 @@ public class MentorController : MonoBehaviour {
                         Debug.Log("check mentor name");
                         break;
                 }
-                break;
+            break;
             case "M002":
                 switch(mentorName)
                 {
@@ -109,6 +109,23 @@ public class MentorController : MonoBehaviour {
                         break;
                 }
                 break;
+            case "M009":
+                switch(mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPreferences.M009_Memoria) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor2":
+                        if (PlayerPreferences.M009_Itens) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor3":
+                        if (PlayerPreferences.M009_Eras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                }
+            break;
             default:
                 Debug.Log("check mission number");
                 break;
@@ -160,6 +177,12 @@ public class MentorController : MonoBehaviour {
                         break;
                 }
                 break;
+          case "M009":
+            switch(mentorName)
+            {
+                // dialogue 
+            }
+            break;
             default:
                 Debug.Log("check mission number");
                 break;
