@@ -90,7 +90,7 @@ public class MentorDialogues {
     };
     public static string[] M009_Mentor3 =
     {
-        prefixom009 + "3" + sufixo + "1"
+        prefixom009 + "3" + sufixo + "1", prefixom009 + "3" + sufixo + "2" 
     };
     public static string[] M009_Mentor4 =
     {

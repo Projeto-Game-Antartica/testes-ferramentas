@@ -2,12 +2,16 @@
 
 public class CardsDescriptionPaleo
 {
-    private const string amnoide = "A baleia assassina é, na verdade, um golfinho. Alimenta-se de focas, pinguins etc.";
-    private const string antarctopelta = "Este peixe vive a mil metros de profundidade. Possui o sangue transparente.";
-    private const string floresta_tropical3 = "Esta baleia pode ser vista levantando a cabeça fora d’água.";
-    private const string fossil = "Esta é a maior baleia podendo atingir 30m. Atualmente, está em perigo de extinção.";
-    private const string plesiossauro = "Esta baleia alimenta-se na Antártica no verão e procria em águas tropicais e subtropicais no  inverno.";
-    private const string pterossauro = "Esta é a segunda maior baleia do mundo, podendo atingir  22 m.";
+    private const string amnoide = "Fóssil de animal marinho. Pareciam os moluscos.";
+    private const string antarctopelta = "Primeiro dinossauro descoberto na Antártica.";
+    private const string floresta_tropical3 = "Abundante fauna e flora. Árvores com até 4 metros de comprimento e alguns animais com 5 metros de comprimento.";
+    private const string fossil = "Objeto de estudo da Paleontologia.";
+    private const string plesiossauro = "Réptil aquático confundido com dinossauro.";
+    private const string pterossauro = "Réptil voador confundido com dinossauro.";
+    private const string artefatos = "São da história humana, é cultura.";
+    private const string ceramicas = "Seres humanos produziram.";
+    private const string trinisaura = "Dinossauros, possuíam quatro patas.";
+
 
     public static string GetCardDescriptionPaleo(string cardName)
     {
@@ -23,6 +27,12 @@ public class CardsDescriptionPaleo
             return plesiossauro;
         else if (cardName.Contains("pterossauroText"))
             return pterossauro;
+        else if (cardName.Contains("artefatosText"))
+            return artefatos;
+        else if (cardName.Contains("ceramicasText"))
+            return ceramicas;
+        else if (cardName.Contains("trinisauraText"))
+            return trinisaura;
         else
             return null;
     }

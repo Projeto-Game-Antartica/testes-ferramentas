@@ -5,12 +5,12 @@ using DG.Tweening;
 using UnityEngine.UI;
 
 
-public class Acampamentoo : AbstractCardManager
+public class Acampamento : AbstractCardManager
 {
 
     public Vector3 initialPosition;
 
-    public Sprite[] sprites;
+    //public Sprite[] sprites;
 
     public Image currentCard;
     public Image nextCard;
@@ -715,21 +715,31 @@ public class Acampamentoo : AbstractCardManager
         if (fill.fillAmount == 0)
             Debug.Log("Zerou um marcador!");
 
-        if (fills.fillAmount == 0)
+        else if (fills.fillAmount == 0)
             Debug.Log("Zerou um marcador!");
 
-        if (fillm.fillAmount == 0)
+        else if (fillm.fillAmount == 0)
             Debug.Log("Zerou um marcador!");
 
         if (fill.fillAmount <= 0.2)
-            minijogosDicas.SetHintByIndex(0);
-        Debug.Log("Cuidado com a limpeza do acampamento!!");
+        {
+            //minijogosDicas.SetHintByIndex(0);
+            Debug.Log("Cuidado com a limpeza do acampamento!!");
+        }
             
-        if (fills.fillAmount <= 0.2)
-            Debug.Log("Cuidado com seus pontos de experiência!!");
+        else if (fills.fillAmount <= 0.2)
+        {
+                    //minijogosDicas.SetHintByIndex(1);
 
-        if (fillm.fillAmount <= 0.2)
+            Debug.Log("Cuidado com seus pontos de experiência!!");
+        }
+
+        else if (fillm.fillAmount <= 0.2)
+        {
+                    //minijogosDicas.SetHintByIndex(2);
+
             Debug.Log("A Antártica não pode sofrer mais danos!");
+        }
     }
 
 
