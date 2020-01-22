@@ -108,13 +108,8 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
-<<<<<<< Updated upstream
         //async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
         async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
-=======
-        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Fotoidentification);
-        async = SceneManager.LoadSceneAsync(ScenesNames.M009Camp);
->>>>>>> Stashed changes
 
         loadScreenObject.SetActive(true);
 

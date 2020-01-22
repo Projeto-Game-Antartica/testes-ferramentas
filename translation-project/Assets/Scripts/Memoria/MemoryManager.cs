@@ -27,7 +27,6 @@ public class MemoryManager : AbstractScreenReader {
     public Button backButton;
     public Button resetButton;
     public Button audioButton;
-    public Button backButton;
 
     public int[] index; 
     private int matches = 9;
@@ -111,7 +110,7 @@ public class MemoryManager : AbstractScreenReader {
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            ReadText("Faltam " + matches + " restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
+            //ReadText("Faltam " + matches + " restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
             Debug.Log("Faltam " + matches + " restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
         }
 
@@ -243,12 +242,6 @@ public class MemoryManager : AbstractScreenReader {
         {
             if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
-                //Debug.Log("carta adicionada >> " + cards[i]);
-<<<<<<< Updated upstream
-=======
-                                Debug.Log("carta adicionada >> " + cards[i]);
-
->>>>>>> Stashed changes
                 c.Add(i);
                 audioSource.PlayOneShot(selectAudio);
                 //Debug.Log("após adicionar carta >> " + c.Count);
@@ -267,8 +260,8 @@ public class MemoryManager : AbstractScreenReader {
 
                     Debug.Log("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
                         "outras cartas.");
-                    ReadText("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
-                        "outras cartas.");
+                    //ReadText("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
+                        //"outras cartas.");
 
                     StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
                     StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
@@ -378,18 +371,9 @@ public class MemoryManager : AbstractScreenReader {
                         if (win)
                             {
                                 WinImage.SetActive(true);
-                                //WinImage.GetComponentInChildren<Button>().Select();
+                                //WinImage.GetComponentInChildren<Button>().Select();            
 
-<<<<<<< Updated upstream
-            if (!PlayerPreferences.M004_TeiaAlimentar)
-            {
-                WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
-=======
-            
-
-                                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
->>>>>>> Stashed changes
-
+                                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
                                 if (!PlayerPreferences.M004_TeiaAlimentar)
                                 {
                                     WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
@@ -397,7 +381,7 @@ public class MemoryManager : AbstractScreenReader {
                                     audioSource.PlayOneShot(victoryAudio);
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
+                                    //ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
                                 }
                                 else
                                 {
@@ -407,13 +391,10 @@ public class MemoryManager : AbstractScreenReader {
                                     audioSource.PlayOneShot(victoryAudio);
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                        "contribuir com as pesquisas da Ciência Cidadã.");
+                                    //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                        //"contribuir com as pesquisas da Ciência Cidadã.");
                                 }
 
-<<<<<<< Updated upstream
-            audioSource.PlayOneShot(loseAudio);
-=======
                                 lifeExpController.AddEXP(0.001f); // finalizou o minijogo
                                 lifeExpController.AddEXP(0.0002f); // ganhou o item
                                 }
@@ -421,14 +402,13 @@ public class MemoryManager : AbstractScreenReader {
                                 {
                                     LoseImage.SetActive(true);
 
-                                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
->>>>>>> Stashed changes
+                                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
                                     audioSource.PlayOneShot(loseAudio);
 
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
                                     resetButton.Select();
                                     lifeExpController.AddEXP(0.0001f); // jogou um minijogo
                                 }
@@ -442,7 +422,7 @@ public class MemoryManager : AbstractScreenReader {
                                 WinImage.SetActive(true);
                                 //WinImage.GetComponentInChildren<Button>().Select();
 
-                                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
                                 if (!PlayerPreferences.M009_Memoria)
                                 {
@@ -451,7 +431,7 @@ public class MemoryManager : AbstractScreenReader {
                                     audioSource.PlayOneShot(victoryAudio);
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
+                                    //ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
                                 }
                                 else
                                 {//MUDAARR
@@ -461,8 +441,8 @@ public class MemoryManager : AbstractScreenReader {
                                     audioSource.PlayOneShot(victoryAudio);
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                        "contribuir com as pesquisas da Ciência Cidadã.");
+                                    //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                                        //"contribuir com as pesquisas da Ciência Cidadã.");
                                 }
 
                                 lifeExpController.AddEXP(0.001f); // finalizou o minijogo
@@ -472,13 +452,13 @@ public class MemoryManager : AbstractScreenReader {
                                 {
                                     LoseImage.SetActive(true);
                                     //MUDAARR
-                                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
                                     audioSource.PlayOneShot(loseAudio);
 
                                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
                                     resetButton.Select();
                                     lifeExpController.AddEXP(0.0001f); // jogou um minijogo
                                 }
@@ -488,27 +468,21 @@ public class MemoryManager : AbstractScreenReader {
                     default:
          
                         break;
-                }
-
-        
+                } 
     }
 
     public void ReturnToShip()
     {
-<<<<<<< Updated upstream
-        if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
-=======
         switch (missionName)
                 {
                     case "baleias":
-                        confirmQuit.SetActive(false);
+                        //confirmQuit.SetActive(false);
                         if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
                         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
                         break;
 
                     case "paleo":
-                        confirmQuit.SetActive(false);
+                        //confirmQuit.SetActive(false);
                         if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
                         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
                         break;
@@ -516,7 +490,6 @@ public class MemoryManager : AbstractScreenReader {
                         
                         break;
                 }        
->>>>>>> Stashed changes
     }
 
     public void ResetScene()

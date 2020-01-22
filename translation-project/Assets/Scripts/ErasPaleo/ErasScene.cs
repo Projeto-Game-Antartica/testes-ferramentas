@@ -52,7 +52,7 @@ public class ErasScene : AbstractScreenReader {
     {
         // read audiodescription
 
-        ReadText("");
+        //ReadText("");
 
         // start counting time
         yield return new WaitForSeconds(0.5f);
@@ -141,7 +141,7 @@ public class ErasScene : AbstractScreenReader {
 
         if(Input.GetKeyDown(KeyCode.F3))
         {
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
+            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
         }
     }
 
@@ -162,7 +162,7 @@ public class ErasScene : AbstractScreenReader {
         // do something
         LoseImage.SetActive(true);
 
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
+        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
 
         lifeExpController.AddEXP(0.0001f);
 
@@ -170,7 +170,7 @@ public class ErasScene : AbstractScreenReader {
 
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        ReadText(LoseText);
+        //ReadText(LoseText);
 
         StartCoroutine(ReturnToCampCoroutine()); // volta para o navio
     }
@@ -200,7 +200,7 @@ public class ErasScene : AbstractScreenReader {
     {
         lifeExpController.ReadHPandEXP();
         //Debug.Log("Restam " + timer.text + " para finalizar o minijogo.");
-        //ReadText("Restam " + timer.text + " para finalizar o minijogo.");
+        ////ReadText("Restam " + timer.text + " para finalizar o minijogo.");
     }
 
     public void TryReturnToCamp()
@@ -209,9 +209,9 @@ public class ErasScene : AbstractScreenReader {
 
         confirmQuit.SetActive(true);
 
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
-        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        //ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();
 
         audioSource.PlayOneShot(avisoClip);
@@ -219,7 +219,7 @@ public class ErasScene : AbstractScreenReader {
 
     public void ReturnToCamp()
     {
-        confirmQuit.SetActive(false);
+        //confirmQuit.SetActive(false);
 
         if (!PlayerPreferences.M009_Eras) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
 
@@ -228,7 +228,7 @@ public class ErasScene : AbstractScreenReader {
 
     public void ReturnToMJ()
     {
-        confirmQuit.SetActive(false);
+        //confirmQuit.SetActive(false);
 
         erasPaleoController.SelectFirstItem();
 
