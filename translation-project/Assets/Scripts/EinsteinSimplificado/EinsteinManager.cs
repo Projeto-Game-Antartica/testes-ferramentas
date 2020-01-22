@@ -113,14 +113,14 @@ public class EinsteinManager : AbstractScreenReader
             checkCards();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
+            isOnMenu = !isOnMenu;
+
             if (!isOnMenu)
                 audioButton.Select();
             else
                 SelectNextAvailableCard();
-
-            isOnMenu = !isOnMenu;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -188,11 +188,8 @@ public class EinsteinManager : AbstractScreenReader
         if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-        }
-
-        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
-        {
-            audioButton.Select();
+            ReadText(attemptsText.text);
+            Debug.Log(attemptsText.text);
         }
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
@@ -422,6 +419,7 @@ public class EinsteinManager : AbstractScreenReader
         {
             audioSource.PlayOneShot(correctAudio);
 
+            processDropDown.options[GetDropDownValue()].text += " (Finalizado)";
         }
 
         // loses the game
@@ -448,15 +446,13 @@ public class EinsteinManager : AbstractScreenReader
                 //WinImage.GetComponentInChildren<Button>().Select();
 
                 //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
-
-            
                 
                 audioSource.PlayOneShot(victoryClip);
             
 
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns, você tem alguns dos itens necessários para sua aventura na antártica");
+                ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: galocha, calça de fleece, calça impermeável, jaqueta polar e calça segunda pele.");
 
                 lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
                 lifeExpController.AddEXP(5*PlayerPreferences.XPwinItem); // ganhou o item
@@ -684,61 +680,69 @@ public class EinsteinManager : AbstractScreenReader
 
     public void ReadDropDown()
     {
-        Debug.Log(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
-        ReadText(processDropDown.name + " " + processDropDown.options[processDropDown.value].text);
+        Debug.Log(processDropDown.options[processDropDown.value].text);
+        ReadText(processDropDown.options[processDropDown.value].text);
     }
 
-    public void ReadDropDownItem(RectTransform item)
-    {
-        string result = "";
-        string itemText = item.GetComponentInChildren<TextMeshProUGUI>().text;
+    //public void ReadDropDownItem(RectTransform item)
+    //{
+    //    string result = "";
+    //    string itemText = item.GetComponentInChildren<TextMeshProUGUI>().text;
 
-        switch (itemText)
-        {
-            case "A metodologia desta Ciência Cidadã é a Fotoidentificação.":
-                if (GetRemainingOptions((int)DropDownColors.blue) == 0)
-                {
-                    result += " pistas já encontradas. ";
-                    item.GetComponentInChildren<Image>().color = blue;
-                }
-                result += itemText;
-                break;
-            case "O objetivo desta pesquisa brasileira é investigar o passado biológico na Antártica.":
-                if (GetRemainingOptions((int)DropDownColors.orange) == 0)
-                {
-                    result += " pistas já encontradas. ";
-                    item.GetComponentInChildren<Image>().color = orange;
-                }
 
-                result += itemText;
-                break;
-            case "Para colaborar com esta Ciência Cidadã é necessário binóculos e catálogo de imagens.":
-                if (GetRemainingOptions((int)DropDownColors.green) == 0)
-                {
-                    result += " pistas já encontradas. ";
-                    item.GetComponentInChildren<Image>().color = green;
-                }
+    //    itemText.Replace("OK. ", "");
 
-                result += itemText;
-                break;
-            case "Esta pesquisa brasileira estuda a Vegetação Antártica.":
-                if (GetRemainingOptions((int)DropDownColors.red) == 0)
-                {
-                    result += " pistas já encontradas. ";
-                    item.GetComponentInChildren<Image>().color = red;
-                }
+    //    switch (itemText)
+    //    {
+    //        case "A metodologia desta Ciência Cidadã é a Fotoidentificação.":
+    //            if (GetRemainingOptions((int)DropDownColors.blue) == 0)
+    //            {
+    //                result += " pistas já encontradas. ";
+    //                //item.GetComponentInChildren<Image>().color = blue;
+    //                //item.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+    //            }
+    //            result += itemText;
+    //            break;
+    //        case "O objetivo desta pesquisa brasileira é investigar o passado biológico na Antártica.":
+    //            if (GetRemainingOptions((int)DropDownColors.orange) == 0)
+    //            {
+    //                result += " pistas já encontradas. ";
+    //                //item.GetComponentInChildren<Image>().color = orange;
+    //                //item.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+    //            }
 
-                result += itemText;
-                break;
-            default:
-                item.GetComponentInChildren<Image>().color = Color.white;
-                result += itemText;
-                break;
-        }
+    //            result += itemText;
+    //            break;
+    //        case "Para colaborar com esta Ciência Cidadã é necessário binóculos e catálogo de imagens.":
+    //            if (GetRemainingOptions((int)DropDownColors.green) == 0)
+    //            {
+    //                result += " pistas já encontradas. ";
+    //                //item.GetComponentInChildren<Image>().color = green;
+    //                //item.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+    //            }
 
-        Debug.Log(result);
-        ReadText(result);
-    }
+    //            result += itemText;
+    //            break;
+    //        case "Esta pesquisa brasileira estuda a Vegetação Antártica.":
+    //            if (GetRemainingOptions((int)DropDownColors.red) == 0)
+    //            {
+    //                result += " pistas já encontradas. ";
+    //                //item.GetComponentInChildren<Image>().color = red;
+    //                //item.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+    //            }
+
+    //            result += itemText;
+    //            break;
+    //        default:
+    //            //item.GetComponentInChildren<Image>().color = Color.white;
+    //            result += itemText;
+    //            break;
+    //    }
+
+    //    Debug.Log(result);
+    //    ReadText(result);
+    //}
+
     public void TryReturnToUshuaia()
     {
         audioSource.PlayOneShot(avisoClip);

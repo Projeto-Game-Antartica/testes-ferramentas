@@ -26,6 +26,7 @@ public class MemoryManager : AbstractScreenReader {
     public Button cancelarButton;
     public Button resetButton;
     public Button audioButton;
+    public Button backButton;
 
     public int[] index; 
     private int matches = 9;
@@ -543,6 +544,8 @@ public class MemoryManager : AbstractScreenReader {
                         if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
 
                         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+
+                    break;
 
                     case "paleo":
                         //confirmQuit.SetActive(false);
