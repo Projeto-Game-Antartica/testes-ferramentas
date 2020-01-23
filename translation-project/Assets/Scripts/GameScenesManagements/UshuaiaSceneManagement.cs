@@ -25,6 +25,11 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
 
     public string sceneDescription;
 
+    public AudioSource audioSource;
+
+    public AudioClip avisoClip;
+    public AudioClip closeClip;
+
 
     // Use this for initialization
     void Start ()
@@ -76,6 +81,7 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
         //Debug.Log(collision.name);
         if (collision.name.Equals("casa_ushuaia"))
         {
+            audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
             warningText.text = "Pressione ENTER para entrar na casa.";
         }
@@ -86,6 +92,7 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
 
     void OnTriggerExit2D(Collider2D other)
     {
+        audioSource.PlayOneShot(closeClip);
         warningInterface.SetActive(false);
 
         isTrigger = false;

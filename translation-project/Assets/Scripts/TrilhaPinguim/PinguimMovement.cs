@@ -44,7 +44,7 @@ public class PinguimMovement : AbstractScreenReader {
         audioSource.PlayOneShot(bloqueioClip);
 
         if (collision.collider.ToString().Contains("pinguim"))
-            pinguimController.CountTime(0.05f);
+            pinguimController.timeLeft -= 1f;
     }
 
     private void CheckEndGame(string pinguim, Collider2D peixe)
