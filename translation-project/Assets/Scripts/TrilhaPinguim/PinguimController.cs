@@ -21,6 +21,12 @@ public class PinguimController : DragAndDropController {
     private Animator pinguim_papuaAnimator;
 
     public Image timer;
+    
+    // max time in seconds
+    public float maxTime;
+
+    public float timeLeft;
+    private bool countingTime;
 
     public bool adeliaFinished;
     public bool antarticoFinished;
@@ -42,6 +48,7 @@ public class PinguimController : DragAndDropController {
     public GameObject WinImage;
     public GameObject LoseImage;
     public GameObject confirmQuit;
+    public GameObject dicas;
 
     public AudioClip closeClip;
     public AudioClip avisoClip;
@@ -59,6 +66,9 @@ public class PinguimController : DragAndDropController {
     private bool finished = false;
 
     private int selectedArea = 1;
+
+    private bool init = false;
+    private bool isOnMenu = false;
 
     public void initializeGame()
     {
@@ -78,6 +88,10 @@ public class PinguimController : DragAndDropController {
 
         timer.fillAmount = 1f;
 
+        timeLeft = maxTime;
+
+        countingTime = false;
+        
         resetButton.interactable = true;
 
         firstItem.Select();
@@ -101,11 +115,6 @@ public class PinguimController : DragAndDropController {
             {
                 TryReturnToUshuaia();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -195,7 +204,12 @@ public class PinguimController : DragAndDropController {
 
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
-            audioButton.Select();
+            isOnMenu = !isOnMenu;
+            
+            if (isOnMenu)
+                audioButton.Select();
+            else
+                firstItem.GetComponent<Selectable>().Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -229,8 +243,8 @@ public class PinguimController : DragAndDropController {
         if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            //ReadText("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
-            //Debug.Log("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
+            ReadText("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
+            Debug.Log("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -247,6 +261,9 @@ public class PinguimController : DragAndDropController {
         {
             StartCoroutine(EndGame(true));
         }
+
+        if (countingTime)
+            CountTime();
     }
 
     /// <summary>
@@ -262,6 +279,12 @@ public class PinguimController : DragAndDropController {
         switch (desc.triggerType)                                               // What type event is?
         {
             case DragAndDropCell.TriggerType.DropRequest:                       // Request for item drag (note: do not destroy item on request)
+                if (!init)
+                {
+                    init = true;
+                    dicas.SetActive(false);
+                }
+
                 Debug.Log("Request " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
                 break;
             case DragAndDropCell.TriggerType.DropEventEnd:                      // Drop event completed (successful or not)
@@ -297,7 +320,8 @@ public class PinguimController : DragAndDropController {
         audioSource.PlayOneShot(pinguimAndandoClip);
         foreach (GameObject g in draggedItems)
         {
-            CountTime(0.01f);  
+            // start counting time
+            countingTime = true;
 
             if (pinguim_adelia.activeSelf) pinguim_adeliaAnimator.SetBool("isMoving", true);
             if (pinguim_antartico.activeSelf) pinguim_antarticoAnimator.SetBool("isMoving", true);
@@ -336,6 +360,8 @@ public class PinguimController : DragAndDropController {
         draggedItems.Clear();
         UpdateBackgroundState();
 
+        // stop counting time
+        countingTime = false;
 
         if (pinguim_adelia.activeSelf)
             pinguim_adeliaAnimator.SetBool("isMoving", false);
@@ -560,15 +586,17 @@ public class PinguimController : DragAndDropController {
         }
     }
 
-    public void CountTime(float value)
+    public void CountTime()
     {
-        if (timer.fillAmount < 0)
+        if(timeLeft > 0)
         {
-            timer.fillAmount = 0;
-            LoseImage.SetActive(true);
+            timeLeft -= Time.deltaTime;
+            timer.fillAmount = timeLeft / maxTime;
         }
         else
-            timer.fillAmount -= value;
+        {
+            StartCoroutine(EndGame(false));
+        }
     }
 
     public void ReadPinguimPosition()

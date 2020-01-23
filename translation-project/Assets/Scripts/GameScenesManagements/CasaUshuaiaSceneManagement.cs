@@ -25,6 +25,10 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
     
     public string sceneDescription;
 
+    public AudioSource audioSource;
+    public AudioClip avisoClip;
+    public AudioClip closeClip;
+
     // Use this for initialization
     void Start()
     {
@@ -65,8 +69,9 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
     {
         if (collision.name.Equals("door"))
         {
+            audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
-            warningText.text = "Pressione ENTER para sair da casa.";
+            warningText.text = "Pressione ENTER para sair na casa.";
         }
 
         isTrigger = true;
@@ -75,6 +80,7 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        audioSource.PlayOneShot(closeClip);
         warningInterface.SetActive(false);
 
         isTrigger = false;
