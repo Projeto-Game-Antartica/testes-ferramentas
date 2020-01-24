@@ -45,6 +45,7 @@ public class HomeostaseVitoria : AbstractScreenReader {
     private GameObject clickedCard = null;
 
     private bool isOnLikeButton;
+    private bool isOnCard;
 
     // Use this for initialization
     void Start ()
@@ -54,11 +55,14 @@ public class HomeostaseVitoria : AbstractScreenReader {
         antarticaImage.fillAmount = PlayerPrefs.GetFloat("MJAntartica");
 
         isOnLikeButton = true;
+        isOnCard = true;
         minijogoDicas.ShowIsolatedHint(initialHint);
 
         Debug.Log(initialHint);
         ReadText(initialHint);
-	}
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -91,23 +95,28 @@ public class HomeostaseVitoria : AbstractScreenReader {
             if(!isOnLikeButton)
             {
                 audioButton.Select();
-                isOnLikeButton = true;
             }
             else
             {
                 fleeceCard.GetComponent<Button>().Select();
-                isOnLikeButton = false;
             }
+
+            isOnLikeButton = !isOnLikeButton;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            likeButton.Select();
+            if (isOnCard)
+                fleeceCard.GetComponent<Button>().Select();
+            else
+                likeButton.Select();
+
+            isOnCard = !isOnCard;
         }
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -160,6 +169,8 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
             PlayerPreferences.M002_Homeostase = true;
 
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_vitoria, LocalizationManager.instance.GetLozalization()));
+
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
@@ -177,6 +188,8 @@ public class HomeostaseVitoria : AbstractScreenReader {
         else
         {
             loseImage.SetActive(true);
+
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_derrota, LocalizationManager.instance.GetLozalization()));
 
             audioSource.PlayOneShot(loseClip);
 

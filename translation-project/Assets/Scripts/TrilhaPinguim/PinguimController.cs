@@ -95,6 +95,8 @@ public class PinguimController : DragAndDropController {
         resetButton.interactable = true;
 
         firstItem.Select();
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha, LocalizationManager.instance.GetLozalization()));
     }
 
     private void Update()
@@ -249,7 +251,7 @@ public class PinguimController : DragAndDropController {
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha, LocalizationManager.instance.GetLozalization()));
         }
 
         // loses the game
@@ -644,7 +646,7 @@ public class PinguimController : DragAndDropController {
                 WinImage.SetActive(true);
                 //WinImage.GetComponentInChildren<Button>().Select();
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha_vitoria, LocalizationManager.instance.GetLozalization()));
                 
                 audioSource.PlayOneShot(victoryClip);
             
@@ -663,7 +665,7 @@ public class PinguimController : DragAndDropController {
                 finished = true;
                 LoseImage.SetActive(true);
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha_derrota, LocalizationManager.instance.GetLozalization()));
 
                 audioSource.PlayOneShot(loseClip);
 

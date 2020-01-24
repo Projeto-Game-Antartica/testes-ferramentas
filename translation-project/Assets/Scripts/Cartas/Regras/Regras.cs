@@ -93,7 +93,7 @@ public class Regras : AbstractCardManager {
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -105,6 +105,8 @@ public class Regras : AbstractCardManager {
     // after instructions, initialize the game
     public void InitializeGame()
     {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras, LocalizationManager.instance.GetLozalization()));
+
         ReadText(instructionText.text);
 
         cardIndex = 0;
@@ -366,6 +368,8 @@ public class Regras : AbstractCardManager {
             winImage.SetActive(true);
 
             PlayerPreferences.M002_Regras = true;
+
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras_vitoria, LocalizationManager.instance.GetLozalization()));
 
             audioSource.PlayOneShot(victoryClip);
 

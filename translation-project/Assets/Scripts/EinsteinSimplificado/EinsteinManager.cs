@@ -194,7 +194,7 @@ public class EinsteinManager : AbstractScreenReader
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -445,7 +445,7 @@ public class EinsteinManager : AbstractScreenReader
 
                 //WinImage.GetComponentInChildren<Button>().Select();
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo_vitoria, LocalizationManager.instance.GetLozalization()));
                 
                 audioSource.PlayOneShot(victoryClip);
             
@@ -462,7 +462,7 @@ public class EinsteinManager : AbstractScreenReader
         {
             LoseImage.SetActive(true);
 
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo_derrota, LocalizationManager.instance.GetLozalization()));
 
             audioSource.PlayOneShot(loseClip);
 

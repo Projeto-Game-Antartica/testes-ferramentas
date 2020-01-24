@@ -131,6 +131,27 @@ public class ReadableTexts : MonoBehaviour
     public static string key_m004_desafio_sucesso = "m004_desafio_sucesso";
     public static string key_m004_navio_mapa = "m004_navio_mapa";
 
+    // M002 - Itens
+    public static string key_m002_itens_mapa = "m002_itens_mapa";
+    public static string key_m002_instrucoes = "m002_instrucoes";
+    public static string key_m002_processo_instrucao = "m002_processo_instrucao";
+    public static string key_m002_processo = "m002_processo";
+    public static string key_m002_processo_vitoria = "m002_processo_vitoria";
+    public static string key_m002_processo_derrota = "m002_processo_derrota";
+    public static string key_m002_trilha_instrucao = "m002_trilha_instrucao";
+    public static string key_m002_trilha = "m002_trilha";
+    public static string key_m002_trilha_vitoria = "m002_trilha_vitoria";
+    public static string key_m002_trilha_derrota = "m002_trilha_derrota";
+    public static string key_m002_regras_instrucao = "m002_regras_instrucao";
+    public static string key_m002_regras = "m002_regras";
+    public static string key_m002_regras_vitoria = "m002_regras_vitoria";
+    public static string key_m002_homeostase_instrucao = "m002_homeostase_instrucao";
+    public static string key_m002_homeostase = "m002_homeostase";
+    public static string key_m002_homeostase_cesta = "m002_homeostase_cesta";
+    public static string key_m002_homeostase2 = "m002_homeostase2";
+    public static string key_m002_homeostase_vitoria = "m002_homeostase_vitoria";
+    public static string key_m002_homeostase_derrota = "m002_homeostase_derrota";
+
 
 
     // old keys

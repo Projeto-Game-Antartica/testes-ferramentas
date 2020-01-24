@@ -119,8 +119,8 @@ public abstract class AbstractCardManager : AbstractScreenReader {
             currentImage.name = sprites[cardIndex].name;
             cardName.text = currentImage.name;
 
-            Debug.Log("Novo alimento: " + cardName.text);
-            ReadText("Novo alimento: " + cardName.text);
+            Debug.Log(cardName.text);
+            ReadText(cardName.text);
 
             if (cardIndex < sprites.Length - 1)
             {
