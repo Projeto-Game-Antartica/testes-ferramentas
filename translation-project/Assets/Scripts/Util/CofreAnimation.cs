@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CofreAnimation : MonoBehaviour
+public class CofreAnimation : AbstractScreenReader
 {
     public AudioSource audioSource;
     public AudioClip cofreClip;
@@ -15,6 +15,7 @@ public class CofreAnimation : MonoBehaviour
     public Image ticketPt1;
     public Image ticketPt2;
     public Button closeButton;
+    public GameObject textPanel;
 
     private bool opened;
 
@@ -54,14 +55,19 @@ public class CofreAnimation : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        PlayerPrefs.SetInt("M002_Ticketpt2", 1);
+
         closeButton.gameObject.SetActive(true);
         closeButton.Select();
 
         if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
             ticketPt1.gameObject.SetActive(true);
 
+        ReadText(textPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
         ticketPt2.gameObject.SetActive(true);
         ticketSprite.enabled = false;
+        textPanel.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -69,5 +75,6 @@ public class CofreAnimation : MonoBehaviour
         ticketPt2.gameObject.SetActive(false);
         ticketPt1.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
+        textPanel.SetActive(false);
     }
 }

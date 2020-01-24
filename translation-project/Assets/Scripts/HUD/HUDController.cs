@@ -62,6 +62,8 @@ public class HUDController : AbstractScreenReader {
             ReadInstructions();
         }
 
+        ShowMap();
+
         iniciarButton.Select();
     }
 
@@ -84,9 +86,9 @@ public class HUDController : AbstractScreenReader {
         if(Input.GetKeyDown(KeyCode.F3))
         {
             if (instructionInterface.activeSelf)
-                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_instrucao, LocalizationManager.instance.GetLozalization()));
+                ReadInstructionAudiodescrition(missionNumber);
             else if (!instructionInterface.activeSelf && !inGameOption.activeSelf)
-                ReadShipAudioDescription();
+                ReadSceneAudiodescription(missionNumber);
             else if (inGameOption.activeSelf)
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
         }
@@ -154,7 +156,22 @@ public class HUDController : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.MAP_KEY))
         {
             if (map.activeSelf)
+            {
                 map.SetActive(false);
+
+                switch (missionNumber)
+                {
+                    case "M002":
+                        PlayerPrefs.SetInt("UshuaiaMap", 1);
+                        break;
+                    case "M002_Casinha":
+                        PlayerPrefs.SetInt("CasaUshuaiaMap", 1);
+                        break;
+                    case "M004":
+                        PlayerPrefs.SetInt("NavioMap", 1);
+                        break;
+                }
+            }
             else
             {
                 map.SetActive(true);
@@ -175,6 +192,58 @@ public class HUDController : AbstractScreenReader {
     {
         instructionInterface.SetActive(true);
         PlayerPrefs.SetInt("InstructionInterface", 1);
+    }
+
+    void ReadInstructionAudiodescrition(string missionNumber)
+    {
+        switch(missionNumber)
+        {
+            case "M002":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_instrucoes, LocalizationManager.instance.GetLozalization()));
+                break;
+            case "M002_Casinha":
+                break;
+            case "M004":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_instrucao, LocalizationManager.instance.GetLozalization()));
+                break;
+            default:
+                Debug.Log("check mission number...");
+                break;
+        }
+    }
+
+    public void ShowMap()
+    {
+        switch (missionNumber)
+        {
+            case "M002":
+                if (PlayerPrefs.GetInt("UshuaiaMap", 0) <= 0)
+                {
+                    map.SetActive(true);
+                    ReadText(mapText.text);
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_itens_mapa, LocalizationManager.instance.GetLozalization()));
+                }
+                break;
+            case "M002_Casinha":
+                if (PlayerPrefs.GetInt("CasaUshuaiaMap", 0) <= 0)
+                {
+                    map.SetActive(true);
+                    ReadText(mapText.text);
+                }
+                break;
+            case "M004":
+                if (PlayerPrefs.GetInt("NavioMap", 0) <= 0)
+                {
+                    map.SetActive(true);
+                    ReadText(mapText.text);
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
+                
+                }
+                break;
+            default:
+                map.SetActive(false);
+                break;
+        }
     }
 
     public void HandleBagBar()
@@ -283,9 +352,23 @@ public class HUDController : AbstractScreenReader {
         Debug.Log(missionDescription.text);
     }
 
-    public void ReadShipAudioDescription()
+    public void ReadSceneAudiodescription(string missionNumber)
     {
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio, LocalizationManager.instance.GetLozalization()));
+        switch (missionNumber)
+        {
+            case "M002":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_itens_mapa, LocalizationManager.instance.GetLozalization()));
+                break;
+            case "M002_Casinha":
+                break;
+            case "M004":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio, LocalizationManager.instance.GetLozalization()));
+                break;
+            default:
+                Debug.Log("check mission number...");
+                break;
+        }
+
     }
 
     public void ChangeMission(TextMeshProUGUI missionName)

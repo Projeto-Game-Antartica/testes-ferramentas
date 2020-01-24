@@ -84,6 +84,7 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
             warningText.text = "Pressione ENTER para entrar na casa.";
+            ReadText(warningText.text);
         }
 
         isTrigger = true;
@@ -92,7 +93,9 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        audioSource.PlayOneShot(closeClip);
+        if (warningInterface.activeSelf)
+            audioSource.PlayOneShot(closeClip);
+
         warningInterface.SetActive(false);
 
         isTrigger = false;
