@@ -48,7 +48,9 @@ public class LoginScene : AbstractScreenReader {
         Debug.Log("trying to log in...");
 
         if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
-            StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, LoginSuccessfull));
+        {
+            StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, System.DateTime.Now, LoginSuccessfull));
+        }
         else
         {
             Debug.Log("Wrong Credentials");
@@ -59,7 +61,6 @@ public class LoginScene : AbstractScreenReader {
 
     public void LoginSuccessfull(bool success)
     {
-        Debug.Log(success);
         if (success)
         {
             Debug.Log("Log in successful");
