@@ -8,13 +8,15 @@ public class DesafioVeg : MonoBehaviour
 {
 
     //Scenario
-    public GameObject Plant, PlantDetached, BowlFull, BagFull, FramePlaced, BowlPlaced, OkDialog;
+    public GameObject Plant, PlantDetached, BowlFull, BagFull, FramePlaced, BowlPlaced, OkDialog, AnalysisScreen, GameScreen;
+
+    public TMPro.TMP_InputField HarvestTime, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestNumber, HarvestLocation;
 
     Action okDialogCallback;
 
     //Tools
     public GameObject[] Tools = new GameObject[6];
-    private int currentToolIndex = -1;
+    private int currentToolIndex;
 
     private enum Tool {
         Frame,
@@ -28,10 +30,13 @@ public class DesafioVeg : MonoBehaviour
 
     public GameObject[] Grid = new GameObject[16];
 
-    private int selectedGridIndex = -1;
+    private int selectedGridIndex;
 
-    private int plantIndex = -1;
-    private int bowlIndex = -1;
+    private int plantIndex;
+    private int bowlIndex;
+
+    private int doneHarvest = 0;
+    private int correctClassification = 0;
 
     private GameState currentGameState = GameState.Initial;
 
@@ -50,10 +55,9 @@ public class DesafioVeg : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        //changeTool(1);
+        resetHarvestScreen();
 
-        plantIndex = 0; //Must start at random
-        changeGameState(GameState.PlantFixed);
+        HarvestNumber.text = "0";//, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestLocation
     }
 
     // Update is called once per frame
@@ -63,6 +67,15 @@ public class DesafioVeg : MonoBehaviour
             Tools[currentToolIndex].transform.SetParent(Grid[selectedGridIndex].transform, false);
         }
 
+    }
+
+    private void resetHarvestScreen() {
+        changeGameState(GameState.PlantFixed);
+
+        selectedGridIndex = -1;
+        plantIndex = 0; //Must start at random
+        bowlIndex = -1;
+        currentToolIndex = -1;
     }
 
     private void changeTool(int toolIndex) {
@@ -98,7 +111,8 @@ public class DesafioVeg : MonoBehaviour
     }
 
     private void warningMessage(string message) {
-        Debug.Log(message);
+        //Debug.Log(message);
+        ShowOkDialog(message);
     }
 
     public void OnOkDialogClick() {
@@ -121,64 +135,51 @@ public class DesafioVeg : MonoBehaviour
 
         switch(currentGameState) {
             case GameState.PlantFixed:
-                if(currentToolIndex == (int)Tool.Frame) {
-                    if(plantIndex == selectedGridIndex) {
-                        changeGameState(GameState.FramePlaced);
-                        changeTool(-1);
-                    }                    
+                if(currentToolIndex == (int)Tool.Frame && plantIndex == selectedGridIndex) {
+                    changeGameState(GameState.FramePlaced);
+                    changeTool(-1);              
                 } else {
-                    warningMessage("Você precisa colocar o quadrante antes!");
+                    warningMessage("Você precisa colocar o quadrante!");
                 }
                 break;
 
             case GameState.FramePlaced:
-                if(currentToolIndex == (int)Tool.Knife)
-                    if(plantIndex == selectedGridIndex) {
-                        changeGameState(GameState.PlantDetached);
-                    }
+                if(currentToolIndex == (int)Tool.Knife && plantIndex == selectedGridIndex)
+                    changeGameState(GameState.PlantDetached);
                 else
                     warningMessage("Você precisa cortar a vegetação!");
                 break;
 
             case GameState.PlantDetached:
-                if(currentToolIndex == (int)Tool.Spatula) {
-                    if(plantIndex == selectedGridIndex) {
-                        changeGameState(GameState.SpatulaWithPlant);
-                        changeTool(Tool.SpatulaWithPlant);
-                    }
+                if(currentToolIndex == (int)Tool.Spatula && plantIndex == selectedGridIndex) {
+                    changeGameState(GameState.SpatulaWithPlant);
+                    changeTool(Tool.SpatulaWithPlant);
                 } else
                     warningMessage("Você precisa pegar a vegetação!");
                 break;
 
             case GameState.SpatulaWithPlant:
-                if(currentToolIndex == (int)Tool.Bowl) {
-                    if(plantIndex != selectedGridIndex) {
-                        bowlIndex = selectedGridIndex;
-                        changeGameState(GameState.BowlPlaced);
-                        changeTool(-1);
-                    }
-
+                if(currentToolIndex == (int)Tool.Bowl && plantIndex != selectedGridIndex) {
+                    bowlIndex = selectedGridIndex;
+                    changeGameState(GameState.BowlPlaced);
+                    changeTool(-1);
                 } else
                     warningMessage("Você precisa posicionar o potinho!");
                 break;
 
             case GameState.BowlPlaced:
-                if(currentToolIndex == (int)Tool.SpatulaWithPlant) {
-                    if(selectedGridIndex == bowlIndex) {
-                        changeGameState(GameState.PlantInBowl);
-                        changeTool(Tool.Spatula);
-                    }
+                if(currentToolIndex == (int)Tool.SpatulaWithPlant && selectedGridIndex == bowlIndex) {
+                    changeGameState(GameState.PlantInBowl);
+                    changeTool(Tool.Spatula);
                 } else
                     warningMessage("Você precisa colocar a vegetação no potinho!");
                 break;
 
             case GameState.PlantInBowl:
-                if(currentToolIndex == (int)Tool.Bag) {
-                    if(selectedGridIndex == bowlIndex) {
-                        changeGameState(GameState.BowlInBag);
-                        changeTool(-1);
-                        finishHarvest();
-                    }
+                if(currentToolIndex == (int)Tool.Bag && selectedGridIndex == bowlIndex) {
+                    changeGameState(GameState.BowlInBag);
+                    changeTool(-1);
+                    finishHarvest();
                 } else
                     warningMessage("Você precisa colocar o potinho no saco!");
                 break;
@@ -192,8 +193,21 @@ public class DesafioVeg : MonoBehaviour
     }
 
     private void finishHarvest() {
-        warningMessage("Você concluiu a colheita!");
+        doneHarvest++;
+        ShowOkDialog("Parabéns coleta realizada, agora você precisa classificá-la.", showAnalysisScreen);
     }
+
+    private void showAnalysisScreen() {
+        GameScreen.SetActive(false);
+        AnalysisScreen.SetActive(true);
+    }
+
+    private void showHarvestScreen() {
+        GameScreen.SetActive(true);
+        AnalysisScreen.SetActive(false);
+    }
+
+
 
     private void changeGameState(GameState state) {
         Plant.SetActive(false);  
