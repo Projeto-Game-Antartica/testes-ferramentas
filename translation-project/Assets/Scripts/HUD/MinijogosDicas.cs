@@ -116,4 +116,9 @@ public class MinijogosDicas : AbstractScreenReader {
         dicas.SetActive(true);
         targetText.text = hint;
     }
+
+    public void SupressDicas()
+    {
+        dicas.SetActive(false);
+    }
 }
