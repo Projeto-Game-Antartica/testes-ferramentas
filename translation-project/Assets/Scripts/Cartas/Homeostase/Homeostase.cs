@@ -114,7 +114,10 @@ public class Homeostase : AbstractCardManager
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            if (!cestaAberta.activeSelf)
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase, LocalizationManager.instance.GetLozalization()));
+            else
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_cesta, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -126,6 +129,8 @@ public class Homeostase : AbstractCardManager
     // initialize after button click on instruction
     public void Initialize()
     {
+        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase, LocalizationManager.instance.GetLozalization()));
+
         isOnLikeButton = true;
         isOnMenu = false;
 
@@ -134,7 +139,7 @@ public class Homeostase : AbstractCardManager
         cardIndex = 0;
         isDone = false;
 
-        kcalBar.fillAmount = 0.5f;
+        kcalBar.fillAmount = 0f;
 
         currentImage.sprite = sprites[cardIndex];
         currentImage.name = sprites[cardIndex].name;
@@ -328,7 +333,7 @@ public class Homeostase : AbstractCardManager
                     iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
                 }
                 break;
-            case "agua":
+            case "garrafa de água":
                 if (add)
                 {
                     alimentoKcal = 0;
@@ -376,7 +381,7 @@ public class Homeostase : AbstractCardManager
                     iconsController.AddPoints(-0.05f, -0.08f, 0.08f);
                 }
                 break;
-            case "maca":
+            case "maçã":
                 if (add)
                 {
                     alimentoKcal = 52;
@@ -465,16 +470,16 @@ public class Homeostase : AbstractCardManager
                 break;
         }
         
-        if(alimentoKcal >= 0)
-        {
-            Debug.Log("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
-            ReadText("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
-        }
-        else
-        {
-            Debug.Log("Removido alimento com " + alimentoKcal + " calorias a cesta");
-            ReadText("Removido alimento com " + alimentoKcal + " calorias a cesta");
-        }
+        //if(alimentoKcal >= 0)
+        //{
+        //    Debug.Log("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
+        //    ReadText("Adicionado alimento com " + alimentoKcal + " calorias a cesta");
+        //}
+        //else
+        //{
+        //    Debug.Log("Removido alimento com " + alimentoKcal + " calorias a cesta");
+        //    ReadText("Removido alimento com " + alimentoKcal + " calorias a cesta");
+        //}
 
         kcal += alimentoKcal;
 
@@ -541,6 +546,13 @@ public class Homeostase : AbstractCardManager
         }
 
         //ShiftArray(index);
+    }
+
+    public void OpenCesta()
+    {
+        cestaAberta.SetActive(true);
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_cesta, LocalizationManager.instance.GetLozalization()));
     }
 
     public void ReadCard(int index)

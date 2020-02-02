@@ -31,6 +31,7 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     public AudioSource audioSource;
     public AudioClip warningClip;
+    public AudioClip closeClip;
 
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
@@ -129,6 +130,9 @@ public class ShipSceneManagement : AbstractScreenReader {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (warningInterface.activeSelf)
+            audioSource.PlayOneShot(closeClip);
+
         warningInterface.SetActive(false);
         dialogueInterface.SetActive(false);
 

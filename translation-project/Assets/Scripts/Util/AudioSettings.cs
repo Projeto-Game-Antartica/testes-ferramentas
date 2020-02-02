@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class AudioSettings : AbstractScreenReader {
+public class AudioSettings : AbstractScreenReader
+{
 
     /*
      * volslider is the master volume of the game. Soundfxslider represents some of sounds effects in the game.
@@ -16,10 +18,39 @@ public class AudioSettings : AbstractScreenReader {
 
     public GameObject volumeControl;
 
+    private float amountChange = .1f;
+
     void Start()
     {
         volslider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
         soundfxslider.value = PlayerPrefs.GetFloat("Soundfx", 1f);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Equals) || Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Plus))
+        {
+            if (EventSystem.current.currentSelectedGameObject == volslider.gameObject)
+                volslider.value += amountChange;
+            else if (EventSystem.current.currentSelectedGameObject == soundfxslider.gameObject)
+                soundfxslider.value += amountChange;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            if (EventSystem.current.currentSelectedGameObject == volslider.gameObject)
+                volslider.value -= amountChange;
+            else if (EventSystem.current.currentSelectedGameObject == soundfxslider.gameObject)
+                soundfxslider.value -= amountChange;
+        }
+
+        if(volumeControl.gameObject != null)
+        {
+            if (EventSystem.current.currentSelectedGameObject != volslider.gameObject &&
+                EventSystem.current.currentSelectedGameObject != soundfxslider.gameObject)
+                volumeControl.SetActive(false);
+        }
+
     }
 
     public void ReadVolSlider(Slider slider)
@@ -31,7 +62,7 @@ public class AudioSettings : AbstractScreenReader {
     {
         ReadText("Volume dos efeitos especiais " + slider.value.ToString("F"));
     }
-    
+
     public void SetVolumeLevel(float sliderValue)
     {
         mixer.SetFloat("volume", Mathf.Log10(sliderValue) * 20);

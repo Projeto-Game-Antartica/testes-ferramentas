@@ -48,6 +48,10 @@ public class PlayerPreferences : MonoBehaviour {
             // set the parameter to show the instruction interface when loading the game
             PlayerPrefs.SetInt("InstructionInterface", 0);
 
+            PlayerPrefs.SetInt("UshuaiaMap", 0);
+            PlayerPrefs.SetInt("CasaUshuaiaMap", 0);
+            PlayerPrefs.SetInt("NavioMap", 0);
+
             // set the saved position int to 0
             PlayerPrefs.SetInt("Saved", 0);
 

@@ -45,6 +45,7 @@ public class HomeostaseVitoria : AbstractScreenReader {
     private GameObject clickedCard = null;
 
     private bool isOnLikeButton;
+    private bool isOnCard;
 
     // Use this for initialization
     void Start ()
@@ -54,11 +55,14 @@ public class HomeostaseVitoria : AbstractScreenReader {
         antarticaImage.fillAmount = PlayerPrefs.GetFloat("MJAntartica");
 
         isOnLikeButton = true;
+        isOnCard = true;
         minijogoDicas.ShowIsolatedHint(initialHint);
 
         Debug.Log(initialHint);
         ReadText(initialHint);
-	}
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -91,23 +95,28 @@ public class HomeostaseVitoria : AbstractScreenReader {
             if(!isOnLikeButton)
             {
                 audioButton.Select();
-                isOnLikeButton = true;
             }
             else
             {
                 fleeceCard.GetComponent<Button>().Select();
-                isOnLikeButton = false;
             }
+
+            isOnLikeButton = !isOnLikeButton;
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            likeButton.Select();
+            if (isOnCard)
+                fleeceCard.GetComponent<Button>().Select();
+            else
+                likeButton.Select();
+
+            isOnCard = !isOnCard;
         }
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -154,17 +163,23 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
     public IEnumerator EndGame(bool win)
     {
+        minijogoDicas.SupressDicas();
+
         if (win)
         {
             winImage.SetActive(true);
 
             PlayerPreferences.M002_Homeostase = true;
 
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: blusa de fleece, camiseta segunda pele e colete salva-vidas.");
+
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: blusa de fleece, camiseta segunda pele e colete salva-vidas.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
@@ -178,11 +193,15 @@ public class HomeostaseVitoria : AbstractScreenReader {
         {
             loseImage.SetActive(true);
 
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+
             audioSource.PlayOneShot(loseClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_derrota, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }

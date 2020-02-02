@@ -21,6 +21,12 @@ public class PinguimController : DragAndDropController {
     private Animator pinguim_papuaAnimator;
 
     public Image timer;
+    
+    // max time in seconds
+    public float maxTime;
+
+    public float timeLeft;
+    private bool countingTime;
 
     public bool adeliaFinished;
     public bool antarticoFinished;
@@ -42,6 +48,7 @@ public class PinguimController : DragAndDropController {
     public GameObject WinImage;
     public GameObject LoseImage;
     public GameObject confirmQuit;
+    public GameObject dicas;
 
     public AudioClip closeClip;
     public AudioClip avisoClip;
@@ -59,6 +66,9 @@ public class PinguimController : DragAndDropController {
     private bool finished = false;
 
     private int selectedArea = 1;
+
+    private bool init = false;
+    private bool isOnMenu = false;
 
     public void initializeGame()
     {
@@ -78,7 +88,16 @@ public class PinguimController : DragAndDropController {
 
         timer.fillAmount = 1f;
 
+        timeLeft = maxTime;
+
+        countingTime = false;
+        
         resetButton.interactable = true;
+
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha, LocalizationManager.instance.GetLozalization()));
+
+        dicas.SetActive(true);
+        ReadText(dicas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
         firstItem.Select();
     }
@@ -90,7 +109,7 @@ public class PinguimController : DragAndDropController {
             instruction_interface.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (instruction_interface.activeSelf)
             {
@@ -101,11 +120,6 @@ public class PinguimController : DragAndDropController {
             {
                 TryReturnToUshuaia();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -195,7 +209,12 @@ public class PinguimController : DragAndDropController {
 
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
-            audioButton.Select();
+            isOnMenu = !isOnMenu;
+            
+            if (isOnMenu)
+                audioButton.Select();
+            else
+                firstItem.GetComponent<Selectable>().Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
@@ -205,14 +224,14 @@ public class PinguimController : DragAndDropController {
 
             if (selectedArea == 1)
             {
-                ReadText("Células");
-                Debug.Log("Células");
+                ReadText("Campo de setas");
+                Debug.Log("Campo de setas");
                 cells[0].GetComponent<Selectable>().Select();
             }
             else if (selectedArea == 2)
             {
-                ReadText("Itens");
-                Debug.Log("Itens");
+                ReadText("Setas");
+                Debug.Log("Setas");
                 firstItem.GetComponent<Selectable>().Select();
             }
             else
@@ -229,13 +248,13 @@ public class PinguimController : DragAndDropController {
         if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            //ReadText("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
-            //Debug.Log("Você ainda tem " + (timer.fillAmount * 10f) + " segundos restantes");
+            ReadText("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
+            Debug.Log("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha, LocalizationManager.instance.GetLozalization()));
         }
 
         // loses the game
@@ -247,6 +266,9 @@ public class PinguimController : DragAndDropController {
         {
             StartCoroutine(EndGame(true));
         }
+
+        if (countingTime)
+            CountTime();
     }
 
     /// <summary>
@@ -262,6 +284,12 @@ public class PinguimController : DragAndDropController {
         switch (desc.triggerType)                                               // What type event is?
         {
             case DragAndDropCell.TriggerType.DropRequest:                       // Request for item drag (note: do not destroy item on request)
+                if (!init)
+                {
+                    init = true;
+                    dicas.SetActive(false);
+                }
+
                 Debug.Log("Request " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
                 break;
             case DragAndDropCell.TriggerType.DropEventEnd:                      // Drop event completed (successful or not)
@@ -295,9 +323,11 @@ public class PinguimController : DragAndDropController {
     public IEnumerator GoCoroutine()
     {
         audioSource.PlayOneShot(pinguimAndandoClip);
+
         foreach (GameObject g in draggedItems)
         {
-            CountTime(0.01f);  
+            // start counting time
+            countingTime = true;
 
             if (pinguim_adelia.activeSelf) pinguim_adeliaAnimator.SetBool("isMoving", true);
             if (pinguim_antartico.activeSelf) pinguim_antarticoAnimator.SetBool("isMoving", true);
@@ -336,18 +366,35 @@ public class PinguimController : DragAndDropController {
         draggedItems.Clear();
         UpdateBackgroundState();
 
+        // stop counting time
+        countingTime = false;
 
-        if (pinguim_adelia.activeSelf)
-            pinguim_adeliaAnimator.SetBool("isMoving", false);
-        if (pinguim_antartico.activeSelf)
-            pinguim_antarticoAnimator.SetBool("isMoving", false);
-        if (pinguim_papua.activeSelf)
-            pinguim_papuaAnimator.SetBool("isMoving", false);
+        if (!pinguim_adelia.activeSelf && !pinguim_antartico.activeSelf && !pinguim_papua.activeSelf)
+            ReadText("Todos os pinguins já chegaram a sua fonte de alimento.");
+        else
+        {
+            if (pinguim_adelia.activeSelf)
+            {
+                pinguim_adeliaAnimator.SetBool("isMoving", false);
+            }
+
+            if (pinguim_antartico.activeSelf)
+            {
+                pinguim_antarticoAnimator.SetBool("isMoving", false);
+            }
+
+            if (pinguim_papua.activeSelf)
+            {
+                pinguim_papuaAnimator.SetBool("isMoving", false);
+            }
+
+            ReadPinguimPosition("adelia");
+            ReadPinguimPosition("antartico");
+            ReadPinguimPosition("papua");
+        }
 
         if (audioSource.isPlaying)
             audioSource.Stop();
-
-        ReadPinguimPosition();
     }
 
     public void goUp()
@@ -560,31 +607,45 @@ public class PinguimController : DragAndDropController {
         }
     }
 
-    public void CountTime(float value)
+    public void CountTime()
     {
-        if (timer.fillAmount < 0)
+        if(timeLeft > 0)
         {
-            timer.fillAmount = 0;
-            LoseImage.SetActive(true);
+            timeLeft -= Time.deltaTime;
+            timer.fillAmount = timeLeft / maxTime;
         }
         else
-            timer.fillAmount -= value;
+        {
+            StartCoroutine(EndGame(false));
+        }
     }
 
-    public void ReadPinguimPosition()
+    public void ReadPinguimPosition(string pinguimName)
     {
-        if (pinguim_adelia.activeSelf)
-            pinguim_adelia.GetComponent<PinguimMovement>().ReadPinguimPosition();
-        else
-            ReadText("O pinguim adélia já chegou a sua fonte de alimento");
-        if (pinguim_antartico.activeSelf)
-            pinguim_antartico.GetComponent<PinguimMovement>().ReadPinguimPosition();
-        else
-            ReadText("O pinguim antártico já chegou a sua fonte de alimento");
-        if (pinguim_papua.activeSelf)
-            pinguim_papua.GetComponent<PinguimMovement>().ReadPinguimPosition();
-        else
-            ReadText("O pinguim adélia já chegou a sua fonte de alimento");
+        switch(pinguimName)
+        {
+            case "adelia":
+                if (pinguim_adelia.activeSelf)
+                    pinguim_adelia.GetComponent<PinguimMovement>().ReadPinguimPosition("Pinguim Adelia");
+                else
+                    ReadText("O pinguim adélia já chegou a sua fonte de alimento");
+                break;
+            case "antartico":
+                if (pinguim_antartico.activeSelf)
+                    pinguim_antartico.GetComponent<PinguimMovement>().ReadPinguimPosition("Pinguim Antártico");
+                else
+                    ReadText("O pinguim antártico já chegou a sua fonte de alimento");
+                break;
+            case "papua":
+                if (pinguim_papua.activeSelf)
+                    pinguim_papua.GetComponent<PinguimMovement>().ReadPinguimPosition("Pinguim Papua");
+                else
+                    ReadText("O pinguim adélia já chegou a sua fonte de alimento");
+                break;
+            default:
+                Debug.Log("check pinguim name");
+                break;
+        }
     }
 
     public void FlipPinguim(string name, bool left)
@@ -616,13 +677,15 @@ public class PinguimController : DragAndDropController {
                 WinImage.SetActive(true);
                 //WinImage.GetComponentInChildren<Button>().Select();
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                ReadText("Parabéns, você conseguiu mais alguns dos itens necessários para sua aventura na Antártica!");
                 
                 audioSource.PlayOneShot(victoryClip);
             
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns, você conseguiu mais alguns dos itens necessários para sua aventura na Antártica!");
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha_vitoria, LocalizationManager.instance.GetLozalization()));
+
+                yield return new WaitForSeconds(10f);
 
                 lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
                 lifeExpController.AddEXP(4*PlayerPreferences.XPwinItem); // ganhou o item
@@ -635,13 +698,15 @@ public class PinguimController : DragAndDropController {
                 finished = true;
                 LoseImage.SetActive(true);
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
                 audioSource.PlayOneShot(loseClip);
 
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_trilha_derrota, LocalizationManager.instance.GetLozalization()));
+
+                yield return new WaitForSeconds(10f);
                 resetButton.Select();
                 lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
             }

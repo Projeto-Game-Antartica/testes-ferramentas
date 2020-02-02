@@ -41,12 +41,23 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
         {
             ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
         }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (gameObject.activeSelf)
+            {
+                if (iniciarButton.gameObject.activeSelf)
+                    iniciarButton.Select();
+                else
+                    voltarButton.Select();
+            }
+        }
     }
 
-    private void OnEnable()
-    {
-        ReadInstructions();
-    }
+    //private void OnEnable()
+    //{
+    //    ReadInstructions();
+    //}
 
     public void ReadInstructions()
     {

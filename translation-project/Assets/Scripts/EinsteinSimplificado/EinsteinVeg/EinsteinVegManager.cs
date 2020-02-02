@@ -283,7 +283,7 @@ public class EinsteinVegManager : AbstractScreenReader
 
         if (wrong) {
             tries++;
-            attemptsText.text = "Tentativas restantes: " + tries + "/" + attempts;
+            attemptsText.text = "Tentativas: " + tries + "/" + attempts;
         }
 
         // loses the game

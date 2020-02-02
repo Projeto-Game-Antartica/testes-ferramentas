@@ -6,11 +6,16 @@ using UnityEngine.Networking;
 
 public class DBConnection : MonoBehaviour
 {
+    // server path
+    // DO NOT UPLOAD THIS TO GITHUB
+    private readonly string connection_url = "http://acessivel.ufabc.edu.br/antartica/php/index.php";
+    private readonly string register_url   = "http://acessivel.ufabc.edu.br/antartica/php/registeruser.php";
+    private readonly string password_url   = "http://acessivel.ufabc.edu.br/antartica/php/password.php";
 
     // local path
-    private readonly string connection_url = "http://localhost/antartica/index.php";
-    private readonly string register_url = "http://localhost/antartica/registeruser.php";
-    private readonly string password_url = "http://localhost/antartica/password.php";
+    //private readonly string connection_url = "http://localhost/antartica/index.php";
+    //private readonly string register_url = "http://localhost/antartica/registeruser.php";
+    //private readonly string password_url = "http://localhost/antartica/password.php";
 
     public static DBConnection instance;
 
@@ -36,7 +41,7 @@ public class DBConnection : MonoBehaviour
         }
     }
 
-    public IEnumerator RegisterUser(string name, string email, string passw, Action<bool> onComplete)
+    public IEnumerator RegisterUser(string name, string email, string passw, DateTime dateTime, Action<bool> onComplete)
     {
         Debug.Log("registering user...");
 
@@ -45,6 +50,7 @@ public class DBConnection : MonoBehaviour
         form.AddField("loginName", name);
         form.AddField("loginEmail", email);
         form.AddField("loginPassw", passw);
+        form.AddField("dateTime", dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 
         using (UnityWebRequest www = UnityWebRequest.Post(register_url, form))
         {
@@ -63,7 +69,7 @@ public class DBConnection : MonoBehaviour
         }
     }
 
-    public IEnumerator TryLogIn(string email, string passw, Action<bool> onComplete)
+    public IEnumerator TryLogIn(string email, string passw, DateTime dateTime, Action<bool> onComplete)
     {
         Debug.Log("trying to log in...");
 
@@ -71,6 +77,7 @@ public class DBConnection : MonoBehaviour
         
         form.AddField("loginEmail", email);
         form.AddField("loginPassw", passw);
+        form.AddField("dateTime", dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
 
         using (UnityWebRequest www = UnityWebRequest.Post(password_url, form))
         {

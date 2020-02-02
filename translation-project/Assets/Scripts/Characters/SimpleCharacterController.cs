@@ -7,7 +7,6 @@ using VIDE_Data;
 public class SimpleCharacterController : AbstractScreenReader {
 
     public GameObject character;
-    public SoundsController soundsController;
     public GameObject inGameOption;
     public GameObject instructionInterface;
     AudioSource audioSource;

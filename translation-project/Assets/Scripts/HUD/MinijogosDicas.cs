@@ -76,7 +76,7 @@ public class MinijogosDicas : AbstractScreenReader {
 
             dicas.SetActive(true);
             //Debug.Log("showing hint number " + index);
-            ReadText("Nova dica: " + hints[index]);
+            ReadText(hints[index]);
             //Debug.Log("Nova dica: " + hints[index]);
             targetText.text = hints[index];
 
@@ -115,5 +115,10 @@ public class MinijogosDicas : AbstractScreenReader {
     {
         dicas.SetActive(true);
         targetText.text = hint;
+    }
+
+    public void SupressDicas()
+    {
+        dicas.SetActive(false);
     }
 }

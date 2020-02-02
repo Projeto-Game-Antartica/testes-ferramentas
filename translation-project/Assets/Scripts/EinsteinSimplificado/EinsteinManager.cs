@@ -194,7 +194,7 @@ public class EinsteinManager : AbstractScreenReader
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
@@ -445,15 +445,16 @@ public class EinsteinManager : AbstractScreenReader
 
                 //WinImage.GetComponentInChildren<Button>().Select();
 
-                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: galocha, calça de fleece, calça impermeável, jaqueta polar e calça segunda pele.");
                 
                 audioSource.PlayOneShot(victoryClip);
             
-
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: galocha, calça de fleece, calça impermeável, jaqueta polar e calça segunda pele.");
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo_vitoria, LocalizationManager.instance.GetLozalization()));
 
+                yield return new WaitForSeconds(5f);
+                
                 lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
                 lifeExpController.AddEXP(5*PlayerPreferences.XPwinItem); // ganhou o item
             }
@@ -462,13 +463,16 @@ public class EinsteinManager : AbstractScreenReader
         {
             LoseImage.SetActive(true);
 
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
             audioSource.PlayOneShot(loseClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_processo_derrota, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
+
             resetButton.Select();
             lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }

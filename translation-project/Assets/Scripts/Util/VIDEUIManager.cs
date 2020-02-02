@@ -44,6 +44,7 @@ public class VIDEUIManager : AbstractScreenReader
 
     public AudioClip xpClip;
     public AudioClip dialogueBlipClip;
+    public AudioClip avisoClip;
 
     public AudioSource audioSource;
 
@@ -59,6 +60,8 @@ public class VIDEUIManager : AbstractScreenReader
 
     //With this we can start a coroutine and stop it. Used to animate text
     IEnumerator NPC_TextAnimator;
+
+    public GameObject warningInterface;
 
     public GameObject AlertDialog;
     private string url;
@@ -340,6 +343,11 @@ public class VIDEUIManager : AbstractScreenReader
                 {
                     Debug.Log("Você não está apto...");
                     EndDialogue(data);
+
+                    warningInterface.SetActive(true);
+                    audioSource.PlayOneShot(avisoClip);
+                    warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = "Você ainda não está apto para viajar à Antártica.";
+                    ReadText(warningInterface.GetComponentInChildren<TextMeshProUGUI>().text);
                 }
             }
 
