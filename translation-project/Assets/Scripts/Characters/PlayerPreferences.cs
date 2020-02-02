@@ -72,6 +72,9 @@ public class PlayerPreferences : MonoBehaviour {
             PlayerPrefs.SetInt("M002_Ticketpt1", 0);
             PlayerPrefs.SetInt("M002_Ticketpt2", 0);
             PlayerPrefs.SetInt("M002_Ticketpt3", 0);
+
+            // M009
+            PlayerPrefs.SetInt("M009_Mentor0_Dialogue1", 0);
         }
         else // not the first time, use the player prefs to load positions
         {

@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class AcampamentoCartas : AbstractCardManager
 {
+    public Button audioButton;
+    public AudioSource audioSource;
+    public GameObject confirmQuit;
+    public AudioClip victoryClip;
+
     public GameObject WinImage;
     public TMPro.TextMeshProUGUI WinText;
     public GameObject LoseImage;
@@ -31,6 +36,8 @@ public class AcampamentoCartas : AbstractCardManager
 
     public Image fillm;
 
+    private float variavel = 50; 
+
     private float coracao;
 
     private float estrela;
@@ -42,8 +49,14 @@ public class AcampamentoCartas : AbstractCardManager
     private readonly int MAX_MAP = 100;
     // Use this for initialization
 
+    private bool isOnMJMenu = false;
+
     private void Start()
     {
+        fill.fillAmount =  variavel / MAX_COR;
+        fills.fillAmount = variavel / MAX_EST;
+        fillm.fillAmount = variavel / MAX_MAP;
+
         resetButton.interactable = false;
         backButton.interactable = false;
 
@@ -53,7 +66,17 @@ public class AcampamentoCartas : AbstractCardManager
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+        {
+            StartCoroutine(EndGame(true));                              
+	    }
+
+        if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
+        {
+            StartCoroutine(EndGame(false));              
+		}
+
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             instruction_interface.SetActive(true);
         }
@@ -61,6 +84,44 @@ public class AcampamentoCartas : AbstractCardManager
         if(Input.GetKey(KeyCode.Escape))
         {
             instruction_interface.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            if (!isOnMJMenu)
+                audioButton.Select();
+            else
+                likeButton.Select();
+
+            isOnMJMenu = !isOnMJMenu;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            likeButton.Select();
+        }
+
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            // audiodescricao
+        }
+
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        {
+            //ReadCard(cardIndex);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (instruction_interface.activeSelf)
+            {
+                audioSource.PlayOneShot(closeClip);
+                instruction_interface.SetActive(false);
+            }
+            else
+            {
+                TryReturnToCamp();
+            }
         }
     }
 
@@ -95,37 +156,37 @@ public class AcampamentoCartas : AbstractCardManager
         //cardname
         switch (currentImage.name.ToLower())
         {
-            case "abridor de latas":
+            case "Abridor de latas":
                 estrela = -1;
                 coracao = 0;
                 mapa = 1;
                 break;
-            case "bandeira":
+            case "Bandeira":
                 estrela = 3;
                 coracao = 0;
                 mapa = -1;
                 break;
-            case "barraca deposito":
+            case "Barraca-depósito (material, banheiro)":
                 estrela = 3;
                 coracao = 2;
                 mapa = 3;
                 break;
-            case "barraca individual":
+            case "Barracas dormitórios(individual)":
                 coracao = 1;
                 estrela = 3;
                 mapa = 2;
                 break;
-            case "barraca polar haven":
+            case "Barracas amplas (polar haven)":
                 coracao = 1;
                 estrela = 3;
                 mapa = 3;
                 break;
-            case "benjamin T":
+            case "Benjamin":
                 coracao = -1;
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "cadeiras de praia":
+            case "Cadeiras de praia":
                 coracao = 0;
                 estrela = -2;
                 mapa = -1;
@@ -135,12 +196,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -2;
                 mapa = -3;
                 break;
-            case "caixas de suprimento":
+            case "Caixas de suprimento":
                 coracao = 2;
                 estrela = 3;
                 mapa = 1;
                 break;
-            case "capa de chuva":
+            case "Capa para chuva":
                 coracao = 0;
                 estrela = -1;
                 mapa = 0;
@@ -150,12 +211,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 3;
                 mapa = -1;
                 break;
-            case "celular":
+            case "Celular e carregador":
                 coracao = 0;
                 estrela = 2;
                 mapa = 0;
                 break;
-            case "chinelo":
+            case "Chinelo":
                 coracao = 0;
                 estrela = -2;
                 mapa = 0;
@@ -165,27 +226,27 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 4;
                 mapa = -2;
                 break;
-            case "copos descartaveis":
+            case "Copos descartáveis":
                 coracao = -3;
                 estrela = -1;
                 mapa = -3;
                 break;
-            case "detergente":
+            case "Detergente":
                 coracao = 3;
                 estrela = -1;
                 mapa = -3;
                 break;
-            case "espelho":
+            case "Espelho":
                 coracao = 0;
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "espetos":
+            case "Espetos":
                 coracao = -2;
                 estrela = -2;
                 mapa = -2;
                 break;
-            case "esponja":
+            case "Esponja":
                 coracao = 2;
                 estrela = -1;
                 mapa = 0;
@@ -200,12 +261,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 1;
                 mapa = -1;
                 break;
-            case "garrafa témica":
+            case "Garrafa térmica":
                 coracao = 2;
                 estrela = 4;
                 mapa = 2;
                 break;
-            case "gerador":
+            case "Gerador":
                 coracao = 0;
                 estrela = 3;
                 mapa = -1;
@@ -215,7 +276,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -2;
                 mapa = -2;
                 break;
-            case "guardanapos":
+            case "Guardanapos":
                 coracao = 2;
                 estrela = -1;
                 mapa = -2;
@@ -225,7 +286,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -2;
                 mapa = -2;
                 break;
-            case "lanterna e pilhas":
+            case "Lanterna e pilhas":
                 coracao = 1;
                 estrela = 2;
                 mapa = -2;
@@ -235,22 +296,22 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "luminária":
+            case "Luminária":
                 coracao = 1;
                 estrela = 2;
                 mapa = 1;
                 break;
-            case "luvas de protrção":
+            case "Luvas de proteção":
                 coracao = 2;
                 estrela = 4;
                 mapa = 3;
                 break;
-            case "martelete":
+            case "Martelete":
                 coracao = 2;
                 estrela = 4;
                 mapa = -1;
                 break;
-            case "martelo":
+            case "Martelo":
                 coracao = 2;
                 estrela = 4;
                 mapa = -1;
@@ -260,42 +321,42 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -2;
                 mapa = 0;
                 break;
-            case "panela":
+            case "Panela":
                 coracao = -2;
                 estrela = -2;
                 mapa = 0;
                 break;
-            case "papel aluminio":
+            case "Papel alumínio":
                 coracao = 2;
                 estrela = 2;
                 mapa = 2;
                 break;
-            case "papel higiênico":
+            case "Papel higiênico":
                 coracao = 2;
                 estrela = 2;
                 mapa = -1;
                 break;
-            case "pincel":
+            case "Pincel":
                 coracao = 2;
                 estrela = 4;
                 mapa = 2;
                 break;
-            case "pratos":
+            case "Pratos":
                 coracao = 1;
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "protetor solar":
+            case "Protetor solar":
                 coracao = -2;
                 estrela = 1;
                 mapa = -1;
                 break;
-            case "quadriciclo":
+            case "Quadriciclo":
                 coracao = -1;
                 estrela = 3;
                 mapa = -1;
                 break;
-            case "repelente":
+            case "Repelente para mosquito":
                 coracao = 0;
                 estrela = -2;
                 mapa = -3;
@@ -305,27 +366,27 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = -1;
                 mapa = -1;
                 break;
-            case "saco de dormir":
+            case "Saco de dormir":
                 coracao = -1;
                 estrela = 3;
                 mapa = 1;
                 break;
-            case "saco plástico":
+            case "Saco plástico":
                 coracao = 2;
                 estrela = 3;
                 mapa = 2;
                 break;
-            case "sacos para lixo":
+            case "Saco para lixo":
                 coracao = 3;
                 estrela = 2;
                 mapa = 2;
                 break;
-            case "talhadeira":
+            case "Talhadeira":
                 coracao = 2;
                 estrela = 4;
                 mapa = -1;
                 break;
-            case "talheres":
+            case "Talheres de alumínio":
                 coracao = 0;
                 estrela = -1;
                 mapa = 0;
@@ -350,17 +411,17 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 3;
                 mapa = 3;
                 break;
-            case "travesseiros":
+            case "Travesseiros":
                 coracao = 0;
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "ventilador pequeno":
+            case "Ventilador pequeno":
                 coracao = 0;
                 estrela = -1;
                 mapa = 0;
                 break;
-            case "óculos de proteção":
+            case "Óculos de proteção":
                 coracao = 2;
                 estrela = 4;
                 mapa = 2;
@@ -382,37 +443,37 @@ public class AcampamentoCartas : AbstractCardManager
     {
         switch (currentImage.name.ToLower())
         {
-            case "abridor de latas":
+            case "Abridor de latas":
                 estrela = 1;
                 coracao = 0;
                 mapa =-1;
                 break;
-            case "bandeira":
+            case "Bandeira":
                 estrela =-3;
                 coracao = 0;
                 mapa = 1;
                 break;
-            case "barraca deposito":
+            case "Barraca-depósito (material, banheiro)":
                 estrela =-3;
                 coracao =-2;
                 mapa =-3;
                 break;
-            case "barraca individual":
+            case "Barracas dormitórios(individual)":
                 coracao =-1;
                 estrela =-3;
                 mapa =-2;
                 break;
-            case "barraca polar haven":
+            case "Barracas amplas (polar haven)":
                 coracao =-1;
                 estrela =-3;
                 mapa =-3;
                 break;
-            case "benjamin T":
+            case "Benjamin":
                 coracao = 1;
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "cadeiras de praia":
+            case "Cadeiras de praia":
                 coracao = 0;
                 estrela = 2;
                 mapa = 1;
@@ -422,12 +483,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 2;
                 mapa = 3;
                 break;
-            case "caixas de suprimento":
+            case "Caixas de suprimento":
                 coracao =-2;
                 estrela =-3;
                 mapa =-1;
                 break;
-            case "capa de chuva":
+            case "Capa para chuva":
                 coracao = 0;
                 estrela = 1;
                 mapa = 0;
@@ -437,12 +498,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela =-3;
                 mapa = 1;
                 break;
-            case "celular":
+            case "Celular e carregador":
                 coracao = 0;
                 estrela =-2;
                 mapa = 0;
                 break;
-            case "chinelo":
+            case "Chinelo":
                 coracao = 0;
                 estrela = 2;
                 mapa = 0;
@@ -452,27 +513,27 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela =-4;
                 mapa = 2;
                 break;
-            case "copos descartaveis":
+            case "Copos descartáveis":
                 coracao = 3;
                 estrela = 1;
                 mapa = 3;
                 break;
-            case "detergente":
+            case "Detergente":
                 coracao =-3;
                 estrela = 1;
                 mapa = 3;
                 break;
-            case "espelho":
+            case "Espelho":
                 coracao = 0;
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "espetos":
+            case "Espetos":
                 coracao = 2;
                 estrela = 2;
                 mapa = 2;
                 break;
-            case "esponja":
+            case "Esponja":
                 coracao =-2;
                 estrela = 1;
                 mapa = 0;
@@ -487,12 +548,12 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela =-1;
                 mapa = 1;
                 break;
-            case "garrafa témica":
+            case "Garrafa térmica":
                 coracao =-2;
                 estrela =-4;
                 mapa =-2;
                 break;
-            case "gerador":
+            case "Gerador":
                 coracao = 0;
                 estrela =-3;
                 mapa = 1;
@@ -502,7 +563,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 2;
                 mapa = 2;
                 break;
-            case "guardanapos":
+            case "Guardanapos":
                 coracao =-2;
                 estrela = 1;
                 mapa = 2;
@@ -512,7 +573,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 2;
                 mapa = 2;
                 break;
-            case "lanterna e pilhas":
+            case "Lanterna e pilhas":
                 coracao =-1;
                 estrela =-2;
                 mapa = 2;
@@ -522,22 +583,22 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "luminária":
+            case "Luminária":
                 coracao =-1;
                 estrela =-2;
                 mapa =-1;
                 break;
-            case "luvas de protrção":
+            case "Luvas de proteção":
                 coracao =-2;
                 estrela =-4;
                 mapa =-3;
                 break;
-            case "martelete":
+            case "Martelete":
                 coracao =-2;
                 estrela =-4;
                 mapa = 1;
                 break;
-            case "martelo":
+            case "Martelo":
                 coracao =-2;
                 estrela =-4;
                 mapa = 1;
@@ -547,42 +608,42 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 2;
                 mapa = 0;
                 break;
-            case "panela":
+            case "Panela":
                 coracao = 2;
                 estrela = 2;
                 mapa = 0;
                 break;
-            case "papel aluminio":
+            case "Papel alumínio":
                 coracao =-2;
                 estrela =-2;
                 mapa =-2;
                 break;
-            case "papel higiênico":
+            case "Papel higiênico":
                 coracao =-2;
                 estrela =-2;
                 mapa = 1;
                 break;
-            case "pincel":
+            case "Pincel":
                 coracao =-2;
                 estrela =-4;
                 mapa =-2;
                 break;
-            case "pratos":
+            case "Pratos":
                 coracao =-1;
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "protetor solar":
+            case "Protetor solar":
                 coracao = 2;
                 estrela =-1;
                 mapa = 1;
                 break;
-            case "quadriciclo":
+            case "Quadriciclo":
                 coracao = 1;
                 estrela =-3;
                 mapa = 1;
                 break;
-            case "repelente":
+            case "Repelente para mosquito":
                 coracao = 0;
                 estrela = 2;
                 mapa = 3;
@@ -592,27 +653,27 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 1;
                 mapa = 1;
                 break;
-            case "saco de dormir":
+            case "Saco de dormir":
                 coracao = 1;
                 estrela =-3;
                 mapa =-1;
                 break;
-            case "saco plástico":
+            case "Saco plástico":
                 coracao =-2;
                 estrela =-3;
                 mapa =-2;
                 break;
-            case "sacos para lixo":
+            case "Saco para lixo":
                 coracao =-3;
                 estrela =-2;
                 mapa =-2;
                 break;
-            case "talhadeira":
+            case "Talhadeira":
                 coracao =-2;
                 estrela =-4;
                 mapa = 1;
                 break;
-            case "talheres":
+            case "Talheres de alumínio":
                 coracao = 0;
                 estrela = 1;
                 mapa = 0;
@@ -637,17 +698,17 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela =-3;
                 mapa =-3;
                 break;
-            case "travesseiros":
+            case "Travesseiros":
                 coracao = 0;
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "ventilador pequeno":
+            case "Ventilador pequeno":
                 coracao = 0;
                 estrela = 1;
                 mapa = 0;
                 break;
-            case "óculos de proteção":
+            case "Óculos de proteção":
                 coracao =-2;
                 estrela =-4;
                 mapa =-2;
@@ -664,30 +725,6 @@ public class AcampamentoCartas : AbstractCardManager
         CheckCalories(coracao, estrela, mapa);
         NextCard();
     }
-
-    /* private void NextCard()
-    {
-        cardIndex++;
-
-        if (cardIndex < sprites.Length)
-        {
-            currentCard.sprite = nextCard.sprite;
-            currentCard.name = sprites[cardIndex].name;
-            cardName.text = currentCard.name;
-
-            if (cardIndex < sprites.Length - 1)
-            {
-                nextCard.sprite = sprites[cardIndex + 1];
-                nextCard.name = sprites[cardIndex + 1].name;
-            }
-        }
-        else
-        {
-            Debug.Log("fim das cartas");
-        }
-
-        ResetPosition();
-    }*/
 
     public void CheckCalories(float coracao, float estrela, float mapa)
     {
@@ -719,48 +756,94 @@ public class AcampamentoCartas : AbstractCardManager
 
             Debug.Log("A Antártica não pode sofrer mais danos!");
         }
+    }
 
-        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+    public void NextCard()
+    {
+        cardIndex++;
+        
+        if (cardIndex < sprites.Length)
         {
-            WinImage.SetActive(true);
+            currentImage.sprite = nextImage.sprite;
+            currentImage.name = sprites[cardIndex].name;
+            cardName.text = currentImage.name;
+
+            Debug.Log("Novo alimento: " + cardName.text);
+            ReadText("Novo alimento: " + cardName.text);
+
+            if (cardIndex < sprites.Length - 1)
+            {
+                nextImage.sprite = sprites[cardIndex + 1];
+                nextImage.name = sprites[cardIndex + 1].name;
+            }
+            else
+            {
+                Debug.Log("fim das cartas... Começando de novo");
+                cardIndex = -1;
+                nextImage.sprite = sprites[cardIndex+1];
+                nextImage.name = sprites[cardIndex+1].name;
+            }
+        }
+        ResetPosition();
+    }
+    public void TryReturnToCamp()
+    {
+        audioSource.PlayOneShot(avisoClip);
+
+        confirmQuit.SetActive(true);
+
+        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        //ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
+        confirmQuit.GetComponentInChildren<Button>().Select();
+    }
+
+    public IEnumerator EndGame(bool win)
+    {
+        if (win)
+        {
+            likeButton.interactable = false;
+            dislikeButton.interactable = false;
 
             PlayerPreferences.M009_Itens = true;
+
+            audioSource.PlayOneShot(victoryClip);
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+            WinImage.SetActive(true);
 
             //audioSource.PlayOneShot(victoryAudio);
             //yield return new WaitWhile(() => audioSource.isPlaying);
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
-
-                                
-	    }
-
-        if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item    
+        }
+        else
         {
               LoseImage.SetActive(true);
 
               //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-              //audioSource.PlayOneShot(loseAudio);
+              audioSource.PlayOneShot(loseAudio);
 
-              //yield return new WaitWhile(() => audioSource.isPlaying);
+              yield return new WaitWhile(() => audioSource.isPlaying);
 
               //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
               resetButton.Select();
-              lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+              lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
               Debug.Log("Zerou um marcador!");
-		}
+        }
+
+        StartCoroutine(ReturnToCampCoroutine());
     }
 
-    public void ReturnToCamp()
+    public IEnumerator ReturnToCampCoroutine()
     {
+        yield return new WaitForSeconds(4f);
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
     }
-
-    public void ResetScene()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Itens);
-    }
-
 }
  
