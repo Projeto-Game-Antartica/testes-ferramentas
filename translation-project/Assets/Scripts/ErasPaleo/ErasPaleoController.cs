@@ -10,6 +10,10 @@ public class ErasPaleoController : DragAndDropController
 {
     private readonly string instructions = "Início do jogo. Minijogo da teia alimentar. Descrição...";
 
+    public AudioClip victoryClip;
+    public AudioClip loseAudio;
+    public AudioClip selectAnimal;
+
     public Button resetButton;
 
     public TMPro.TextMeshProUGUI attemptsText;
@@ -45,34 +49,13 @@ public class ErasPaleoController : DragAndDropController
     private List<DragAndDropCell.DropEventDescriptor> passar_itens;
 
     public Button audioButton;
-    public GameObject firstItem;
+    //public GameObject firstItem;
 
     enum Cells
     {
         bentosCell = 1, avesMarinhasCell, pinguinsCell, baleiasCell, krillCell,
         cefalopodesCell, focasCell, peixesCell, protozariosCell, cetaceosCell,
         zooplanctonsCell, bacteriasCell, algasCell
-    };
-
-    enum Eras2    {
-        protozoarioCell = 1, esponjaCell, rochasCell, peixesCell, plantasCell,
-        anfibiosCell, insetosCell, repteisCell
-    };
-
-    enum Eras3
-    {
-        mamiferosPCell = 1, sementesCell, dinossaurosCell, passarosCell, floresCell,
-        himalaiaCell
-    };
-
-    enum Eras4
-    {
-        mamiferoGCell = 1, MacacosCell, alpesCell
-    };
-
-    enum Eras5
-    {
-        idadesCell = 1, mamutesCell, humanosCell
     };
 
     private void Start()
@@ -88,14 +71,6 @@ public class ErasPaleoController : DragAndDropController
         passar_itens = new List<DragAndDropCell.DropEventDescriptor>();
 
         ReadText(instructions);
-
-        NRO_CELLS = 12;
-
-        Debug.Log(cells.Length);
-        foreach(GameObject g in cells)
-        {
-            Debug.Log(g.name);
-        }
 
         audioSource = GetComponent<AudioSource>();
 
@@ -143,55 +118,84 @@ public class ErasPaleoController : DragAndDropController
             if (isCell)
             {
                 nextCell.GetComponent<Selectable>().Select();
-                Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
-                Debug.Log(ReturnCellInfo(nextCell.name));
-                //ReadText(nextCell.name);
-                ReadText("Célula " + ReturnCellNumber(nextCell.name));
-                ReadText(ReturnCellInfo(nextCell.name));   
+
+                ReadCell(nextCell);
             }
             else
             {
                 nextCell.GetComponent<Selectable>().Select();
-                Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
-                ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+
+                ReadItem(nextCell);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
-        {
-            try
             {
-                DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
-                currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
-
-                desc.item = currentItem;
-                desc.sourceCell = sourceCell;
-                desc.destinationCell = currentCell;
-                currentCell.SendRequest(desc);                      // Send drop request
-                StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
-
-                if (desc.permission == true)
+                if (!isPositioning)
                 {
-                    currentCell.PlaceItem(currentItem);
+                    try
+                    {
+                        if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
+                        {
+                            OnButtonClick();
+                            audioSource.PlayOneShot(selectAnimal);
+                            isPositioning = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
+                    }
                 }
+                else
+                {
+                    try
+                    {
+                        DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
+                        currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
 
-                currentCell.UpdateMyItem();
-                currentCell.UpdateBackgroundState();
-                sourceCell.UpdateMyItem();
-                sourceCell.UpdateBackgroundState();
+                        desc.item = currentItem;
+                        desc.sourceCell = sourceCell;
+                        desc.destinationCell = currentCell;
+                        currentCell.SendRequest(desc);                      // Send drop request
+                        StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
 
-                // go to item
-                firstItem.GetComponent<Selectable>().Select();
+                        if (desc.permission == true)
+                        {
+                            currentCell.PlaceItem(currentItem);
+                        }
 
-                ResetConditions();
+                        currentCell.UpdateMyItem();
+                        currentCell.UpdateBackgroundState();
+                        sourceCell.UpdateMyItem();
+                        sourceCell.UpdateBackgroundState();
 
-                isPositioning = false;
+                        try
+                        {
+                            // go to item
+                            items[FindNextItem()].GetComponent<Selectable>().Select();
+                            ReadItem(items[FindNextItem()]);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log("Não há mais itens. StackTrace >> " + ex.StackTrace);
+                        }
+
+                        audioSource.PlayOneShot(selectAnimal);
+
+                        ResetConditions();
+
+                        desc.item.ResetConditions();
+                        
+                        isPositioning = false;
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                    }
+                }
             }
-            catch(Exception e)
-            {
-                Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
-            }
-        }
 
         if(Input.GetKeyDown(KeyCode.F6) && !isPositioning)
         {
@@ -201,13 +205,15 @@ public class ErasPaleoController : DragAndDropController
             {
                 ReadText("Células");
                 Debug.Log("Células");
-                cells[0].GetComponent<Selectable>().Select();
+                cells[FindNextEmptyCell()].GetComponent<Selectable>().Select();
+                ReadCell(cells[FindNextEmptyCell()]);
             }
             else
             {
                 ReadText("Itens");
                 Debug.Log("Itens");
-                firstItem.GetComponent<Selectable>().Select();
+                items[FindNextItem()].GetComponent<Selectable>().Select();
+                ReadItem(items[FindNextItem()]);
             }
         }
     }
@@ -219,42 +225,11 @@ public class ErasPaleoController : DragAndDropController
     
     public void GoWrapper()
     {
-
         StartCoroutine(GoCoroutine());               
-
-        //Debug.Log("teste: " + transform.GetComponent("Era1"));
-
     }
 
     public IEnumerator GoCoroutine()
     {
-        /* Debug.Log(draggedItems[0].name);
-         Debug.Log(draggedItems[1].name);
-         Debug.Log(draggedItems[2].name);
-         Debug.Log(draggedItems[3].name);
-         */   
-
-   /*     if (draggedCell[1].name == draggedItems[1].name + "Cell")
-            Debug.Log("Acerto");
-        else
-            passar_itens[1].sourceCell.PlaceItem(passar_itens[1].item);
-
-        if (draggedCell[2].name == draggedItems[2].name + "Cell")
-            Debug.Log("Acerto");
-        else
-            passar_itens[2].sourceCell.PlaceItem(passar_itens[2].item);
-
-        if (draggedCell[3].name == draggedItems[3].name + "Cell")
-            Debug.Log("Acerto");
-        else
-            passar_itens[3].sourceCell.PlaceItem(passar_itens[3].item);
-
-        Debug.Log(draggedCell[0].name.Equals(draggedItems[0].name + "Cell") ? true : false);
-        Debug.Log(draggedCell[1].name.Equals(draggedItems[1].name + "Cell") ? true : false);
-        Debug.Log(draggedCell[2].name.Equals(draggedItems[2].name + "Cell") ? true : false);
-        Debug.Log(draggedCell[3].name.Equals(draggedItems[3].name + "Cell") ? true : false);
-
-        */
 
         int contador = 0;
 
@@ -262,15 +237,26 @@ public class ErasPaleoController : DragAndDropController
 
         foreach (GameObject g in draggedItems)
         {
-            string nome = g.name; 
+            string nome1 = g.name + "_1";
+            string nome2 = g.name + "_2";
+            string nome3 = g.name + "_3";
+            string nome4 = g.name + "_4";
+            string nome5 = g.name + "_5";
+            string nome6 = g.name + "_6";
+            string nome7 = g.name + "_7";
+            string nome8 = g.name + "_8";
+            string nome9 = g.name + "_9";
 
             Debug.Log("cont: " + contador + " g.name: " + g.name + "Cell: " + draggedCell[contador].name);
-            Debug.Log("Nome: " +nome + "cell: " + g.name);
+            Debug.Log("Nome1: " +nome1 + "cell: " + g.name);
 
-            if (nome.Contains(draggedCell[contador].name))
+            if (nome1.Contains(draggedCell[contador].name) || nome2.Contains(draggedCell[contador].name) || nome3.Contains(draggedCell[contador].name)
+            || nome4.Contains(draggedCell[contador].name) || nome5.Contains(draggedCell[contador].name) || nome6.Contains(draggedCell[contador].name)
+            || nome7.Contains(draggedCell[contador].name) || nome8.Contains(draggedCell[contador].name) || nome9.Contains(draggedCell[contador].name))
             {
                 Debug.Log("Acerto");
                 correctAnswer++;
+                Debug.Log("ACERTOS:" +correctAnswer);
             }
             else
             {
@@ -287,32 +273,18 @@ public class ErasPaleoController : DragAndDropController
         
         if (cont_erro > 0)
             {
-                wrongAnswer++;
+                wrongAnswer = wrongAnswer + 1;
                 attemptsText.text = "Tentativas restantes: " + wrongAnswer + "/" + attempts;
                 confirmaButton.interactable = false;
+                audioSource.PlayOneShot(wrongClip);
             }
-        //remover.Reverse();
-
-        //foreach (GameObject g in draggedItems)
-        //    Debug.Log("dg " + g.name);
-
-        //foreach (GameObject g in draggedCell)
-        //    Debug.Log("dc " + g.name);
-
-        //foreach (GameObject g in draggedLocal)
-        //    Debug.Log("dl " + g.name);
-
         
         foreach (GameObject re in remover)
         {
             Debug.Log("antes: " + re);
             // remove o item que foi dropado
             draggedItems.Remove(re);
-            //Debug.Log("depois: " + re);
 
-            // re nao esta nessas duas listas
-            //draggedCell.Remove(re);
-            //draggedLocal.Remove(re);
             total--;
             Debug.Log("Total: " + total);
         }
@@ -324,18 +296,9 @@ public class ErasPaleoController : DragAndDropController
         draggedLocal.Clear();
         passar_itens.Clear();
         
-        
-
         yield return new WaitForSeconds(1.2f);
-        /* RemoveAllItems();
-         draggedItems.Clear();
-         UpdateBackgroundState();
 
-         pinguim_adeliaAnimator.SetBool("isMoving", false);
-         pinguim_antarticoAnimator.SetBool("isMoving", false);
-         pinguim_papuaAnimator.SetBool("isMoving", false);    */
-
-        if(correctAnswer == 29)
+        if(correctAnswer == 24)
             {
                 EndGame(true);
 			}
@@ -349,21 +312,34 @@ public class ErasPaleoController : DragAndDropController
     {
         if (win)
         {
+            PlayerPreferences.M009_Eras = true;
+
+            audioSource.PlayOneShot(victoryClip);
+
+            //yield return new WaitWhile(() => audioSource.isPlaying);
+
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
-            PlayerPreferences.M009_Eras = true;
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
+            
         }
         else
         {
             LoseImage.SetActive(true);
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+
+            audioSource.PlayOneShot(loseAudio);
+
+            //yield return new WaitWhile(() => audioSource.isPlaying);
+
             resetButton.Select();
+
+            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+            
         }
 
-        //StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
 
     public override void OnSimpleDragAndDropEvent(DragAndDropCell.DropEventDescriptor desc)
@@ -372,6 +348,9 @@ public class ErasPaleoController : DragAndDropController
         ErasPaleoController sourceSheet = desc.sourceCell.GetComponentInParent<ErasPaleoController>();
         // Get control unit of destination cell
         ErasPaleoController destinationSheet = desc.destinationCell.GetComponentInParent<ErasPaleoController>();
+
+        //desc.permission = false;
+
         switch (desc.triggerType)                                               // What type event is?
         {
             case DragAndDropCell.TriggerType.DropRequest:                       // Request for item drag (note: do not destroy item on request)
@@ -402,7 +381,7 @@ public class ErasPaleoController : DragAndDropController
                 {
                     Debug.Log("Denied drop " + desc.item.name + " from " + sourceSheet.name + " to " + destinationSheet.name);
 
-                    //PlayAudioClip(wrongClip);
+                    audioSource.PlayOneShot(wrongClip);
                     //wrongAnswer++;
                 }
                 break;
@@ -432,115 +411,99 @@ public class ErasPaleoController : DragAndDropController
         total++;
         Debug.Log(total);
 
-        if(total == 29)
+        if(total == 24)
             confirmaButton.interactable = true;
 
-
-
-        //foreach (GameObject g in draggedItems)
-        //    Debug.Log("dg " + g.name);
-
-        //foreach (GameObject g in draggedCell)
-        //    Debug.Log("dc " + g.name);
-
-        //foreach (GameObject g in draggedLocal)
-        //    Debug.Log("dl " + g.name);
-        
-        //Debug.Log(passa.item);
-
-        // passa.sourceCell.PlaceItem(passa.item);
-    }
-    
-    public void CheckEndGame()
-    {
-        if (WIN)
-        {
-            lifeExpController.AddEXP(0.001f); // concluiu o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou um item
-            Debug.Log("Wrong answers count: " + wrongAnswer);
-            WinImage.SetActive(true);
-
-            if (!PlayerPreferences.M004_Memoria)
-                WinText.text = "Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.";
-            else
-                WinText.text = "Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.";
-
-            PlayerPreferences.M004_TeiaAlimentar = true;
-
-
-            StartCoroutine(ReturnToShipCoroutine());
-        }
     }
 
     public int ReturnCellNumber(string name)
     {
-        switch(name)
-        {
-            case "bentosCell":
-                return (int)Cells.bentosCell;
-            case "avesmarinhasCell":
-                return (int)Cells.avesMarinhasCell;
-            case "pinguinsCell":
-                return (int)Cells.pinguinsCell;
-            case "baleiasCell":
-                return (int)Cells.baleiasCell;
-            case "krillCell":
-                return (int)Cells.krillCell;
-            case "cefalopodesCell":
-                return (int)Cells.cefalopodesCell;
-            case "focasCell":
-                return (int)Cells.focasCell;
-            case "peixesCell":
-                return (int)Cells.peixesCell;
-            case "protozoariosCell":
-                return (int)Cells.protozariosCell;
-            case "cetaceosCell":
-                return (int)Cells.cetaceosCell;
-            case "zooplanctonsCell":
-                return (int)Cells.zooplanctonsCell;
-            case "bacteriasCell":
-                return (int)Cells.bacteriasCell;
-            case "algasCell":
-                return (int)Cells.algasCell;
-            default:
-                return -1;
-
-        }   
+        if(name.Contains("_1"))
+             return 1;
+        else if(name.Contains("_2"))
+            return 2;
+        else if(name.Contains("_3"))
+            return 3;
+        else if(name.Contains("_4"))
+            return 4;
+        else if(name.Contains("_5"))
+            return 5;
+        else if(name.Contains("_6"))
+            return 6;
+        else if(name.Contains("_7"))
+            return 7;
+        else if(name.Contains("_8"))
+            return 8;
+        else if(name.Contains("_9"))
+            return 9;
+        else 
+            return -1; 
     }
 
     public string ReturnCellInfo(string name)
     {
         switch (name)
         {
-            case "bentosCell":
-                return "serve de alimento para a célula " + (int)Cells.peixesCell;
-            case "avesmarinhasCell":
-                return "não serve de alimento para nenhuma célula";
-            case "pinguinsCell":
-                return "serve de alimento para as células " + (int)Cells.focasCell + " e " + (int)Cells.cetaceosCell;
-            case "baleiasCell":
-                return "não serve de alimento para nenhuma célula";
-            case "krillCell":
-                return "serve de alimento para as células as células " + (int)Cells.baleiasCell + " e " + (int)Cells.avesMarinhasCell + " e " + (int)Cells.pinguinsCell + " e " + (int)Cells.cefalopodesCell;
-            case "cefalopodesCell":
-                return "serve de alimento para as células " + (int)Cells.pinguinsCell + " e " + (int)Cells.cetaceosCell;
-            case "focasCell":
-                return "serve de alimento para a célula " + (int)Cells.cetaceosCell;
-            case "peixesCell":
-                return "serve de alimento para as células " + (int)Cells.avesMarinhasCell + " e " + (int)Cells.cetaceosCell;
-            case "protozoariosCell":
-                return "serve de alimento para as células " + (int)Cells.krillCell + " e " + (int)Cells.zooplanctonsCell + " e " + (int)Cells.bentosCell;
-            case "cetaceosCell":
-                return  "serve de alimento para a célula " + (int)Cells.bentosCell;
-            case "zooplanctonsCell":
-                return  "serve de alimento para a célula " + (int)Cells.bentosCell;
-            case "bacteriasCell":
-                return  "serve de alimento para as células " + (int)Cells.zooplanctonsCell + " e " + (int)Cells.protozariosCell;
-            case "algasCell":
-                return  "serve de alimento para as células " + (int)Cells.bacteriasCell + " e " + (int)Cells.bentosCell + " e " + (int)Cells.protozariosCell;
+            case "formacao_terraEra1":
+                return "Formação da terra";
+            case "AlgasEra1":
+                return "Algas";
+            case "rochas_antigasEra1":
+                return "Rochas antigas";
+            case "bacteriasEra1":
+                return "Bactérias";
+            case "pre_cambrianoEra1":
+                return "Pré-Cambriano";
+            case "protozoarioEra2":
+                return "Protozoários";
+            case "esponjasEra2":
+                return "Esponjas";
+            case "rochas_sedimentaresEra2":
+                return "Rochas sedimentares";
+            case "peixesEra2":
+                return "Peixes";
+            case "plantas_terrestresEra2":
+                return  "Plantas terrestres";
+            case "anfibiosEra2":
+                return  "Anfíbios";
+            case "insetosEra2":
+                return  "Insetos";
+            case "repteisEra2":
+                return  "Répteis";
+            case "paleozoicoEra2":
+                return  "Paleozóico";
+            case "mamiferos_pequenosEra3":
+                return  "Mamíferos pequenos";
+            case "sementesEra3":
+                return  "Sementes";
+            case "dinossaurosEra3":
+                return  "Dinossauros";
+            case "passarosEra3":
+                return  "Pássaros";
+            case "floresEra3":
+                return  "Flores";
+            case "himalaiaEra3":
+                return  "Himalaia";
+            case "mesozoicoEra3":
+                return  "Mesozóico";
+            case "mamiferosgigantesEra4":
+                return  "Mamíferos gigantes";
+            case "macacosEra4":
+                return  "Macacos";
+            case "alpesEra4":
+                return  "Alpes";
+            case "ceno_terEra4":
+                return  "Cenozóico (Terciário)";
+            case "idades_glaciaisEra5":
+                return  "Idades glaciais";
+            case "mamutesEra5":
+                return  "Mamutes";
+            case "humanosEra5":
+                return  "Humanos";
+            case "ceno_quaEra5":
+                return  "Cenozóico (Quaternário)";
             default:
                 return null;
-
         }
     }
     
@@ -552,11 +515,11 @@ public class ErasPaleoController : DragAndDropController
         return currentCellname.Equals(currentItemname + "Cell") ? true : false;
     }
 
-    public IEnumerator ReturnToShipCoroutine()
+    public IEnumerator ReturnToCampCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(4f);
 
-        SceneManager.LoadScene(ScenesNames.M004Ship);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
     }
 
     public void SelectFirstItem()
@@ -564,5 +527,136 @@ public class ErasPaleoController : DragAndDropController
         items[0].GetComponent<Selectable>().Select();
 
         //ReadItem(items[0]);
+    }
+
+    public int FindNextItem()
+    {
+        int index = 0;
+
+        while(items[index].GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            Debug.Log("vazio");
+            index++;
+        }
+
+        return index;
+    }
+
+    void ReadCell(GameObject nextCell)
+    {
+        if(nextCell.name.Contains("Era1"))
+        {
+            // navegando pelas celulas vazias
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                Debug.Log("Era 1, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+                ReadText("Era 1, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            }
+            else
+            {
+                // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+                Debug.Log("Era 1, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Era 1, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
+
+        if(nextCell.name.Contains("Era2"))
+        {
+            // navegando pelas celulas vazias
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                Debug.Log("Era 2, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+                ReadText("Era 2, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            }
+            else
+            {
+                // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+                Debug.Log("Era 2, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Era 2, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
+
+        if(nextCell.name.Contains("Era3"))
+        {
+            // navegando pelas celulas vazias
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                Debug.Log("Era 3, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+                ReadText("Era 3, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            }
+            else
+            {
+                // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+                Debug.Log("Era 3, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Era 3, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
+
+        if(nextCell.name.Contains("Era4"))
+        {
+            // navegando pelas celulas vazias
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                Debug.Log("Era 4, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+                ReadText("Era 4, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            }
+            else
+            {
+                // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+                Debug.Log("Era 4, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Era 4, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
+
+        if(nextCell.name.Contains("Era5"))
+        {
+            // navegando pelas celulas vazias
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                Debug.Log("Era 5, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+                ReadText("Era 5, Célula " + ReturnCellNumber(nextCell.name) + " " + ReturnCellInfo(nextCell.name));
+            }
+            else
+            {
+                // se tiver o component DragAndDropItem significa que o item foi dropado na celula
+                Debug.Log("Era 5, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Era 5, Célula " + ReturnCellNumber(nextCell.name) + " preenchida com o item: "
+                    + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
+    }
+
+    void ReadItem(GameObject nextCell)
+    {
+        // navegando por itens vazios
+        if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            // caso que o jogador estara navegando com o item selecionado nas ceulas
+            // entao é preciso ler a celula e seu numero para auxiliar o usuario a escolher o posicionamento correto
+            if (nextCell.gameObject.name.Contains("Cell"))
+            {
+                Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
+                ReadText("Célula " + ReturnCellNumber(nextCell.name));
+            }
+            else
+            {
+                Debug.Log("Item vazio");
+                ReadText("Item vazio");
+            }
+        }
+        else // navegando por itens ainda com conteudo
+        {
+            Debug.Log(ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            ReadText(ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+        }
     }
 }

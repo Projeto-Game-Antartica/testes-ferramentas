@@ -137,9 +137,12 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
 
             if(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().acha_fossil == 4 && desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().limpa_fossil == 4)
             {
-                        desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().ClassificaFossil.SetActive(true);
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().ClassificaFossil.SetActive(true);
             }
         }
+
+        if(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().acha_fossil == 4)
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().correctAudio);
     }
 
     public void turnCardDown()

@@ -400,6 +400,10 @@ public class HUDController : AbstractScreenReader {
             case "itens":
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
                 break;
+            case "paleo":
+                SceneManager.LoadScene(ScenesNames.M009Camp);
+                break;
+
         }
     }
 }

@@ -6,11 +6,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ErasScene : AbstractScreenReader {
-
-    //public TMPro.TextMeshProUGUI timer;
-    
-    // timer settings
-    //private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
     
     public GameObject LoseImage;
     public TMPro.TextMeshProUGUI LoseText;
@@ -26,10 +21,6 @@ public class ErasScene : AbstractScreenReader {
     private bool started = false;
     private bool finished = false;
     private bool paused = false;
-
-    //private float timerCount;
-    //private float timeInSeconds;
-    //private int timeInMinutes;
 
     public GameObject instructionInterface;
     public GameObject confirmQuit;
@@ -50,45 +41,21 @@ public class ErasScene : AbstractScreenReader {
 
     public IEnumerator StartTimer()
     {
-        // read audiodescription
-
-        //ReadText("");
-
-        // start counting time
         yield return new WaitForSeconds(0.5f);
-
-        //initialMinutes = 6f;
-        //initialSeconds = 59f;
-
-        //timerCount = 0;
 
         started = true;
 
         resetButton.interactable = true;
         backButton.interactable = true;
 
-        // start afther time seconds and repeat at repeatRate rate
-        //InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
-
-        //erasPaleoController.started = true;
         erasPaleoController.SelectFirstItem();
     }
 
     private void Update()
     {
-        //if(started && !finished && !paused) HandleTimer();
-
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
-            if (!instructionInterface.activeSelf)
-            {
                 instructionInterface.SetActive(true);
-                paused = true;
-            }
-            //else
-            //{
-            //    // Read Instructions
-            //}
         }
 
         if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
@@ -102,14 +69,14 @@ public class ErasScene : AbstractScreenReader {
             {
                 audioButton.Select();
                 isOnMenu = true;
-                paused = true;
             }
             else
             {
-                erasPaleoController.SelectFirstItem();
-                paused = false;
+                erasPaleoController.GetComponent<ErasPaleoController>().SelectFirstItem();
+
                 isOnMenu = false;
             }
+            
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -120,8 +87,6 @@ public class ErasScene : AbstractScreenReader {
                 audioSource.PlayOneShot(closeClip);
 
                 erasPaleoController.SelectFirstItem();
-
-                paused = false;
             }
             else
             {
@@ -138,11 +103,6 @@ public class ErasScene : AbstractScreenReader {
                 paused = false;
             }
         }
-
-        if(Input.GetKeyDown(KeyCode.F3))
-        {
-            //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
-        }
     }
 
     public void ResetGameObjects()
@@ -157,9 +117,6 @@ public class ErasScene : AbstractScreenReader {
 
     IEnumerator EndGameCoroutine()
     {
-        Debug.Log("Coroutine.");
-        //timer.text = "00:00";
-        // do something
         LoseImage.SetActive(true);
 
         //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
@@ -200,7 +157,7 @@ public class ErasScene : AbstractScreenReader {
     {
         lifeExpController.ReadHPandEXP();
         //Debug.Log("Restam " + timer.text + " para finalizar o minijogo.");
-        ////ReadText("Restam " + timer.text + " para finalizar o minijogo.");
+        //ReadText("Restam " + timer.text + " para finalizar o minijogo.");
     }
 
     public void TryReturnToCamp()
@@ -228,17 +185,16 @@ public class ErasScene : AbstractScreenReader {
 
     public void ReturnToMJ()
     {
-        //confirmQuit.SetActive(false);
+        confirmQuit.SetActive(false);
 
         erasPaleoController.SelectFirstItem();
 
-        paused = false;
     }
 
     public IEnumerator ReturnToCampCoroutine()
     {
         yield return new WaitForSeconds(4f);
 
-        SceneManager.LoadScene(ScenesNames.M009Camp);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
     }
 }
