@@ -128,11 +128,40 @@ public class CampSceneManagement : AbstractScreenReader {
 
         }*/
 
+        Debug.Log("TRIGGER>>>>>> " + collision.name);
+
+        if(PlayerPreferences.finishedAllM009Games() && collision.name.Equals("Mentor4"))
+        {
+            //mentorController.AddComponent<VIDE_Assign>();
+            
+            //mentorController.GetComponent<VIDE_Assign>().enabled = true;
+            mentorController.GetComponent<MentorController>().GetDialogue("M009", "Mentor4", 0); // dialogo que leva para missao
+
+            
+        
+		}
+        else if (collision.name.Equals("Mentor4"))
+           {
+            mentorController.GetComponent<MentorController>().GetDialogue("M009", "Mentor4", 1); // dialogo que leva para missao
+             //   dialogueInterface.SetActive(true);
+             //   dialogueInterfacePlayerName.text = "Turistas";
+                
+               // dialogueInterfaceText.text = "Olá, nós também somos turistas e estamos participando do Ciência Cidadã de " +
+                 //   "identificação de baleias. Para você participar, você ainda precisa conquistar a " +
+                   // (PlayerPreferences.M004_Memoria == false ? "Câmera fotográfica " : "") +
+                    //(PlayerPreferences.M004_TeiaAlimentar == false ? "Lente Zoom; " : "") +
+                    //(PlayerPreferences.M004_FotoIdentificacao == false ? " E conhecer sobre o processo de fotoidentificação de baleias; " : "") +
+                    //"Volte aqui depois para concluir a missão!!";
+
+                //Debug.Log(dialogueInterfaceText.text);
+                //ReadText(dialogueInterfaceText.text);  
+		   }
+
         isTrigger = true;
         colliderControl = collision;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         warningInterface.SetActive(false);
         dialogueInterface.SetActive(false);

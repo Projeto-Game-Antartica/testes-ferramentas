@@ -196,8 +196,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 591513330}
+    m_SelectOnRight: {fileID: 405596429}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -237,6 +237,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 1, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!114 &10492040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000022888184, y: 0.000015258789}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0.000015258789}
   m_SizeDelta: {x: 0.000076294, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &32046576
@@ -379,7 +380,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &39769638
 MonoBehaviour:
@@ -452,7 +453,7 @@ PrefabInstance:
     - target: {fileID: 224117820506368316, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 51.964005
+      value: 25.48999
       objectReference: {fileID: 0}
     - target: {fileID: 224117820506368316, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
@@ -462,7 +463,7 @@ PrefabInstance:
     - target: {fileID: 224117820506368316, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 103.93
+      value: 156.88
       objectReference: {fileID: 0}
     - target: {fileID: 224117820506368316, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
@@ -524,6 +525,42 @@ PrefabInstance:
       propertyPath: m_text
       value: "Infelizmente voc\xEA n\xE3o conseguiu finalizar a miss\xE3o com \xEAxito.
         Tente novamente."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323487328530182195, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -209.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1323487328530182195, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -44.651993
+      objectReference: {fileID: 0}
+    - target: {fileID: 114987052439368512, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 194f74a8050881c4faf4aa7c7508f823,
+        type: 3}
+    - target: {fileID: 114987052439368512, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114987052439368512, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114987052439368512, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185584002816851651, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114974642299274636, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
@@ -763,11 +800,12 @@ PrefabInstance:
         Utilize os itens talhadeira e martelo para fazer a escava\xE7\xE3o no solo\r\n3.
         O solo tem uma profundidade de 3 n\xEDveis.\r\n4. Cuidado para n\xE3o quebrar
         o f\xF3ssil.\r\n5. Fa\xE7a a coleta e classifica\xE7\xE3o do f\xF3ssil.\r\n6.
-        Na classifica\xE7\xE3o, voc\xEA deve escolher uma resposta de cada categoria.\r\n7.
-        A miss\xE3o ser\xE1 conclu\xEDda quando voc\xEA realizar a coleta e classifica\xE7\xE3o
-        de 3 f\xF3sseis.\r\n\r\nPara acessar as instru\xE7\xF5es deste minijogo  tecle
-        F1\r\nPara acessar e repetir a navega\xE7\xE3o via teclado tecle F2\r\nPara
-        repetir audiodescri\xE7\xE3o da tela tecle F3\r\n"
+        Na classifica\xE7\xE3o, voc\xEA deve escolher uma resposta de cada categoria.
+        Em seguida, confirmar e guardar no saco pl\xE1stico.\n7. A miss\xE3o ser\xE1
+        conclu\xEDda quando voc\xEA realizar a coleta e classifica\xE7\xE3o de 3 f\xF3sseis.\r\n\r\nPara
+        acessar as instru\xE7\xF5es deste minijogo  tecle F1\r\nPara acessar e repetir
+        a navega\xE7\xE3o via teclado tecle F2\r\nPara repetir audiodescri\xE7\xE3o
+        da tela tecle F3\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
@@ -782,27 +820,27 @@ PrefabInstance:
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 729
+      value: 778
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 120
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 116
+      value: 124
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 114157988782853510, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_fontSize
-      value: 23.05
+      value: 21.75
       objectReference: {fileID: 0}
     - target: {fileID: 114651646753477032, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
@@ -932,7 +970,7 @@ PrefabInstance:
     - target: {fileID: 114858827161162768, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114461273028311804, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
         type: 3}
@@ -1018,7 +1056,7 @@ PrefabInstance:
         type: 3}
       propertyPath: minijogoName
       value: 
-      objectReference: {fileID: 1018884407}
+      objectReference: {fileID: 0}
     - target: {fileID: 1052566290508666, guid: c1541f1f7ff7e0e4a9dba4d198db7620, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1081,6 +1119,29 @@ PrefabInstance:
     - target: {fileID: 1387547604370170, guid: c1541f1f7ff7e0e4a9dba4d198db7620, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811226386495058, guid: c1541f1f7ff7e0e4a9dba4d198db7620, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801158476040634, guid: c1541f1f7ff7e0e4a9dba4d198db7620, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488375051402672, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114367563354190066, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114879224981373188, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1541f1f7ff7e0e4a9dba4d198db7620, type: 3}
@@ -1291,7 +1352,7 @@ GameObject:
   - component: {fileID: 156728631}
   m_Layer: 5
   m_Name: Item00
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1401,6 +1462,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 0.7490196, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!222 &156728633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1444,7 +1506,7 @@ GameObject:
   - component: {fileID: 158154147}
   m_Layer: 5
   m_Name: Carta15
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1484,7 +1546,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 8a1df666a0cb462428f9e89a769e6aae, type: 3}
+  - {fileID: 21300000, guid: 5a81bbe59f1060e498ccbaf7e1e9f74a, type: 3}
   - {fileID: 21300000, guid: 1347ce87b1e0ed44eb91eefd9c216f2c, type: 3}
   - {fileID: 21300000, guid: e827070dd5c75f04b8c186ba9887665b, type: 3}
   - {fileID: 0}
@@ -1506,10 +1568,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 574145241}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 734312508}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -1565,7 +1627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8a1df666a0cb462428f9e89a769e6aae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a81bbe59f1060e498ccbaf7e1e9f74a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1693,7 +1755,7 @@ GameObject:
   - component: {fileID: 237112742}
   m_Layer: 5
   m_Name: Carta3
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1733,7 +1795,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 28a75605626891b479dc772d91e56908, type: 3}
+  - {fileID: 21300000, guid: 517b0db326bcbf04383cb53496f6d9bc, type: 3}
   - {fileID: 21300000, guid: 75e09e08669db974a86f37a77c64d92d, type: 3}
   - {fileID: 21300000, guid: d3d9621053c263c49a005641e0b8ff20, type: 3}
   - {fileID: 0}
@@ -1755,10 +1817,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnDown: {fileID: 1891661041}
+    m_SelectOnLeft: {fileID: 1486015781}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -1814,7 +1876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 28a75605626891b479dc772d91e56908, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 517b0db326bcbf04383cb53496f6d9bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2458,8 +2520,8 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 10492038}
+    m_SelectOnRight: {fileID: 1920223967}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2499,6 +2561,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 1, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!114 &405596431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2668,7 +2731,7 @@ PrefabInstance:
     - target: {fileID: 224214055056297122, guid: 4253b291e1a83a0498b3f4e0311937eb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 51.964035
+      value: 25.48999
       objectReference: {fileID: 0}
     - target: {fileID: 224214055056297122, guid: 4253b291e1a83a0498b3f4e0311937eb,
         type: 3}
@@ -2678,7 +2741,7 @@ PrefabInstance:
     - target: {fileID: 224214055056297122, guid: 4253b291e1a83a0498b3f4e0311937eb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 103.93
+      value: 156.88
       objectReference: {fileID: 0}
     - target: {fileID: 224214055056297122, guid: 4253b291e1a83a0498b3f4e0311937eb,
         type: 3}
@@ -3132,7 +3195,7 @@ GameObject:
   - component: {fileID: 574145240}
   m_Layer: 5
   m_Name: Carta11
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3172,7 +3235,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: ac79b34c11ac1d94d950d782f68ee0db, type: 3}
+  - {fileID: 21300000, guid: b30648d66e97df3409e5391cfe49a1b8, type: 3}
   - {fileID: 21300000, guid: c69fc7bbdedfadc4f9aecad03ba66d45, type: 3}
   - {fileID: 21300000, guid: ce4c33df6a8e76e4fa22de6d128a5706, type: 3}
   - {fileID: 0}
@@ -3194,10 +3257,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1891661041}
+    m_SelectOnDown: {fileID: 158154148}
+    m_SelectOnLeft: {fileID: 2005251828}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -3253,7 +3316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ac79b34c11ac1d94d950d782f68ee0db, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b30648d66e97df3409e5391cfe49a1b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3632,7 +3695,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 10492038}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3672,6 +3735,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 1, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!114 &591513332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4198,7 +4262,7 @@ GameObject:
   - component: {fileID: 734312507}
   m_Layer: 5
   m_Name: Carta14
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4238,7 +4302,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 37307f612f09ab945baa29e1b54e3c34, type: 3}
+  - {fileID: 21300000, guid: 68c016101b0573645b2b5d504b7e78d5, type: 3}
   - {fileID: 21300000, guid: 239cac1556aca884391fe89ed815fbc0, type: 3}
   - {fileID: 21300000, guid: 2edc0a80b513b6a42bba9d0bcaaabc9f, type: 3}
   - {fileID: 0}
@@ -4260,11 +4324,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 2005251828}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1406584007}
+    m_SelectOnRight: {fileID: 158154148}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4319,7 +4383,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37307f612f09ab945baa29e1b54e3c34, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68c016101b0573645b2b5d504b7e78d5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4994,129 +5058,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1402584794}
     m_Modifications:
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.size
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[17]
-      value: "Este pequeno animal similar ao camar\xE3o."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[18]
-      value: "A baleia fin possui peso m\xE9dio de 45 toneladas e pode de viver mais
-        de 100 anos. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[19]
-      value: "A baleia jubarte \xE9 encontrada em  praticamente todo o Hemisf\xE9rio
-        Sul."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[20]
-      value: "A popula\xE7\xE3o do pinguim ad\xE9lia tem diminu\xEDdo muito nos \xFAltimos
-        30 anos devido ao aquecimento global."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[0]
-      value: "A baleia franco austral foi extremamente cac\u0327ada no passado, devido
-        ao seu h\xE1bito costeiro, comportamento lento e possuir uma espessa camada
-        de gordura."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[1]
-      value: "A baleia-minke-ant\xE1rtica tem cerca de 10 m de comprimento."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[2]
-      value: "A baleia-minke normalmente n\xE3o levanta a cauda para fora d'\xE1gua
-        quando submerge."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[3]
-      value: "A baleia azul \xE9 a maior de todas as esp\xE9cias e \xE9 considerada
-        criticamente amea\xE7ada de extin\xE7\xE3o."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[4]
-      value: "A baleia azul ant\xE1rtica \xE9 o maior animal existente no planeta."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[5]
-      value: A baleia fin possui dorso negro ou cinza escuro e o ventre mais claro.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[6]
-      value: A baleia jubarte costuma ser vista no litoral baiano.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[7]
-      value: "Em \xE9pocas de acasalamento a baleia jubarte costuma emitir uma variedade
-        de sons."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[8]
-      value: O dorso de uma baleia-jubarte costuma ser escuro e o seu ventre branco.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[9]
-      value: "O krill possui um exosqueleto de quitina, dividido em cabe\xE7a, t\xF3rax
-        e abd\xF3men."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[10]
-      value: "A Jubarte tamb\xE9m \xE9 conhecida como baleia cantora, devido a uma
-        grande variedade de sons que produze."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[11]
-      value: "Misticetos possuem cerdas em vez de dentes as cerdas s\xE3o utilizadas
-        para filtrar a \xE1gua do alimento."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[12]
-      value: "As algas s\xE3o praticamente os \xFAnicos seres autotr\xF3ficos na Ant\xE1rtida."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[13]
-      value: "Os misticetos ficam na Ant\xE1rtica durante o ver\xE3o para alimentar-se
-        do krill, e migram durante o inverno para as \xE1reas de acasalamento nas
-        regi\xF5es tropicais."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[14]
-      value: "Misticetos s\xE3o animais que em vez de dentes, possuem cerdas bucais. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[15]
-      value: "H\xE1 seis esp\xE9cies de pinguim na Ant\xE1rtica."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[16]
-      value: "Algumas estimativas indicam haver 75 milh\xF5es dessas focas."
-      objectReference: {fileID: 0}
     - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5282,6 +5223,206 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[17]
+      value: "Este pequeno animal similar ao camar\xE3o."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[18]
+      value: "A baleia fin possui peso m\xE9dio de 45 toneladas e pode de viver mais
+        de 100 anos. "
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[19]
+      value: "A baleia jubarte \xE9 encontrada em  praticamente todo o Hemisf\xE9rio
+        Sul."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[20]
+      value: "A popula\xE7\xE3o do pinguim ad\xE9lia tem diminu\xEDdo muito nos \xFAltimos
+        30 anos devido ao aquecimento global."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[0]
+      value: "Os sacos servem para guardar os f\xF3sseis encontrados, para n\xE3o
+        contamin\xE1-los. Por isso as luvas s\xE3o importantes tamb\xE9m, elas esquentam
+        suas m\xE3os e protegem os f\xF3sseis."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[1]
+      value: "O martelo quebra uma \xE1rea grande, para ter uma maior precis\xE3o,
+        utilize a talhadeira, apoie-a na concre\xE7\xE3o e d\xEA leves batidas para
+        n\xE3o danificar o f\xF3ssil."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[2]
+      value: "O martelete \xE9 usado para retirar a parte superior que est\xE1 longe
+        dos f\xF3sseis, ou para aumentar a concre\xE7\xE3o."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[3]
+      value: "Os pinc\xE9is s\xE3o usados para retirar pequenos peda\xE7os de rochas
+        que podem ficar nos f\xF3sseis."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[4]
+      value: "A baleia azul ant\xE1rtica \xE9 o maior animal existente no planeta."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[5]
+      value: A baleia fin possui dorso negro ou cinza escuro e o ventre mais claro.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[6]
+      value: A baleia jubarte costuma ser vista no litoral baiano.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[7]
+      value: "Em \xE9pocas de acasalamento a baleia jubarte costuma emitir uma variedade
+        de sons."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[8]
+      value: O dorso de uma baleia-jubarte costuma ser escuro e o seu ventre branco.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[9]
+      value: "O krill possui um exosqueleto de quitina, dividido em cabe\xE7a, t\xF3rax
+        e abd\xF3men."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[10]
+      value: "A Jubarte tamb\xE9m \xE9 conhecida como baleia cantora, devido a uma
+        grande variedade de sons que produze."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[11]
+      value: "Misticetos possuem cerdas em vez de dentes as cerdas s\xE3o utilizadas
+        para filtrar a \xE1gua do alimento."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[12]
+      value: "As algas s\xE3o praticamente os \xFAnicos seres autotr\xF3ficos na Ant\xE1rtida."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[13]
+      value: "Os misticetos ficam na Ant\xE1rtica durante o ver\xE3o para alimentar-se
+        do krill, e migram durante o inverno para as \xE1reas de acasalamento nas
+        regi\xF5es tropicais."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[14]
+      value: "Misticetos s\xE3o animais que em vez de dentes, possuem cerdas bucais. "
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[15]
+      value: "H\xE1 seis esp\xE9cies de pinguim na Ant\xE1rtica."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[16]
+      value: "Algumas estimativas indicam haver 75 milh\xF5es dessas focas."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1412044900}
+    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 900311672}
+    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Text, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReadText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 900311673}
+    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Text, UnityEngine.UI
+      objectReference: {fileID: 0}
     - target: {fileID: 224868911147323678, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -5427,81 +5568,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1412044900}
-    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReturnToShip
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReadText
-      objectReference: {fileID: 0}
-    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 900311672}
-    - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Text, UnityEngine.UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReadText
-      objectReference: {fileID: 0}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 900311673}
-    - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Text, UnityEngine.UI
-      objectReference: {fileID: 0}
     - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -5556,12 +5622,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_subTextObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 900311675}
+      objectReference: {fileID: 0}
     - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_subTextObjects.Array.data[2]
       value: 
-      objectReference: {fileID: 900311675}
+      objectReference: {fileID: 0}
     - target: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_textAlignment
@@ -5652,6 +5718,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114602996426576124, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f7d38b51f99c6e43b8e88e32c5b9a38,
+        type: 3}
+    - target: {fileID: 114602996426576124, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_text
+      value: "PALEONTOLOGIA SUBZERO\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 20.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 224475827567671104, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -5694,7 +5796,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1858838867816090, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008996525660598056, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977406636603947234, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_padding
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977406636603947234, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224811924281148610, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
@@ -5705,17 +5822,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114602996426576124, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0357b282f7c822c45be0e0e986e170c7,
-        type: 3}
-    - target: {fileID: 114602996426576124, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_PreserveAspect
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1235584193936968, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 3}
       propertyPath: m_IsActive
@@ -5811,18 +5917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &900311675 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114470089739274656, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-    type: 3}
-  m_PrefabInstance: {fileID: 900311670}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &900311676 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
@@ -5851,7 +5945,7 @@ GameObject:
   - component: {fileID: 911251958}
   m_Layer: 5
   m_Name: Item04
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5911,8 +6005,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 1436378449}
+    m_SelectOnDown: {fileID: 1860440564}
+    m_SelectOnLeft: {fileID: 1491033215}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -5953,6 +6047,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 0.7490196, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!114 &911251961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6004,7 +6099,7 @@ GameObject:
   - component: {fileID: 932494102}
   m_Layer: 5
   m_Name: Carta0
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6044,7 +6139,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: dd29f5b73cdcff44db0229ab31eb4b1d, type: 3}
+  - {fileID: 21300000, guid: 096dca9801638a444ab772da8b950d16, type: 3}
   - {fileID: 21300000, guid: bdd11f4678945934e8d91137e388553e, type: 3}
   - {fileID: 21300000, guid: 12d5c64c231de61409563f4522818f82, type: 3}
   - {fileID: 0}
@@ -6066,11 +6161,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 1586172330}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1204969812}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6125,7 +6220,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd29f5b73cdcff44db0229ab31eb4b1d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 096dca9801638a444ab772da8b950d16, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6466,7 +6561,7 @@ GameObject:
   - component: {fileID: 985396400}
   m_Layer: 5
   m_Name: Carta9
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6506,7 +6601,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 9b901e584e7bf4945bf87776bfa8bbd8, type: 3}
+  - {fileID: 21300000, guid: 723608fd172e8bb4aa9b61b2f75d3edb, type: 3}
   - {fileID: 21300000, guid: 62448901abb9c3348a6bec72ffd90e00, type: 3}
   - {fileID: 21300000, guid: 64f4f42d3b2f0b6409be42c18b8679cd, type: 3}
   - {fileID: 0}
@@ -6528,11 +6623,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1406018445}
+    m_SelectOnDown: {fileID: 1406584007}
+    m_SelectOnLeft: {fileID: 1183291495}
+    m_SelectOnRight: {fileID: 2005251828}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6587,7 +6682,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9b901e584e7bf4945bf87776bfa8bbd8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 723608fd172e8bb4aa9b61b2f75d3edb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6639,7 +6734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000038146973, y: 0.000015258789}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0.000015258789}
   m_SizeDelta: {x: 0.000076294, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &988522563
@@ -6682,18 +6777,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988522561}
   m_CullTransparentMesh: 0
---- !u!114 &1018884407 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114674205987613368, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-    type: 3}
-  m_PrefabInstance: {fileID: 900311670}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1044079531
 GameObject:
   m_ObjectHideFlags: 0
@@ -7023,6 +7106,7 @@ MonoBehaviour:
     image_path: 
     identified: 0
   fossilController: {fileID: 39769638}
+  guardarButton: {fileID: 1574624644}
   fossilImages: {fileID: 1950171568}
   cards:
   - {fileID: 1343556365}
@@ -7047,7 +7131,7 @@ MonoBehaviour:
   audioButton: {fileID: 0}
   confirmarButton: {fileID: 589646493}
   cancelButton: {fileID: 822040052}
-  correctAudio: {fileID: 0}
+  correctAudio: {fileID: 8300000, guid: 0c3aa63f78fb1cd47806373a0350b4e4, type: 3}
   wrongAudio: {fileID: 0}
   WinImage: {fileID: 977949288}
   LoseImage: {fileID: 1596455380}
@@ -7398,104 +7482,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -6, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1171683286
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1171683290}
-  - component: {fileID: 1171683289}
-  - component: {fileID: 1171683288}
-  - component: {fileID: 1171683287}
-  m_Layer: 5
-  m_Name: Canvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1171683287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171683286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &1171683288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171683286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
---- !u!223 &1171683289
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171683286}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!224 &1171683290
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171683286}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1183291492
 GameObject:
   m_ObjectHideFlags: 0
@@ -7511,7 +7497,7 @@ GameObject:
   - component: {fileID: 1183291494}
   m_Layer: 5
   m_Name: Carta8
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7551,7 +7537,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 58448f01e1aa41947bfed71758c4e9de, type: 3}
+  - {fileID: 21300000, guid: 0ed5f71055084bc44a1dedb460ffb7b6, type: 3}
   - {fileID: 21300000, guid: 6c3f1d0646c9da84bb9408cf6c82952f, type: 3}
   - {fileID: 21300000, guid: 8e63143d392a9424cb4b22722702a291, type: 3}
   - {fileID: 0}
@@ -7573,11 +7559,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1586172330}
+    m_SelectOnDown: {fileID: 1201802777}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 985396401}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7632,7 +7618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 58448f01e1aa41947bfed71758c4e9de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ed5f71055084bc44a1dedb460ffb7b6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7665,7 +7651,7 @@ GameObject:
   - component: {fileID: 1201802776}
   m_Layer: 5
   m_Name: Carta12
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7705,7 +7691,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: acbd07ce676b36d4eab5e64fc3a9880a, type: 3}
+  - {fileID: 21300000, guid: 357169853fe84ce4fbeb2dc017cd8d17, type: 3}
   - {fileID: 21300000, guid: dda8b423d0bc67b4a8e45e9d417b3c3b, type: 3}
   - {fileID: 21300000, guid: 6d4b7b4f824bff146b54ba774fe3dfd6, type: 3}
   - {fileID: 0}
@@ -7727,11 +7713,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1183291495}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1406584007}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7786,7 +7772,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: acbd07ce676b36d4eab5e64fc3a9880a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 357169853fe84ce4fbeb2dc017cd8d17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7820,7 +7806,7 @@ GameObject:
   - component: {fileID: 1204592872}
   m_Layer: 5
   m_Name: Item01
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7838,11 +7824,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 156728629}
+    m_SelectOnRight: {fileID: 1436378449}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7930,6 +7916,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 0.7490196, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!222 &1204592874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7973,7 +7960,7 @@ GameObject:
   - component: {fileID: 1204969811}
   m_Layer: 5
   m_Name: Carta1
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8013,7 +8000,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 7882d4ffd5935e3479f5fd341a9cf3fc, type: 3}
+  - {fileID: 21300000, guid: 063d8adb3449c2043a3070c85a4d8d5b, type: 3}
   - {fileID: 21300000, guid: b5f416a6ef2726947a5fae925084a0b6, type: 3}
   - {fileID: 21300000, guid: 714acfbef00c502408a164afc80f5fe3, type: 3}
   - {fileID: 0}
@@ -8035,11 +8022,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 1406018445}
+    m_SelectOnLeft: {fileID: 932494103}
+    m_SelectOnRight: {fileID: 1486015781}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -8094,7 +8081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7882d4ffd5935e3479f5fd341a9cf3fc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 063d8adb3449c2043a3070c85a4d8d5b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8477,7 +8464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000038146973, y: 0.000015258789}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0.000015258789}
   m_SizeDelta: {x: 0.000076294, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275040519
@@ -9070,7 +9057,7 @@ RectTransform:
   - {fileID: 70350503}
   - {fileID: 129507058}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9104,7 +9091,7 @@ GameObject:
   - component: {fileID: 1406018444}
   m_Layer: 5
   m_Name: Carta5
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9144,7 +9131,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 19ea75413deb6a34db70d6c46c063578, type: 3}
+  - {fileID: 21300000, guid: e9d942a7af111ad40b47a15ee999253b, type: 3}
   - {fileID: 21300000, guid: ad3119f2b61b09f4b89bbb547038b5c9, type: 3}
   - {fileID: 21300000, guid: 8b189c27fcb9b1d4c906ffe7dc737af2, type: 3}
   - {fileID: 0}
@@ -9166,11 +9153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1204969812}
+    m_SelectOnDown: {fileID: 985396401}
+    m_SelectOnLeft: {fileID: 1586172330}
+    m_SelectOnRight: {fileID: 1791554856}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9225,7 +9212,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 19ea75413deb6a34db70d6c46c063578, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9d942a7af111ad40b47a15ee999253b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9258,7 +9245,7 @@ GameObject:
   - component: {fileID: 1406584006}
   m_Layer: 5
   m_Name: Carta13
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9298,7 +9285,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: f5ccd09b40362a948b5e6f27e1b3e8ae, type: 3}
+  - {fileID: 21300000, guid: 5897af099e3d11e4b9895e0462824b49, type: 3}
   - {fileID: 21300000, guid: b4614f3ebf087ab41a7281a9660902d1, type: 3}
   - {fileID: 21300000, guid: 77ff54ee40152a14db515e8dbae3eaa3, type: 3}
   - {fileID: 0}
@@ -9320,11 +9307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 985396401}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1201802777}
+    m_SelectOnRight: {fileID: 734312508}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9379,7 +9366,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f5ccd09b40362a948b5e6f27e1b3e8ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5897af099e3d11e4b9895e0462824b49, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9632,6 +9619,12 @@ MonoBehaviour:
   - {fileID: 10492035}
   - {fileID: 405596426}
   - {fileID: 1920223964}
+  equipamentos:
+  - {fileID: 156728628}
+  - {fileID: 1204592869}
+  - {fileID: 1436378448}
+  - {fileID: 1491033214}
+  - {fileID: 911251956}
   backButton: {fileID: 900311676}
   resetButton: {fileID: 150783534}
   audioButton: {fileID: 120489452}
@@ -9639,6 +9632,7 @@ MonoBehaviour:
   index: 
   missText: {fileID: 645565919}
   matchesText: {fileID: 640822319}
+  audioSource: {fileID: 0}
   correctAudio: {fileID: 8300000, guid: 0c3aa63f78fb1cd47806373a0350b4e4, type: 3}
   wrongAudio: {fileID: 8300000, guid: 9334914c91919bb4d828dd4a41bfe914, type: 3}
   WinImage: {fileID: 977949288}
@@ -9663,7 +9657,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1412044902
 AudioSource:
@@ -9998,7 +9992,7 @@ GameObject:
   - component: {fileID: 1436378451}
   m_Layer: 5
   m_Name: Item02
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10016,11 +10010,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1204592870}
+    m_SelectOnRight: {fileID: 1491033215}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10108,6 +10102,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 0.7490196, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!222 &1436378453
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10240,7 +10235,7 @@ GameObject:
   - component: {fileID: 1486015780}
   m_Layer: 5
   m_Name: Carta2
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10280,7 +10275,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: d11a605966f509141924300b982e4ef0, type: 3}
+  - {fileID: 21300000, guid: d1d683146f4b1654e94475425c6fc24f, type: 3}
   - {fileID: 21300000, guid: afc9a0c098d802f48a1140e668e70108, type: 3}
   - {fileID: 21300000, guid: ffc033bd929062542b59d83c7d4e37ac, type: 3}
   - {fileID: 0}
@@ -10302,11 +10297,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 1791554856}
+    m_SelectOnLeft: {fileID: 1204969812}
+    m_SelectOnRight: {fileID: 237112743}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10361,7 +10356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d11a605966f509141924300b982e4ef0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d1d683146f4b1654e94475425c6fc24f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10395,7 +10390,7 @@ GameObject:
   - component: {fileID: 1491033217}
   m_Layer: 5
   m_Name: Item03
-  m_TagString: Untagged
+  m_TagString: cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10417,7 +10412,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 1436378449}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 911251959}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10505,6 +10500,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 0.7490196, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!222 &1491033219
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10925,7 +10921,7 @@ GameObject:
   - component: {fileID: 1586172329}
   m_Layer: 5
   m_Name: Carta4
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10965,7 +10961,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 9e9f779f5a134c84f8219b400a08cf0b, type: 3}
+  - {fileID: 21300000, guid: e5886ccb3f5ad7d4badf1a1866f9e0b8, type: 3}
   - {fileID: 21300000, guid: 91937f9a9b77a2b4d8691c4419c51605, type: 3}
   - {fileID: 21300000, guid: a079232727783404f9d2573a1e09c9eb, type: 3}
   - {fileID: 0}
@@ -10987,11 +10983,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 932494103}
+    m_SelectOnDown: {fileID: 1183291495}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1406018445}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -11046,7 +11042,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9e9f779f5a134c84f8219b400a08cf0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5886ccb3f5ad7d4badf1a1866f9e0b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11267,7 +11263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000038146973, y: 0}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: 0.000076294, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701850982
@@ -11349,7 +11345,7 @@ GameObject:
   - component: {fileID: 1791554855}
   m_Layer: 5
   m_Name: Carta6
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11389,7 +11385,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: 4032b16fed0d93d4e953dec6e9ac21f6, type: 3}
+  - {fileID: 21300000, guid: 8d33555de2023cb4396835af7a64fba0, type: 3}
   - {fileID: 21300000, guid: 58d81af50a9c79943b0c552dac08bd2a, type: 3}
   - {fileID: 21300000, guid: 194cf8c511ae25744a947a33164606cc, type: 3}
   - {fileID: 0}
@@ -11411,11 +11407,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1486015781}
+    m_SelectOnDown: {fileID: 2005251828}
+    m_SelectOnLeft: {fileID: 1406018445}
+    m_SelectOnRight: {fileID: 1891661041}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -11470,7 +11466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4032b16fed0d93d4e953dec6e9ac21f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d33555de2023cb4396835af7a64fba0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11629,7 +11625,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860440561
 GameObject:
@@ -11713,10 +11709,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 911251959}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1718946614}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12133,7 +12129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000038146973, y: 0}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: 0.000015259, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1885242059
@@ -12191,7 +12187,7 @@ GameObject:
   - component: {fileID: 1891661040}
   m_Layer: 5
   m_Name: Carta7
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12231,7 +12227,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: bd169034657fb7e4fab89b0680766528, type: 3}
+  - {fileID: 21300000, guid: 31c39c6b81cc52a42a83f47dbb948a76, type: 3}
   - {fileID: 21300000, guid: 5bbbf1222a7f00a4cadcb29b78affa19, type: 3}
   - {fileID: 21300000, guid: e26e3e9936df8124d8051e957937f238, type: 3}
   - {fileID: 0}
@@ -12253,10 +12249,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 237112743}
+    m_SelectOnDown: {fileID: 574145241}
+    m_SelectOnLeft: {fileID: 1791554856}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -12312,7 +12308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd169034657fb7e4fab89b0680766528, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31c39c6b81cc52a42a83f47dbb948a76, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12406,7 +12402,7 @@ MonoBehaviour:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 405596429}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
@@ -12447,6 +12443,7 @@ MonoBehaviour:
   full: {r: 1, g: 1, b: 1, a: 1}
   unlimitedSource: 0
   teiaAlimentarController: {fileID: 0}
+  erasPaleoController: {fileID: 0}
 --- !u!114 &1920223969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12628,7 +12625,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1982138195 stripped
 MonoBehaviour:
@@ -12657,7 +12654,7 @@ GameObject:
   - component: {fileID: 2005251827}
   m_Layer: 5
   m_Name: Carta10
-  m_TagString: Untagged
+  m_TagString: Solo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12697,7 +12694,7 @@ MonoBehaviour:
   teste: {fileID: 0}
   BGImage: {fileID: 0}
   BGImage_Solo1:
-  - {fileID: 21300000, guid: f4e4264fe86d0de48a3b98c2eddc88c1, type: 3}
+  - {fileID: 21300000, guid: d6bc9a2cc5830064a9edf6a9daeb077f, type: 3}
   - {fileID: 21300000, guid: e343358e7bd90cb4e92779f101c89d60, type: 3}
   - {fileID: 21300000, guid: dd6a24111a7ba5e449934e2b69e9c21f, type: 3}
   - {fileID: 0}
@@ -12719,11 +12716,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1791554856}
+    m_SelectOnDown: {fileID: 734312508}
+    m_SelectOnLeft: {fileID: 985396401}
+    m_SelectOnRight: {fileID: 574145241}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -12778,7 +12775,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f4e4264fe86d0de48a3b98c2eddc88c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6bc9a2cc5830064a9edf6a9daeb077f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12976,7 +12973,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000038146973, y: 0.000015258789}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0.000015258789}
   m_SizeDelta: {x: 0.000015259, y: -92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058548367

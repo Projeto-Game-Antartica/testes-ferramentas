@@ -19,7 +19,7 @@ public class ClassificaManager : AbstractScreenReader
     private string era;
     private string image_path;
 
-    //public Image image_fossil;
+    public Button guardarButton;
 
     public FossilImages fossilImages;
 
@@ -66,6 +66,8 @@ public class ClassificaManager : AbstractScreenReader
 
     private void Start()
     {
+        guardarButton.interactable = false;
+
         desafioManagerPaleo = GameObject.FindGameObjectWithTag("GameController");
 
         //resetButton.interactable = false;
@@ -329,6 +331,8 @@ public class ClassificaManager : AbstractScreenReader
     Debug.Log(fossilData.era);
 
      //Debug.Log(fossilData.description);
+
+     guardarButton.interactable = true;
 	}
 
     public void CompareCards()
@@ -355,69 +359,27 @@ public class ClassificaManager : AbstractScreenReader
         c.Clear();
         cards[0].GetComponent<Button>().Select();
         //processDropDown.interactable = true;
+
+        guardarButton.interactable = false;
+
+        confirmarButton.interactable = false;
     }
-
-    /*public int CheckCombination(List<int> c, int dropDownValue, int lenght, string cardType)
-    {
-        int x = 0;
-        int correct = 0;
-        bool wrong = false;
-
-        for (int i = 0; i < lenght; i++)
-        {
-            var card = cards[c[i]].GetComponent<ClassificaCard>();
-            x = 0;
-            if (card.name.Contains(cardType))
-            {
-                Debug.Log("correct >> " + card);
-                StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.correct));
-                x = 2;
-                correct++;
-            }
-            else
-            {
-                Debug.Log("wrong >> " + card);
-                StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.wrong));
-                wrong = true;
-                // wrong answer, can add card to the list again
-                card.added = false;
-            }
-            
-            card.state = x;
-        }
-
-
-        if (wrong)
-        {
-            tries++;
-            attemptsText.text = "Tentativas restantes: " + tries + "/" + attempts;
-        }
-
-        // loses the game
-        if (tries > attempts)
-        {
-            EndGame(false);
-        }
-
-        //processDropDown.interactable = true;
-        return correct;
-    }*/
 
     public void EndGame()
     {
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
 
-        StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
 
-    public void ReturnToUshuaia()
+    public void ReturnToCamp()
     {
         //if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Desafio);
     }
 
     public IEnumerator ReadCards()
@@ -444,46 +406,10 @@ public class ClassificaManager : AbstractScreenReader
         }
     }
 
-    /*public IEnumerator CheckAnswer(Image image, int op)
-    {
-        Color color;
-        //Debug.Log("Checking answer...");
-
-        switch (op)
-        {
-            case (int)Operation.correct:
-                color = new Color(0, 1, 0, 1); // green
-                break;
-            case (int)Operation.wrong:
-                color = new Color(1, 0, 0, 1); // red
-                break;
-            default:
-                color = new Color(0, 0, 0, 0);
-                break;
-        }
-
-        image.color = color;
-
-        // wait seconds
-        yield return new WaitForSeconds(2f);
-
-        if (op == (int)Operation.wrong)
-        {
-            // back to normal!!
-            image.color = new Color(1, 1, 1, 1);
-        }
-        else
-        {
-            // set the color to dropdown color
-            //image.sprite = GetBackground(GetDropDownValue());
-            image.color = Color.white;
-        }
-    }*/
-
-    public IEnumerator ReturnToUshuaiaCoroutine()
+    public IEnumerator ReturnToCampCoroutine()
     {
         yield return new WaitForSeconds(7f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Desafio);
     }
 }
