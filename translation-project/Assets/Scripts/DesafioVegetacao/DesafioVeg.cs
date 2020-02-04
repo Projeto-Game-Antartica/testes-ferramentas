@@ -35,10 +35,19 @@ public class DesafioVeg : MonoBehaviour
     private int plantIndex;
     private int bowlIndex;
 
+    private int[] possibleBowlStartIndexes = new int[] {
+        0, 1, 2, 3,
+        4, 7,
+        8, 11, 
+        12, 13, 14, 15
+    };
+
     private int doneHarvest = 0;
     private int correctClassification = 0;
 
     private GameState currentGameState = GameState.Initial;
+
+    private System.Random rnd = new System.Random();
 
     private enum GameState {
         Initial,
@@ -55,9 +64,9 @@ public class DesafioVeg : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        resetHarvestScreen();
+        ResetHarvestScreen();
 
-        HarvestNumber.text = "0";//, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestLocation
+        //HarvestNumber.text = "0";//, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestLocation
     }
 
     // Update is called once per frame
@@ -69,13 +78,20 @@ public class DesafioVeg : MonoBehaviour
 
     }
 
-    private void resetHarvestScreen() {
-        changeGameState(GameState.PlantFixed);
+    public void ResetHarvestScreen() {
+        
 
         selectedGridIndex = -1;
-        plantIndex = 0; //Must start at random
-        bowlIndex = -1;
+        //plantIndex = 0; //Must start at random
+        //bowlIndex = -1;
+        plantIndex = rnd.Next(16);
+        do
+            bowlIndex = possibleBowlStartIndexes[rnd.Next(possibleBowlStartIndexes.Length)];
+        while(bowlIndex == plantIndex);
+
         currentToolIndex = -1;
+
+        changeGameState(GameState.PlantFixed);
     }
 
     private void changeTool(int toolIndex) {
@@ -152,7 +168,8 @@ public class DesafioVeg : MonoBehaviour
 
             case GameState.PlantDetached:
                 if(currentToolIndex == (int)Tool.Spatula && plantIndex == selectedGridIndex) {
-                    changeGameState(GameState.SpatulaWithPlant);
+                    //changeGameState(GameState.SpatulaWithPlant);
+                    changeGameState(GameState.BowlPlaced);
                     changeTool(Tool.SpatulaWithPlant);
                 } else
                     warningMessage("Você precisa pegar a vegetação!");
@@ -198,11 +215,12 @@ public class DesafioVeg : MonoBehaviour
     }
 
     private void showAnalysisScreen() {
+        AnalysisScreen.GetComponent<AnalysisVegScreen>().ResetScreen();
         GameScreen.SetActive(false);
         AnalysisScreen.SetActive(true);
     }
 
-    private void showHarvestScreen() {
+    public void ShowHarvestScreen() {
         GameScreen.SetActive(true);
         AnalysisScreen.SetActive(false);
     }
@@ -226,6 +244,8 @@ public class DesafioVeg : MonoBehaviour
             case GameState.PlantFixed:
                 Plant.SetActive(true);
                 Plant.transform.SetParent(Grid[plantIndex].transform, false);
+                BowlPlaced.SetActive(true);
+                BowlPlaced.transform.SetParent(Grid[bowlIndex].transform, false);
                 break;
 
             case GameState.FramePlaced:
@@ -234,6 +254,8 @@ public class DesafioVeg : MonoBehaviour
                 FramePlaced.transform.SetParent(Grid[plantIndex].transform, false);
                 Plant.transform.SetParent(Grid[plantIndex].transform, false);
                 FramePlaced.transform.SetSiblingIndex(0);
+                BowlPlaced.SetActive(true);
+                BowlPlaced.transform.SetParent(Grid[bowlIndex].transform, false);
                 break;
 
             case GameState.PlantDetached:
@@ -241,6 +263,8 @@ public class DesafioVeg : MonoBehaviour
                 PlantDetached .SetActive(true);
                 FramePlaced.transform.SetParent(Grid[plantIndex].transform, false);
                 PlantDetached.transform.SetParent(Grid[plantIndex].transform, false);
+                BowlPlaced.SetActive(true);
+                BowlPlaced.transform.SetParent(Grid[bowlIndex].transform, false);
                 break;
 
             case GameState.SpatulaWithPlant:
@@ -283,7 +307,7 @@ public class DesafioVeg : MonoBehaviour
         //Plant.transform.SetParent(Grid[1].transform, false);
         //changeTool(currentToolIndex + 1);
         //changeGameState(GameState.BowlInBag);
-        ShowOkDialog("Oiiii", finishHarvest);
+        //ShowOkDialog("teste", finishHarvest);
     }
 
     public void OnGridClick(int gridIndex) {
