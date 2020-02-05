@@ -89,6 +89,7 @@ public class DictionaryController : AbstractScreenReader {
 
         //    m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition, m_verticalPosition, Time.deltaTime / m_lerpTime);
         //}
+
         if (Input.GetKeyDown(KeyCode.F1))
         {
             ReadContentText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));

@@ -36,12 +36,12 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private readonly string[,] answersInLine = new string[,]
     {
         {"1A - 95%","1B - 95%","2 - 75%","3 - 50%","4 - 25%","5 - 5%","","",""},
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Lisa","Áspera", "", "","","","","",""},
-        {"Arredondada","Aguda","","","","","","",""},
-        {"Forma de V","Forma de U","","","","","","",""},
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Lisa","2 - Áspera", "", "","","","","",""},
+        {"1 - Arredondada","2 - Aguda","","","","","","",""},
+        {"1 - Forma de V","2 - Forma de U","","","","","","",""},
     };
 
     /*

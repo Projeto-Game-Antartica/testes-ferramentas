@@ -284,19 +284,17 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             //string itemName = desc.item.name + "Cell"; // to compare with destinationCell
             //if (desc.destinationCell.name.Equals(itemName))
             if (teiaAlimentarController != null)
+            {
                 desc.permission = teiaAlimentarController.CheckAnswer(desc.destinationCell.name, desc.item.name);
-            else
-                desc.permission = true;
-
-            if (erasPaleoController != null)
+            }
+            else if (erasPaleoController != null)
             {
                 if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
                     desc.permission = false;    
             }
             else
                 desc.permission = true;
-            //else
-            //    desc.permission = false;
+
             SendNotification(desc);
             result = desc.permission;
         }

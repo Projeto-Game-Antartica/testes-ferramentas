@@ -22,6 +22,8 @@ public class MemoryManager : AbstractScreenReader {
 
     public GameObject[] cards;
 
+    private GameObject lastCardSelected;
+
     public Button confirmarButton;
     public Button cancelarButton;
     public Button resetButton;
@@ -147,7 +149,7 @@ public class MemoryManager : AbstractScreenReader {
             Card.DO_NOT = true;
             cancelarButton.interactable = true;
             confirmarButton.interactable = true;
-            Debug.Log(c.Count);
+            //Debug.Log(c.Count);
         }
 
         if (Input.GetKeyDown(KeyCode.F1))
@@ -274,6 +276,7 @@ public class MemoryManager : AbstractScreenReader {
         {
             if (cards[i].GetComponent<Card>().state == Card.VIRADA_CIMA && !_first)
             {
+                
                 //Debug.Log("carta adicionada >> " + cards[i]);
                 c.Add(i);
                 audioSource.PlayOneShot(selectAudio);
@@ -284,37 +287,54 @@ public class MemoryManager : AbstractScreenReader {
                     // primeira carta imagem e segunda carta imagem = nao pode
                     // primeira carta texto e segunda carta texto = nao pode
                     // desvira a ultima carta selecionada
-                    //if ((!cards[c[0]].GetComponent<Card>().isText && !cards[c[1]].GetComponent<Card>().isText) ||
-                    //    (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText))
-                    //{;
-                    //    //cards[c[1]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
-                    //    cards[c[0]].GetComponent<Card>().turnCardDown();
-                    //    c.RemoveAt(0);
-                    //}
-                    //else
-                    //{
+                    if ((!cards[c[0]].GetComponent<Card>().isText && !cards[c[1]].GetComponent<Card>().isText) ||
+                        (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText))
+                    {
+                        // sao adicionados os indices. Entao se o indice da segunda carta for menor, ele é adicionado antes
+                        // entao é preciso fazer essa verificacao pra remover sempre a ultima que foi selecionada.
+                        if (c[0] > c[1])
+                        {
+                            cards[c[0]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+                            cards[c[0]].GetComponent<Card>().turnCardDown();
+                            c.Remove(c[0]);
+                        }
+                        else
+                        {
+                            cards[c[1]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+                            cards[c[1]].GetComponent<Card>().turnCardDown();
+                            c.Remove(c[1]);
+                        }
+                        //c.RemoveAt(indexOfFirstCardAdded);
+                    }
+                    else
+                    {
 
-                        Debug.Log("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
+                        Debug.Log("As duas cartas foram selecionadas. Confirme para checar se a combinação está correta ou cancele para combinar " +
                         "outras cartas.");
-                        ReadText("As duas cartas foram selecionadas. Confirme para cherar se a combinação está correta ou cancele para combinar " +
+                        ReadText("As duas cartas foram selecionadas. Confirme para checar se a combinação está correta ou cancele para combinar " +
                             "outras cartas.");
 
                         StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, (int)Operation.confirm));
                         StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.confirm));
 
-                        confirmarButton.Select();
-                    //}
+                        if (c[0] > c[1])
+                            lastCardSelected = cards[c[0]];
+                        else
+                            lastCardSelected = cards[c[1]];
 
-                        // block the comparison of two text cards
-                        //if (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText)
-                        //{
-                        //    Debug.Log("clear....");
-                        //    cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
-                        //    c.Clear();
-                        //}
-                        //else
-                        //{
-                        //}
+                        confirmarButton.Select();
+                    }
+
+                    //// block the comparison of two text cards
+                    //if (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText)
+                    //{
+                    //    Debug.Log("clear....");
+                    //    cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+                    //    c.Clear();
+                    //}
+                    //else
+                    //{
+                    //}
                 }
             }
         }
@@ -347,7 +367,11 @@ public class MemoryManager : AbstractScreenReader {
 
         cancelarButton.interactable = false;
         confirmarButton.interactable = false;
-        cards[0].GetComponent<Button>().Select();
+
+        if (lastCardSelected != null)
+            lastCardSelected.GetComponent<Button>().Select();
+        else
+            cards[FindIndexNextCard()].GetComponent<Button>().Select();
     }
 
     void cardComparison(List<int> c)
@@ -410,7 +434,15 @@ public class MemoryManager : AbstractScreenReader {
         c.Clear();
 
         // select the next card that does not have a match yet
-        if (matches != 0) cards[FindIndexNextCard()].GetComponent<Button>().Select();
+        //if (matches != 0) cards[FindIndexNextCard()].GetComponent<Button>().Select();
+
+        if (matches != 0)
+        {
+            if (lastCardSelected != null)
+                lastCardSelected.GetComponent<Button>().Select();
+            else
+                cards[FindIndexNextCard()].GetComponent<Button>().Select();
+        }
     }
 
     public IEnumerator EndGame(bool win)
