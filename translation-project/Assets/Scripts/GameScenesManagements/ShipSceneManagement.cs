@@ -49,6 +49,8 @@ public class ShipSceneManagement : AbstractScreenReader {
         }
 
         Debug.Log(SceneManager.GetActiveScene().name);
+
+        Parameters.HIGH_CONTRAST = true;
     }
 
     private void Update()

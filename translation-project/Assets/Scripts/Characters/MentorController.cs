@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using VIDE_Data;
 
-public class MentorController : MonoBehaviour {
+public class MentorController : AbstractScreenReader {
     
     public AudioSource audioSource; // beep for localization
     private string mentorName;
@@ -228,14 +228,35 @@ public class MentorController : MonoBehaviour {
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    int index = Random.Range(0, RandomMentorDialogues.GetVectorLenght(mentorName));
-    //    //Debug.Log(index);
-
-    //    // change the assigned dialogue
-    //    GetDialogue(mentorName, index);
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name.Contains("Turista"))
+        {
+            switch(gameObject.name)
+            {
+                case "Mentor0":
+                    Debug.Log("Naturalista: Bia");
+                    ReadText("Naturalista: Bia");
+                    break;
+                case "Mentor1":
+                    Debug.Log("Naturalista: Artur");
+                    ReadText("Naturalista: Artur");
+                    break;
+                case "Mentor2":
+                    Debug.Log("Naturalista: Ceci");
+                    ReadText("Naturalista: Ceci");
+                    break;
+                case "Mentor3":
+                    Debug.Log("Naturalista: Pedro");
+                    ReadText("Naturalista: Pedro");
+                    break;
+                case "Mentor4":
+                    Debug.Log("Naturalista: Ivan");
+                    ReadText("Naturalista: Ivan");
+                    break;
+            }
+        }
+    }
 
     //private void OnTriggerStay2D(Collider2D collision)
     //{
