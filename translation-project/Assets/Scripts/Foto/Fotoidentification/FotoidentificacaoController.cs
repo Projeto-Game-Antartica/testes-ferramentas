@@ -467,6 +467,42 @@ public class FotoidentificacaoController : AbstractScreenReader {
             g.GetComponent<Image>().color = Color.white;
         }
     }
+
+    public void ReadOptions(TextMeshProUGUI text)
+    {
+        if (roundIndex == Parameters.PIGMENTACAO)
+        {
+            switch (text.text)
+            {
+                case "1A - 95%":
+                    ReadText(text.text + " Totalmente branca.");
+                    break;
+                case "1B - 95%":
+                    ReadText(text.text + " Quase toda branca com detalhes preto na parte central superior e inferior.");
+                    break;
+                case "2 - 75%":
+                    ReadText(text.text + " Pigmentação branca nas laterais e parte preta central completamente fechada.");
+                    break;
+                case "3 - 50%":
+                    ReadText(text.text + " Pigmentação metade branca nas laterais, e parte preta no centro completamente fechada.");
+                    break;
+                case "4 - 25%":
+                    ReadText(text.text + " Pequena pigmentação branca nas laterais e o centro todo preto");
+                    break;
+                case "5 - 5%":
+                    ReadText(text.text + " Dois pontos de pigmentação branca nas laterais e o restante todo preto.");
+                    break;
+                default:
+                    Debug.Log("check option text.");
+                    break;
+            }
+        }
+        else
+        {
+            ReadText(text.text);
+        }
+    }
+
     /*
     public void NextRound()
     {
