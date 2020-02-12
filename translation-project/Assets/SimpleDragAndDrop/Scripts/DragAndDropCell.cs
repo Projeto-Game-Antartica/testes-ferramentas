@@ -48,6 +48,8 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 
     public ErasPaleoController erasPaleoController;
 
+    public DesafioManagerPaleo DesafioController;
+
     void OnEnable()
     {
         DragAndDropItem.OnItemDragStartEvent += OnAnyItemDragStart;         // Handle any item drag start
@@ -290,7 +292,19 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             else if (erasPaleoController != null)
             {
                 if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
-                    desc.permission = false;    
+                {
+                    Debug.Log("dropou >>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    desc.permission = false;
+                }
+                else
+                    desc.permission = true;
+            }
+            else if (DesafioController != null)
+            {
+                if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
+                    desc.permission = false;
+                else
+                    desc.permission = true;
             }
             else
                 desc.permission = true;

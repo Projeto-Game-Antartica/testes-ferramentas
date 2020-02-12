@@ -79,6 +79,7 @@ public class PlayerPreferences : MonoBehaviour {
 
             // M009
             PlayerPrefs.SetInt("M009_Mentor0_Dialogue1", 0);
+            PlayerPrefs.SetInt("M009_Mentor3_Dialogue2", 0);
         }
         else // not the first time, use the player prefs to load positions
         {

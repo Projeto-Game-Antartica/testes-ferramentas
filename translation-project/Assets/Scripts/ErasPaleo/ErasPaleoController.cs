@@ -125,7 +125,7 @@ public class ErasPaleoController : DragAndDropController
             {
                 nextCell.GetComponent<Selectable>().Select();
 
-                ReadItem(nextCell);
+                ReadCell(nextCell);
             }
         }
 
@@ -174,7 +174,7 @@ public class ErasPaleoController : DragAndDropController
                         {
                             // go to item
                             items[FindNextItem()].GetComponent<Selectable>().Select();
-                            ReadItem(items[FindNextItem()]);
+                            ReadCell(items[FindNextItem()]);
                         }
                         catch (Exception ex)
                         {
@@ -210,11 +210,35 @@ public class ErasPaleoController : DragAndDropController
             }
             else
             {
+                if(total == 24)
+                {
+                    confirmaButton.interactable = true;
+                    confirmaButton.GetComponent<Selectable>().Select();
+                    ReadText("Confirmar escolhas.");
+                    Debug.Log("Confirmar escolhas.");
+
+                }
+                else
+                {
                 ReadText("Itens");
                 Debug.Log("Itens");
                 items[FindNextItem()].GetComponent<Selectable>().Select();
-                ReadItem(items[FindNextItem()]);
+                ReadCell(items[FindNextItem()]);
+                }
             }
+
+            /*if(total == 24)
+            {
+                confirmaButton.interactable = true;
+                confirmaButton.GetComponent<Selectable>().Select();
+
+                if(GetComponentInChildren<DragAndDropItem>().gameObject.name == "Confirmar")
+                {
+                    Debug.Log("Confirmar escolhas.");
+                    ReadText("Confirmar escolhas.");               
+			    }
+
+            }*/
         }
     }
 
@@ -399,20 +423,35 @@ public class ErasPaleoController : DragAndDropController
 
     public void guarda(GameObject item, GameObject cell, GameObject local, DragAndDropCell.DropEventDescriptor passa)
     {
+
+        if(!draggedItems.Contains(item) || draggedItems == null)
+            {
+                total++;
+                Debug.Log("não tem: " +total);
+                //break;
+           }
+        else
+           {
+                Debug.Log("já tem: " +total);
+                //break;
+           }
+
         Debug.Log("Guardo item: " + item.name);
         draggedItems.Add(item);
 
-        Debug.Log("Guardo Cell: " + cell.name);
+        Debug.Log("Guardo Cell: " + cell.GetComponentInChildren<DragAndDropItem>().name);
         draggedCell.Add(cell);
 
         Debug.Log("Guardo local: " + local.name);
-        draggedLocal.Add(local);
-
-        total++;
-        Debug.Log(total);
+        draggedLocal.Add(local); 
 
         if(total == 24)
+        {
             confirmaButton.interactable = true;
+            confirmaButton.GetComponent<Selectable>().Select();  
+            Debug.Log("Confirmar escolhas.");
+            ReadText("Confirmar escolhas.");               
+        }
 
     }
 
@@ -526,7 +565,7 @@ public class ErasPaleoController : DragAndDropController
     {
         items[0].GetComponent<Selectable>().Select();
 
-        //ReadItem(items[0]);
+        ReadCell(items[0]);
     }
 
     public int FindNextItem()
@@ -562,7 +601,7 @@ public class ErasPaleoController : DragAndDropController
             }
         }
 
-        if(nextCell.name.Contains("Era2"))
+        else if(nextCell.name.Contains("Era2"))
         {
             // navegando pelas celulas vazias
             if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
@@ -580,7 +619,7 @@ public class ErasPaleoController : DragAndDropController
             }
         }
 
-        if(nextCell.name.Contains("Era3"))
+        else if(nextCell.name.Contains("Era3"))
         {
             // navegando pelas celulas vazias
             if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
@@ -598,7 +637,7 @@ public class ErasPaleoController : DragAndDropController
             }
         }
 
-        if(nextCell.name.Contains("Era4"))
+        else if(nextCell.name.Contains("Era4"))
         {
             // navegando pelas celulas vazias
             if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
@@ -616,7 +655,7 @@ public class ErasPaleoController : DragAndDropController
             }
         }
 
-        if(nextCell.name.Contains("Era5"))
+        else if(nextCell.name.Contains("Era5"))
         {
             // navegando pelas celulas vazias
             if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
@@ -633,9 +672,45 @@ public class ErasPaleoController : DragAndDropController
                     + ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
             }
         }
+
+        else
+        {
+                
+            if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+            {
+                // caso que o jogador estara navegando com o item selecionado nas ceulas
+                // entao é preciso ler a celula e seu numero para auxiliar o usuario a escolher o posicionamento correto
+                if (nextCell.gameObject.name.Contains("Cell"))
+                {
+                    Debug.Log("Célula com o item: " + ReturnCellNumber(nextCell.name));
+                    ReadText("Célula com o item: " + ReturnCellNumber(nextCell.name));
+                }
+                else
+                {
+                    if(nextCell.GetComponent<Button>() != null)
+                    {
+                        if(nextCell.GetComponent<Button>().name == "Confirmar")
+                        {
+                            Debug.Log("Confirmar escolhas.");
+                            ReadText("Confirmar escolhas.");
+                        }
+			        }
+                    else
+                    {
+                    Debug.Log("Célula vazia");
+                    ReadText("Célula vazia");
+                    }
+                }
+        }
+            else // navegando por itens ainda com conteudo
+            {
+                Debug.Log("Célula com o item: " +ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+                ReadText("Célula com o item: " +ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            }
+        }
     }
 
-    void ReadItem(GameObject nextCell)
+    /*void ReadItem(GameObject nextCell)
     {
         // navegando por itens vazios
         if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
@@ -644,19 +719,19 @@ public class ErasPaleoController : DragAndDropController
             // entao é preciso ler a celula e seu numero para auxiliar o usuario a escolher o posicionamento correto
             if (nextCell.gameObject.name.Contains("Cell"))
             {
-                Debug.Log("Célula " + ReturnCellNumber(nextCell.name));
-                ReadText("Célula " + ReturnCellNumber(nextCell.name));
+                Debug.Log("Célula com o item: " + ReturnCellNumber(nextCell.name));
+                ReadText("Célula com o item: " + ReturnCellNumber(nextCell.name));
             }
             else
             {
-                Debug.Log("Item vazio");
-                ReadText("Item vazio");
+                Debug.Log("Célula vazia");
+                ReadText("Célula vazia");
             }
         }
         else // navegando por itens ainda com conteudo
         {
-            Debug.Log(ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
-            ReadText(ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            Debug.Log("Célula com o item: " +ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
+            ReadText("Célula com o item: " +ReturnCellInfo(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name));
         }
-    }
+    }*/
 }

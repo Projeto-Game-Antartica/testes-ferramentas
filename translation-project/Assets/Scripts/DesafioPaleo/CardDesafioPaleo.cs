@@ -25,18 +25,12 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
     public bool isText { get; set; }   
     private Sprite cardBack;
     public Sprite cardFace;
-    public Sprite teste;
-    //public Sprite cardText;
 
     private GameObject desafioManagerPaleo;
 
-    public Image BGImage;
     public Sprite[] BGImage_Solo1;
 
     private bool _init = false;
-
-    public GameObject memoryCardBackImage;
-    public GameObject memoryCardBackText;
 
     public GameObject cardImage;
 
@@ -97,6 +91,9 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().lifeExpController.AddEXP(0.0001f); // jogou um minijogo
 
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().LoseText.text = "Fóssil destruído, procure outro afloramento.";
+                ReadText("Fóssil destruído, procure outro afloramento.");
+
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().som_quebra_fossil);
             }
         }
 
@@ -107,11 +104,15 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
             {
                 GetComponent<Image>().sprite = BGImage_Solo1[1];
                 state = VIRADA_CIMA;
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().som_quebra_solo1);
+
             }
             else if (state == VIRADA_CIMA && !DO_NOT)
             {
                 GetComponent<Image>().sprite = BGImage_Solo1[2];
                 state = solo_2;
+
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().som_quebra_solo2);
             }
             else if (state == solo_2 && !DO_NOT && BGImage_Solo1[3] != null)
             {
@@ -125,6 +126,7 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
             {
                 GetComponent<Image>().sprite = BGImage_Solo1[4];  
                 state = solo_3;
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().som_quebra_solo3);
 		    }
         }
 
