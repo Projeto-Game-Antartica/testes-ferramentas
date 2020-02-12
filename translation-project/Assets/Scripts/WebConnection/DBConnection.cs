@@ -6,16 +6,12 @@ using UnityEngine.Networking;
 
 public class DBConnection : MonoBehaviour
 {
-    // server path
-    // DO NOT UPLOAD THIS TO GITHUB
-    private readonly string connection_url = "http://acessivel.ufabc.edu.br/antartica/php/index.php";
-    private readonly string register_url   = "http://acessivel.ufabc.edu.br/antartica/php/registeruser.php";
-    private readonly string password_url   = "http://acessivel.ufabc.edu.br/antartica/php/password.php";
+
 
     // local path
-    //private readonly string connection_url = "http://localhost/antartica/index.php";
-    //private readonly string register_url = "http://localhost/antartica/registeruser.php";
-    //private readonly string password_url = "http://localhost/antartica/password.php";
+    private readonly string connection_url = "http://localhost/antartica/index.php";
+    private readonly string register_url = "http://localhost/antartica/registeruser.php";
+    private readonly string password_url = "http://localhost/antartica/password.php";
 
     public static DBConnection instance;
 

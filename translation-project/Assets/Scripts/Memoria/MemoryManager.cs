@@ -76,7 +76,9 @@ public class MemoryManager : AbstractScreenReader {
     private enum Operation { correct, confirm, wrong }
 
     public string missionName;
-    
+
+    private int indexOfFirstCardAdded = -1;
+
     private void Start()
     {
         resetButton.interactable = false;
@@ -282,6 +284,12 @@ public class MemoryManager : AbstractScreenReader {
                 audioSource.PlayOneShot(selectAudio);
                 //Debug.Log("após adicionar carta >> " + c.Count);
 
+                // salva o indice da primeira carta que foi selecionada
+                if (indexOfFirstCardAdded == -1)
+                    indexOfFirstCardAdded = c[0];
+
+                Debug.Log(indexOfFirstCardAdded);
+
                 if (c.Count == 2)
                 {
                     // primeira carta imagem e segunda carta imagem = nao pode
@@ -290,21 +298,24 @@ public class MemoryManager : AbstractScreenReader {
                     if ((!cards[c[0]].GetComponent<Card>().isText && !cards[c[1]].GetComponent<Card>().isText) ||
                         (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText))
                     {
-                        // sao adicionados os indices. Entao se o indice da segunda carta for menor, ele é adicionado antes
+                        //Debug.Log(c[0] + " >>> " + cards[c[0]]);
+                        //Debug.Log(c[1] + " >>> " + cards[c[1]]);
+
+                        // sao adicionados os indices das cartas. Entao se o indice da segunda carta for menor, ele é adicionado antes
                         // entao é preciso fazer essa verificacao pra remover sempre a ultima que foi selecionada.
-                        if (c[0] > c[1])
-                        {
-                            cards[c[0]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
-                            cards[c[0]].GetComponent<Card>().turnCardDown();
-                            c.Remove(c[0]);
-                        }
-                        else
+                        if (c[0] == indexOfFirstCardAdded)
                         {
                             cards[c[1]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
                             cards[c[1]].GetComponent<Card>().turnCardDown();
                             c.Remove(c[1]);
                         }
-                        //c.RemoveAt(indexOfFirstCardAdded);
+                        else
+                        {
+                            cards[c[0]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
+                            cards[c[0]].GetComponent<Card>().turnCardDown();
+                            c.Remove(c[0]);
+                        }
+                    //c.RemoveAt(indexOfFirstCardAdded);
                     }
                     else
                     {
@@ -323,6 +334,8 @@ public class MemoryManager : AbstractScreenReader {
                             lastCardSelected = cards[c[1]];
 
                         confirmarButton.Select();
+
+                        indexOfFirstCardAdded = -1;
                     }
 
                     //// block the comparison of two text cards
@@ -340,6 +353,7 @@ public class MemoryManager : AbstractScreenReader {
         }
 
         Debug.Log("Após checar cartas >> " + c.Count);
+
         //if (c.Count == 2)
         //    cardComparison(c);
     }
