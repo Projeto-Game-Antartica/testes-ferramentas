@@ -95,7 +95,7 @@ public class ContentPanelController : AbstractScreenReader {
     public void Initialize()
     {
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao, LocalizationManager.instance.GetLozalization()));
-        
+
         SetWhalePhoto();
 
         ReadText(descriptionText);
@@ -172,37 +172,37 @@ public class ContentPanelController : AbstractScreenReader {
     public void CheckFotoidentificacaoButtons()
     {
         if (Parameters.ISPIGMENTACAODONE)
-            pigmentacaoTMPro.color = Color.green;
+            pigmentacaoTMPro.color = Color.yellow;
         else
             pigmentacaoTMPro.color = Color.white;
 
         if (Parameters.ISMANCHASDONE)
-            manchasTMPro.color = Color.green;
+            manchasTMPro.color = Color.yellow;
         else
             manchasTMPro.color = Color.white;
 
         if (Parameters.ISRISCOSDONE)
-            riscosTMPro.color = Color.green;
+            riscosTMPro.color = Color.yellow;
         else
             riscosTMPro.color = Color.white;
 
         if (Parameters.ISMARCASDONE)
-            marcasTMPro.color = Color.green;
+            marcasTMPro.color = Color.yellow;
         else
             marcasTMPro.color = Color.white;
 
         if (Parameters.ISENTALHEDONE)
-            entalheTMPro.color = Color.green;
+            entalheTMPro.color = Color.yellow;
         else
             entalheTMPro.color = Color.white;
 
         if (Parameters.ISBORDADONE)
-            bordaTMPro.color = Color.green;
+            bordaTMPro.color = Color.yellow;
         else
             bordaTMPro.color = Color.white;
 
         if (Parameters.ISPONTADONE)
-            pontaTMPro.color = Color.green;
+            pontaTMPro.color = Color.yellow;
         else
             pontaTMPro.color = Color.white;
 
@@ -286,6 +286,12 @@ public class ContentPanelController : AbstractScreenReader {
 
     public void ReadButton(TextMeshProUGUI buttonText)
     {
+        if (buttonText.text.Contains("<b>"))
+        {
+            buttonText.text = buttonText.text.Replace("<b>", "");
+            buttonText.text = buttonText.text.Replace("</b>", "");
+        }
+
         switch (buttonText.text.ToLower())
         {
             case "pigmentação":

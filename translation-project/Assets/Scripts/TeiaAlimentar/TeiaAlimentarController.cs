@@ -50,6 +50,8 @@ public class TeiaAlimentarController : DragAndDropController
         //}
 
         audioSource = GetComponent<AudioSource>();
+
+        Parameters.HIGH_CONTRAST = true;
     }
 
     
@@ -393,6 +395,7 @@ public class TeiaAlimentarController : DragAndDropController
     
     public bool CheckAnswer(string currentCellname, string currentItemname)
     {
+        Debug.Log(currentCellname.Equals(currentItemname + "Cell") ? true : false);
         return currentCellname.Equals(currentItemname + "Cell") ? true : false;
     }
 
