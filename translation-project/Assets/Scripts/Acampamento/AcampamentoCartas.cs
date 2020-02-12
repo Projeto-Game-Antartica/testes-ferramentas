@@ -53,9 +53,9 @@ public class AcampamentoCartas : AbstractCardManager
 
     private void Start()
     {
-        fill.fillAmount =  variavel / MAX_COR;
-        fills.fillAmount = variavel / MAX_EST;
-        fillm.fillAmount = variavel / MAX_MAP;
+        //fill.fillAmount =  variavel / MAX_COR;
+        //fills.fillAmount = variavel / MAX_EST;
+        //fillm.fillAmount = variavel / MAX_MAP;
 
         resetButton.interactable = false;
         backButton.interactable = false;
@@ -66,16 +66,6 @@ public class AcampamentoCartas : AbstractCardManager
 
     private void Update()
     {
-        if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
-        {
-            StartCoroutine(EndGame(true));                              
-	    }
-
-        if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
-        {
-            StartCoroutine(EndGame(false));              
-		}
-
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             instruction_interface.SetActive(true);
@@ -154,7 +144,7 @@ public class AcampamentoCartas : AbstractCardManager
         Debug.Log(cardIndex);
         // do something
         //cardname
-        switch (currentImage.name.ToLower())
+        switch (currentImage.name)
         {
             case "Abridor de latas":
                 estrela = -1;
@@ -436,12 +426,14 @@ public class AcampamentoCartas : AbstractCardManager
         }
 
         CheckCalories(coracao, estrela, mapa);
+
+        
         NextCard();
     }
 
     public override void CheckDislike()
     {
-        switch (currentImage.name.ToLower())
+        switch (currentImage.name)
         {
             case "Abridor de latas":
                 estrela = 1;
@@ -721,19 +713,22 @@ public class AcampamentoCartas : AbstractCardManager
                 mapa = 0;
                 break;
         }
-
         CheckCalories(coracao, estrela, mapa);
+
         NextCard();
     }
 
     public void CheckCalories(float coracao, float estrela, float mapa)
     {
+        Debug.Log("entrou no CheckCalories");
         // normalize
         fill.fillAmount += coracao / MAX_COR;
 
         fills.fillAmount += estrela / MAX_EST;
 
         fillm.fillAmount += mapa / MAX_MAP;
+
+        Debug.Log("entrou no coracao: " + coracao +"estrela: " +estrela + "mapa: " +mapa);
     
         if (fill.fillAmount <= 0.2)
         {
@@ -756,6 +751,8 @@ public class AcampamentoCartas : AbstractCardManager
 
             Debug.Log("A Antártica não pode sofrer mais danos!");
         }
+
+        likeButton.Select();
     }
 
     public void NextCard()
@@ -768,16 +765,36 @@ public class AcampamentoCartas : AbstractCardManager
             currentImage.name = sprites[cardIndex].name;
             cardName.text = currentImage.name;
 
-            Debug.Log("Novo alimento: " + cardName.text);
-            ReadText("Novo alimento: " + cardName.text);
+            Debug.Log("Novo item: " + cardName.text);
+            ReadText("Novo item: " + cardName.text);
 
             if (cardIndex < sprites.Length - 1)
             {
                 nextImage.sprite = sprites[cardIndex + 1];
                 nextImage.name = sprites[cardIndex + 1].name;
+
+                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+                {
+                    StartCoroutine(EndGame(true));                              
+	            }
+
+                else if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
+                {
+                    StartCoroutine(EndGame(false));              
+		        }
             }
             else
             {
+                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+                {
+                    StartCoroutine(EndGame(true));                              
+	            }
+
+                else if (fill.fillAmount == 0 || fills.fillAmount == 0 || fillm.fillAmount == 0)
+                {
+                    StartCoroutine(EndGame(false));              
+		        }
+
                 Debug.Log("fim das cartas... Começando de novo");
                 cardIndex = -1;
                 nextImage.sprite = sprites[cardIndex+1];
@@ -803,6 +820,8 @@ public class AcampamentoCartas : AbstractCardManager
     {
         if (win)
         {
+            WinImage.SetActive(true);
+
             likeButton.interactable = false;
             dislikeButton.interactable = false;
 
@@ -811,8 +830,6 @@ public class AcampamentoCartas : AbstractCardManager
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
-
-            WinImage.SetActive(true);
 
             //audioSource.PlayOneShot(victoryAudio);
             //yield return new WaitWhile(() => audioSource.isPlaying);
@@ -844,6 +861,19 @@ public class AcampamentoCartas : AbstractCardManager
         yield return new WaitForSeconds(4f);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+    }
+
+    public void ReturnToCamp()
+    {
+        //confirmQuit.SetActive(false);
+
+        if (!PlayerPreferences.M009_Itens) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+            UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+    }
+
+    public void ResetGameObjects()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Itens);
     }
 }
  

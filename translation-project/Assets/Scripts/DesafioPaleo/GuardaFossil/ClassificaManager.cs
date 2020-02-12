@@ -38,6 +38,8 @@ public class ClassificaManager : AbstractScreenReader
 
     private bool init;
 
+    private bool verificado = true;
+
     private AudioSource audioSource;
 
     public AudioClip correctAudio;
@@ -88,8 +90,7 @@ public class ClassificaManager : AbstractScreenReader
         {
             //Debug.Log("Checando cartas....");
             Debug.Log("CHECK CARD");
-            checkCards();
-            
+            checkCards(); 
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -107,6 +108,13 @@ public class ClassificaManager : AbstractScreenReader
             ClassificaCard.DO_NOT = true;
             confirmarButton.interactable = true;
             cancelButton.interactable = true;
+
+            if(verificado)
+            {
+                confirmarButton.GetComponent<Selectable>().Select();
+                verificado = false;
+            }
+
             //Debug.Log(c.Count);
         }
         else if (c != null && c.Count > 0)
@@ -181,6 +189,7 @@ public class ClassificaManager : AbstractScreenReader
         {
             init = true;
             cards[0].GetComponent<Button>().Select();
+            desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().ReadCaracteristicas(cards[0]);
             StartCoroutine(ReadCards());
         }
     }
@@ -203,21 +212,53 @@ public class ClassificaManager : AbstractScreenReader
                 //card.BGImage.color = GetColor(GetDropDownValue());
                 card.added = true;
 
-               /* if(i == 0)
-                {
+               if(i == 0)
+               {
                     Botao[3].interactable = false;
                     Botao[6].interactable = false;
-                }
-                if(i == 3)
-                {
+               }
+                else if(i == 3)
+               {
                     Botao[0].interactable = false;
                     Botao[6].interactable = false;
-                }
-                if(i == 6)
-                {
+               }
+                else if(i == 6)
+               {
                     Botao[0].interactable = false;
                     Botao[3].interactable = false;
-                }*/
+               }
+
+               if(i == 1)
+               {
+                    Botao[4].interactable = false;
+                    Botao[7].interactable = false;
+               }
+                else if(i == 4)
+               {
+                    Botao[1].interactable = false;
+                    Botao[7].interactable = false;
+               }
+                else if(i == 7)
+               {
+                    Botao[1].interactable = false;
+                    Botao[4].interactable = false;
+               }
+
+               if(i == 2)
+               {
+                    Botao[5].interactable = false;
+                    Botao[8].interactable = false;
+               }
+                else if(i == 5)
+               {
+                    Botao[2].interactable = false;
+                    Botao[8].interactable = false;
+               }
+                else if(i == 8)
+               {
+                    Botao[2].interactable = false;
+                    Botao[5].interactable = false;
+               }
             }
         }
 
@@ -229,120 +270,122 @@ public class ClassificaManager : AbstractScreenReader
 
     public void verifica()
     {
-    for(int i=0; i <= 2; i++)
-    {
-        var card = cards[c[i]].GetComponent<ClassificaCard>();
+    verificado = false;
 
-        if(cards[c[i]].name == "Carta1")
+        for(int i=0; i <= 2; i++)
         {
-            if(fossilData.caracteristica == "Concreção")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);         
+            var card = cards[c[i]].GetComponent<ClassificaCard>();
+
+            if(cards[c[i]].name == "Carta1")
+            {
+                if(fossilData.caracteristica == "Concreção")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);         
+            }
+            if(cards[c[i]].name == "Carta2")
+            {
+                if(fossilData.classificacao == "Invertebrado")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    } 
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta3")
+            {
+                if(fossilData.era == "Cenozóico")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta4")
+            {
+                if(fossilData.caracteristica == "Fora")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta5")
+            {
+                if(fossilData.classificacao == "Vertebrado")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta6")
+            {
+                  if(fossilData.era == "Mesozóico")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta7")
+            {
+                  if(fossilData.caracteristica == "Molde")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta8")
+            {
+                  if(fossilData.classificacao == "Vegetal")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
+            if(cards[c[i]].name == "Carta9")
+            {
+                  if(fossilData.era == "Paleozóico")
+                    {
+                        Debug.Log("Acerto");
+                        card.BGImage.color = new Color(0, 1, 0, 1); 
+                    }
+                    else
+                        card.BGImage.color =new Color(1, 0, 0, 1);
+		    }
         }
-        if(cards[c[i]].name == "Carta2")
-        {
-            if(fossilData.classificacao == "Invertebrado")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                } 
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta3")
-        {
-            if(fossilData.era == "Cenozóico")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta4")
-        {
-            if(fossilData.caracteristica == "Fora")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta5")
-        {
-            if(fossilData.classificacao == "Vertebrado")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta6")
-        {
-              if(fossilData.era == "Mesozóico")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta7")
-        {
-              if(fossilData.caracteristica == "Molde")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta8")
-        {
-              if(fossilData.classificacao == "Vegetal")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-        if(cards[c[i]].name == "Carta9")
-        {
-              if(fossilData.era == "Paleozóico")
-                {
-                    Debug.Log("Acerto");
-                    card.BGImage.color = new Color(0, 1, 0, 1); 
-                }
-                else
-                    card.BGImage.color =new Color(1, 0, 0, 1);
-		}
-    }
 
-    Debug.Log(fossilData.id_fossil);
-    Debug.Log(fossilData.caracteristica);
-    Debug.Log(fossilData.classificacao);
-    Debug.Log(fossilData.era);
+        Debug.Log(fossilData.id_fossil);
+        Debug.Log(fossilData.caracteristica);
+        Debug.Log(fossilData.classificacao);
+        Debug.Log(fossilData.era);
 
-     //Debug.Log(fossilData.description);
+         //Debug.Log(fossilData.description);
+         cancelButton.interactable = false;
+         guardarButton.interactable = true;
 
-     guardarButton.interactable = true;
+         guardarButton.GetComponent<Selectable>().Select();
+
 	}
-
-    public void CompareCards()
-    {
-        //cardComparison(c);
-    }
 
     public void Cancel()
     {
         //int dropDownValue = GetDropDownValue();
+
+        verificado = true;
         
         for (int i = 0; i < c.Count; i++)
         {
@@ -363,15 +406,21 @@ public class ClassificaManager : AbstractScreenReader
         guardarButton.interactable = false;
 
         confirmarButton.interactable = false;
+
+        for (int i = 0; i < 9; i++)
+        {
+            Botao[i].interactable = true;
+        }
     }
 
     public void EndGame()
-    {
-            WinImage.SetActive(true);
-            //WinImage.GetComponentInChildren<Button>().Select();
+    {   
+        desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().guarda_saco);
+        WinImage.SetActive(true);
+        //WinImage.GetComponentInChildren<Button>().Select();
 
-            lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
-            lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
+        lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
+        lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item      
 
         StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
