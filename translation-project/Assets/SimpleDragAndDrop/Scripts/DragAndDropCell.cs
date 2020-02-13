@@ -299,7 +299,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
                 else
                     desc.permission = true;
             }
-            if (DesafioController != null)
+            else if (DesafioController != null)
             {
                 if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
                     desc.permission = false;
@@ -308,7 +308,6 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             }
             else
                 desc.permission = true;
-
 
             SendNotification(desc);
             result = desc.permission;
