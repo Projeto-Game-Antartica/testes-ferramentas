@@ -286,11 +286,10 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             //string itemName = desc.item.name + "Cell"; // to compare with destinationCell
             //if (desc.destinationCell.name.Equals(itemName))
             if (teiaAlimentarController != null)
+            {
                 desc.permission = teiaAlimentarController.CheckAnswer(desc.destinationCell.name, desc.item.name);
-            else
-                desc.permission = true;
-
-            if (erasPaleoController != null)
+            }
+            else if (erasPaleoController != null)
             {
                 if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
                 {
@@ -300,7 +299,6 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
                 else
                     desc.permission = true;
             }
-
             if (DesafioController != null)
             {
                 if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
@@ -308,10 +306,13 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
                 else
                     desc.permission = true;
             }
+            else
+                desc.permission = true;
+
 
             SendNotification(desc);
             result = desc.permission;
-        }
+        
         return result;
     }
 

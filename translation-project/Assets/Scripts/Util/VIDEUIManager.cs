@@ -216,8 +216,8 @@ public class VIDEUIManager : AbstractScreenReader
                         //currentChoices[i].color = Color.yellow;
                         // habilita a imagem do fundo do texto que foi selecionado
                         currentChoices[i].gameObject.GetComponentInParent<Image>().enabled = true;
-                        Debug.Log("Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
-                        ReadText("Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
+                        Debug.Log(playerLabel.text + ": Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
+                        ReadText(playerLabel.text + ": Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
                     }
                 }
             }
