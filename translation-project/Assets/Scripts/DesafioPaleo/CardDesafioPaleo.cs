@@ -30,6 +30,8 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
 
     public Sprite[] BGImage_Solo1;
 
+    public Image BGImage;
+
     private bool _init = false;
 
     public GameObject cardImage;
