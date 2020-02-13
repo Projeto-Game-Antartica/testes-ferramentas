@@ -311,7 +311,7 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 
             SendNotification(desc);
             result = desc.permission;
-        
+        }
         return result;
     }
 
