@@ -37,5 +37,6 @@ public class ScenesNames {
     /* M010 Vegetação */
     public const string M010TiposVegetacao = "M010TiposVegetacaoScene";
     public const string M010AmostrasVegetacao = "M010AmostrasVegetacaoScene";
-
+    
+    public const string M010Desafio = "M010DesafioScene";
 }
