@@ -35,6 +35,7 @@ public class HUDController : AbstractScreenReader {
     public TextMeshProUGUI missionTitle;
     public TextMeshProUGUI missionDescription;
     public Button iniciarButton;
+    public Button fecharButton;
 
     public SimpleCharacterController simpleCharacterController;
 
@@ -47,24 +48,24 @@ public class HUDController : AbstractScreenReader {
     public GameObject map;
     public TextMeshProUGUI mapText;
 
+    public GameObject acessoTeclado;
+    public TextMeshProUGUI descricaoText;
+
     public string missionNumber;
+    public string missionAudiodescriptionKey;
 
     private void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt1"));
-        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt2"));
-        Debug.Log(PlayerPrefs.GetInt("M002_Ticketpt3"));
-        
+        Debug.Log(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
+
+        Debug.Log(PlayerPrefs.GetInt("InstructionInterface", 0));
+
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
         {
             ActivateInstructionInterface();
-            ReadInstructions();
         }
-
-        ShowMap();
-
-        iniciarButton.Select();
     }
 
     private void LateUpdate()
@@ -99,12 +100,11 @@ public class HUDController : AbstractScreenReader {
             if (!instructionInterface.activeSelf)
             {
                 ReadText("Menu de instruções aberto");
-                instructionInterface.SetActive(true);
-                ReadInstructions();
+                ActivateInstructionInterface();
             }
             else
             {
-                ReadInstructions();
+                ActivateInstructionInterface();
             }
         }
 
@@ -112,13 +112,19 @@ public class HUDController : AbstractScreenReader {
         {
             if (!VD.isActive)
             {
-                Debug.Log("HUDController");
-                if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
+                if(map.activeSelf)
+                {
+                    ShowMap(false);
+                }
+                else if (acessoTeclado.activeSelf)
+                {
+                    acessoTeclado.SetActive(false);
+                }
+                else if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
                 {
                     ReadText("Menu de opções aberto");
-                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
+                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_ingamemenu, LocalizationManager.instance.GetLozalization()));
                     inGameOption.SetActive(true);
-                    inGameOption.GetComponentInChildren<Button>().Select();
                 }
                 else
                 {
@@ -153,45 +159,47 @@ public class HUDController : AbstractScreenReader {
             HandleBagBar();
         }
 
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        {
+            acessoTeclado.SetActive(true);
+            ReadText(descricaoText.text);
+        }
+
         if (Input.GetKeyDown(InputKeys.MAP_KEY))
         {
             if (map.activeSelf)
             {
-                map.SetActive(false);
-
-                switch (missionNumber)
-                {
-                    case "M002":
-                        PlayerPrefs.SetInt("UshuaiaMap", 1);
-                        break;
-                    case "M002_Casinha":
-                        PlayerPrefs.SetInt("CasaUshuaiaMap", 1);
-                        break;
-                    case "M004":
-                        PlayerPrefs.SetInt("NavioMap", 1);
-                        break;
-                }
+                ShowMap(false);
             }
             else
             {
-                map.SetActive(true);
-                switch(mapText.text)
-                {
-                    case "M002":
-                        ReadText("");
-                        break;
-                    case "M004":
-                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
-                        break;
-                }
+                ShowMap(true);
             }
         }
+    }
+
+    public void InitializeGame()
+    {
+        instructionInterface.SetActive(false);
+
+        ShowMap(true);
+
+        iniciarButton.gameObject.SetActive(false);
+        fecharButton.gameObject.SetActive(true);
     }
 
     public void ActivateInstructionInterface()
     {
         instructionInterface.SetActive(true);
         PlayerPrefs.SetInt("InstructionInterface", 1);
+
+        ReadText(missionTitle.text);
+        ReadText(missionDescription.text);
+
+        Debug.Log(missionTitle.text);
+        Debug.Log(missionDescription.text);
+
+        iniciarButton.Select();
     }
 
     void ReadInstructionAudiodescrition(string missionNumber)
@@ -212,37 +220,53 @@ public class HUDController : AbstractScreenReader {
         }
     }
 
-    public void ShowMap()
+    public void ShowMap(bool op)
     {
-        switch (missionNumber)
+        if(op)
         {
-            case "M002":
-                if (PlayerPrefs.GetInt("UshuaiaMap", 0) <= 0)
-                {
-                    map.SetActive(true);
-                    ReadText(mapText.text);
-                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_itens_mapa, LocalizationManager.instance.GetLozalization()));
-                }
-                break;
-            case "M002_Casinha":
-                if (PlayerPrefs.GetInt("CasaUshuaiaMap", 0) <= 0)
-                {
-                    map.SetActive(true);
-                    ReadText(mapText.text);
-                }
-                break;
-            case "M004":
-                if (PlayerPrefs.GetInt("NavioMap", 0) <= 0)
-                {
-                    map.SetActive(true);
-                    ReadText(mapText.text);
-                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
+            map.SetActive(true);
+            switch (missionNumber)
+            {
+                case "M002":
+                    if (PlayerPrefs.GetInt("UshuaiaMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_itens_mapa, LocalizationManager.instance.GetLozalization()));
+                    }
+                    break;
+                case "M002_Casinha":
+                    if (PlayerPrefs.GetInt("CasaUshuaiaMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText("");
+                    }
+                    break;
+                case "M004":
+                    if (PlayerPrefs.GetInt("NavioMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_mapa, LocalizationManager.instance.GetLozalization()));
                 
-                }
-                break;
-            default:
-                map.SetActive(false);
-                break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            map.SetActive(false);
+
+            switch (missionNumber)
+            {
+                case "M002":
+                    PlayerPrefs.SetInt("UshuaiaMap", 1);
+                    break;
+                case "M002_Casinha":
+                    PlayerPrefs.SetInt("CasaUshuaiaMap", 1);
+                    break;
+                case "M004":
+                    PlayerPrefs.SetInt("NavioMap", 1);
+                    break;
+            }
         }
     }
 
@@ -343,15 +367,6 @@ public class HUDController : AbstractScreenReader {
         }
     }
 
-    public void ReadInstructions()
-    {
-        ReadText(missionTitle.text);
-        ReadText(missionDescription.text);
-
-        Debug.Log(missionTitle.text);
-        Debug.Log(missionDescription.text);
-    }
-
     public void ReadSceneAudiodescription(string missionNumber)
     {
         switch (missionNumber)
@@ -387,6 +402,10 @@ public class HUDController : AbstractScreenReader {
             case "itens":
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
                 break;
+            case "paleo":
+                SceneManager.LoadScene(ScenesNames.M009Camp);
+                break;
+
         }
     }
 }

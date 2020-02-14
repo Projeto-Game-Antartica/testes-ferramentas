@@ -17,6 +17,12 @@ public class CofreAnimation : AbstractScreenReader
     public Button closeButton;
     public GameObject textPanel;
 
+    public GameObject warningInterface;
+    public TMPro.TextMeshProUGUI warningText;
+    public Button closeWarningButton;
+
+    public AudioClip avisoClip;
+
     private bool opened;
 
     int i = 0;
@@ -35,6 +41,13 @@ public class CofreAnimation : AbstractScreenReader
         // condition to open the locker
         if (PlayerPreferences.M002_Homeostase && !opened)
         {
+            audioSource.PlayOneShot(avisoClip);
+            warningInterface.SetActive(true);
+            warningText.text = "Você ganhou parte do ticket para sua viagem. Ele se encontra no cofre.";
+            ReadText(warningText.text);
+
+            closeWarningButton.Select();
+            
             StartCoroutine(OpenLocker());
         }
     }

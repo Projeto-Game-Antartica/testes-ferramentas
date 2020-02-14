@@ -163,19 +163,23 @@ public class HomeostaseVitoria : AbstractScreenReader {
 
     public IEnumerator EndGame(bool win)
     {
+        minijogoDicas.SupressDicas();
+
         if (win)
         {
             winImage.SetActive(true);
 
             PlayerPreferences.M002_Homeostase = true;
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_vitoria, LocalizationManager.instance.GetLozalization()));
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: blusa de fleece, camiseta segunda pele e colete salva-vidas.");
 
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: blusa de fleece, camiseta segunda pele e colete salva-vidas.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item
@@ -189,13 +193,15 @@ public class HomeostaseVitoria : AbstractScreenReader {
         {
             loseImage.SetActive(true);
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_derrota, LocalizationManager.instance.GetLozalization()));
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
             audioSource.PlayOneShot(loseClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_derrota, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
         }

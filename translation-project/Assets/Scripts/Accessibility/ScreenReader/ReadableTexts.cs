@@ -151,6 +151,7 @@ public class ReadableTexts : MonoBehaviour
     public static string key_m002_homeostase2 = "m002_homeostase2";
     public static string key_m002_homeostase_vitoria = "m002_homeostase_vitoria";
     public static string key_m002_homeostase_derrota = "m002_homeostase_derrota";
+    public static string key_m002_casinha_mapa = "m002_casinha_mapa";
 
 
 

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class CadastroHandler : MonoBehaviour
 {
@@ -29,8 +30,8 @@ public class CadastroHandler : MonoBehaviour
                 string hashedPassword = SecurePasswordHasher.Hash(inputPassw.text);
 
                 //Debug.Log(hashedPassword);
-
-                StartCoroutine(DBConnection.instance.RegisterUser(inputName.text, inputEmail.text, hashedPassword, Register));
+                
+                StartCoroutine(DBConnection.instance.RegisterUser(inputName.text, inputEmail.text, hashedPassword, DateTime.Now, Register));
             }
             else
             {

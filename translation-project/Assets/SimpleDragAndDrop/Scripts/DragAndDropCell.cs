@@ -46,7 +46,9 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
 
     public TeiaAlimentarController teiaAlimentarController;
 
+    public ErasPaleoController erasPaleoController;
 
+    public DesafioManagerPaleo DesafioController;
 
     void OnEnable()
     {
@@ -284,11 +286,29 @@ public class DragAndDropCell : MonoBehaviour, IDropHandler
             //string itemName = desc.item.name + "Cell"; // to compare with destinationCell
             //if (desc.destinationCell.name.Equals(itemName))
             if (teiaAlimentarController != null)
+            {
                 desc.permission = teiaAlimentarController.CheckAnswer(desc.destinationCell.name, desc.item.name);
+            }
+            else if (erasPaleoController != null)
+            {
+                if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
+                {
+                    Debug.Log("dropou >>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    desc.permission = false;
+                }
+                else
+                    desc.permission = true;
+            }
+            else if (DesafioController != null)
+            {
+                if(desc.destinationCell.GetComponentInChildren<DragAndDropItem>())
+                    desc.permission = false;
+                else
+                    desc.permission = true;
+            }
             else
                 desc.permission = true;
-            //else
-            //    desc.permission = false;
+
             SendNotification(desc);
             result = desc.permission;
         }

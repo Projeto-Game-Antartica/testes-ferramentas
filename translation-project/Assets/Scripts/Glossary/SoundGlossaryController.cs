@@ -4,9 +4,8 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using System.IO;
-using UnityEngine.Video;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using System;
 
 public class SoundGlossaryController : AbstractScreenReader {
 
@@ -38,6 +37,8 @@ public class SoundGlossaryController : AbstractScreenReader {
     public SimpleObjectPool buttonObjectPool;
     public Button backButton;
 
+    private bool isScrolling = false;
+
     private bool isOnLetter;
 
     /*
@@ -62,27 +63,36 @@ public class SoundGlossaryController : AbstractScreenReader {
     }
 
     public void Update()
-    {
+    {   
         // scrollbar follows the selected button (accessibility ?)
-        //if (SoundButton.contentButton)
-        //{
-        //    m_up = Input.GetKeyDown(KeyCode.UpArrow);
-        //    m_down = Input.GetKeyDown(KeyCode.DownArrow);
+        if (!isScrolling)
+        {
+            if (SoundButton.contentButton)
+            {
+                m_up = Input.GetKeyDown(KeyCode.UpArrow);
+                m_down = Input.GetKeyDown(KeyCode.DownArrow);
 
-        //    if (m_up ^ m_down)
-        //    {
-        //        if (m_up)
-        //            m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
-        //        else
-        //            m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
+                if (m_up ^ m_down)
+                {
+                    if (m_up)
+                        m_index = Mathf.Clamp(m_index - 1, 0, m_buttons.Count - 1);
+                    else
+                        m_index = Mathf.Clamp(m_index + 1, 0, m_buttons.Count - 1);
 
-        //        m_buttons[m_index].Select();
-        //        m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
-        //    }
+                    m_buttons[m_index].Select();
+                    m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
+                }
 
-        //    m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
-        //    m_verticalPosition, Time.deltaTime / m_lerpTime);
-        //}
+                m_scrollRect.verticalNormalizedPosition = Mathf.Lerp(m_scrollRect.verticalNormalizedPosition,
+                m_verticalPosition, Time.deltaTime / m_lerpTime);
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            isScrolling = false;
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -106,7 +116,7 @@ public class SoundGlossaryController : AbstractScreenReader {
         //    backButton.Select();
         //}
 
-        if(Input.GetKeyDown(KeyCode.F6))
+        if (Input.GetKeyDown(KeyCode.F6))
         {
             if (isOnLetter)
             {
@@ -284,5 +294,10 @@ public class SoundGlossaryController : AbstractScreenReader {
             db.first = false;
             db.last = false;
         }
+    }
+
+    public void StartDrag()
+    {
+        isScrolling = true;
     }
 }

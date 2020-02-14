@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 212924639462476752}
   - component: {fileID: 95241161369712560}
   - component: {fileID: 82482835812246798}
-  - component: {fileID: 114720855412633032}
   - component: {fileID: 114111264331343048}
   - component: {fileID: 50162836876345398}
   - component: {fileID: 70657409191648544}
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 00a10fe987838074daab121721fb4893, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d10caae177189f4c877925ab8c771db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -203,38 +202,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114720855412633032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930038188777532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8978c6c356827f4994d6b5e206c697b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 114111264331343048}
-  chasingCamera: {fileID: 0}
-  warningInterface: {fileID: 0}
-  warningText: {fileID: 0}
-  dialogueInterface: {fileID: 0}
-  dialogueInterfaceText: {fileID: 0}
-  dialogueInterfacePlayerName: {fileID: 0}
-  instructionInterface: {fileID: 0}
-  missionName: {fileID: 0}
-  descriptionText: {fileID: 0}
-  sceneDescription: "Notas proemias Conv\xE9s de navio: Conv\xE9s de navio, com piso
-    listrado marrom, do lado direito popa de tr\xEAs andares, branca com portas marrons,
-    e do lado esquerdo popa com porta. Personagem principal no canto superior esquerdo
-    da tela com duas barras uma em cima da outra ao seu lado direito. A barra de cima
-    vermelha, representada por um cora\xE7\xE3o vermelho \xE9 a carga vida do personagem.
-    A debaixo, amarela, representada por uma estrela amarela, representa os pontos
-    de experi\xEAncia do personagem. Livro marrom com fita vermelha no canto inferior
-    direito que represent o logbook do personagem, ainda n\xE3o est\xE1 em funcionamento.
-    Mochila branca e marrom no canto inferior esquerdo que representa o invent\xE1rio
-    do personagem com os itens j\xE1 adquiridos. Pressione F2 para repetir."
 --- !u!114 &114111264331343048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 1930038188777532}
-  soundsController: {fileID: 0}
   inGameOption: {fileID: 0}
   instructionInterface: {fileID: 0}
   SPEED: 200
