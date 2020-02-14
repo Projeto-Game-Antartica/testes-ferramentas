@@ -59,6 +59,8 @@ public class HUDController : AbstractScreenReader {
         Debug.Log(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
         ReadText(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
+        Debug.Log(PlayerPrefs.GetInt("InstructionInterface", 0));
+
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
         {

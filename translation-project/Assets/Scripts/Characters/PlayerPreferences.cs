@@ -30,20 +30,21 @@ public class PlayerPreferences : MonoBehaviour {
     public static float XPwinMission = 0.006f;
     public static float HPwinMission = 0.006f;
 
-    private int firstRun;
+    private int firstRun = 0;
 
     private void Start()
     {
-        firstRun = PlayerPrefs.GetInt("firstRun", 0);
-        LoadAndSetPlayerPreferences(firstRun);
+        //firstRun = PlayerPrefs.GetInt("firstRun", 0);
+        //LoadAndSetPlayerPreferences(firstRun);
+        LoadAndSetPlayerPreferences();
     }
 
-    private void LoadAndSetPlayerPreferences(int firstRun)
+    private void LoadAndSetPlayerPreferences()
     {
         // first time playing the game, initialize with default values
-        if(firstRun == 0)
-        {
-            firstRun = 1;
+        //if(firstRun == 0)
+        //{
+            //firstRun = 1;
             
             // set the parameter to show the instruction interface when loading the game
             PlayerPrefs.SetInt("InstructionInterface", 0);
@@ -61,6 +62,12 @@ public class PlayerPreferences : MonoBehaviour {
             // ingame player preferences
             PlayerPrefs.SetFloat("Experience", 0f);
             PlayerPrefs.SetFloat("HealthPoints", 1f);
+
+            // initial position of each scenario starts unsaved
+            PlayerPrefs.SetInt("Saved_M002", 0);
+            PlayerPrefs.SetInt("Saved_M002_Casinha", 0);
+            PlayerPrefs.SetInt("Saved_M004", 0);
+            PlayerPrefs.SetInt("Saved_M009", 0);
 
             // set the dialogues to not read (0)
             // when the dialogue is read (1), the balloon change its color to green
@@ -80,11 +87,7 @@ public class PlayerPreferences : MonoBehaviour {
             // M009
             PlayerPrefs.SetInt("M009_Mentor0_Dialogue1", 0);
             PlayerPrefs.SetInt("M009_Mentor3_Dialogue2", 0);
-        }
-        else // not the first time, use the player prefs to load positions
-        {
-            // do something else
-        }
+        //}
     }
 
     public static bool finishedAllM004Games()

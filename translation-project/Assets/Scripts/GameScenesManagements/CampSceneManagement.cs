@@ -34,6 +34,8 @@ public class CampSceneManagement : AbstractScreenReader {
     public AudioSource audioSource;
     public AudioClip warningClip;
 
+    private string missionNumber = "M009";
+
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
     public void Start()
@@ -42,10 +44,10 @@ public class CampSceneManagement : AbstractScreenReader {
 
         //InitialInstruction();
 
-        if (PlayerPrefs.GetInt("Saved") == 1)
+        if (PlayerPrefs.GetInt("Saved_"+missionNumber) == 1)
         {
-            transform.position = character.GetPosition();
-            chasingCamera.SetCameraPosition(character.GetPosition());
+            transform.position = character.GetPosition(missionNumber);
+            chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
             Debug.Log(transform.position);
         }
 
@@ -58,7 +60,7 @@ public class CampSceneManagement : AbstractScreenReader {
         {
             positionSceneChange = new Vector3(transform.position.x, transform.position.y);
             // save the position when loading another scene
-            character.SavePosition(positionSceneChange);
+            character.SavePosition(positionSceneChange, missionNumber);
 
 
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM009Games())

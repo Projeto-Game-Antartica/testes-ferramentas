@@ -129,7 +129,7 @@ public class Homeostase : AbstractCardManager
     // initialize after button click on instruction
     public void Initialize()
     {
-        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase, LocalizationManager.instance.GetLozalization()));
 
         isOnLikeButton = true;
         isOnMenu = false;

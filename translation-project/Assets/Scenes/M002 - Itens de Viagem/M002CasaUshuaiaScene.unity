@@ -529,8 +529,28 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1984871305446342, guid: 3762c2b5f772f174cbe392aa905ccf0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726419443447408, guid: 3762c2b5f772f174cbe392aa905ccf0c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3762c2b5f772f174cbe392aa905ccf0c, type: 3}
+--- !u!114 &174895367 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114739322772008406, guid: 3762c2b5f772f174cbe392aa905ccf0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 174895366}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &174895368 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1984871305446342, guid: 3762c2b5f772f174cbe392aa905ccf0c,
@@ -696,7 +716,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1169,6 +1189,11 @@ PrefabInstance:
       propertyPath: simpleCharacterController
       value: 
       objectReference: {fileID: 2123722135}
+    - target: {fileID: 114100347341746834, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: missionAudiodescriptionKey
+      value: m002_casinha_mapa
+      objectReference: {fileID: 0}
     - target: {fileID: 8629376654283654456, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1561,22 +1586,22 @@ PrefabInstance:
     - target: {fileID: 224467511071002492, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.9999924
+      value: -5.0000076
       objectReference: {fileID: 0}
     - target: {fileID: 224776924761374218, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2.4999924
+      value: -2.5000076
       objectReference: {fileID: 0}
     - target: {fileID: 224309081793049338, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.9999924
+      value: -5.0000076
       objectReference: {fileID: 0}
     - target: {fileID: 224618563262996108, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2.4999924
+      value: -2.5000076
       objectReference: {fileID: 0}
     - target: {fileID: 114797963606416930, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -1686,7 +1711,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: fe7c4e1d63da52c4e854b28263d26237,
+      objectReference: {fileID: 21300000, guid: ed2a0f238857aa040a7182cd2e24a162,
         type: 3}
     - target: {fileID: 114342712295665778, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -2832,7 +2857,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d08cf94b0ef49df4cb41d64996b7f3c6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7b692eb855b6bd43bfa24e928ae1fa8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2864,6 +2889,10 @@ MonoBehaviour:
   ticketPt2: {fileID: 421524739}
   closeButton: {fileID: 421524741}
   textPanel: {fileID: 1468160486}
+  warningInterface: {fileID: 174895368}
+  warningText: {fileID: 778536483}
+  closeWarningButton: {fileID: 174895367}
+  avisoClip: {fileID: 8300000, guid: 538e67db62c159342a01a9a96dfeb3cf, type: 3}
 --- !u!58 &1123418112
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2951,7 +2980,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b06da069b785564fab419919e0c33df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5575282e5a59f614f9ff5ad0215721ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2979,7 +3008,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.19, y: 8.29}
+    oldSize: {x: 6.61, y: 8.85}
     newSize: {x: 6.19, y: 8.29}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3159,7 +3188,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e3c532deae01bb34dafa05c91ea3cbac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c10e0438541225e44b0787669c2b3ce3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3187,7 +3216,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.25, y: 4.89}
+    oldSize: {x: 4.73, y: 5.44}
     newSize: {x: 4.25, y: 4.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4127,7 +4156,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ad5188e74925bd0438fbb7562fa3dd09, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 46b6e1b522f9ee64688eba603b8a4c7f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4155,7 +4184,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.39, y: 2.93}
+    oldSize: {x: 4.16, y: 3.6}
     newSize: {x: 3.39, y: 2.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4839,7 +4868,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 975cf3432fccbf4429a5caf5cb38d7d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20bad14ee43af044ebf10091b2b3fc28, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5021,6 +5050,11 @@ PrefabInstance:
       propertyPath: inGameOptions
       value: 
       objectReference: {fileID: 421524735}
+    - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 3}
+      propertyPath: missionNumber
+      value: M002_Casinha
+      objectReference: {fileID: 0}
     - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
         type: 3}
       propertyPath: m_audioClip
