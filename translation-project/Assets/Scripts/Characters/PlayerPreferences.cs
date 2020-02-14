@@ -19,6 +19,10 @@ public class PlayerPreferences : MonoBehaviour {
     public static bool M009_Memoria = false;
     public static bool M009_Eras = false;
     public static bool M009_Itens = false;
+
+    // M010
+    public static bool M010_Amostras = false;
+    public static bool M010_Tipos = false;
   
     // puzzles points
     public static float XPwinPuzzle = 0.004f;

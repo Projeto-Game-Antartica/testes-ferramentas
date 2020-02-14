@@ -16,6 +16,8 @@ public class MentorDialogues {
     public const string prefixom004 = "M004_Mentor";
 
     public const string prefixom009 = "M009_Mentor";
+
+    public const string prefixom010 = "M010_Mentor";
     
     /* ####### */ 
 
@@ -97,6 +99,16 @@ public class MentorDialogues {
         prefixom009 + "4" + sufixo + "1"
     };
 
+    //M010
+    public static string[] M010_Mentor0 = { prefixom010 + "0" + sufixo + "1" };
+    public static string[] M010_Mentor1 = { prefixom010 + "1" + sufixo + "1" };
+    public static string[] M010_Mentor2 = { prefixom010 + "2" + sufixo + "1" };
+    public static string[] M010_Mentor3 = { 
+        prefixom010 + "3" + sufixo + "1", 
+        //prefixom010 + "3" + sufixo + "2" 
+    };
+    public static string[] M010_Mentor4 = { prefixom010 + "4" + sufixo + "1" };
+
 
 
     /*
@@ -159,6 +171,23 @@ public class MentorDialogues {
                         return M009_Mentor3[index];
                     case "Mentor4":
                         return M009_Mentor4[index];
+                    default:
+                        return "Check mentor name.";
+                }
+
+            case "M010":
+                switch(mentor)
+                {
+                    case "Mentor0":
+                        return M010_Mentor0[index];
+                    case "Mentor1":
+                        return M010_Mentor1[index];
+                    case "Mentor2":
+                        return M010_Mentor2[index];
+                    case "Mentor3":
+                        return M010_Mentor3[index];
+                    case "Mentor4":
+                        return M010_Mentor4[index];
                     default:
                         return "Check mentor name.";
                 }
@@ -225,6 +254,23 @@ public class MentorDialogues {
                         return M009_Mentor3.Length;
                     case "Mentor4":
                         return M009_Mentor4.Length;
+                    default:
+                        return -1;
+                }
+
+            case "M010":
+                switch(mentor)
+                {
+                    case "Mentor0":
+                        return M010_Mentor0.Length;
+                    case "Mentor1":
+                        return M010_Mentor1.Length;
+                    case "Mentor2":
+                        return M010_Mentor2.Length;
+                    case "Mentor3":
+                        return M010_Mentor3.Length;
+                    case "Mentor4":
+                        return M010_Mentor4.Length;
                     default:
                         return -1;
                 }
