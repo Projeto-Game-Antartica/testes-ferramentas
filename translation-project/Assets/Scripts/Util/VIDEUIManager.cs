@@ -240,7 +240,9 @@ public class VIDEUIManager : AbstractScreenReader
 
                 
                 Debug.Log(positionSceneChange);
-                player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange);
+                string missionNumber = player.gameObject.GetComponent<SimpleCharacterController>().missionNumber;
+
+                player.gameObject.GetComponent<SimpleCharacterController>().SavePosition(positionSceneChange, missionNumber);
             }
 
             if(data.extraVars.ContainsKey("OpenURL"))

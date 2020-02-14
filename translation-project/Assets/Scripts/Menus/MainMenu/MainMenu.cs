@@ -118,7 +118,7 @@ public class MainMenu : AbstractScreenReader
     public IEnumerator LoadingScreen()
     {
         //async = SceneManager.LoadSceneAsync(ScenesNames.M009Camp);
-        async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
+        async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
 
         loadScreenObject.SetActive(true);
 
