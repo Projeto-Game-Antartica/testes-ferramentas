@@ -39,4 +39,6 @@ public class ScenesNames {
     public const string M010AmostrasVegetacao = "M010AmostrasVegetacaoScene";
     
     public const string M010Desafio = "M010DesafioScene";
+
+    public const string M010Camp = "M010VegCampaScene";
 }
