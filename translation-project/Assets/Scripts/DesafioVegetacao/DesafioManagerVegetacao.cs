@@ -577,8 +577,8 @@ public class DesafioManagerVegetacao : AbstractScreenReader {
                         //BigImage2.SetActive(true);
                         //BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
 
-                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
-                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
+                        //StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
+                        //StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
 
                         //confirmarButton.Select();
                     //}
@@ -633,8 +633,8 @@ public class DesafioManagerVegetacao : AbstractScreenReader {
         {
             audioSource.PlayOneShot(correctAudio);
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
+            //StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
+            //StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
 
             x = 2;
             matches--;
@@ -651,8 +651,8 @@ public class DesafioManagerVegetacao : AbstractScreenReader {
         {
             audioSource.PlayOneShot(wrongAudio);
 
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
+            //StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
+            //StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
 
             miss++;
             missText.text = "Tentativas incorretas: " + miss;

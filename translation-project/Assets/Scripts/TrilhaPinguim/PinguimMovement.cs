@@ -23,7 +23,9 @@ public class PinguimMovement : AbstractScreenReader {
     {
         if(Input.GetKeyDown(KeyCode.L))
         {
-            ReadPinguimPosition();
+            ReadPinguimPosition("adelia");
+            ReadPinguimPosition("antartico");
+            ReadPinguimPosition("papua");
         }
     }
 
@@ -105,9 +107,9 @@ public class PinguimMovement : AbstractScreenReader {
         }
     }
 
-    public void ReadPinguimPosition()
+    public void ReadPinguimPosition(string pinguimName)
     {
-        string pinguimName = gameObject.name.Replace("_", " ");
+        //string pinguimName = gameObject.name.Replace("_", " ");
 
         Debug.Log("O " + pinguimName + " está na posição " + pinguimPosition);
         ReadText("O " + pinguimName + " está na posição " + pinguimPosition);

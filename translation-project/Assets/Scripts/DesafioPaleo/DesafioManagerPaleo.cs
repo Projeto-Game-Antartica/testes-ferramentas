@@ -6,11 +6,31 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using Random=UnityEngine.Random;
+using UnityEngine.EventSystems;
 
 public class DesafioManagerPaleo : AbstractScreenReader {
 
     private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
+
+    public AudioClip som_quebra_solo1;
+    public AudioClip som_quebra_solo2;
+    public AudioClip som_quebra_solo3;
+    public AudioClip som_quebra_fossil;
+    public AudioClip guarda_saco;
+
+    public GameObject confirmQuit;
+
+    public AudioClip avisoClip;
+    public AudioClip closeClip;
     
+    protected int selectedArea = 1;
+
+    protected bool isEquipamento = false;
+
+    protected bool isEquipado = false;
+
+    protected bool acabou = false;
+
     public TMPro.TextMeshProUGUI kitValor;
 
     private float ganha = 33;
@@ -70,10 +90,6 @@ public class DesafioManagerPaleo : AbstractScreenReader {
     public Sprite[] fossil25;
     public Sprite[] fossil26;
 
-    // round 1
-    //public Sprite[] cardFace1;
-    //public Sprite[] cardText1;
-
     public int[] posicoes = new int[] {0,1,2,4,5,6,8,9,10};
     private int sorteio;
 
@@ -83,8 +99,9 @@ public class DesafioManagerPaleo : AbstractScreenReader {
 
     public GameObject[] pega_item;
 
-    //public Button confirmarButton;
-    //public Button cancelarButton;
+    public GameObject[] equipamentos;
+
+
     public Button backButton;
     public Button resetButton;
     public Button audioButton;
@@ -98,12 +115,11 @@ public class DesafioManagerPaleo : AbstractScreenReader {
     private bool init;
 
     public static int CARDFACE = 1;
-    //public static int CARDTEXT = 2;
 
     public TMPro.TextMeshProUGUI missText;
     public TMPro.TextMeshProUGUI matchesText;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     public AudioClip correctAudio;
     public AudioClip wrongAudio;
@@ -139,6 +155,7 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         lifeExpController.GetComponent<LifeExpController>().HPImage.fillAmount = 1;
 
         sorteio = Random.Range(0, 9);
+        //sorteio = 0;
 
         num_fossil = Random.Range(0, 27);
 
@@ -154,8 +171,6 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         
         fossilImages.SetPhotographedWhaleImage(fossilData.image_path);
 
-        //Debug.Log(Parameters.MEMORY_ROUNDINDEX);
-
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
@@ -167,11 +182,108 @@ public class DesafioManagerPaleo : AbstractScreenReader {
     // Update is called once per frame
     void Update () {
 
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+                                    Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+        {
+            GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
+            if(!ClassificaFossil.activeInHierarchy) //verifica se a cena está ativada
+            {
+                if (selectedArea == 2)
+                {
+                    nextCell.GetComponent<Selectable>().Select();
+
+                    ReadCamp(nextCell);
+                }
+                else if(selectedArea == 0)
+                {
+                    nextCell.GetComponent<Selectable>().Select();
+
+                    ReadEquipamento(nextCell);
+                }
+
+                else if(selectedArea == 1)
+                {
+                    nextCell.GetComponent<Selectable>().Select();
+
+                    ReadEquipados(nextCell);
+                }
+            }
+            else
+            {
+                nextCell.GetComponent<Selectable>().Select();
+                ReadCaracteristicas(nextCell);
+			}
+        }
+
+        if(Input.GetKeyDown(KeyCode.Return)) {
+            if(!ClassificaFossil.activeInHierarchy) //verifica se a cena está ativada
+            {
+                if(selectedArea == 0)
+                {
+                    GameObject currentTool = EventSystem.current.currentSelectedGameObject.gameObject;
+
+                    foreach(GameObject equipSpot in pega_item)
+                    {
+                        if(equipSpot.transform.childCount == 0)
+                        {   
+                            /*if(currentTool.GetComponent<Button>().gameObject.name == "usaKit")
+                                {
+                            
+							    }*/
+                            if(currentTool.GetComponentInChildren<DragAndDropItem>().gameObject.name == "kit")
+                            {
+                                Debug.Log("O kit não pode ser equipado.");
+                                break;
+                            }
+                            else
+                            {
+                                Debug.Log("O item "+ currentTool.GetComponentInChildren<DragAndDropItem>().gameObject.name +" foi equipado.");
+                                ReadText("O item "+ currentTool.GetComponentInChildren<DragAndDropItem>().gameObject.name +" foi equipado.");
+                                currentTool.transform.GetChild(0).SetParent(equipSpot.transform, false);                   
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                else if(selectedArea == 1)
+                {
+                    GameObject currentTool = EventSystem.current.currentSelectedGameObject.gameObject;
+
+                    foreach(GameObject desequipSpot in equipamentos)
+                    {
+                        if(desequipSpot.transform.childCount == 0)
+                        {   Debug.Log("O item "+ currentTool.GetComponentInChildren<DragAndDropItem>().gameObject.name +" foi desequipado.");
+                            ReadText("O item "+ currentTool.GetComponentInChildren<DragAndDropItem>().gameObject.name +" foi desequipado.");
+                            currentTool.transform.GetChild(0).SetParent(desequipSpot.transform, false);                   
+                            break;
+                        }
+                    }
+			    }
+            }
+		}
+
+
         if (!_first && (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !Card.DO_NOT)
         {
             Debug.Log("aqui: " +pega_item[0]);
             Debug.Log("Checando cartas....");
-            checkCards();
+            //checkCards();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (instructionInterface.activeSelf)
+            {
+                instructionInterface.SetActive(false);
+                audioSource.PlayOneShot(closeClip);
+
+                cards[0].GetComponent<Button>().Select();
+            }
+            else
+            {
+                TryReturnToShip();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.P))
@@ -179,9 +291,35 @@ public class DesafioManagerPaleo : AbstractScreenReader {
             audioButton.Select();
         }
 
-        if(Input.GetKeyDown(KeyCode.F6))
+        if(!ClassificaFossil.activeInHierarchy) //verifica se a cena está ativada
         {
-            cards[0].GetComponent<Button>().Select();
+            if(Input.GetKeyDown(KeyCode.F6))
+            {
+                selectedArea = (selectedArea + 1) % 3;
+
+                if (selectedArea == 2)
+                {
+                    cards[0].GetComponent<Button>().Select();
+                    ReadText("Campo");
+                    Debug.Log("Campo");
+                    ReadCamp(cards[0]);
+                }
+                else if(selectedArea == 1)
+                {
+                    ReadText("Itens equipado");
+                    Debug.Log("Itens equipado");
+                    pega_item[0].GetComponent<Selectable>().Select();
+                    ReadEquipados(pega_item[0]);  
+                
+                }
+                else
+                {
+                    ReadText("Itens");
+                    Debug.Log("Itens");
+                    equipamentos[0].GetComponent<Selectable>().Select();
+                    ReadEquipamento(equipamentos[0]);
+			    }
+            }
         }
 
         if (c != null && c.Count >= 2)
@@ -203,14 +341,6 @@ public class DesafioManagerPaleo : AbstractScreenReader {
                 instructionInterface.SetActive(false);
         }
 
-        //else
-        //{
-        //    confirmarButton.interactable = false;
-        //    cancelarButton.interactable = false;
-
-        //}
-
-        //Debug.Log(Card.DO_NOT);
     }
 
     public void initializeGame()
@@ -527,139 +657,6 @@ public class DesafioManagerPaleo : AbstractScreenReader {
             }
     }
 
-    /*public Sprite getCardText(int i)
-    {
-        return Parameters.MEMORY_ROUNDINDEX == 0 ? fossil1[i - 1] : null; //tirar
-    }*/
-
-    void checkCards()
-    {
-        c = new List<int>();
-
-        for (int i = 0; i < cards.Length; i++)
-        {
-            if (cards[i].GetComponent<CardDesafioPaleo>().state == Card.VIRADA_CIMA && !_first)
-            {
-                Debug.Log("carta adicionada >> " + cards[i]);
-                c.Add(i);
-                Debug.Log("após adicionar carta >> " + c.Count);
-                
-                if (c.Count == 2)
-                {
-                    // block the comparison of two text cards
-                    //if (cards[c[0]].GetComponent<Card>().isText && cards[c[1]].GetComponent<Card>().isText)
-                    //{
-                    //    Debug.Log("clear....");
-                    //    cards[c[i]].GetComponent<Card>().state = Card.VIRADA_BAIXO;
-                    //    c.Clear();
-                    //}
-                    //else
-                    //{
-                        //BigImage1.SetActive(true);
-                        //BigImage1.GetComponentInChildren<Image>().sprite = cards[c[0]].GetComponent<Card>().cardFace ?? cards[c[0]].GetComponent<Card>().cardText;
-                        //BigImage2.SetActive(true);
-                        //BigImage2.GetComponentInChildren<Image>().sprite = cards[c[1]].GetComponent<Card>().cardFace ?? cards[c[1]].GetComponent<Card>().cardText;
-
-                        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
-                        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.confirm));
-
-                        //confirmarButton.Select();
-                    //}
-                }
-            }
-        }
-
-        Debug.Log("Após checar cartas >> " + c.Count);
-        //if (c.Count == 2)
-        //    cardComparison(c);
-    }
-
-   /* public void CompareCards()
-    {
-        cardComparison(c);
-        //BigImage1.SetActive(false);
-        //BigImage2.SetActive(false);
-
-        cancelarButton.interactable = false;
-        confirmarButton.interactable = false;
-    }*/
-
-    /*public void Cancel()
-    {
-        //BigImage1.SetActive(false);
-        //BigImage2.SetActive(false);
-
-        StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<Card>().BGImage, -1));
-        StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, -1));
-
-        for (int i = 0; i < c.Count; i++)
-        {
-            cards[c[i]].GetComponent<CardDesafioPaleo>().state = Card.VIRADA_BAIXO;
-            cards[c[i]].GetComponent<CardDesafioPaleo>().turnCardDown();
-        }
-
-        c.Clear();
-        Debug.Log("Depois de limpar a lista >> " +  c.Count);
-
-        cancelarButton.interactable = false;
-        confirmarButton.interactable = false;
-        cards[0].GetComponent<Button>().Select();
-    }*/
-
-    void cardComparison(List<int> c)
-    {
-        CardDesafioPaleo.DO_NOT = true;
-
-        int x = 0;
-
-        if(cards[c[0]].GetComponent<CardDesafioPaleo>().cardValue == cards[c[1]].GetComponent<CardDesafioPaleo>().cardValue)
-        {
-            audioSource.PlayOneShot(correctAudio);
-
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.correct));
-
-            x = 2;
-            matches--;
-            matchesText.text = "Pares restantes: " + matches;
-            if (matches == 0)
-            {
-                Debug.Log("Fim de jogo! Você conseguiu terminar com sucesso. Volte ao navio para novas aventuras.");
-                ReadText("Fim de jogo! Você conseguiu terminar com sucesso. Volte ao navio para novas aventuras.");
-                PlayerPreferences.M009_Memoria = true;
-                EndGame(true);
-            }
-        }
-        else
-        {
-            audioSource.PlayOneShot(wrongAudio);
-
-            StartCoroutine(ChangeBGColor(cards[c[0]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
-            StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<CardDesafioPaleo>().BGImage, (int)Operation.wrong));
-
-            miss++;
-            missText.text = "Tentativas incorretas: " + miss;
-
-            if(miss >= 3)
-            {
-                Debug.Log("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
-                ReadText("Fim de jogo! Você não conseguiu concluir o objetivo. Tente novamente.");
-                EndGame(false);
-                // 0 or 1
-                //Parameters.MEMORY_ROUNDINDEX = (Parameters.MEMORY_ROUNDINDEX + 1) % 2;
-            }
-        }
-
-        for(int i = 0; i<c.Count; i++)
-        {
-            cards[c[i]].GetComponent<CardDesafioPaleo>().state = x;
-            //cards[c[i]].GetComponent<CardDesafioPaleo>().falseCheck();
-        }
-
-        c.Clear();
-        cards[0].GetComponent<Button>().Select();
-    }
-
     public void EndGame(bool win)
     {
         BigImage1.SetActive(false);
@@ -685,11 +682,25 @@ public class DesafioManagerPaleo : AbstractScreenReader {
             lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
 
-        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+    }
+
+    public void TryReturnToShip()
+    {
+        confirmQuit.SetActive(true);
+
+        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        confirmQuit.GetComponentInChildren<Button>().Select();
+
+        audioSource.PlayOneShot(avisoClip);
     }
 
     public void ReturnToShip()
     {
+        confirmQuit.SetActive(false);
+
         if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
     }
@@ -708,8 +719,6 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         {
             return int.Parse(new string(g1.name.Where(char.IsDigit).ToArray())).CompareTo(
                 int.Parse(new string(g2.name.Where(char.IsDigit).ToArray())));
-            //return string.Join(string.Empty, Regex.Matches(g1.gameObject.name, @"\d+").OfType<Match>().Select(m => m.Value)).CompareTo(
-            //    string.Join(string.Empty, Regex.Matches(g2.gameObject.name, @"\d+").OfType<Match>().Select(m => m.Value)));
         });
 
         // imprime e le o conteudo a cada meio segundo (tempo que as cartas ficarão abertas no início)
@@ -730,57 +739,8 @@ public class DesafioManagerPaleo : AbstractScreenReader {
                     Debug.Log("check mission name");
                     break;
             }
-
-            //Debug.Log(objectName != null ? (tmpCards[i].name.Substring(0, tmpCards[i].name.IndexOf(":")) + ": " + objectName) : tmpCards[i].gameObject.name);
-
-            //tmpCards[i].GetComponent<Button>().Select();
             yield return new WaitForSeconds(0.5f);
         }
-    }
-
-    public IEnumerator ChangeBGColor(Image image, int op)
-    {
-        //Debug.Log("ChangeBGColor");
-
-        Color color;
-
-        switch (op)
-        {
-            case (int)Operation.confirm:
-                color = new Color(1, 1, 0, 1); // yellow
-                break;
-            case (int)Operation.correct:
-                color = new Color(0, 1, 0, 1); // green
-                //color = new Color(0, 0, 0, 0); // transparent
-                break;
-            case (int)Operation.wrong:
-                color = new Color(1, 0, 0, 1); // red
-                break;
-            default:
-                color = new Color(0, 0, 0, 0);
-                break;
-        }
-            image.color = color;
-        
-        if (op != (int)Operation.confirm && op != (int)Operation.correct)
-        {
-            // wait seconds
-            yield return new WaitForSeconds(2f);
-
-            // back to normal!!
-            image.color = new Color(1, 1, 1, 0);
-        }
-    }
-
-    public bool ContainJustText(List<Card> list)
-    {
-        foreach(Card c in list)
-        {
-            if (!c.isText)
-                return false;
-        }
-
-        return true;
     }
 
     public IEnumerator showCards()
@@ -798,7 +758,7 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         _first = false;
     }
 
-    public IEnumerator ReturnToShipCoroutine()
+    public IEnumerator ReturnToCampCoroutine()
     {
         yield return new WaitForSeconds(7f);
 
@@ -856,14 +816,160 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         if(valor > 0)
         {
             lifeExpController.GetComponent<LifeExpController>().HPImage.fillAmount += ganha / 100;
-            Debug.Log("Tem kit");
+            Debug.Log("Tem kit saúde");
             Debug.Log(lifeExpController.GetComponent<LifeExpController>().HPImage.fillAmount);
             valor--;
             kitValor.text = valor.ToString();
+            Debug.Log("Você usou um Kit de saúde, restam: " + kitValor.text + " kits.");
+            ReadText("Você usou um Kit de saúde, restam: " + kitValor.text + " kits."); 
 		}  
         else
         {
-            Debug.Log("Não tem");
+            Debug.Log("Você não possui mais nenhum kit de saúde.");
+            ReadText("Você não possui mais nenhum kit de saúde.");
 		}
 	}
+
+    void ReadEquipamento(GameObject nextCell)
+    {
+        
+        // navegando por itens vazios
+        if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+        {
+            if(nextCell.GetComponent<Button>() != null)
+            {
+                Debug.Log("Usar kit de saúde.");
+                ReadText("Usar kit de saúde.");
+            }
+            else
+            {
+                Debug.Log("Item vazio");
+                ReadText("Item vazio");
+            }
+        }
+        else if (nextCell.GetComponentInChildren<DragAndDropItem>() != null)  // navegando por itens ainda com conteudo
+        {
+            if(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name == "kit")
+            {
+                Debug.Log("Item equipado: Kit de saúde. Quantidade: " + kitValor.text);
+                ReadText("Item equipado: Kit de saúde. Quantidade: " + kitValor.text);                
+			}
+            else
+            {
+            Debug.Log("Item:" + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+            ReadText("Item:" + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+            }
+        }
+    }
+
+    void ReadEquipados(GameObject nextCell)
+    {
+        // navegando por itens vazios
+        if (nextCell.GetComponentInChildren<DragAndDropItem>() == null)
+        {
+                Debug.Log("Nenhum item equipado.");
+                ReadText("Nenhum item equipado.");
+        }
+        else // navegando por itens ainda com conteudo
+        {
+            Debug.Log("Item equipado:" + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+            ReadText("Item equipado:" + nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+        }
+    }
+
+    void ReadCamp(GameObject nextCell)
+    {
+        if(!ClassificaFossil.activeInHierarchy) //verifica se a cena está ativada
+        {
+            string verifica = nextCell.GetComponent<Image>().sprite.name;
+
+            int index = Array.IndexOf(cards,nextCell) + 1;   
+
+            if(verifica.Contains("solo0"))
+            {
+                Debug.Log("Solo " + index + " na profundidade 0");
+                ReadText("Solo " + index + " na profundidade 0");
+            }
+            else if(verifica.Contains("solo1"))
+            {
+                Debug.Log("Solo " + index + " na profundidade 1");
+                ReadText("Solo " + index + " na profundidade 1");
+            }
+
+            else if(verifica.Contains("solo2"))
+            {
+                Debug.Log("Solo " + index + " na profundidade 2");
+                ReadText("Solo " + index + " na profundidade 2");
+            }
+
+            else if(verifica.Contains("solo3"))
+            {
+                Debug.Log("Solo " + index + " na profundidade 3");
+                ReadText("Solo " + index + " na profundidade 3");
+            }
+
+            else
+            {
+                Debug.Log("Parte de fóssil encontrada");
+                ReadText("Parte de fóssil encontrada");
+            }
+        }
+    }
+
+    public void ReadCaracteristicas(GameObject nextCell)
+    {
+        string verifica = nextCell.GetComponent<Button>().name;
+
+        Debug.Log("CARACTERISTICA: " +nextCell.GetComponent<Button>().name);
+
+        if(nextCell.GetComponent<Button>().name == "Carta1")
+            {
+
+                Debug.Log("Característica: Concreção");
+                ReadText("Característica: Concreção");
+
+            }
+            if(nextCell.GetComponent<Button>().name == "Carta2")
+            {
+                Debug.Log("Classificação Biológica: Invertebrado");
+                ReadText("Classificação Biológica: Invertebrado");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta3")
+            {
+                Debug.Log("Era: Cenozóico");
+                ReadText("Era: Cenozóico");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta4")
+            {
+                Debug.Log("Característica: Fora");
+                ReadText("Característica: Fora");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta5")
+            {
+                Debug.Log("Classificação Biológica: Vertebrado");
+                ReadText("Classificação Biológica: Vertebrado");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta6")
+            {
+                Debug.Log("Era: Mesozóico");
+                ReadText("Era: Mesozóico");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta7")
+            {
+                Debug.Log("Característica: Molde");
+                ReadText("Característica: Molde");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta8")
+            {
+                Debug.Log("Classificação Biológica: Vegetal");
+                ReadText("Classificação Biológica: Vegetal");
+		    }
+            if(nextCell.GetComponent<Button>().name == "Carta9")
+            {
+                Debug.Log("Era: Paleozóico");
+                ReadText("Era: Paleozóico");
+		    }
+
+	}
+
 }

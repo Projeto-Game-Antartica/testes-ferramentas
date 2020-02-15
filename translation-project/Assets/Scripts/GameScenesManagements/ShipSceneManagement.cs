@@ -33,6 +33,8 @@ public class ShipSceneManagement : AbstractScreenReader {
     public AudioClip warningClip;
     public AudioClip closeClip;
 
+    private string missionNumber = "M004";
+
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
     public void Start()
@@ -41,10 +43,10 @@ public class ShipSceneManagement : AbstractScreenReader {
 
         //InitialInstruction();
 
-        if (PlayerPrefs.GetInt("Saved") == 1)
+        if (PlayerPrefs.GetInt("Saved_"+missionNumber) == 1)
         {
-            transform.position = character.GetPosition();
-            chasingCamera.SetCameraPosition(character.GetPosition());
+            transform.position = character.GetPosition(missionNumber);
+            chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
             Debug.Log(transform.position);
         }
 
@@ -57,7 +59,7 @@ public class ShipSceneManagement : AbstractScreenReader {
         {
             positionSceneChange = new Vector3(transform.position.x, transform.position.y);
             // save the position when loading another scene
-            character.SavePosition(positionSceneChange);
+            character.SavePosition(positionSceneChange, missionNumber);
 
 
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())

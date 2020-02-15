@@ -36,12 +36,12 @@ public class FotoidentificacaoController : AbstractScreenReader {
     private readonly string[,] answersInLine = new string[,]
     {
         {"1A - 95%","1B - 95%","2 - 75%","3 - 50%","4 - 25%","5 - 5%","","",""},
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Esquerda","Centro","Direita", "Esquerda e Direita", "Esquerda e Centro", "Centro e Direita", "Esquerda, Centro e Direita", "Sem", "" },
-        {"Lisa","Áspera", "", "","","","","",""},
-        {"Arredondada","Aguda","","","","","","",""},
-        {"Forma de V","Forma de U","","","","","","",""},
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Esquerda","2 - Centro","3 - Direita", "4 - Esquerda e Direita", "5 - Esquerda e Centro", "6 - Centro e Direita", "7 - Esquerda, Centro e Direita", "8 - Sem", "" },
+        {"1 - Lisa","2 - Áspera", "", "","","","","",""},
+        {"1 - Arredondada","2 - Aguda","","","","","","",""},
+        {"1 - Forma de V","2 - Forma de U","","","","","","",""},
     };
 
     /*
@@ -467,6 +467,42 @@ public class FotoidentificacaoController : AbstractScreenReader {
             g.GetComponent<Image>().color = Color.white;
         }
     }
+
+    public void ReadOptions(TextMeshProUGUI text)
+    {
+        if (roundIndex == Parameters.PIGMENTACAO)
+        {
+            switch (text.text)
+            {
+                case "1A - 95%":
+                    ReadText(text.text + " Totalmente branca.");
+                    break;
+                case "1B - 95%":
+                    ReadText(text.text + " Quase toda branca com detalhes preto na parte central superior e inferior.");
+                    break;
+                case "2 - 75%":
+                    ReadText(text.text + " Pigmentação branca nas laterais e parte preta central completamente fechada.");
+                    break;
+                case "3 - 50%":
+                    ReadText(text.text + " Pigmentação metade branca nas laterais, e parte preta no centro completamente fechada.");
+                    break;
+                case "4 - 25%":
+                    ReadText(text.text + " Pequena pigmentação branca nas laterais e o centro todo preto");
+                    break;
+                case "5 - 5%":
+                    ReadText(text.text + " Dois pontos de pigmentação branca nas laterais e o restante todo preto.");
+                    break;
+                default:
+                    Debug.Log("check option text.");
+                    break;
+            }
+        }
+        else
+        {
+            ReadText(text.text);
+        }
+    }
+
     /*
     public void NextRound()
     {

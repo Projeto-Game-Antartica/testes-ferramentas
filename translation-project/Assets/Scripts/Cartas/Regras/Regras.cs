@@ -107,8 +107,6 @@ public class Regras : AbstractCardManager {
     {
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras, LocalizationManager.instance.GetLozalization()));
 
-        ReadText(instructionText.text);
-
         cardIndex = 0;
 
         //selectedCards = new bool[sprites.Length];
@@ -126,9 +124,7 @@ public class Regras : AbstractCardManager {
         //cardName.text = currentImage.name;
         Instantiate(textPrefab, currentImage.transform, false);
         currentImage.GetComponentInChildren<TextMeshProUGUI>().text = RegrasText.GetRegra(cardIndex);
-
-        ReadCard(cardIndex);
-
+        
         // next card initial settings
         nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
         nextImage.color = new Color(1, 1, 1, 0);
@@ -140,6 +136,12 @@ public class Regras : AbstractCardManager {
 
         resetButton.interactable = true;
         backButton.interactable = true;
+        
+        // instruction of puzzle
+        ReadText(instructionText.text);
+
+        // current content card
+        ReadCard(cardIndex);
 
         likeButton.Select();
     }
@@ -369,13 +371,15 @@ public class Regras : AbstractCardManager {
 
             PlayerPreferences.M002_Regras = true;
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras_vitoria, LocalizationManager.instance.GetLozalization()));
+            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: óculos escuros, filtro solar e a mochila.");
 
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
             
-            ReadText("Parabéns, você ganhou alguns dos itens necessário para sua aventura na antártica: óculos escuros, filtro solar e a mochila.");
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_regras_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item

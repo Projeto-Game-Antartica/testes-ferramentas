@@ -47,7 +47,7 @@ public class HighContrastText : AbstractScreenReader {
     {
         if (Parameters.HIGH_CONTRAST)
         {
-            Debug.Log("ChangeHighContrast");
+            //Debug.Log("ChangeHighContrast");
             var tempColor = bgImage.color;
             tempColor = Color.black;
             tempColor.a = 1f;

@@ -57,7 +57,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // start counting time
         yield return new WaitForSeconds(0.5f);
 
-        initialMinutes = 6f;
+        initialMinutes = 8f;
         initialSeconds = 59f;
 
         timerCount = 0;
@@ -76,7 +76,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
     private void Update()
     {
-        //if(started && !finished && !paused) HandleTimer();
+        if(started && !finished && !paused) HandleTimer();
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
@@ -152,10 +152,10 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
     public void RestartTimer()
     {
-        initialMinutes = 2f;
+        initialMinutes = 8f;
         initialSeconds = 59f;
 
-        timer.text = "2:00";
+        timer.text = "9:00";
     }
 
     //public void CallHintMethod()
