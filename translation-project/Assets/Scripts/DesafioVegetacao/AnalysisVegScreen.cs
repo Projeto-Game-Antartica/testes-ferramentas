@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class AnalysisVegScreen : MonoBehaviour
 {
@@ -59,6 +60,7 @@ public class AnalysisVegScreen : MonoBehaviour
             GameScreen.ShowOkDialog("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
         } else {
             WinScreen.SetActive(true);
+            DoAfter(5, ReturnToCamp);
         }
     }
 
@@ -97,4 +99,18 @@ public class AnalysisVegScreen : MonoBehaviour
     // {
         
     // }
+
+    public void DoAfter(int secs, UnityAction action) {
+        StartCoroutine(DoAfterCoroutine(secs, action));
+    }
+
+    public IEnumerator DoAfterCoroutine(int secs, UnityAction action) {
+        yield return new WaitForSeconds(secs);
+        action();
+    }
+
+    //Volta para o acampamento
+    public void ReturnToCamp() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010Camp);
+    }
 }

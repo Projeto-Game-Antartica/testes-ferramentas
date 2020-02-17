@@ -22,10 +22,10 @@ public class PlantScheme : MonoBehaviour
     public void Show() {
         canvasGo.SetActive(true);
         //Must generate a delay, otherwise the screen will show and imediatelly hide
-        StartCoroutine(allowHideAfterDelay(3));   
+        StartCoroutine(allowHideAfterDelay(0.1f));   
     }
 
-    IEnumerator allowHideAfterDelay(int secs) {
+    IEnumerator allowHideAfterDelay(float secs) {
         yield return new WaitForSeconds(secs);
         allowHide = true;
     }

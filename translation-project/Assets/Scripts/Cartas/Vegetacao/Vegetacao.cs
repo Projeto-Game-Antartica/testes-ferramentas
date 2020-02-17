@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Vegetacao : AbstractCardManager
 {
@@ -220,11 +221,15 @@ public class Vegetacao : AbstractCardManager
     private void doWin() { //Routine to happen once the user wins
         winImg.SetActive(true);
         Debug.Log("Você ganhou!");
+
+        DoAfter(5, ReturnToCamp);
     }
 
     private void doLose() { //Routine to happen once the user wins
         loseImg.SetActive(true);
         Debug.Log("Você perdeu!");
+
+        DoAfter(5, ReturnToCamp);
     }
 
     public void NextCard() {
@@ -262,13 +267,22 @@ public class Vegetacao : AbstractCardManager
 		return array;
 	}
 
+    public void DoAfter(int secs, UnityAction action) {
+        StartCoroutine(DoAfterCoroutine(secs, action));
+    }
+
+    public IEnumerator DoAfterCoroutine(int secs, UnityAction action) {
+        yield return new WaitForSeconds(secs);
+        action();
+    }
+
+    //Volta para o acampamento
+    public void ReturnToCamp() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010Camp);
+    }
+
     public void ResetScene()
     {
         SceneManager.LoadScene(ScenesNames.M010TiposVegetacao);
-    }
-
-    public void ReturnToUshuaia()
-    {
-        SceneManager.LoadScene(ScenesNames.M002CasaUshuaia);
     }
 }
