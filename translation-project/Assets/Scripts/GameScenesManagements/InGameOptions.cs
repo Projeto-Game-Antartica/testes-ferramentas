@@ -57,7 +57,6 @@ public class InGameOptions : AbstractScreenReader {
         yesButton.onClick.AddListener(ReturnToMainMenu);
 
         yesButton.Select();
-
     }
 
 
