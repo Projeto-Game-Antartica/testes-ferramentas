@@ -68,7 +68,7 @@ public class Vegetacao : AbstractCardManager
             nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex];
             nextImage.name = sprites[cardIndex].name;
         } else {
-            nextImage.GetComponentInChildren<Image>().sprite = null;
+            nextImage.transform.parent.gameObject.SetActive(false); //Get hid of the last card
             nextImage.name = "";
         }
     }
@@ -132,12 +132,6 @@ public class Vegetacao : AbstractCardManager
     public void Initialize() {
         PlayerPreferences.M010_Tipos = true;
         
-        // Debug.Log("-----------------------------------STATES--------------------------------");
-        // Debug.Log(PlayerPreferences.M010_Amostras);
-        // Debug.Log(PlayerPreferences.M010_Tipos);
-        // Debug.Log("------------------------------END-STATES---------------------------------");
-
-        // Debug.Log(SceneManager.GetActiveScene().name);
         rand = new System.Random(); //Inits random number generator
 
         sprites = Shuffle<Sprite>(sprites);
