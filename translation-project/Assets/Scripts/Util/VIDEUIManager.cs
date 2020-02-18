@@ -271,8 +271,13 @@ public class VIDEUIManager : AbstractScreenReader
                     Debug.Log("Player prefs dont have key >> " + dialogueName);
                 }
 
-                // the tird component on hierarchy is the dialogue/minijogo balloon
-                mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
+                //The third component on hierarchy is the dialogue/minijogo balloon
+                //Update 18/02: This should only change when the player successfully finishes the minigame
+                //mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
+            }
+
+            if(data.extraVars.ContainsKey("SetDoneBalloon")) {
+                mentor.gameObject.GetComponentInChildren<DialogMentorBalloon>().SetDone();
             }
 
             if(data.extraVars.ContainsKey("OpenLista"))

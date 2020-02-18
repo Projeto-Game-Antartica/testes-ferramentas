@@ -51,13 +51,10 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
         if (PlayerPrefs.GetInt("Saved_" + missionNumber) == 1)
         {
-            Debug.Log("TESTE123123" + missionNumber);
             transform.position = character.GetPosition(missionNumber);
             chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
-            Debug.Log(transform.position);
+            //Debug.Log(transform.position);
         }
-
-        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     private void Update()

@@ -143,7 +143,6 @@ public class MentorController : AbstractScreenReader {
                 break;
 
             default:
-                //Debug.Log("check mission number");
                 throw new NotImplementedException(missionNumber + "-" + mentorName + " not implemented.");
                 break;
         }
@@ -194,33 +193,24 @@ public class MentorController : AbstractScreenReader {
                         break;
                 }
                 break;
-          case "M009":
-            switch(mentorName)
-            {
-                // dialogue 
-                case "Mentor3":
-                        if (PlayerPrefs.GetInt("M009_Mentor3_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
-                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
-                        break;
-            }
-            break;
-          case "M010":
+
+            case "M009":
                 switch(mentorName)
                 {
                     // dialogue 
                     case "Mentor3":
-                        if (PlayerPreferences.M010_Mentor3_Talked) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
-                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
-                        break;
-
-                    case "Mentor0":
-                        if (PlayerPreferences.M010_Mentor0_Talked) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
-                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
-                        break;
+                            if (PlayerPrefs.GetInt("M009_Mentor3_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                            else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                            break;
                 }
                 break;
+
+            case "M010":
+                    //Handled by DialogMentorBalloon
+                    break;
+
             default:
-                Debug.Log("check mission number");
+                throw new NotImplementedException("Mission number not implemented: " + missionNumber);
                 break;
         }
     }
