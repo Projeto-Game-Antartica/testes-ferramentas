@@ -32,7 +32,7 @@ public class Homeostase : AbstractCardManager
 
     private readonly int MAX_KCAL = 2000;
 
-    public Image[] alimentosCesta;
+    public List<Image> alimentosCesta;
 
     private int alimentosCestaIndex = 20;
 
@@ -55,6 +55,10 @@ public class Homeostase : AbstractCardManager
     public GameObject instruction_interface;
 
     public LifeExpController lifeExpController;
+
+    private bool[] selectedCards;
+
+    private int nextCardIndex;
 
     private void Update()
     {
@@ -147,13 +151,13 @@ public class Homeostase : AbstractCardManager
 
         //Debug.Log(cardName.text);
 
-        nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
-        nextImage.name = sprites[cardIndex + 1].name;
+        //nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
+        //nextImage.name = sprites[cardIndex + 1].name;
 
         initialPosition = currentImage.transform.parent.position;
 
         // set initialized from alimentos on inventory to false
-        for (int i = 0; i < alimentosCesta.Length; i++)
+        for (int i = 0; i < alimentosCesta.Count; i++)
         {
             alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
         }
@@ -204,9 +208,65 @@ public class Homeostase : AbstractCardManager
         }
 
         CheckCalories(currentImage.name, true);
-        NextCard();
+        this.NextCard();
 
         likeButton.Select();
+    }
+
+    new public void NextCard()
+    {
+        cardIndex++;
+
+        // checa se o elemento esta na cesta
+        //cardIndex = GetNextIndexCard();
+
+        if (alimentosCesta.Find(x => x.name == sprites[cardIndex].name))
+        {
+            while (alimentosCesta.Find(x => x.name == sprites[cardIndex].name))
+                cardIndex++;
+        }
+
+        Debug.Log(sprites[cardIndex].name);
+
+        if (cardIndex < sprites.Length)
+        {
+            //currentImage.sprite = nextImage.sprite;
+            currentImage.sprite = sprites[cardIndex];
+            currentImage.name = sprites[cardIndex].name;
+            cardName.text = currentImage.name;
+
+            Debug.Log(cardName.text);
+            ReadText(cardName.text);
+            
+            if (cardIndex < sprites.Length - 1)
+            {
+                //nextImage.sprite = sprites[cardIndex + 1];
+                //nextImage.name = sprites[cardIndex + 1].name;
+            }
+            else
+            {
+                Debug.Log("fim das cartas... Começando de novo");
+                minijogosDicas.SetHintByIndex(cardIndex);
+
+                cardIndex = -1;
+                //nextImage.sprite = sprites[cardIndex + 1];
+                //nextImage.name = sprites[cardIndex + 1].name;
+            }
+        }
+
+        // read the hint
+        if (cardIndex >= 0)
+            minijogosDicas.SetHintByIndex(cardIndex);
+
+        ResetPosition();
+    }
+
+    public int GetNextIndexCard()
+    {
+        while (alimentosCesta.Find(x => x.name == sprites[cardIndex].name))
+            cardIndex++;
+
+        return cardIndex;
     }
 
     override public void CheckDislike()

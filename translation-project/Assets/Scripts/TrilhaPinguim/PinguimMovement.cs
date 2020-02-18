@@ -13,9 +13,9 @@ public class PinguimMovement : AbstractScreenReader {
     public AudioClip pinguimFonteClip;
     public AudioClip bloqueioClip;
 
-    public SpriteRenderer adeliaIcon;
-    public SpriteRenderer antarticoIcon;
-    public SpriteRenderer papuaIcon;
+    public Image adeliaIcon;
+    public Image antarticoIcon;
+    public Image papuaIcon;
 
     private int pinguimPosition = 0;
 
@@ -46,7 +46,7 @@ public class PinguimMovement : AbstractScreenReader {
         audioSource.PlayOneShot(bloqueioClip);
 
         if (collision.collider.ToString().Contains("pinguim"))
-            pinguimController.timeLeft -= 1f;
+            pinguimController.timerCount += 10f;
     }
 
     private void CheckEndGame(string pinguim, Collider2D peixe)

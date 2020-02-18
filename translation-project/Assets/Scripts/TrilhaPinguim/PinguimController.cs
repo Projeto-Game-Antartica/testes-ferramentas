@@ -21,11 +21,11 @@ public class PinguimController : DragAndDropController {
     private Animator pinguim_papuaAnimator;
 
     //public Image timer;
-    
-    // max time in seconds
-    public float maxTime;
 
-    public float timeLeft;
+    // max time in seconds
+    //public float maxTime;
+
+    //public float timeLeft;
     private bool countingTime;
 
     public bool adeliaFinished;
@@ -72,7 +72,7 @@ public class PinguimController : DragAndDropController {
 
     private float elapsedMinutes, elapsedSeconds, initialMinutes, initialSeconds;
 
-    private float timerCount;
+    public float timerCount;
     private float timeInSeconds;
     private int timeInMinutes;
 
@@ -101,7 +101,7 @@ public class PinguimController : DragAndDropController {
 
         //timer.fillAmount = 1f;
 
-        timeLeft = maxTime;
+        //timeLeft = maxTime;
 
         countingTime = false;
         
@@ -261,8 +261,8 @@ public class PinguimController : DragAndDropController {
         if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            ReadText("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
-            Debug.Log("Você ainda tem " + Math.Truncate(timeLeft) + " segundos restantes");
+            Debug.Log("Restam " + timer.text + " para finalizar o minijogo.");
+            ReadText("Restam " + timer.text + " para finalizar o minijogo.");
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -601,13 +601,13 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(false);
 
                 // OL
-                pinguim_adelia.transform.GetChild(1).gameObject.SetActive(true);
-                pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_adelia.transform.GetChild(1).gameObject.SetActive(true);
+                //pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
 
                 // OL orientation
-                Debug.Log(pinguim_adelia.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX);
-                Debug.Log(pinguim_adelia.GetComponent<SpriteRenderer>().flipX);
+                //Debug.Log(pinguim_adelia.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX);
+                //Debug.Log(pinguim_adelia.GetComponent<SpriteRenderer>().flipX);
 
                 break;
             case "antartico":
@@ -620,12 +620,12 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(false);
 
                 // OL
-                pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_antartico.transform.GetChild(1).gameObject.SetActive(true);
-                pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_antartico.transform.GetChild(1).gameObject.SetActive(true);
+                //pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
 
                 // OL orientation
-                pinguim_antartico.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = pinguim_antartico.GetComponent<SpriteRenderer>().flipX;
+                //pinguim_antartico.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = pinguim_antartico.GetComponent<SpriteRenderer>().flipX;
 
                 break;
             case "papua":
@@ -638,12 +638,12 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(true);
 
                 // OL
-                pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_papua.transform.GetChild(1).gameObject.SetActive(true);
+                //pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_papua.transform.GetChild(1).gameObject.SetActive(true);
 
                 // OL orientation
-                pinguim_papua.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = pinguim_papua.GetComponent<SpriteRenderer>().flipX;
+                //pinguim_papua.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = pinguim_papua.GetComponent<SpriteRenderer>().flipX;
                 break;
             default:
 
@@ -653,9 +653,9 @@ public class PinguimController : DragAndDropController {
                 pinguim_papua.transform.GetChild(0).gameObject.SetActive(false);
 
                 // OL
-                pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
-                pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_adelia.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_antartico.transform.GetChild(1).gameObject.SetActive(false);
+                //pinguim_papua.transform.GetChild(1).gameObject.SetActive(false);
                 break;
         }
     }
@@ -714,15 +714,15 @@ public class PinguimController : DragAndDropController {
         {
             case "pinguim_adelia":
                 pinguim_adelia.GetComponent<SpriteRenderer>().flipX = left;
-                pinguim_adelia.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
+                //pinguim_adelia.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
                 break;
             case "pinguim_antartico":
                 pinguim_antartico.GetComponent<SpriteRenderer>().flipX = left;
-                pinguim_antartico.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
+                //pinguim_antartico.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
                 break;
             case "pinguim_papua":
                 pinguim_papua.GetComponent<SpriteRenderer>().flipX = left;
-                pinguim_papua.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
+                //pinguim_papua.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
                 break;
         }
     }

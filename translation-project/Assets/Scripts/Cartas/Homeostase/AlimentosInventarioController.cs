@@ -16,6 +16,10 @@ public class AlimentosInventarioController : AbstractScreenReader, ISelectHandle
     public Image confirmImage;
     public Button removeButton;
 
+    public AudioSource audioSource;
+
+    public AudioClip avisoClip;
+
     public bool initialized;
 
     public void RemoverAlimento(Transform alimento)
@@ -25,6 +29,8 @@ public class AlimentosInventarioController : AbstractScreenReader, ISelectHandle
         int index = int.Parse(Regex.Match(alimento.name, @"\d+").Value);
 
         Debug.Log(index);
+
+        audioSource.PlayOneShot(avisoClip);
 
         confirmPanel.SetActive(true);
 
