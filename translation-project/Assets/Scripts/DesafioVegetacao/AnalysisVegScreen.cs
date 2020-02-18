@@ -17,6 +17,8 @@ public class AnalysisVegScreen : MonoBehaviour
 
     public ButtonGroup Options;
 
+    public Button ConfirmButton;
+
     enum VegType {
         Angiosperma,
         Briofita,
@@ -39,11 +41,12 @@ public class AnalysisVegScreen : MonoBehaviour
     // }
 
     public void OnConfirmClick() {
-        
         int selectedIndex = Options.GetSelectedIndex();
 
         if(selectedIndex < 0)
             return;
+
+        ConfirmButton.interactable = false;
 
         VegType selectedAnswer = (VegType)selectedIndex;
 
@@ -51,17 +54,27 @@ public class AnalysisVegScreen : MonoBehaviour
 
         if(selectedAnswer == correctAnswer) {
             Debug.Log("Resposta Certa!");
+            Options.SetButtonColor(selectedIndex, Color.green);           
         } else {
             Debug.Log("Resposta Errada!");
+            Options.SetButtonColor(selectedIndex, Color.red);
         }
 
         if(harvNumber <= 3) {
-            GameScreen.ResetHarvestScreen();
-            GameScreen.ShowOkDialog("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
+            DoAfter(3, resetHarvestAndShowDialog);
         } else {
-            WinScreen.SetActive(true);
-            DoAfter(5, ReturnToCamp);
+            DoAfter(3, showWinScreen);
         }
+    }
+
+    private void resetHarvestAndShowDialog() {
+        GameScreen.ResetHarvestScreen();
+        GameScreen.ShowOkDialog("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
+    }
+
+    private void showWinScreen() {
+        WinScreen.SetActive(true);
+        DoAfter(5, ReturnToCamp);
     }
 
     public void ResetScreen() {
@@ -85,6 +98,8 @@ public class AnalysisVegScreen : MonoBehaviour
             correctAnswer = VegType.Angiosperma;
         else
             throw new NotImplementedException("Tipo nao identificado " + randomSprite.name);
+
+        ConfirmButton.interactable = true;
     }
 
 
