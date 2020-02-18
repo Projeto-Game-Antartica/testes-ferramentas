@@ -208,6 +208,15 @@ public class MentorController : AbstractScreenReader {
                 switch(mentorName)
                 {
                     // dialogue 
+                    case "Mentor3":
+                        if (PlayerPreferences.M010_Mentor3_Talked) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+
+                    case "Mentor0":
+                        if (PlayerPreferences.M010_Mentor0_Talked) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
                 }
                 break;
             default:

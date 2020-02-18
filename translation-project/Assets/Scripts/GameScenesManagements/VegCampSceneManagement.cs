@@ -40,6 +40,11 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
     public void Start()
     {
+        Debug.Log("-----------------------------------STATES--------------------------------");
+        Debug.Log(PlayerPreferences.M010_Amostras);
+        Debug.Log(PlayerPreferences.M010_Tipos);
+        Debug.Log("------------------------------END-STATES---------------------------------");
+
         isTrigger = false;
 
         //InitialInstruction();
@@ -173,4 +178,14 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
         colliderControl = null;
     }
+
+    public void talkMentor0() {
+        PlayerPreferences.M010_Mentor0_Talked = true;
+    }
+    
+    public void talkMentor3() {
+        PlayerPreferences.M010_Mentor3_Talked = true;
+    }
+
+
 }

@@ -130,7 +130,14 @@ public class Vegetacao : AbstractCardManager
 
     // initialize after button click on instruction
     public void Initialize() {
-        Debug.Log(SceneManager.GetActiveScene().name);
+        PlayerPreferences.M010_Tipos = true;
+        
+        // Debug.Log("-----------------------------------STATES--------------------------------");
+        // Debug.Log(PlayerPreferences.M010_Amostras);
+        // Debug.Log(PlayerPreferences.M010_Tipos);
+        // Debug.Log("------------------------------END-STATES---------------------------------");
+
+        // Debug.Log(SceneManager.GetActiveScene().name);
         rand = new System.Random(); //Inits random number generator
 
         sprites = Shuffle<Sprite>(sprites);

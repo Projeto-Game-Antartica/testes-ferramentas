@@ -149,6 +149,8 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
+        PlayerPreferences.M010_Amostras = true;
+        
         if (!init)
             initializeCards();
 
