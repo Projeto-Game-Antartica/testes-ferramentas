@@ -26,6 +26,7 @@ public class HUDController : AbstractScreenReader {
     public Image info;
     public GameObject infoMissionName;
     public GameObject infoMissionDescription;
+    public GameObject infoMissionIcon;
     private readonly int INFO = 2;
 
     public GameObject inGameOption;
@@ -320,6 +321,7 @@ public class HUDController : AbstractScreenReader {
         {
             infoMissionDescription.SetActive(true);
             infoMissionName.SetActive(true);
+            infoMissionIcon.SetActive(true);
         }
     }
 
@@ -330,6 +332,7 @@ public class HUDController : AbstractScreenReader {
         {
             infoMissionDescription.SetActive(false);
             infoMissionName.SetActive(false);
+            infoMissionIcon.SetActive(false);
         }
 
         while (img.fillAmount > 0)
