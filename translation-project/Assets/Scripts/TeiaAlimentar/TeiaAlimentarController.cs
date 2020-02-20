@@ -23,6 +23,7 @@ public class TeiaAlimentarController : DragAndDropController
     public AudioClip selectTeia;
 
     public LifeExpController lifeExpController;
+    public MinijogosDicas dicas;
 
     public GameObject WinImage;
     public TMPro.TextMeshProUGUI WinText;
@@ -50,8 +51,6 @@ public class TeiaAlimentarController : DragAndDropController
         //}
 
         audioSource = GetComponent<AudioSource>();
-
-        Parameters.HIGH_CONTRAST = true;
     }
 
     
@@ -173,6 +172,11 @@ public class TeiaAlimentarController : DragAndDropController
                     items[FindNextItem()].GetComponent<Selectable>().Select();
                     ReadItem(items[FindNextItem()]);
                 }
+            }
+
+            if (Input.GetKeyDown(InputKeys.DICAS_KEY))
+            {
+                dicas.ShowHint();
             }
         }
         

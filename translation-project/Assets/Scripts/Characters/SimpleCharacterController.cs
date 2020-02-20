@@ -52,7 +52,9 @@ public class SimpleCharacterController : AbstractScreenReader {
     public List<string> demo_ItemInventory = new List<string>();
 
     public string missionNumber;
-    
+
+    public GameObject map;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -72,7 +74,15 @@ public class SimpleCharacterController : AbstractScreenReader {
             if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
             {
                 if (movement.magnitude > 0)
+                {
                     isWalking = true;
+
+                    if(map.activeSelf)
+                    {
+                        map.SetActive(false);
+                        ReadText("Mapa fechado.");
+                    }
+                }
                 else
                     isWalking = false;
 
