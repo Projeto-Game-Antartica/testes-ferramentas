@@ -135,6 +135,11 @@ public class MentorController : AbstractScreenReader {
                         if (PlayerPreferences.M010_Amostras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
                         break;
+
+                    case "Mentor2":
+                        minijogoBalloon.color = PlayerPreferences.M010_Desafio_Done ? new Color(0.4f, 1, 0.4f) : new Color(0.3f, 0.7f, 1);
+                        break;
+
                     case "Mentor4":
                         if (PlayerPreferences.M010_Tipos) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);

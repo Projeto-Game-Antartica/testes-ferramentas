@@ -73,6 +73,7 @@ public class AnalysisVegScreen : MonoBehaviour
     }
 
     private void showWinScreen() {
+        PlayerPreferences.M010_Desafio_Done = true;
         WinScreen.SetActive(true);
         DoAfter(5, ReturnToCamp);
     }
