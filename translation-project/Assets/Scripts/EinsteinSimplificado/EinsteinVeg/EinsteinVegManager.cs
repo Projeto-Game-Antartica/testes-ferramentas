@@ -241,7 +241,7 @@ public class EinsteinVegManager : AbstractScreenReader
         SetRemainingOptions(dropDownValue, GetRemainingOptions(dropDownValue) - correct);
         Debug.Log(GetRemainingOptions(dropDownValue));
 
-        tokensToCompare.Clear();
+        //tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
 
         //Check if the current option is done:
@@ -432,6 +432,8 @@ public class EinsteinVegManager : AbstractScreenReader
             image.sprite = GetBackground(GetDropDownValue());
             image.color = Color.white;
         }
+
+        tokensToCompare.Clear();
     }
     
     public int GetDropDownValue()

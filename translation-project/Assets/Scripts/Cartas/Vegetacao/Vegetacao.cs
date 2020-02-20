@@ -220,6 +220,7 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doWin() { //Routine to happen once the user wins
+        minijogosDicas.SupressDicas();
         winImg.SetActive(true);
         Debug.Log("Você ganhou!");
 
@@ -227,6 +228,7 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doLose() { //Routine to happen once the user wins
+        minijogosDicas.SupressDicas();
         loseImg.SetActive(true);
         Debug.Log("Você perdeu!");
 

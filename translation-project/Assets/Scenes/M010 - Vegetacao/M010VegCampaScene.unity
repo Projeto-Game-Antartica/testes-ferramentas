@@ -1941,6 +1941,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!212 &262274631 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 212881277728425086, guid: 0e2bd3f17c076384d95f3bedf0528b7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 710273126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &271002709
 GameObject:
   m_ObjectHideFlags: 0
@@ -6598,16 +6604,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1746216327458716, guid: 0e2bd3f17c076384d95f3bedf0528b7b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114979713582182044, guid: 0e2bd3f17c076384d95f3bedf0528b7b,
         type: 3}
       propertyPath: spriteRenderer.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114979713582182044, guid: 0e2bd3f17c076384d95f3bedf0528b7b,
         type: 3}
       propertyPath: missionNumber
       value: M010
       objectReference: {fileID: 0}
+    - target: {fileID: 114979713582182044, guid: 0e2bd3f17c076384d95f3bedf0528b7b,
+        type: 3}
+      propertyPath: spriteRenderer.Array.data[1]
+      value: 
+      objectReference: {fileID: 262274631}
     - target: {fileID: 4793639689783144, guid: 0e2bd3f17c076384d95f3bedf0528b7b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20
@@ -8137,6 +8152,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1722745982687666, guid: e9bd5d174e69d104ba29ed33b7d23917, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1764563386646488, guid: e9bd5d174e69d104ba29ed33b7d23917, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3278215499719410135, guid: e9bd5d174e69d104ba29ed33b7d23917,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219969578310961930, guid: e9bd5d174e69d104ba29ed33b7d23917,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085800902667120945, guid: e9bd5d174e69d104ba29ed33b7d23917,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647687235688906327, guid: e9bd5d174e69d104ba29ed33b7d23917,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11120,12 +11159,12 @@ PrefabInstance:
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.size
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: assignedIndex
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
@@ -11170,37 +11209,42 @@ PrefabInstance:
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[23]
-      value: M010_Mentor1_Dialogue1
+      value: M010_Mentor0_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[24]
-      value: M010_Mentor2_Dialogue1
+      value: M010_Mentor1_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[25]
-      value: M010_Mentor3_Dialogue1
+      value: M010_Mentor2_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[26]
-      value: M010_Mentor4_Dialogue1
+      value: M010_Mentor3_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[27]
-      value: MrCube
+      value: M010_Mentor4_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[28]
-      value: NPCOnly
+      value: MrCube
       objectReference: {fileID: 0}
     - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
       propertyPath: diags.Array.data[29]
-      value: Witch
+      value: NPCOnly
+      objectReference: {fileID: 0}
+    - target: {fileID: 114766042987598436, guid: c3f2b5248bd9ddf489c95275a8117bd3,
+        type: 3}
+      propertyPath: alias
+      value: Naturalista - Arthur
       objectReference: {fileID: 0}
     - target: {fileID: 114710294892915322, guid: c3f2b5248bd9ddf489c95275a8117bd3,
         type: 3}
@@ -11771,12 +11815,12 @@ PrefabInstance:
     - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
       propertyPath: diags.Array.data[21]
-      value: M009_Mentor5_Dialogue1
+      value: M009_Mentor4_Dialogue2
       objectReference: {fileID: 0}
     - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
       propertyPath: diags.Array.data[22]
-      value: M010_Mentor0_Dialogue1
+      value: M009_Mentor5_Dialogue1
       objectReference: {fileID: 0}
     - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
@@ -11792,12 +11836,12 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultNPCSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0357b282f7c822c45be0e0e986e170c7,
+      objectReference: {fileID: 21300000, guid: 2888179619c57d346b04da88d9daff6c,
         type: 3}
     - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
@@ -11823,6 +11867,11 @@ PrefabInstance:
         type: 3}
       propertyPath: diags.Array.data[29]
       value: NPCOnly
+      objectReference: {fileID: 0}
+    - target: {fileID: 114941408173502330, guid: ae9f52b453ae36d4487b9e66914db525,
+        type: 3}
+      propertyPath: diags.Array.data[30]
+      value: Witch
       objectReference: {fileID: 0}
     - target: {fileID: 114214754129747152, guid: ae9f52b453ae36d4487b9e66914db525,
         type: 3}
@@ -12530,27 +12579,37 @@ PrefabInstance:
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_text
-      value: Paleontologia Subzero
+      value: "VEGETA\xC7\xC3O"
       objectReference: {fileID: 0}
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 21
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_fontStyle
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1045706715485358, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
       propertyPath: m_IsActive
@@ -12559,16 +12618,16 @@ PrefabInstance:
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_text
-      value: "Objetivo:Fazer a escava\xE7\xE3o, coleta e classifica\xE7\xE3o correta
-        de 3 f\xF3sseis para contribuir com a pesquisa brasileira.\r\n\n1. Movimente
-        o jogador pelo cen\xE1rio com as setas direcionais.\r\n2. Interaja com os
-        personagens (naturalistas) do cen\xE1rio.\r\n3. Em alguns di\xE1logos haver\xE1
-        dois caminhos a seguir.\r\n4. Escolha op\xE7\xE3o de di\xE1logo acionando
-        as teclas direcionais (setas para cima/baixo)\r\n5. Monitore sua sa\xFAde
-        e pontua\xE7\xE3o. \r\n6. Complete os minijogos ao dialogar com os naturalistas
-        e ganhe itens para a Expedi\xE7\xE3o na Ant\xE1rtica.\r\n\r\nPara acessar
-        as instru\xE7\xF5es desta miss\xE3o, tecle F1\r\nPara acessar e repetir a
-        navega\xE7\xE3o via teclado tecle F2\r\nPara repetir audiodescri\xE7\xE3o
+      value: "Objetivo: Fazer a coleta e classifica\xE7\xE3o correta de 3 vegetais
+        para contribuir com a pesquisa brasileira.\r\n\r\n1. Movimente o jogador pelo
+        cen\xE1rio com as setas direcionais.\r\n2. Interaja com os personagens (naturalistas)
+        do cen\xE1rio.\r\n3.Tecle ENTER para passar o di\xE1logo\r\n4. Em alguns di\xE1logos
+        voc\xEA ter\xE1 dois caminhos a seguir.\r\n5. Escolha op\xE7\xE3o de di\xE1logo
+        acionando as teclas direcionais (setas para cima/baixo)\r\n6. Monitore sua
+        sa\xFAde e pontua\xE7\xE3o. \r\n7. Complete os minijogos ao dialogar com os
+        naturalistas e ganhe itens para a Expedi\xE7\xE3o na Ant\xE1rtica.\r\n\r\nPara
+        acessar as instru\xE7\xF5es desta miss\xE3o, tecle F1\r\nPara acessar e repetir
+        a navega\xE7\xE3o via teclado tecle F2\r\nPara repetir audiodescri\xE7\xE3o
         da tela tecle F3\r\n"
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
@@ -12579,17 +12638,17 @@ PrefabInstance:
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 674
+      value: 706
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 106
+      value: 113
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 105
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -12598,7 +12657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1898185719459980, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224044704426130502, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -12703,7 +12762,7 @@ PrefabInstance:
     - target: {fileID: 114512177246375156, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114512177246375156, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -12713,7 +12772,7 @@ PrefabInstance:
     - target: {fileID: 114008053196294442, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114008053196294442, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -12723,7 +12782,7 @@ PrefabInstance:
     - target: {fileID: 114801691609848058, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114801691609848058, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -12733,7 +12792,7 @@ PrefabInstance:
     - target: {fileID: 114830244172971936, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114100347341746834, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -13174,6 +13233,122 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 96df61eb07a6376488a02c6ff35e0360,
         type: 3}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InitMission
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 380219413}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 380219413}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: InitMission
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649669410666548, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250708204586134, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665443900673620, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1354499596135982, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383759594519356, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101929764875080, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224593457875607196, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.599998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938905677933178, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239034422084864, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062992199294454, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305712809590112, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114035165663177218, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114035165663177218, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916464498608308313, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114941141543676192, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797963606416930, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
 --- !u!1 &2049756389 stripped

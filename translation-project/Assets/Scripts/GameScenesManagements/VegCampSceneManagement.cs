@@ -55,6 +55,9 @@ public class VegCampSceneManagement : AbstractScreenReader {
             chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
             //Debug.Log(transform.position);
         }
+
+        //Show instructions in case game has not yet been initialized
+        instructionInterface.SetActive(!PlayerPreferences.M010_Initialized);
     }
 
     private void Update()
@@ -78,6 +81,12 @@ public class VegCampSceneManagement : AbstractScreenReader {
         //    }
         //}
     }
+
+    public void InitMission() {
+        PlayerPreferences.M010_Initialized = true;
+        instructionInterface.SetActive(false);
+    }
+
 
     //public void ReadSceneDescription()
     //{

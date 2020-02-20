@@ -26,6 +26,7 @@ public class PlayerPreferences : MonoBehaviour {
     public static bool M010_Mentor0_Talked = false;
     public static bool M010_Mentor3_Talked = false;
     public static bool M010_Desafio_Done = false;
+    public static bool M010_Initialized = false;
   
     // puzzles points
     public static float XPwinPuzzle = 0.004f;
