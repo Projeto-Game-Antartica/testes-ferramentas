@@ -130,7 +130,7 @@ public class Vegetacao : AbstractCardManager
 
     // initialize after button click on instruction
     public void Initialize() {
-        PlayerPreferences.M010_Tipos = true;
+        //PlayerPreferences.M010_Tipos = true;
         
         rand = new System.Random(); //Inits random number generator
 
@@ -220,6 +220,7 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doWin() { //Routine to happen once the user wins
+        PlayerPreferences.M010_Tipos = true;
         minijogosDicas.SupressDicas();
         winImg.SetActive(true);
         Debug.Log("Você ganhou!");

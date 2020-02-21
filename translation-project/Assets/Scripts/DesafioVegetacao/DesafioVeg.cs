@@ -84,6 +84,7 @@ public class DesafioVeg : MonoBehaviour
 
     public void StartGame() {
         resetButton.interactable = true;
+        //PlayerPreferences.M010_Desafio_Done = true;
     }
 
     public void ResetHarvestScreen() {

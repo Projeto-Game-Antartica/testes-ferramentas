@@ -149,7 +149,7 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
-        PlayerPreferences.M010_Amostras = true;
+        //PlayerPreferences.M010_Amostras = true;
         
         if (!init)
             initializeCards();
@@ -302,6 +302,7 @@ public class EinsteinVegManager : AbstractScreenReader
     {
         if (win)
         {
+            PlayerPreferences.M010_Amostras = true;
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 

@@ -224,7 +224,8 @@ public class VIDEUIManager : AbstractScreenReader
              
             if (data.extraVars.ContainsKey("LoadScene"))
             {
-                SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
+                //SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
+                LoadSceneWithDelay((string)data.extraVars["LoadScene"], 3f);
             }
 
             if(data.extraVars.ContainsKey("SavePosition"))
@@ -387,12 +388,20 @@ public class VIDEUIManager : AbstractScreenReader
             audioSource.PlayOneShot(xpClip);
 
             StartCoroutine(HandlexpIcon());
-            
             lifeExpController.AddEXP(0.02f);
 
             Debug.Log("exp gained");
             flagEXP = false;
         }
+    }
+
+    public void LoadSceneWithDelay(string sceneName, float delay) {
+        StartCoroutine(LoadSceneWithDelayCoroutine(sceneName, delay));
+    }
+
+    public IEnumerator LoadSceneWithDelayCoroutine(string sceneName, float delay) {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public IEnumerator HandlexpIcon()
@@ -413,7 +422,7 @@ public class VIDEUIManager : AbstractScreenReader
             xpIcon.fillAmount -= 0.05f;
             yield return new WaitForSeconds(0.05f);
         }
-        }
+    }
 
     public void HandleAlertDialog(bool open)
     {
