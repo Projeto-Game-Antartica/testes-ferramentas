@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerPreferences : MonoBehaviour {
 
+    public static string PlayerName = "";
+    
     // M004 - Puzzles
     public static bool M004_TeiaAlimentar = false;
     public static bool M004_FotoIdentificacao = false;

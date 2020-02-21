@@ -95,8 +95,6 @@ public class EinsteinManager : AbstractScreenReader
         audioSource = GetComponent<AudioSource>();
 
         //initializeGame();
-
-        Parameters.HIGH_CONTRAST = true;
     }
 
     // Update is called once per frame

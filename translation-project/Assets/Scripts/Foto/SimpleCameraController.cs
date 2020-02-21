@@ -22,8 +22,6 @@ public class SimpleCameraController : AbstractScreenReader {
     public Sprite seta_cima_amarela;
     
     private const float SPEED = 70.0f;
-
-    private ReadableTexts readableTexts;
     
     /*
      * Startup Settings
@@ -38,35 +36,8 @@ public class SimpleCameraController : AbstractScreenReader {
     }
 
     // Update is called once per frame
-    void Update () {
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (!panelInstruction.activeSelf)
-            {
-                panelInstruction.SetActive(true);
-                GameObject.Find("button-play").GetComponent<UnityEngine.UI.Button>().Select();
-
-                ReadText("Painel de instruções aberto.");
-                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
-            }
-            else
-            {
-                ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_instructions, LocalizationManager.instance.GetLozalization()));
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            panelInstruction.SetActive(false);
-            ReadText("Painel de instruções fechado.");
-        }
-
-        if (Input.GetKeyDown(KeyCode.F3) && !panelInstruction.activeSelf && !panelContent.activeSelf)
-        {
-            ReadText(readableTexts.GetReadableText(ReadableTexts.key_foto_sceneDescription, LocalizationManager.instance.GetLozalization()));
-        }
-
+    void Update ()
+    {
         // camera se movimenta quando os paineis estao desabilitados
         if (!panelInstruction.activeSelf && !panelContent.activeSelf)
         {

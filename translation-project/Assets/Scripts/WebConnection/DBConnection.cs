@@ -6,12 +6,11 @@ using UnityEngine.Networking;
 
 public class DBConnection : MonoBehaviour
 {
-
-
     // local path
     private readonly string connection_url = "http://localhost/antartica/index.php";
     private readonly string register_url = "http://localhost/antartica/registeruser.php";
     private readonly string password_url = "http://localhost/antartica/password.php";
+    private readonly string username_url = "http://localhost/antartica/username.php";
 
     public static DBConnection instance;
 
@@ -20,6 +19,8 @@ public class DBConnection : MonoBehaviour
         instance = this;
 
         //StartCoroutine(ConnectToDB());
+
+        DontDestroyOnLoad(this);
     }
 
     private IEnumerator ConnectToDB()
@@ -60,6 +61,9 @@ public class DBConnection : MonoBehaviour
             else
             {
                 Debug.Log(www.downloadHandler.text);
+
+                PlayerPreferences.PlayerName = name;
+
                 onComplete(true);
             }
         }
@@ -86,20 +90,45 @@ public class DBConnection : MonoBehaviour
                 //Debug.Log(www.downloadHandler.text);
 
                 string passwordFromDB = www.downloadHandler.text;
-                onComplete(ComparePasswords(passwordFromDB, passw));
+                onComplete(ComparePasswords(email, passwordFromDB, passw));
             }
         }
     }
 
-    private bool ComparePasswords(string passwordfromDB, string password)
+    private bool ComparePasswords(string email, string passwordfromDB, string password)
     {
+        DateTime dateTime = DateTime.Now;
         if (SecurePasswordHasher.Verify(password, passwordfromDB))
         {
             Debug.Log("Log in successfull");
+            StartCoroutine(GetUserName(email, dateTime.ToString("yyyy-MM-dd HH:mm:ss")));
             return true;
         }
 
         Debug.Log("Wrong Credentials");
         return false;
+    }
+
+    private IEnumerator GetUserName(string email, string date)
+    {
+        WWWForm form = new WWWForm();
+
+        form.AddField("loginEmail", email);
+        form.AddField("dateTime", date);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(username_url, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                PlayerPreferences.PlayerName = www.downloadHandler.text;
+            }
+        }
     }
 }

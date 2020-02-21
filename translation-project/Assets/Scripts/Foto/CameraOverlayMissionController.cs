@@ -314,7 +314,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
         // set the button inactive
         panelContent.SetActive(true);
 
-        saveButton.Select();
+        okButton.Select();
 
         // set the screenshot on panel image
         panelImage.sprite = null;

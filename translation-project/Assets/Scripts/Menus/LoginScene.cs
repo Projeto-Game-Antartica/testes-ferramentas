@@ -45,7 +45,7 @@ public class LoginScene : AbstractScreenReader {
 
     public void TryLoginEmail()
     {
-        Debug.Log("trying to log in...");
+        //Debug.Log("trying to log in...");
 
         if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
         {

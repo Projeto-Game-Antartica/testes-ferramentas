@@ -43,6 +43,11 @@ public class InGameOptions : AbstractScreenReader {
         }
     }
 
+    private void OnDisable()
+    {
+        confirmQuit.SetActive(false);
+    }
+
     public void TryReturnToMenu()
     {
         confirmQuit.SetActive(true);

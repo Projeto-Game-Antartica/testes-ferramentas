@@ -30,6 +30,9 @@ public class InputKeys : MonoBehaviour {
 
     // repetir acesso via teclado
     public static KeyCode REPEAT_KEY = KeyCode.F2;
+    
+    // dicas nos minijogos
+    public static KeyCode DICAS_KEY = KeyCode.F5;
 
     // repetir audiodescricao
     public static KeyCode AUDIODESCRICAO_KEY = KeyCode.F3;
