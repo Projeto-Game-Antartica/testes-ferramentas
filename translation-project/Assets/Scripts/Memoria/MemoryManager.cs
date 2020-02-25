@@ -63,9 +63,10 @@ public class MemoryManager : AbstractScreenReader {
     public GameObject BigImage2;
 
     // hint settings
-    //public MinijogosDicas dicas;
+    public MinijogosDicas dicas;
 
     public LifeExpController lifeExpController;
+
 
     public GameObject instructionInterface;
     public GameObject confirmQuit;
@@ -154,7 +155,7 @@ public class MemoryManager : AbstractScreenReader {
             //Debug.Log(c.Count);
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             if (!instructionInterface.activeSelf)
             {
@@ -163,9 +164,14 @@ public class MemoryManager : AbstractScreenReader {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+        }
+
+        if (Input.GetKeyDown(InputKeys.DICAS_KEY))
+        {
+            dicas.ShowHint();
         }
 
         //else
@@ -462,110 +468,110 @@ public class MemoryManager : AbstractScreenReader {
     public IEnumerator EndGame(bool win)
     {
         switch (missionName)
+        {
+            case "baleias":
+                if (win)
                 {
-                    case "baleias":
-                        if (win)
-                            {
-                            WinImage.SetActive(true);
-                            //WinImage.GetComponentInChildren<Button>().Select();
+                    WinImage.SetActive(true);
+                    //WinImage.GetComponentInChildren<Button>().Select();
 
-                            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                    if (!PlayerPreferences.M004_TeiaAlimentar)
+                    {
+                        WinText.text = "Parabéns, você ganhou um dos itens necessário para sua aventura na antártica: Câmera fotográfica";
 
-                            if (!PlayerPreferences.M004_TeiaAlimentar)
-                            {
-                                WinText.text = "Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.";
+                        audioSource.PlayOneShot(victoryAudio);
+                        yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                audioSource.PlayOneShot(victoryAudio);
-                                yield return new WaitWhile(() => audioSource.isPlaying);
+                        ReadText(WinText.text);
+                    }
+                    else
+                    {
+                        WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                            "contribuir com as pesquisas da Ciência Cidadã.";
 
-                                ReadText("Parabéns!! Você ganhou a câmera fotográfica, mas ainda falta conquistar a lente zoom.");
-                            }
-                            else
-                            {
-                                WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                    "contribuir com as pesquisas da Ciência Cidadã.";
+                        audioSource.PlayOneShot(victoryAudio);
+                        yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                audioSource.PlayOneShot(victoryAudio);
-                                yield return new WaitWhile(() => audioSource.isPlaying);
+                        ReadText(WinText.text);
+                    }
 
-                                ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                    "contribuir com as pesquisas da Ciência Cidadã.");
-                            }
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
-                            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // finalizou o minijogo
-                            lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou o item
-                        }
-                        else
-                        {
-                            LoseImage.SetActive(true);
+                    lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // finalizou o minijogo
+                    lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou o item
+                }
+                else
+                {
+                    LoseImage.SetActive(true);
 
-                            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-                            audioSource.PlayOneShot(loseAudio);
+                    audioSource.PlayOneShot(loseAudio);
 
-                            yield return new WaitWhile(() => audioSource.isPlaying);
+                    yield return new WaitWhile(() => audioSource.isPlaying);
 
-                            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
-                            resetButton.Select();
-                            lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
-                        }
+                    ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
-                        StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
-                                        break;
+                    resetButton.Select();
+                    lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
 
-                    case "paleo":
-                        if (win)
-                            {
-                                WinImage.SetActive(true);
-                                //WinImage.GetComponentInChildren<Button>().Select();
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                }
 
-                                //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
+                StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+                break;
 
-                                if (!PlayerPreferences.M009_Memoria)
-                                {
-                                    WinText.text = "Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.";
+            case "paleo":
+                if (win)
+                {
+                    WinImage.SetActive(true);
+                    //WinImage.GetComponentInChildren<Button>().Select();
 
-                                    audioSource.PlayOneShot(victoryAudio);
-                                    yield return new WaitWhile(() => audioSource.isPlaying);
+                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
-                                    //ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
-                                }
-                                else
-                                {//MUDAARR
-                                    WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                        "contribuir com as pesquisas da Ciência Cidadã.";
+                    if (!PlayerPreferences.M009_Memoria)
+                    {
+                        WinText.text = "Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.";
 
-                                    audioSource.PlayOneShot(victoryAudio);
-                                    yield return new WaitWhile(() => audioSource.isPlaying);
+                        audioSource.PlayOneShot(victoryAudio);
+                        yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                                        //"contribuir com as pesquisas da Ciência Cidadã.");
-                                }
+                        //ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
+                    }
+                    else
+                    {//MUDAARR
+                        WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                            "contribuir com as pesquisas da Ciência Cidadã.";
 
-                                lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-                                lifeExpController.AddEXP(0.0002f); // ganhou o item
-                                }
-                                else
-                                {
-                                    LoseImage.SetActive(true);
-                                    //MUDAARR
-                                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+                        audioSource.PlayOneShot(victoryAudio);
+                        yield return new WaitWhile(() => audioSource.isPlaying);
 
-                                    audioSource.PlayOneShot(loseAudio);
+                        //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
+                            //"contribuir com as pesquisas da Ciência Cidadã.");
+                    }
 
-                                    yield return new WaitWhile(() => audioSource.isPlaying);
+                    lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+                    lifeExpController.AddEXP(0.0002f); // ganhou o item
+                }
+                else
+                {
+                    LoseImage.SetActive(true);
+                    //MUDAARR
+                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
-                                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
-                                    resetButton.Select();
-                                    lifeExpController.AddEXP(0.0001f); // jogou um minijogo
-                                }
+                    audioSource.PlayOneShot(loseAudio);
 
-                                StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
-                        break;
-                    default:
-         
-                        break;
-                } 
+                    yield return new WaitWhile(() => audioSource.isPlaying);
+
+                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                    resetButton.Select();
+                    lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+                }
+
+                StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+                break;
+            default:
+                break;
+        } 
     }
 
     public void TryReturnToShip()

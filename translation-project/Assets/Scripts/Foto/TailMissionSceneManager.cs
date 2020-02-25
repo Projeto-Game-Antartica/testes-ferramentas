@@ -37,23 +37,26 @@ public class TailMissionSceneManager : AbstractScreenReader
             }
         }
 
-        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        if(!ContentPanelMissionController.isOnInputfield)
         {
-            if (!isOnMenu)
+            if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
             {
-                audioButton.Select();
-                isOnMenu = true;
+                if (!isOnMenu)
+                {
+                    audioButton.Select();
+                    isOnMenu = true;
+                }
+                else
+                {
+                    cameraOverlayController.GetComponentInChildren<Button>().Select();
+                    isOnMenu = false;
+                }
             }
-            else
-            {
-                cameraOverlayController.GetComponentInChildren<Button>().Select();
-                isOnMenu = false;
-            }
-        }
 
-        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
-        {
-            lifeExpController.ReadHPandEXP();
+            if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+            {
+                lifeExpController.ReadHPandEXP();
+            }
         }
 
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
@@ -86,7 +89,7 @@ public class TailMissionSceneManager : AbstractScreenReader
     public void ReturnToShip()
     {
         confirmQuit.SetActive(false);
-        SceneManager.LoadScene("ShipScene");
+        SceneManager.LoadScene(ScenesNames.M004Ship);
     }
 
     public IEnumerator ReturnToShipCoroutine()

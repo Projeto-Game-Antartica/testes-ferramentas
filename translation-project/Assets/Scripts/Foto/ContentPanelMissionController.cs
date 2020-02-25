@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
@@ -31,21 +32,20 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     private int count = 0;
 
-    private bool onWhaleCatalog = false;
+    private int selectedArea = 0;
 
     public LifeExpController lifeExpController;
+
+    public static bool isOnInputfield = false;
     
     private void Start()
     {
         whaleCountText.text = count.ToString();
-        //TolkUtil.Load();
         //Parameters.ACCESSIBILITY = true;
-
-        //readableTexts = GameObject.Find("ReadableTexts").GetComponent<ReadableTexts>();
 
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_catalogo, LocalizationManager.instance.GetLozalization()));
 
-        saveButton.Select();
+        //saveButton.Select();
     }
 
     // Update is called once per frame
@@ -53,22 +53,41 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            if(!onWhaleCatalog)
+            selectedArea = (selectedArea + 1) % 3;
+
+            if (selectedArea == 1)
             {
                 buttonCatalogMission.buttons[0].GetComponent<Button>().Select();
-                onWhaleCatalog = true;
             }
-            else
+            else if (selectedArea == 2)
             {
                 // audiodescricao da baleia e suas info
                 ReadWhaleInfo(whale);
-                onWhaleCatalog = false;
+            }
+            else
+            {
+                whaleNameInput.Select();
             }
         }
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_catalogo, LocalizationManager.instance.GetLozalization()));
+        }
+
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            if(saveButton.interactable)
+                Save();
+        }
+
+        if(EventSystem.current.currentSelectedGameObject == whaleNameInput.gameObject)
+        {
+            isOnInputfield = true;
+        }
+        else
+        {
+            isOnInputfield = false;
         }
 
         // not the best way
@@ -94,9 +113,11 @@ public class ContentPanelMissionController : AbstractScreenReader {
     {
         try
         {
-            //string audiodescricao = "";
+            whale = whaleData;
 
-            string result = "Informações referente à baleia fotografada: " + "Data da foto " + dateText.text + " Organização ou Operador: INTERANTAR "
+            string result = "Características da cauda fotografada:" +  whaleController.getWhaleById(whaleData.id_whale).description;
+
+            result += "Informações referente à baleia fotografada: " + "Data da foto " + dateText.text + " Organização ou Operador: INTERANTAR "
                 + " A Localização é: Latitude: " + whaleData.latitude + " Longitude: " + whaleData.longitude;
 
             ReadText(result);
@@ -116,6 +137,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
         if (string.IsNullOrEmpty(whaleNameInput.text))
         {
             Debug.Log("O nome não pode ser vazio!");
+            ReadText("O nome não pode ser vazio!");
+
+            ReadText("Insira um nome para a baleia fotografada");
             whaleNameInput.Select();
         }
         else
@@ -136,6 +160,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
                     confirmText.text = "Parabéns, baleia identificada. Realize uma nova foto.";
                 else
                     confirmText.text = "Parabéns, baleia cadastrada. Realize uma nova foto.";
+
+                ReadText("Nome da baleia: " + whaleNameInput.text);
+                ReadText(confirmText.text);
 
                 StartCoroutine(BackToPhotoCoroutine());
             }
@@ -177,7 +204,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
     public IEnumerator BackToPhotoCoroutine()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
 
         confirmFoto.SetActive(false);
         gameObject.SetActive(false);
@@ -194,9 +221,11 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
         yield return new WaitWhile(() => audioSource.isPlaying);
 
+        ReadText("Parabéns, você concluiu esta missão e colaborou com a Ciência Cidadã. Siga agora para mais um desafio, escolhendo uma nova missão.");
+
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_sucesso, LocalizationManager.instance.GetLozalization()));
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(7f);
 
         tailMissionSceneManager.ReturnToShip();
     }

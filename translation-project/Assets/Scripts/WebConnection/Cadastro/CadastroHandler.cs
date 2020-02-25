@@ -16,12 +16,12 @@ public class CadastroHandler : MonoBehaviour
     private TMP_InputField inputPassw;
     [SerializeField]
     private TMP_InputField inputConfirm_passw;
-    [SerializeField]
-    private Toggle toggleTermos;
+    //[SerializeField]
+    //private Toggle toggleTermos;
 
     public void TryToRegister()
     {
-        if (!string.IsNullOrEmpty(inputName.text) && !string.IsNullOrEmpty(inputEmail.text) && toggleTermos.isOn)
+        if (!string.IsNullOrEmpty(inputName.text) && !string.IsNullOrEmpty(inputEmail.text))
         {
             if (!string.IsNullOrEmpty(inputPassw.text) && inputPassw.text.Equals(inputConfirm_passw.text))
             {

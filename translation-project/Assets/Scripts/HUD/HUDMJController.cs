@@ -8,6 +8,13 @@ public class HUDMJController : AbstractScreenReader
     public GameObject acessoTeclado;
     public TMPro.TextMeshProUGUI descricaoText;
 
+    public TMPro.TextMeshProUGUI playerName;
+
+    private void Start()
+    {
+        playerName.text = PlayerPreferences.PlayerName.ToUpper();
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(InputKeys.REPEAT_KEY))

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class DesafioVeg : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class DesafioVeg : MonoBehaviour
     public TMPro.TMP_InputField HarvestTime, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestNumber, HarvestLocation;
 
     Action okDialogCallback;
+
+    public Button resetButton;
 
     //Tools
     public GameObject[] Tools = new GameObject[6];
@@ -76,6 +80,10 @@ public class DesafioVeg : MonoBehaviour
             Tools[currentToolIndex].transform.SetParent(Grid[selectedGridIndex].transform, false);
         }
 
+    }
+
+    public void StartGame() {
+        resetButton.interactable = true;
     }
 
     public void ResetHarvestScreen() {
@@ -328,5 +336,24 @@ public class DesafioVeg : MonoBehaviour
 
     private void deselectGrid() {
         selectedGridIndex = -1;
+    }
+
+    public void DoAfter(int secs, UnityAction action) {
+        StartCoroutine(DoAfterCoroutine(secs, action));
+    }
+
+    public IEnumerator DoAfterCoroutine(int secs, UnityAction action) {
+        yield return new WaitForSeconds(secs);
+        action();
+    }
+
+    //Volta para o acampamento
+    public void ReturnToCamp() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010Camp);
+    }
+
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(ScenesNames.M010Desafio);
     }
 }

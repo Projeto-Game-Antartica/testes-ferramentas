@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -125,9 +126,25 @@ public class MentorController : AbstractScreenReader {
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
                         break;
                 }
-            break;
+                break;
+
+            case "M010":
+                switch(mentorName)
+                {
+                    case "Mentor1":
+                        if (PlayerPreferences.M010_Amostras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                    case "Mentor4":
+                        if (PlayerPreferences.M010_Tipos) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
+                }
+                break;
+
             default:
-                Debug.Log("check mission number");
+                //Debug.Log("check mission number");
+                throw new NotImplementedException(missionNumber + "-" + mentorName + " not implemented.");
                 break;
         }
     }
@@ -191,6 +208,12 @@ public class MentorController : AbstractScreenReader {
                         break;
             }
             break;
+          case "M010":
+                switch(mentorName)
+                {
+                    // dialogue 
+                }
+                break;
             default:
                 Debug.Log("check mission number");
                 break;

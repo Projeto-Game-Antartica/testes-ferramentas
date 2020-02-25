@@ -56,8 +56,9 @@ public class HUDController : AbstractScreenReader {
 
     private void Start()
     {
-        Debug.Log(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
-        ReadText(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
+        ReadInstructionAudiodescrition(missionNumber);
+
+        Debug.Log(PlayerPrefs.GetInt("InstructionInterface", 0));
 
         // "InstructionInterface" set on the main menu script
         if (PlayerPrefs.GetInt("InstructionInterface", 0) <= 0)
@@ -141,7 +142,7 @@ public class HUDController : AbstractScreenReader {
             }
             else
             {
-                Debug.Log("SimpleCharacter");
+                //Debug.Log("SimpleCharacter");
                 simpleCharacterController.diagUI.EndDialogue(VD.nodeData);
                 inGameOption.SetActive(false);
             }
@@ -181,6 +182,9 @@ public class HUDController : AbstractScreenReader {
         instructionInterface.SetActive(false);
 
         ShowMap(true);
+
+        Debug.Log(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
         iniciarButton.gameObject.SetActive(false);
         fecharButton.gameObject.SetActive(true);

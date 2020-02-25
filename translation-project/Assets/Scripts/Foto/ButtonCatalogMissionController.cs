@@ -4,8 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Text.RegularExpressions;
 
-public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
+public class ButtonCatalogMissionController : AbstractScreenReader, ISelectHandler {
 
     [SerializeField]
     private WhaleController whaleController;
@@ -86,6 +87,11 @@ public class ButtonCatalogMissionController : MonoBehaviour, ISelectHandler {
 
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log(eventData.selectedObject.name);
+        string result = Regex.Match(eventData.selectedObject.name, @"\d+").Value;
+
+        int id = int.Parse(result);
+
+        ReadText(whaleController.getWhaleById(id).description);
+        Debug.Log(whaleController.getWhaleById(id).description);
     }
 }

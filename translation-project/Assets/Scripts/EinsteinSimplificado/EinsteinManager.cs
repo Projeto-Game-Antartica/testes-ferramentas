@@ -410,7 +410,7 @@ public class EinsteinManager : AbstractScreenReader
             lifeExpController.AddEXP(PlayerPreferences.XPwrongTry);
 
             tries++;
-            attemptsText.text = "Tentativas restantes: " + tries + "/" + attempts;
+            attemptsText.text = "Tentativa: " + tries + "/" + attempts;
 
             ReadText("Tentativa " + tries + " de " + attempts);
             Debug.Log("Tentativa " + tries + " de " + attempts);

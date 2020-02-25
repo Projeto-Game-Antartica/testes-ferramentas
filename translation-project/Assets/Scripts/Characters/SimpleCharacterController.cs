@@ -50,7 +50,11 @@ public class SimpleCharacterController : AbstractScreenReader {
     //Crazy cap NPC in the demo has items you can collect
     public List<string> demo_Items = new List<string>();
     public List<string> demo_ItemInventory = new List<string>();
-    
+
+    public string missionNumber;
+
+    public GameObject map;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -70,7 +74,15 @@ public class SimpleCharacterController : AbstractScreenReader {
             if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
             {
                 if (movement.magnitude > 0)
+                {
                     isWalking = true;
+
+                    if(map.activeSelf)
+                    {
+                        map.SetActive(false);
+                        ReadText("Mapa fechado.");
+                    }
+                }
                 else
                     isWalking = false;
 
@@ -208,24 +220,24 @@ public class SimpleCharacterController : AbstractScreenReader {
     }
 
     // Save the position in player prefs
-    public void SavePosition(Vector2 position)
+    public void SavePosition(Vector2 position, string missionNumber)
     {
-        PlayerPrefs.SetFloat("p_x", position.x);
+        PlayerPrefs.SetFloat("p_x_" + missionNumber, position.x);
 
-        PlayerPrefs.SetFloat("p_y", position.y);
+        PlayerPrefs.SetFloat("p_y_" + missionNumber, position.y);
 
-        PlayerPrefs.SetInt("Saved", 1);
+        PlayerPrefs.SetInt("Saved_" + missionNumber, 1);
 
         PlayerPrefs.Save();
     }
 
-    public Vector3 GetPosition()
+    public Vector3 GetPosition(string missionNumber)
     {
         // Reset, so that the save will be used only once
-        PlayerPrefs.SetInt("Saved", 0);
+        PlayerPrefs.SetInt("Saved_"+missionNumber, 0);
         PlayerPrefs.Save();
 
-        return new Vector3(PlayerPrefs.GetFloat("p_x"), PlayerPrefs.GetFloat("p_y"));
+        return new Vector3(PlayerPrefs.GetFloat("p_x_"+ missionNumber), PlayerPrefs.GetFloat("p_y_" + missionNumber));
     }
 
     void TryInteract()
