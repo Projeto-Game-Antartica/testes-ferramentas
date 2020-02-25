@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 
 public class EinsteinVegManager : AbstractScreenReader
 {
@@ -303,21 +303,30 @@ public class EinsteinVegManager : AbstractScreenReader
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
-            lifeExpController.AddEXP(0.001f); // finalizou o minijogo
-            lifeExpController.AddEXP(0.0002f); // ganhou o item
+            //lifeExpController.AddEXP(0.001f); // finalizou o minijogo
+            //lifeExpController.AddEXP(0.0002f); // ganhou o item
         }
         else
         {
             LoseImage.SetActive(true);
-            lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+            //lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
 
-        StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        DoAfter(3, ReturnToCamp);
     }
 
-    public void ReturnToUshuaia() {
-        //if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    public void DoAfter(int secs, UnityAction action) {
+        StartCoroutine(DoAfterCoroutine(secs, action));
+    }
+
+    public IEnumerator DoAfterCoroutine(int secs, UnityAction action) {
+        yield return new WaitForSeconds(secs);
+        action();
+    }
+
+    //Volta para o acampamento
+    public void ReturnToCamp() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010Camp);
     }
 
     public void ResetScene() {
@@ -438,11 +447,4 @@ public class EinsteinVegManager : AbstractScreenReader
 
         processDropDown.GetComponent<Image>().color = GetColor(dropdownValue);
     }   
-
-    public IEnumerator ReturnToUshuaiaCoroutine()
-    {
-        yield return new WaitForSeconds(7f);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
-    }
 }

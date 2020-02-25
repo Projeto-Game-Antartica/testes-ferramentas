@@ -29,10 +29,19 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
     public AudioClip avisoClip;
     public AudioClip closeClip;
 
+    private string missionNumber = "M002_Casinha";
+
     // Use this for initialization
     void Start()
     {
         isTrigger = false;
+        
+        if (PlayerPrefs.GetInt("Saved_" + missionNumber) == 1)
+        {
+            transform.position = character.GetPosition(missionNumber);
+            chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
+            Debug.Log(transform.position);
+        }
 
         Debug.Log(SceneManager.GetActiveScene().name);
     }
@@ -41,13 +50,14 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
     {
         if (isTrigger && Input.GetKeyDown(KeyCode.Return))
         {
-            positionSceneChange = new Vector3(transform.position.x, transform.position.y);
-
-            // save the position when loading another scene
-            //character.SavePosition(positionSceneChange);
-
             if (colliderControl.name.Equals("door"))
+            {
+                positionSceneChange = new Vector3(transform.position.x, transform.position.y);
+
+                // save the position when loading another scene
+                character.SavePosition(positionSceneChange, missionNumber);
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F2))

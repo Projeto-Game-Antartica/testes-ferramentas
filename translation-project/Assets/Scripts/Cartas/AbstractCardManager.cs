@@ -88,6 +88,7 @@ public abstract class AbstractCardManager : AbstractScreenReader {
     {
         int delta = Random.Range(0, 90);
         currentImage.transform.parent.DOMoveX(120 + delta, 1);
+        currentImage.transform.parent.DOMoveY(3, 1);
         currentImage.transform.parent.DORotate(new Vector3(0, 0, -45), 2);
         currentImage.transform.parent.DOScale(new Vector3(0.4f, 0.4f), 2);
 
