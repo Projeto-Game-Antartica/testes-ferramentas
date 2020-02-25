@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 
 public class AcampamentoCartas : AbstractCardManager
 {
@@ -66,6 +66,18 @@ public class AcampamentoCartas : AbstractCardManager
 
     private void Update()
     {
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+                                    Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+        {
+            GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
+
+            if (nextCell.GetComponent<Button>() != null)
+            {
+                nextCell.GetComponent<Selectable>().Select();
+                ReadButton(nextCell);
+            }
+        }
+
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             instruction_interface.SetActive(true);
@@ -89,6 +101,10 @@ public class AcampamentoCartas : AbstractCardManager
         if (Input.GetKeyDown(KeyCode.F6))
         {
             likeButton.Select();
+
+            GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
+            
+            ReadButton(nextCell);
         }
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
@@ -112,6 +128,11 @@ public class AcampamentoCartas : AbstractCardManager
             {
                 TryReturnToCamp();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            minijogosDicas.ShowHint();
         }
     }
 
@@ -836,6 +857,8 @@ public class AcampamentoCartas : AbstractCardManager
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item    
+
+            minijogosDicas.GetComponent<MinijogosDicas>().dicas.SetActive(false);
         }
         else
         {
@@ -851,6 +874,8 @@ public class AcampamentoCartas : AbstractCardManager
               resetButton.Select();
               lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
               Debug.Log("Zerou um marcador!");
+
+              minijogosDicas.GetComponent<MinijogosDicas>().dicas.SetActive(false);
         }
 
         StartCoroutine(ReturnToCampCoroutine());
@@ -874,6 +899,24 @@ public class AcampamentoCartas : AbstractCardManager
     public void ResetGameObjects()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Itens);
+    }
+
+    void ReadButton (GameObject nextCell)
+    {
+        if(nextCell.GetComponent<Button>() != null)
+        {
+            if(nextCell.GetComponent<Button>().name == "dislike")
+            {
+                    Debug.Log("Rejeitar item.");
+                    ReadText("Rejeitar item.");
+            }
+            
+            else if(nextCell.GetComponent<Button>().name == "like")
+            {
+                    Debug.Log("Aceitar item.");
+                    ReadText("Aceitar item.");
+            }
+        }
     }
 }
  
