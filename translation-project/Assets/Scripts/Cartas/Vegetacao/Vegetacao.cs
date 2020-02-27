@@ -68,7 +68,7 @@ public class Vegetacao : AbstractCardManager
             nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex];
             nextImage.name = sprites[cardIndex].name;
         } else {
-            nextImage.GetComponentInChildren<Image>().sprite = null;
+            nextImage.transform.parent.gameObject.SetActive(false); //Get hid of the last card
             nextImage.name = "";
         }
     }
@@ -130,7 +130,8 @@ public class Vegetacao : AbstractCardManager
 
     // initialize after button click on instruction
     public void Initialize() {
-        Debug.Log(SceneManager.GetActiveScene().name);
+        //PlayerPreferences.M010_Tipos = true;
+        
         rand = new System.Random(); //Inits random number generator
 
         sprites = Shuffle<Sprite>(sprites);
@@ -219,6 +220,8 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doWin() { //Routine to happen once the user wins
+        PlayerPreferences.M010_Tipos = true;
+        minijogosDicas.SupressDicas();
         winImg.SetActive(true);
         Debug.Log("Você ganhou!");
 
@@ -226,6 +229,7 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doLose() { //Routine to happen once the user wins
+        minijogosDicas.SupressDicas();
         loseImg.SetActive(true);
         Debug.Log("Você perdeu!");
 

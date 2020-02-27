@@ -135,6 +135,11 @@ public class MentorController : AbstractScreenReader {
                         if (PlayerPreferences.M010_Amostras) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
                         break;
+
+                    case "Mentor2":
+                        minijogoBalloon.color = PlayerPreferences.M010_Desafio_Done ? new Color(0.4f, 1, 0.4f) : new Color(0.3f, 0.7f, 1);
+                        break;
+
                     case "Mentor4":
                         if (PlayerPreferences.M010_Tipos) minijogoBalloon.color = new Color(0.4f, 1, 0.4f);
                         else minijogoBalloon.color = new Color(0.3f, 0.7f, 1);
@@ -143,7 +148,6 @@ public class MentorController : AbstractScreenReader {
                 break;
 
             default:
-                //Debug.Log("check mission number");
                 throw new NotImplementedException(missionNumber + "-" + mentorName + " not implemented.");
                 break;
         }
@@ -194,24 +198,24 @@ public class MentorController : AbstractScreenReader {
                         break;
                 }
                 break;
-          case "M009":
-            switch(mentorName)
-            {
-                // dialogue 
-                case "Mentor3":
-                        if (PlayerPrefs.GetInt("M009_Mentor3_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
-                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
-                        break;
-            }
-            break;
-          case "M010":
+
+            case "M009":
                 switch(mentorName)
                 {
                     // dialogue 
+                    case "Mentor3":
+                            if (PlayerPrefs.GetInt("M009_Mentor3_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                            else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                            break;
                 }
                 break;
+
+            case "M010":
+                    //Handled by DialogMentorBalloon
+                    break;
+
             default:
-                Debug.Log("check mission number");
+                throw new NotImplementedException("Mission number not implemented: " + missionNumber);
                 break;
         }
     }

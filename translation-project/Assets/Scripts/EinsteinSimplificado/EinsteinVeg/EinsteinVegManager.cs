@@ -149,6 +149,8 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
+        //PlayerPreferences.M010_Amostras = true;
+        
         if (!init)
             initializeCards();
 
@@ -239,7 +241,7 @@ public class EinsteinVegManager : AbstractScreenReader
         SetRemainingOptions(dropDownValue, GetRemainingOptions(dropDownValue) - correct);
         Debug.Log(GetRemainingOptions(dropDownValue));
 
-        tokensToCompare.Clear();
+        //tokensToCompare.Clear();
         cards[0].GetComponent<Button>().Select();
 
         //Check if the current option is done:
@@ -300,6 +302,7 @@ public class EinsteinVegManager : AbstractScreenReader
     {
         if (win)
         {
+            PlayerPreferences.M010_Amostras = true;
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
@@ -430,6 +433,8 @@ public class EinsteinVegManager : AbstractScreenReader
             image.sprite = GetBackground(GetDropDownValue());
             image.color = Color.white;
         }
+
+        tokensToCompare.Clear();
     }
     
     public int GetDropDownValue()

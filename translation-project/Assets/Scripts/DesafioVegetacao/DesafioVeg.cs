@@ -10,7 +10,7 @@ public class DesafioVeg : MonoBehaviour
 {
 
     //Scenario
-    public GameObject Plant, PlantDetached, BowlFull, BagFull, FramePlaced, BowlPlaced, OkDialog, AnalysisScreen, GameScreen;
+    public GameObject Plant, PlantDetached, PlantToolBox, BowlFull, BagFull, FramePlaced, BowlPlaced, OkDialog, AnalysisScreen, GameScreen;
 
     public TMPro.TMP_InputField HarvestTime, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestNumber, HarvestLocation;
 
@@ -84,6 +84,7 @@ public class DesafioVeg : MonoBehaviour
 
     public void StartGame() {
         resetButton.interactable = true;
+        //PlayerPreferences.M010_Desafio_Done = true;
     }
 
     public void ResetHarvestScreen() {
@@ -242,6 +243,7 @@ public class DesafioVeg : MonoBehaviour
         BagFull.SetActive(false);
         FramePlaced.SetActive(false);
         BowlPlaced.SetActive(false);
+        PlantToolBox.SetActive(false);
 
         currentGameState = state;
 
@@ -281,6 +283,7 @@ public class DesafioVeg : MonoBehaviour
                 break;
 
             case GameState.BowlPlaced:
+                PlantToolBox.SetActive(true);
                 FramePlaced.SetActive(true);
                 FramePlaced.transform.SetParent(Grid[plantIndex].transform, false);
                 BowlPlaced.SetActive(true);
