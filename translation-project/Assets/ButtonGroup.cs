@@ -8,28 +8,32 @@ public class ButtonGroup : MonoBehaviour
 
     private Button[] buttons;
 
-    private int selectedIndex = -1;
+    private int selectedIndex;
 
     public int GetSelectedIndex() => selectedIndex;
 
     public void ClearSelection() {
         selectedIndex = -1;
         foreach(Button button in GetComponentsInChildren<Button>())
-            button.GetComponent<Image>().color = Color.white;
+            SetButtonColor(button, Color.white);
+    }
+
+    private void selectButton(int buttonIndex) {
+        ClearSelection();
+        selectedIndex = buttonIndex;
+        SetButtonColor(buttonIndex, Color.yellow);
     }
 
     private void onButtonClick(int i) {
-        selectedIndex = i;
-        updatedButtonsColor(i);
+        selectButton(i);
     }
 
-    private void updatedButtonsColor(int buttonIndex) {
-        for(int i = 0; i < buttons.Length; i++) {
-            if(i == buttonIndex)
-                buttons[i].GetComponent<Image>().color = Color.yellow;
-            else
-                buttons[i].GetComponent<Image>().color = Color.white;
-        }
+    public void SetButtonColor(int buttonIndex, Color color) {
+        SetButtonColor(buttons[buttonIndex], color); 
+    }
+
+    public void SetButtonColor(Button button, Color color) {
+        button.GetComponent<Image>().color = color;
     }
 
     // Start is called before the first frame update
@@ -42,14 +46,8 @@ public class ButtonGroup : MonoBehaviour
             int temp = i;
             buttons[i].onClick.AddListener(()=>{onButtonClick(temp);});
         }
+
+        ClearSelection();
     }
 
-    // Update is called once per frame
-    // void Update()
-    // {
-    //     string debugStr = "";
-    //     foreach (Button but in buttons)
-    //         debugStr += but.IsPressed();
-    //     Debug.Log(debugStr);
-    // }
 }

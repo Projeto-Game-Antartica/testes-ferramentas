@@ -40,19 +40,24 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
     public void Start()
     {
+        Debug.Log("-----------------------------------STATES--------------------------------");
+        Debug.Log(PlayerPreferences.M010_Amostras);
+        Debug.Log(PlayerPreferences.M010_Tipos);
+        Debug.Log("------------------------------END-STATES---------------------------------");
+
         isTrigger = false;
 
         //InitialInstruction();
 
         if (PlayerPrefs.GetInt("Saved_" + missionNumber) == 1)
         {
-            Debug.Log("TESTE123123" + missionNumber);
             transform.position = character.GetPosition(missionNumber);
             chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
-            Debug.Log(transform.position);
+            //Debug.Log(transform.position);
         }
 
-        Debug.Log(SceneManager.GetActiveScene().name);
+        //Show instructions in case game has not yet been initialized
+        instructionInterface.SetActive(!PlayerPreferences.M010_Initialized);
     }
 
     private void Update()
@@ -76,6 +81,12 @@ public class VegCampSceneManagement : AbstractScreenReader {
         //    }
         //}
     }
+
+    public void InitMission() {
+        PlayerPreferences.M010_Initialized = true;
+        instructionInterface.SetActive(false);
+    }
+
 
     //public void ReadSceneDescription()
     //{
@@ -173,4 +184,14 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
         colliderControl = null;
     }
+
+    public void talkMentor0() {
+        PlayerPreferences.M010_Mentor0_Talked = true;
+    }
+    
+    public void talkMentor3() {
+        PlayerPreferences.M010_Mentor3_Talked = true;
+    }
+
+
 }

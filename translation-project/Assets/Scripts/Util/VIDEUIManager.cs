@@ -224,7 +224,8 @@ public class VIDEUIManager : AbstractScreenReader
              
             if (data.extraVars.ContainsKey("LoadScene"))
             {
-                SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
+                //SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
+                LoadSceneWithDelay((string)data.extraVars["LoadScene"], 3f);
             }
 
             if(data.extraVars.ContainsKey("SavePosition"))
@@ -271,8 +272,13 @@ public class VIDEUIManager : AbstractScreenReader
                     Debug.Log("Player prefs dont have key >> " + dialogueName);
                 }
 
-                // the tird component on hierarchy is the dialogue/minijogo balloon
-                mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
+                //The third component on hierarchy is the dialogue/minijogo balloon
+                //Update 18/02: This should only change when the player successfully finishes the minigame
+                //mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
+            }
+
+            if(data.extraVars.ContainsKey("SetDoneBalloon")) {
+                mentor.gameObject.GetComponentInChildren<DialogMentorBalloon>().SetDone();
             }
 
             if(data.extraVars.ContainsKey("OpenLista"))
@@ -382,12 +388,20 @@ public class VIDEUIManager : AbstractScreenReader
             audioSource.PlayOneShot(xpClip);
 
             StartCoroutine(HandlexpIcon());
-            
             lifeExpController.AddEXP(0.02f);
 
             Debug.Log("exp gained");
             flagEXP = false;
         }
+    }
+
+    public void LoadSceneWithDelay(string sceneName, float delay) {
+        StartCoroutine(LoadSceneWithDelayCoroutine(sceneName, delay));
+    }
+
+    public IEnumerator LoadSceneWithDelayCoroutine(string sceneName, float delay) {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public IEnumerator HandlexpIcon()
@@ -408,7 +422,7 @@ public class VIDEUIManager : AbstractScreenReader
             xpIcon.fillAmount -= 0.05f;
             yield return new WaitForSeconds(0.05f);
         }
-        }
+    }
 
     public void HandleAlertDialog(bool open)
     {
