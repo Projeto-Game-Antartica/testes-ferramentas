@@ -187,7 +187,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela = 3;
                 mapa = 2;
                 break;
-            case "Barracas amplas (polar haven)":
+            case "Polar Harven":
                 coracao = 1;
                 estrela = 3;
                 mapa = 3;
@@ -476,7 +476,7 @@ public class AcampamentoCartas : AbstractCardManager
                 estrela =-3;
                 mapa =-2;
                 break;
-            case "Barracas amplas (polar haven)":
+            case "Polar Harven":
                 coracao =-1;
                 estrela =-3;
                 mapa =-3;

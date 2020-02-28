@@ -339,10 +339,10 @@ public class ErasPaleoController : DragAndDropController
             {
                 EndGame(true);
 			}
-        if(wrongAnswer >= 3)
+        /* if(wrongAnswer >= 3)
             {
                 EndGame(false);
-			}
+			} */
     }
 
     public void EndGame(bool win)
