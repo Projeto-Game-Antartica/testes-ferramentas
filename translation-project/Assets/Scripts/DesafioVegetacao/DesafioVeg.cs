@@ -18,6 +18,8 @@ public class DesafioVeg : MonoBehaviour
 
     public Button resetButton;
 
+    public GameObject instruction_interface;
+
     //Tools
     public GameObject[] Tools = new GameObject[6];
     private int currentToolIndex;
@@ -79,6 +81,12 @@ public class DesafioVeg : MonoBehaviour
         if(selectedGridIndex > -1 && currentToolIndex > -1) {
             Tools[currentToolIndex].transform.SetParent(Grid[selectedGridIndex].transform, false);
         }
+
+        if (ActionInput.GetKeyDown(KeyCode.F1))
+            instruction_interface.SetActive(true);
+
+        if (ActionInput.GetKey(KeyCode.Escape))
+            instruction_interface.SetActive(false);
 
     }
 
