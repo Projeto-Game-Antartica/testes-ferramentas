@@ -29,13 +29,16 @@ public class InputKeys : MonoBehaviour {
     public static KeyCode MJMENU_KEY = KeyCode.P;
 
     // repetir acesso via teclado
-    public static KeyCode REPEAT_KEY = KeyCode.F2;
+    public static KeyCode ACESSOTECLADO_KEY = KeyCode.F2;
     
-    // dicas nos minijogos
-    public static KeyCode DICAS_KEY = KeyCode.F5;
-
     // repetir audiodescricao
     public static KeyCode AUDIODESCRICAO_KEY = KeyCode.F3;
+
+    // repetir conteudo minijogos
+    public static KeyCode REPEAT_KEY = KeyCode.F4;
+
+    // dicas nos minijogos
+    public static KeyCode DICAS_KEY = KeyCode.F5;
 
     // abrir mapa
     public static KeyCode MAP_KEY = KeyCode.M;

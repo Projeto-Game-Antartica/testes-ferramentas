@@ -17,7 +17,7 @@ public class HUDMJController : AbstractScreenReader
 
     private void Update()
     {
-        if(Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        if(Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
         {
             acessoTeclado.SetActive(true);
             ReadText(descricaoText.text);

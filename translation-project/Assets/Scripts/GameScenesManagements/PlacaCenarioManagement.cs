@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacaCenarioManagement : MonoBehaviour {
+public class PlacaCenarioManagement : AbstractScreenReader {
 
     public GameObject placaHUD;
 
@@ -14,18 +14,30 @@ public class PlacaCenarioManagement : MonoBehaviour {
     {
         //Debug.Log(collision.name);
         if (collision.name.Equals("Turista"))
+        {
             placaHUD.SetActive(true);
+            Debug.Log("placa aberta");
+            ReadText("placa aberta");
+
+            placaHUD.GetComponentInChildren<UnityEngine.UI.Button>().Select();
+        }
     }
 
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.name.Equals("Turista"))
-            placaHUD.SetActive(true);
-    }
+    //public void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.name.Equals("Turista"))
+    //    {
+    //        placaHUD.SetActive(true);
+    //    }
+    //}
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.name.Equals("Turista"))
+        {
             placaHUD.SetActive(false);
+            Debug.Log("placa fechada");
+            ReadText("placa fechada");
+        }
     }
 }

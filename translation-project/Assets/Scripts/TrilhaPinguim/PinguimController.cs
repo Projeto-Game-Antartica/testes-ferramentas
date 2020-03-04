@@ -12,6 +12,10 @@ public class PinguimController : DragAndDropController {
     public GameObject pinguim_antartico;
     public GameObject pinguim_papua;
 
+    private Vector3 adelia_position;
+    private Vector3 antartico_position;
+    private Vector3 papua_position;
+
     public Button adeliaButton;
     public Button antarticoButton;
     public Button papuaButton;
@@ -78,8 +82,19 @@ public class PinguimController : DragAndDropController {
 
     public TMPro.TextMeshProUGUI timer;
 
+    private bool mapping = true;
+
+    private void Start()
+    {
+        SavePinguimPosition();
+    }
+
     public void initializeGame()
     {
+        mapping = false;
+
+        ResetPinguimPosition();
+
         initialMinutes = 5f;
         initialSeconds = 59f;
 
@@ -91,6 +106,10 @@ public class PinguimController : DragAndDropController {
         antarticoFinished = false;
         papuaFinished = false;
 
+        adeliaButton.interactable = true;
+        antarticoButton.interactable = true;
+        papuaButton.interactable = true;
+        
         pinguim_adeliaAnimator = pinguim_adelia.GetComponent<Animator>();
         pinguim_antarticoAnimator = pinguim_antartico.GetComponent<Animator>();
         pinguim_papuaAnimator = pinguim_papua.GetComponent<Animator>();
@@ -115,6 +134,18 @@ public class PinguimController : DragAndDropController {
         firstItem.Select();
     }
 
+    public void MapearTrilha()
+    {
+        // do something...
+        instruction_interface.SetActive(false);
+
+        mapping = true;
+
+        adeliaButton.interactable = false;
+        antarticoButton.interactable = false;
+        papuaButton.interactable = false;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
@@ -135,92 +166,158 @@ public class PinguimController : DragAndDropController {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            if (!isPositioning)
+            if (mapping)
             {
-                try
-                {
-                    if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
-                    {
-                        OnButtonClick();
-                        isPositioning = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
-                }
+                Debug.Log("Voltando ao minijogo");
+                ReadText("Voltando ao minijogo");
+
+                mapping = false;
+                
+                ResetPinguimPosition();
+
+                pinguim_papua.GetComponentInChildren<CircleCollider2D>().enabled = true;
+                pinguim_antartico.GetComponentInChildren<CircleCollider2D>().enabled = true;
+
+                adeliaButton.interactable = true;
+                antarticoButton.interactable = true;
+                papuaButton.interactable = true;
             }
             else
             {
-                try
-                {
-                    DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
-                    currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
+                Debug.Log("Mapeando a trilha dos pinguins");
+                ReadText("Mapeando a trilha dos pinguins");
 
-                    desc.item = currentItem;
-                    desc.sourceCell = sourceCell;
-                    desc.destinationCell = currentCell;
-                    currentCell.SendRequest(desc);                      // Send drop request
-                    StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
+                mapping = true;
 
-                    if (desc.permission == true)
-                    {
-                        currentCell.PlaceItem(currentItem);
-                    }
+                SavePinguimPosition();
 
-                    currentCell.UpdateMyItem();
-                    currentCell.UpdateBackgroundState();
-                    sourceCell.UpdateMyItem();
-                    sourceCell.UpdateBackgroundState();
+                pinguim_papua.GetComponentInChildren<CircleCollider2D>().enabled = false;
+                pinguim_antartico.GetComponentInChildren<CircleCollider2D>().enabled = false;
 
-                    // go to item
-                    //firstItem.GetComponent<Selectable>().Select();
-
-                    ResetConditions();
-                    desc.item.ResetConditions();
-
-                    isPositioning = false;
-                    firstItem.Select();
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
-                }
+                adeliaButton.interactable = false;
+                antarticoButton.interactable = false;
+                papuaButton.interactable = false;
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
-                            Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+        // playing the puzzle
+        if (!mapping)
         {
-            GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
-
-            try
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (currentItem != null)
+                if (!isPositioning)
                 {
-                    DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
-                }
-
-                if (isCell)
-                {
-                    nextCell.GetComponent<Selectable>().Select();
+                    try
+                    {
+                        if (EventSystem.current.currentSelectedGameObject.GetComponentInChildren<DragAndDropItem>().gameObject.tag.Equals("item"))
+                        {
+                            OnButtonClick();
+                            isPositioning = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é um item. Stacktrace >>" + e.StackTrace);
+                    }
                 }
                 else
                 {
-                    nextCell.GetComponent<Selectable>().Select();
-                    Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
-                    ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                    try
+                    {
+                        DragAndDropCell.DropEventDescriptor desc = new DragAndDropCell.DropEventDescriptor();
+                        currentCell = EventSystem.current.currentSelectedGameObject.GetComponent<DragAndDropCell>();
+
+                        desc.item = currentItem;
+                        desc.sourceCell = sourceCell;
+                        desc.destinationCell = currentCell;
+                        currentCell.SendRequest(desc);                      // Send drop request
+                        StartCoroutine(currentCell.NotifyOnDragEnd(desc));  // Send notification after drop will be finished
+
+                        if (desc.permission == true)
+                        {
+                            currentCell.PlaceItem(currentItem);
+                        }
+
+                        currentCell.UpdateMyItem();
+                        currentCell.UpdateBackgroundState();
+                        sourceCell.UpdateMyItem();
+                        sourceCell.UpdateBackgroundState();
+
+                        // go to item
+                        //firstItem.GetComponent<Selectable>().Select();
+
+                        ResetConditions();
+                        desc.item.ResetConditions();
+
+                        isPositioning = false;
+                        firstItem.Select();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Não é uma célula. Stacktrace >>" + e.StackTrace);
+                    }
                 }
             }
-            catch (Exception e)
+
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) ||
+                                Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
             {
-                Debug.Log("null exception >> " + e.StackTrace);
+                GameObject nextCell = EventSystem.current.currentSelectedGameObject.gameObject;
+
+                try
+                {
+                    if (currentItem != null)
+                    {
+                        DragAndDropItem.icon.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(nextCell.transform.position);
+                    }
+
+                    if (isCell)
+                    {
+                        nextCell.GetComponent<Selectable>().Select();
+                    }
+                    else
+                    {
+                        nextCell.GetComponent<Selectable>().Select();
+                        Debug.Log(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                        ReadText(nextCell.GetComponentInChildren<DragAndDropItem>().gameObject.name);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("null exception >> " + e.StackTrace);
+                }
+            }
+        }
+        else // mapping 
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                goUp();
+                ReadPinguimPosition("adelia");
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                goDown();
+                ReadPinguimPosition("adelia");
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                goRight();
+                ReadPinguimPosition("adelia");
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                goLeft();
+                ReadPinguimPosition("adelia");
             }
         }
 
-        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
             isOnMenu = !isOnMenu;
             
@@ -412,17 +509,16 @@ public class PinguimController : DragAndDropController {
 
     public void goUp()
     {
+        // move adelia
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(0, verticalLength), 1);
         }
-
-        if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+        else if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished) // move papua
         {
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(0, verticalLength), 1);
         }
-
-        if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+        else if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished) // move antartico
         {
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(0, verticalLength), 1);
         }
@@ -430,17 +526,16 @@ public class PinguimController : DragAndDropController {
 
     public void goDown()
     {
+        // move adelia
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
         }
-
-        if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+        else if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished) // move papua
         {
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
         }
-
-        if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+        else if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished) // move antartico
         {
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(0, -verticalLength), 1);
         }
@@ -448,19 +543,18 @@ public class PinguimController : DragAndDropController {
 
     public void goRight()
     {
+        // move adelia
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
             FlipPinguim(pinguim_adelia.name, false);
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
         }
-
-        if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+        else if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished) // move papua
         {
             FlipPinguim(pinguim_papua.name, false);
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
         }
-
-        if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+        else if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished) // move antartico
         {
             FlipPinguim(pinguim_antartico.name, false);
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(horizontalLenght, 0), 1);
@@ -469,19 +563,18 @@ public class PinguimController : DragAndDropController {
 
     public void goLeft()
     {
+        // move adelia
         if (pinguim_adelia.transform.GetChild(0).gameObject.activeSelf && !adeliaFinished)
         {
             FlipPinguim(pinguim_adelia.name, true);
             pinguim_adelia.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
         }
-
-        if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished)
+        else if (pinguim_papua.transform.GetChild(0).gameObject.activeSelf && !papuaFinished) // move papua
         {
             FlipPinguim(pinguim_papua.name, true);
             pinguim_papua.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
         }
-
-        if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished)
+        else if (pinguim_antartico.transform.GetChild(0).gameObject.activeSelf && !antarticoFinished) // move antartico
         {
             FlipPinguim(pinguim_antartico.name, true);
             pinguim_antartico.transform.DOBlendableMoveBy(new Vector3(-horizontalLenght, 0), 1);
@@ -703,8 +796,7 @@ public class PinguimController : DragAndDropController {
                     ReadText("O pinguim adélia já chegou a sua fonte de alimento");
                 break;
             default:
-                Debug.Log("check pinguim name");
-                break;
+                throw new NotImplementedException("check pinguim name");
         }
     }
 
@@ -725,6 +817,20 @@ public class PinguimController : DragAndDropController {
                 //pinguim_papua.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = left;
                 break;
         }
+    }
+
+    public void ResetPinguimPosition()
+    {
+        pinguim_adelia.transform.position = adelia_position;
+        pinguim_papua.transform.position = papua_position;
+        pinguim_antartico.transform.position = antartico_position;
+    }
+
+    public void SavePinguimPosition()
+    {
+        adelia_position = pinguim_adelia.transform.position;
+        papua_position = pinguim_papua.transform.position;
+        antartico_position = pinguim_antartico.transform.position;
     }
 
     public IEnumerator EndGame(bool win)
@@ -776,6 +882,11 @@ public class PinguimController : DragAndDropController {
         }
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+    }
+
+    public bool isMapping()
+    {
+        return mapping;
     }
 
     public void TryReturnToUshuaia()
