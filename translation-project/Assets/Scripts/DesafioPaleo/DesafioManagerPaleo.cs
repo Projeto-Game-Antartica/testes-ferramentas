@@ -341,6 +341,11 @@ public class DesafioManagerPaleo : AbstractScreenReader {
                 instructionInterface.SetActive(false);
         }
 
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            dicas.ShowHint();
+        }
+
     }
 
     public void initializeGame()

@@ -207,6 +207,10 @@ public class MentorController : AbstractScreenReader {
                             if (PlayerPrefs.GetInt("M009_Mentor3_Dialogue2") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
                             else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
                             break;
+                    case "Mentor0":
+                        if (PlayerPrefs.GetInt("M009_Mentor0_Dialogue1") == 1) dialogueBalloon.color = new Color(0.4f, 1, 0.4f);
+                        else dialogueBalloon.color = new Color(0.3f, 0.7f, 1);
+                        break;
                 }
                 break;
 
