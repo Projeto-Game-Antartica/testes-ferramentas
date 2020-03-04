@@ -91,8 +91,6 @@ public class PinguimController : DragAndDropController {
 
     public void initializeGame()
     {
-        mapping = false;
-
         ResetPinguimPosition();
 
         initialMinutes = 5f;
@@ -132,6 +130,8 @@ public class PinguimController : DragAndDropController {
         ReadText(dicas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
         firstItem.Select();
+
+        mapping = false;
     }
 
     public void MapearTrilha()
