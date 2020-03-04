@@ -292,10 +292,15 @@ public class VIDEUIManager : AbstractScreenReader
                 textPanel.SetActive(true);
                 close.Select();
 
+                string result = "";
+
                 switch ((string)data.extraVars["Ticket"])
                 {
                     case "pt1":
                         ticket_pt1.gameObject.SetActive(true);
+
+                        result = "Parabéns! Você adquiriu a parte 1 de 3 da passagem de embarque";
+
                         PlayerPrefs.SetInt("M002_Ticketpt1", 1);
 
                         if (PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
@@ -306,6 +311,9 @@ public class VIDEUIManager : AbstractScreenReader
                         break;
                     case "pt2":
                         ticket_pt2.gameObject.SetActive(true);
+
+                        result = "Parabéns! Você adquiriu a parte 2 de 3 da passagem de embarque";
+
                         PlayerPrefs.SetInt("M002_Ticketpt2", 1);
 
                         if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
@@ -318,6 +326,8 @@ public class VIDEUIManager : AbstractScreenReader
                         PlayerPrefs.SetInt("M002_Ticketpt3", 1);
                         ticket_pt3.gameObject.SetActive(true);
 
+                        result = "Parabéns! Você adquiriu a parte 3 de 3 da passagem de embarque";
+
                         if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
                             ticket_pt1.gameObject.SetActive(true);
 
@@ -328,8 +338,10 @@ public class VIDEUIManager : AbstractScreenReader
                         break;
                 }
 
-                Debug.Log("Parabéns, você adquiriu parte do ticket para sua viagem!");
-                ReadText("Parabéns, você adquiriu parte do ticket para sua viagem!");
+                textPanel.GetComponentInChildren<TextMeshProUGUI>().text = result;
+
+                Debug.Log(result);
+                ReadText(result);
             }
 
             if (data.extraVars.ContainsKey("CloseTicket"))

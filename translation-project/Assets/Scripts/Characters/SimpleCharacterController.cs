@@ -55,6 +55,8 @@ public class SimpleCharacterController : AbstractScreenReader {
 
     public GameObject map;
 
+    public GameObject placaHUD;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -71,7 +73,7 @@ public class SimpleCharacterController : AbstractScreenReader {
         if (!VD.isActive)
         {
             // character movement
-            if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
+            if (!inGameOption.activeSelf && !instructionInterface.activeSelf && !placaHUD.activeSelf)
             {
                 if (movement.magnitude > 0)
                 {

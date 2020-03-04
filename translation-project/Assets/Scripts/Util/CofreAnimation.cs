@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,11 +70,15 @@ public class CofreAnimation : AbstractScreenReader
     {
         PlayerPrefs.SetInt("M002_Ticketpt2", 1);
 
+        warningInterface.SetActive(false);
+
         closeButton.gameObject.SetActive(true);
         closeButton.Select();
 
         if (PlayerPrefs.GetInt("M002_Ticketpt1") == 1)
             ticketPt1.gameObject.SetActive(true);
+
+        textPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Parabéns! Você adquiriu a parte 2 de 3 da passagem de embarque";
 
         ReadText(textPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 

@@ -32,6 +32,7 @@ public class HUDController : AbstractScreenReader {
     public GameObject inGameOption;
 
     // instruction interface settings
+    public TextMeshProUGUI playerName;
     public GameObject instructionInterface;
     public TextMeshProUGUI missionTitle;
     public TextMeshProUGUI missionDescription;
@@ -52,11 +53,15 @@ public class HUDController : AbstractScreenReader {
     public GameObject acessoTeclado;
     public TextMeshProUGUI descricaoText;
 
+    public GameObject placaHUD;
+
     public string missionNumber;
     public string missionAudiodescriptionKey;
 
     private void Start()
     {
+        playerName.text = PlayerPreferences.PlayerName.ToUpper();
+
         ReadInstructionAudiodescrition(missionNumber);
 
         Debug.Log(PlayerPrefs.GetInt("InstructionInterface", 0));
@@ -84,7 +89,7 @@ public class HUDController : AbstractScreenReader {
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F3))
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             if (instructionInterface.activeSelf)
                 ReadInstructionAudiodescrition(missionNumber);
@@ -120,6 +125,10 @@ public class HUDController : AbstractScreenReader {
                 {
                     acessoTeclado.SetActive(false);
                 }
+                else if (placaHUD.activeSelf)
+                {
+                    placaHUD.SetActive(false);
+                }
                 else if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
                 {
                     ReadText("Menu de opções aberto");
@@ -140,6 +149,8 @@ public class HUDController : AbstractScreenReader {
                     instructionInterface.SetActive(false);
                     inGameOption.SetActive(false);
                 }
+
+                
             }
             else
             {
@@ -228,6 +239,9 @@ public class HUDController : AbstractScreenReader {
         if(op)
         {
             map.SetActive(true);
+
+            ReadText("mapa aberto.");
+
             switch (missionNumber)
             {
                 case "M002":
@@ -257,6 +271,8 @@ public class HUDController : AbstractScreenReader {
         else
         {
             map.SetActive(false);
+
+            ReadText("mapa fechado.");
 
             switch (missionNumber)
             {
