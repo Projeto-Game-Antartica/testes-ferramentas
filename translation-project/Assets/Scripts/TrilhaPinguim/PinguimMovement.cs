@@ -12,6 +12,7 @@ public class PinguimMovement : AbstractScreenReader {
 
     public AudioClip pinguimFonteClip;
     public AudioClip bloqueioClip;
+    public AudioClip mapLimit;
 
     public Image adeliaIcon;
     public Image antarticoIcon;
@@ -36,50 +37,59 @@ public class PinguimMovement : AbstractScreenReader {
         // verify if collision.name is a integer
         int.TryParse(collision.name, out pinguimPosition);
 
-        CheckEndGame(gameObject.name, collision);
+        CheckEndGame(gameObject.name, collision, pinguimController.isMapping());
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Object: " + gameObject.name + " Collided in: " + collision.collider);
-
-        audioSource.PlayOneShot(bloqueioClip);
-
+        
         if (collision.collider.ToString().Contains("pinguim"))
+        {
             pinguimController.timerCount += 10f;
+            audioSource.PlayOneShot(bloqueioClip);
+        }
+        else
+        {
+            audioSource.PlayOneShot(mapLimit);
+        }
     }
 
-    private void CheckEndGame(string pinguim, Collider2D peixe)
+    private void CheckEndGame(string pinguim, Collider2D peixe, bool isMapping)
     {
-        if (pinguim.Equals("pinguim_adelia") && peixe.name.Equals("peixe_adelia"))
+        // check end game only if its not mapping the trail
+        if (!isMapping)
         {
-            pinguimController.adeliaFinished = true;
-            pinguimController.adeliaButton.interactable = false;
-            pinguimController.pinguim_adelia.SetActive(false);
-            adeliaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
-            audioSource.PlayOneShot(pinguimFonteClip);
-        }
+            if (pinguim.Equals("pinguim_adelia") && peixe.name.Equals("peixe_adelia"))
+            {
+                pinguimController.adeliaFinished = true;
+                pinguimController.adeliaButton.interactable = false;
+                pinguimController.pinguim_adelia.SetActive(false);
+                adeliaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+                audioSource.PlayOneShot(pinguimFonteClip);
+            }
 
-        if (pinguim.Equals("pinguim_antartico") && peixe.name.Equals("peixe_antartico"))
-        {
-            pinguimController.antarticoFinished = true;
-            pinguimController.antarticoButton.interactable = false;
-            pinguimController.pinguim_antartico.SetActive(false);
-            antarticoIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
-            audioSource.PlayOneShot(pinguimFonteClip);
-        }
+            if (pinguim.Equals("pinguim_antartico") && peixe.name.Equals("peixe_antartico"))
+            {
+                pinguimController.antarticoFinished = true;
+                pinguimController.antarticoButton.interactable = false;
+                pinguimController.pinguim_antartico.SetActive(false);
+                antarticoIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+                audioSource.PlayOneShot(pinguimFonteClip);
+            }
 
-        if (pinguim.Equals("pinguim_papua") && peixe.name.Equals("peixe_papua"))
-        {
-            pinguimController.papuaFinished = true;
-            pinguimController.papuaButton.interactable = false;
-            pinguimController.pinguim_papua.SetActive(false);
-            papuaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
-            audioSource.PlayOneShot(pinguimFonteClip);
-        }
+            if (pinguim.Equals("pinguim_papua") && peixe.name.Equals("peixe_papua"))
+            {
+                pinguimController.papuaFinished = true;
+                pinguimController.papuaButton.interactable = false;
+                pinguimController.pinguim_papua.SetActive(false);
+                papuaIcon.color = new Color(0.4575472f, 1f, 0.4743936f);
+                audioSource.PlayOneShot(pinguimFonteClip);
+            }
 
-        if(peixe.name.Contains("peixe"))
-            SelectNextPinguim();
+            if (peixe.name.Contains("peixe"))
+                SelectNextPinguim();
+        }
     }
 
     private void SelectNextPinguim()

@@ -479,18 +479,7 @@ public class EinsteinManager : AbstractScreenReader
 
         StartCoroutine(ReturnToUshuaiaCoroutine()); // volta para o ushuaia perdendo ou ganhando o minijogo
     }
-
-    public void ReturnToUshuaia()
-    {
-        //if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
-    }
-
-    public void ResetScene()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Einstein);
-    }
-
+    
     public IEnumerator ReadCards()
     {
         GameObject[] tmpCards = cards;
@@ -758,6 +747,17 @@ public class EinsteinManager : AbstractScreenReader
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
         confirmQuit.GetComponentInChildren<Button>().Select();
+    }
+
+    public void ReturnToUshuaia()
+    {
+        //if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    }
+
+    public void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Einstein);
     }
 
     public IEnumerator ReturnToUshuaiaCoroutine()

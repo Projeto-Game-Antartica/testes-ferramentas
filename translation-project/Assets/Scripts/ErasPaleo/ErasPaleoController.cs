@@ -90,6 +90,13 @@ public class ErasPaleoController : DragAndDropController
                 audioButton.Select();
         }
 
+        if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+            ReadText("Tentativas restantes: " + (attempts - wrongAnswer));
+            Debug.Log("Tentativas restantes: " + (attempts - wrongAnswer));
+        }
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             try
@@ -140,6 +147,7 @@ public class ErasPaleoController : DragAndDropController
                             OnButtonClick();
                             audioSource.PlayOneShot(selectAnimal);
                             isPositioning = true;
+                            ReadCell(EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>().gameObject);
                         }
                     }
                     catch (Exception e)
@@ -196,6 +204,11 @@ public class ErasPaleoController : DragAndDropController
                     }
                 }
             }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            dicas.ShowHint();
+        }
 
         if(Input.GetKeyDown(KeyCode.F6) && !isPositioning)
         {
@@ -326,10 +339,10 @@ public class ErasPaleoController : DragAndDropController
             {
                 EndGame(true);
 			}
-        if(wrongAnswer >= 3)
+        /* if(wrongAnswer >= 3)
             {
                 EndGame(false);
-			}
+			} */
     }
 
     public void EndGame(bool win)
@@ -347,6 +360,8 @@ public class ErasPaleoController : DragAndDropController
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
+
+            dicas.dicas.SetActive(false);
             
         }
         else
@@ -360,6 +375,8 @@ public class ErasPaleoController : DragAndDropController
             resetButton.Select();
 
             lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+
+            dicas.dicas.SetActive(false);
             
         }
 
