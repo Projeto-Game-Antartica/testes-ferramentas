@@ -18,6 +18,9 @@ public class BagController : MonoBehaviour
     public Sprite[] ItemsSprites;
     public string[] ItemsDescriptions;
 
+    //Array to store activated items in case this script does not activate in proper order
+    private bool[] activatedItems = new bool[20];
+
     public AudioSource audioSource;
 
     public AudioClip openBagClip;
@@ -37,6 +40,10 @@ public class BagController : MonoBehaviour
 
         for(int i = 0; i < bagSize; i++) {
             bagItems[i] = addItemToBag(ItemsSprites[i], ItemsDescriptions[i]);
+
+            //Activate items if necessary
+            if(activatedItems[i])
+                EnableItemByIndex(i);
         }
 
         //Remove standardItem and its space
@@ -70,7 +77,10 @@ public class BagController : MonoBehaviour
     }
 
     public void EnableItemByIndex(int index) {
-        bagItems[index].GetComponent<Image>().color = new Color32(255,255,255,255);
+        if(bagItems == null)
+            activatedItems[index] = true;
+        else
+            bagItems[index].GetComponent<Image>().color = new Color32(255,255,255,255);
     }
 
     public void OpenBag() {

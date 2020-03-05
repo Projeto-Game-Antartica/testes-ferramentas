@@ -34,18 +34,26 @@ public class VegCampSceneManagement : AbstractScreenReader {
     public AudioSource audioSource;
     public AudioClip warningClip;
 
+    public BagController Bag;
+
     private string missionNumber = "M010";
 
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
 
     public void Start()
     {
-        Debug.Log("-----------------------------------STATES--------------------------------");
-        Debug.Log(PlayerPreferences.M010_Amostras);
-        Debug.Log(PlayerPreferences.M010_Tipos);
-        Debug.Log("------------------------------END-STATES---------------------------------");
-
         isTrigger = false;
+        
+        if(PlayerPreferences.M010_Tipos) {
+            Bag.EnableItemByIndex(0);
+            Bag.EnableItemByIndex(1);
+            Bag.EnableItemByIndex(2);
+        }
+
+        if(PlayerPreferences.M010_Amostras) {
+            Bag.EnableItemByIndex(3);
+            Bag.EnableItemByIndex(4);
+        }
 
         //InitialInstruction();
 
