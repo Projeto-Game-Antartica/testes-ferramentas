@@ -70,15 +70,15 @@ public class HUDController : AbstractScreenReader {
 
     private void LateUpdate()
     {
-        if (!PlayerPreferences.M004_Memoria)
-            camera_inv.sprite = camera_cinza;
-        else
-            camera_inv.sprite = camera_color;
+        // if (!PlayerPreferences.M004_Memoria)
+        //     camera_inv.sprite = camera_cinza;
+        // else
+        //     camera_inv.sprite = camera_color;
 
-        if (!PlayerPreferences.M004_TeiaAlimentar)
-            lente_inv.sprite = lente_cinza;
-        else
-            lente_inv.sprite = lente_color;
+        // if (!PlayerPreferences.M004_TeiaAlimentar)
+        //     lente_inv.sprite = lente_cinza;
+        // else
+        //     lente_inv.sprite = lente_color;
            
     }
 
