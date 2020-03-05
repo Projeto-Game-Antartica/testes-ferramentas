@@ -69,7 +69,8 @@ public class AnalysisVegScreen : MonoBehaviour
 
     private void resetHarvestAndShowDialog() {
         GameScreen.ResetHarvestScreen();
-        GameScreen.ShowOkDialog("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
+        GameScreen.OkDialogBox.Show("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
+        //GameScreen.ShowOkDialog("Parabéns, vegetação classificada. Realize nova coleta.", GameScreen.ShowHarvestScreen);
     }
 
     private void showWinScreen() {
