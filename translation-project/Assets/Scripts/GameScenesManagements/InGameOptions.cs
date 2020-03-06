@@ -23,7 +23,7 @@ public class InGameOptions : AbstractScreenReader {
 
     private void Start()
     {
-        toggle.isOn = Parameters.ACCESSIBILITY;    
+        toggle.isOn = Parameters.ACCESSIBILITY;
     }
 
     private void OnEnable()
