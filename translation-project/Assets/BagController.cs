@@ -26,7 +26,7 @@ public class BagController : MonoBehaviour
     public AudioClip openBagClip;
     public AudioClip closeBagClip;
 
-    private bool opened { get{ return spots.active; } }
+    private bool opened { get{ return spots.activeSelf; } }
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +50,9 @@ public class BagController : MonoBehaviour
         Destroy(itemSpot);
         if(bagItems.Length > 0) //If bag not empty
             itemSpot = bagItems[0];
-        increaseSpotsWidth(- itemWidth - spacing);
+
+        // remove space after last item
+        increaseSpotsWidth(1.5f*(-itemWidth - spacing));
 
         //Ensure bag is closed when start
         closeBagImmediate();
@@ -71,6 +73,7 @@ public class BagController : MonoBehaviour
     private GameObject addItemToBag(Sprite sprite, string description) {
         increaseSpotsWidth(itemWidth + spacing);
         GameObject newItem = Instantiate(itemSpot, spots.transform); //Make copy of standard object
+        newItem.name = sprite.name;
         newItem.GetComponent<Image>().sprite = sprite;
         newItem.GetComponent<Image>().color = new Color32(255,255,255,50); //Leave image translucide (disabled)
         return newItem;
