@@ -51,6 +51,7 @@ public class BagController : MonoBehaviour
         if(bagItems.Length > 0) //If bag not empty
             itemSpot = bagItems[0];
 
+        // remove space after last item
         increaseSpotsWidth(1.5f*(-itemWidth - spacing));
 
         //Ensure bag is closed when start
