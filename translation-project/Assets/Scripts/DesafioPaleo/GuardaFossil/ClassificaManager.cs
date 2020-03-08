@@ -5,13 +5,17 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class ClassificaManager : AbstractScreenReader
 {
     public FossilData fossilData;
     public FossilController fossilController;
 
-    private GameObject desafioManagerPaleo;
+    public DesafioManagerPaleo desafioManagerPaleo;
+
+    public CardDesafioPaleo cards_Wall;
 
     private int id_fossil;
     private string caracteristica;
@@ -64,13 +68,15 @@ public class ClassificaManager : AbstractScreenReader
     private int attempts = 3;
     private int tries = 0;
 
+    private int harvNumber = 1;
+
     public TMPro.TextMeshProUGUI attemptsText;
 
-    private void Start()
+    public void Start()
     {
         guardarButton.interactable = false;
 
-        desafioManagerPaleo = GameObject.FindGameObjectWithTag("GameController");
+        //desafioManagerPaleo = GameObject.FindGameObjectWithTag("GameController");
 
         //resetButton.interactable = false;
 
@@ -415,14 +421,41 @@ public class ClassificaManager : AbstractScreenReader
 
     public void EndGame()
     {   
-        desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().guarda_saco);
+        desafioManagerPaleo.audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().guarda_saco);
+
+        harvNumber++;
+        
+        if(harvNumber <= 3) {
+            DoAfter(3, resetHarvestAndShowDialog);
+        } else {
+            DoAfter(3, showWinScreen);
+        }
+
+    }
+
+    private void resetHarvestAndShowDialog() {
+        //turnCardDown
+        resetScene();
+        desafioManagerPaleo.ShowOkDialog("Parabéns, fóssil classificado. Realize uma nova escavação e classificação.", desafioManagerPaleo.ShowHarvestScreen);             
+    }
+
+    private void showWinScreen() {
         WinImage.SetActive(true);
-        //WinImage.GetComponentInChildren<Button>().Select();
-
         lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
-        lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item      
+        lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
 
-        StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
+        PlayerPreferences.M009_Desafio_Done = true;
+ 
+        DoAfter(5, ReturnToCamp);
+    }
+
+    public void DoAfter(int secs, UnityAction action) {
+        StartCoroutine(DoAfterCoroutine(secs, action));
+    }
+
+    public IEnumerator DoAfterCoroutine(int secs, UnityAction action) {
+        yield return new WaitForSeconds(secs);
+        action();
     }
 
     public void ReturnToCamp()
@@ -461,4 +494,13 @@ public class ClassificaManager : AbstractScreenReader
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Desafio);
     }
+
+    public void resetScene()
+    {
+        Cancel();
+
+        guardarButton.interactable = false;
+        confirmarButton.interactable = false;
+        cancelButton.interactable = false;
+	}
 }
