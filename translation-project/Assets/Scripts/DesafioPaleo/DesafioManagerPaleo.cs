@@ -12,6 +12,11 @@ public class DesafioManagerPaleo : AbstractScreenReader {
 
     private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
+    public GameObject OkDialog;
+    Action okDialogCallback;
+
+    public bool encontro;
+
     public AudioClip som_quebra_solo1;
     public AudioClip som_quebra_solo2;
     public AudioClip som_quebra_solo3;
@@ -41,6 +46,8 @@ public class DesafioManagerPaleo : AbstractScreenReader {
 
     public ClassificaManager classificaManager;
     public FossilData fossilData;
+
+    public GameObject GameScreen;
 
     public int num_fossil;
 
@@ -148,7 +155,7 @@ public class DesafioManagerPaleo : AbstractScreenReader {
 
     public string missionName;
     
-    private void Start()
+    public void Start()
     {
         kitValor.text = "1";
 
@@ -354,7 +361,7 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         backButton.interactable = true;
         resetButton.interactable = true;
 
-        if (!init)
+       
             initializeCards();
         
         // start afther dicas.time seconds and repeat at dicas.repeatRate rate
@@ -363,10 +370,27 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         StartCoroutine(showCards());
 
     }
-
+    //coloca mensagem no warning
     public void CallHintMethod()
     {
         dicas.StartHints();
+    }
+
+        public void OnOkDialogClick() {
+        if(okDialogCallback != null)
+            okDialogCallback();
+    }
+
+    public void ShowOkDialog(string message) {
+    Debug.Log("ShowOkDialog errado");
+         ShowOkDialog(message, null);
+    }
+
+    public void ShowOkDialog(string message, Action onOkClick) {
+    Debug.Log("ShowOkDialog certo:" + onOkClick);
+        okDialogCallback = onOkClick;
+        OkDialog.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0].text = message;
+        OkDialog.SetActive(true);
     }
 
     public void initializeCards()
@@ -690,6 +714,20 @@ public class DesafioManagerPaleo : AbstractScreenReader {
         StartCoroutine(ReturnToCampCoroutine()); // volta para o navio perdendo ou ganhando o minijogo
     }
 
+    public void ShowHarvestScreen() {
+        Debug.Log("foi >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //GameScreen.SetActive(true);
+        ClassificaFossil.SetActive(false);
+        ResetAcerto();
+    }
+
+    private void showAnalysisScreen() {
+    Debug.Log("teste >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //ClassificaFossil.GetComponent<ClassificaManager>().Start();
+        //GameScreen.SetActive(false);
+        ClassificaFossil.SetActive(true);
+    }
+
     public void TryReturnToShip()
     {
         confirmQuit.SetActive(true);
@@ -812,6 +850,12 @@ public class DesafioManagerPaleo : AbstractScreenReader {
                 Debug.Log("tem item: " +item03);
             }
         }
+	}
+
+    public void verificaAcha_Limpa()
+    {
+        if(acha_fossil == 4 && limpa_fossil == 4)
+            ShowOkDialog("Parabéns, fóssil limpo. Agora Realize a classificação.", showAnalysisScreen);
 	}
 
     public void usaKit()
@@ -974,6 +1018,35 @@ public class DesafioManagerPaleo : AbstractScreenReader {
                 Debug.Log("Era: Paleozóico");
                 ReadText("Era: Paleozóico");
 		    }
+
+	}
+
+    public void ResetAcerto()
+    {
+        for (int i = 0; i < cards.Length; i++)
+        {
+            cards[i].GetComponent<Image>().sprite = cards[i].GetComponent<CardDesafioPaleo>().cardBack;
+            cards[i].GetComponent<CardDesafioPaleo>().BGImage_Solo1[3] = null;
+            cards[i].GetComponent<CardDesafioPaleo>().state = 0;
+        }
+
+        /*pega_item[0].GetComponentInChildren<DragAndDropItem>();
+
+        for (int i = 0; i < cards.Length; i++)
+        {   
+            foreach(GameObject itemss in pega_item)
+            {
+                if (equipamentos[i].GetComponentInChildren<DragAndDropItem>() == null)
+                    equipamentos[i].GetComponentInChildren<DragAndDropItem>() = itemss.GetComponentInChildren<DragAndDropItem>();
+            }
+        }*/
+
+        acha_fossil = 0;
+        quebra_fossil = 0;
+        limpa_fossil = 0;
+        encontro = true;
+        Start();
+        initializeGame();
 
 	}
 

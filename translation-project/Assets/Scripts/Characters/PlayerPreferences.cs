@@ -21,6 +21,8 @@ public class PlayerPreferences : MonoBehaviour {
     public static bool M009_Memoria = false;
     public static bool M009_Eras = false;
     public static bool M009_Itens = false;
+    public static bool M009_Desafio_Done = false;
+
 
     // M010
     public static bool M010_Amostras = false;

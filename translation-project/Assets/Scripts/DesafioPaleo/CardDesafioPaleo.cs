@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,18 +16,18 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
 
     private float perde = 33;
 
-    //public int acha_fossil;
-
     public static bool DO_NOT = false;
 
     public int state { get; set; }
     public int cardValue { get; set; }
     public bool initialized { get; set; }
     public bool isText { get; set; }   
-    private Sprite cardBack;
+    public Sprite cardBack;
     public Sprite cardFace;
 
     private GameObject desafioManagerPaleo;
+
+    public DesafioManagerPaleo DesafioGame;
 
     public Sprite[] BGImage_Solo1;
 
@@ -45,6 +46,11 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
         desafioManagerPaleo = GameObject.FindGameObjectWithTag("GameController");
 
         //StartCoroutine(showCards());
+    }
+
+    private void warningMessage(string message) {
+        //Debug.Log(message);
+        desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().ShowOkDialog(message);
     }
 
     public void setupGraphics(int choice)
@@ -139,20 +145,27 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
             GetComponent<Image>().sprite = BGImage_Solo1[3];
             GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
-            if(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().acha_fossil == 4 && desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().limpa_fossil == 4)
-            {
-                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().ClassificaFossil.SetActive(true);
-            }
+                DesafioGame.verificaAcha_Limpa();
+            
         }
 
         if(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().acha_fossil == 4)
+        {
+            if (desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().encontro)
+            {
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().audioSource.PlayOneShot(desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().correctAudio);
+                warningMessage("Parabéns, fóssil encontrado. Agora você precisa limpá-lo.");
+                desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().encontro = false;
+            }
+
+        }
     }
 
     public void turnCardDown()
     {
 
-        if(!isText) GetComponent<Image>().sprite = cardBack;
+        GetComponent<Image>().sprite = cardBack;
+        Debug.Log("setou cartas");
 
         state = VIRADA_BAIXO;
         DO_NOT = false;
