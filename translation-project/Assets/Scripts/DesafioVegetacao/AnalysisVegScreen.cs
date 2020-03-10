@@ -28,7 +28,7 @@ public class AnalysisVegScreen : MonoBehaviour
     private List<int> doneVegs = new List<int>();
     private int harvNumber = 1;
 
-    public TMPro.TMP_InputField HarvestNumber;
+    public TMPro.TMP_InputField HarvestNumber, HarvestDateTime;
 
     public GameObject WinScreen;
 
@@ -82,6 +82,10 @@ public class AnalysisVegScreen : MonoBehaviour
     public void ResetScreen() {
         HarvestNumber.text = harvNumber.ToString();
         Options.ClearSelection();
+
+        DateTime currentDT = DateTime.Now;
+
+        HarvestDateTime.text = currentDT.ToString("dd/MM/yyyy | HH:mm");
 
         //Get Random Sprite
         int randIndex = rnd.Next(VegSprites.Length);
