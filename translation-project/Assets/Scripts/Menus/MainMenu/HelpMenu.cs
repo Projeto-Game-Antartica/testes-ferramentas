@@ -18,7 +18,7 @@ public class HelpMenu : AbstractScreenReader {
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1) && !optionMenu.activeSelf)
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !optionMenu.activeSelf)
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_ajuda, LocalizationManager.instance.GetLozalization()));
         }
