@@ -26,6 +26,14 @@ public class LoginScene : AbstractScreenReader {
         criarContaButton.Select();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            // read audiodescription
+        }
+    }
+
     public void CreateAccount()
     {
         SceneManager.LoadScene(ScenesNames.Cadastro);

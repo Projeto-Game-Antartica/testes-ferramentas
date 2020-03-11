@@ -86,9 +86,15 @@ public class AudioSettings : AbstractScreenReader
     public void EnableVolumeControlPainel()
     {
         if (volumeControl.activeSelf)
+        {
+            ReadText("Controle de volume fechado");
             volumeControl.SetActive(false);
+        }
         else
+        {
+            ReadText("Controle de volume aberto com duas barras verticais uma ao lado da outra");
             volumeControl.SetActive(true);
+        }
     }
 
     public void OnValueChange(float value)
