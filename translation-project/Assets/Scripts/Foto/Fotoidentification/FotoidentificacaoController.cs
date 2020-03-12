@@ -78,6 +78,8 @@ public class FotoidentificacaoController : AbstractScreenReader {
 
     public LifeExpController lifeExpController;
 
+    private int selectedArea = 0;
+
     private void Start()
     {
         // index from whale of photo for first round
@@ -104,26 +106,28 @@ public class FotoidentificacaoController : AbstractScreenReader {
         //    Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
         //}
 
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             ReadCharacteristics(roundIndex);
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            if (!buttonSelected)
+            selectedArea = (selectedArea+1)% 3;
+            if (selectedArea == 1)
             {
                 undentifiedButton.Select();
-
-                ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
-                Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
-
                 buttonSelected = true;
             }
-            else
+            else if (selectedArea == 2)
             {
                 options[0].GetComponentInChildren<Button>().Select();
                 buttonSelected = false;
+            }
+            else
+            {
+                ReadText(whaleController.getWhaleById(Parameters.WHALE_ID).description);
+                Debug.Log(whaleController.getWhaleById(Parameters.WHALE_ID).description);
             }
         }
     }
@@ -363,7 +367,7 @@ public class FotoidentificacaoController : AbstractScreenReader {
         {
             case Parameters.PIGMENTACAO:
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
-                //Debug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
+                //aDebug.Log(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_pigmentacao, LocalizationManager.instance.GetLozalization()));
                 break;
             case Parameters.MANCHAS:
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_mancha, LocalizationManager.instance.GetLozalization()));

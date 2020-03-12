@@ -52,12 +52,12 @@ public class TeiaAlimentarScene : AbstractScreenReader {
     {
         // read audiodescription
 
-        ReadText("");
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
 
         // start counting time
         yield return new WaitForSeconds(0.5f);
 
-        initialMinutes = 8f;
+        initialMinutes = 0f;
         initialSeconds = 59f;
 
         timerCount = 0;
@@ -71,7 +71,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         //InvokeRepeating("CallHintMethod", dicas.time, dicas.repeatRate);
 
         teiaAlimentarController.started = true;
-        teiaAlimentarController.SelectFirstItem();
+        teiaAlimentarController.ReturnFirstCell().GetComponent<Selectable>().Select();
     }
 
     private void Update()
@@ -139,7 +139,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.F3))
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia, LocalizationManager.instance.GetLozalization()));
         }
@@ -227,8 +227,17 @@ public class TeiaAlimentarScene : AbstractScreenReader {
     public void ReadMJMenu()
     {
         lifeExpController.ReadHPandEXP();
-        Debug.Log("Restam " + timer.text + " para finalizar o minijogo.");
-        ReadText("Restam " + timer.text + " para finalizar o minijogo.");
+
+        if (elapsedMinutes > 0)
+        {
+            ReadText("Restam " + elapsedMinutes + " minutos e " + elapsedSeconds + " segundos para terminar o minijogo.");
+            Debug.Log("Restam " + elapsedMinutes + " minutos e " + elapsedSeconds + " segundos para terminar o minijogo.");
+        }
+        else
+        {
+            ReadText("Restam " + elapsedSeconds + " segundos para terminar o minijogo.");
+            Debug.Log("Restam " + elapsedSeconds + " segundos para terminar o minijogo.");
+        }
     }
 
     public void TryReturnToShip()

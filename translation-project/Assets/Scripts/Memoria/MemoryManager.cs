@@ -138,8 +138,8 @@ public class MemoryManager : AbstractScreenReader {
         if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            ReadText("Faltam " + matches + " pares restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
-            Debug.Log("Faltam " + matches + " pares restantes. E você tem mais " + (tries - miss) + " tentativas restantes");
+            ReadText("Faltam " + matches + " pares. E você tem mais " + (tries - miss) + " tentativas restantes");
+            Debug.Log("Faltam " + matches + " pares. E você tem mais " + (tries - miss) + " tentativas restantes");
         }
 
         if(Input.GetKeyDown(KeyCode.F6))

@@ -353,8 +353,11 @@ public class HUDController : AbstractScreenReader {
             case "itens":
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
                 break;
-            case "paleo":
+            case "paleontologia":
                 SceneManager.LoadScene(ScenesNames.M009Camp);
+                break;
+            case "vegetação":
+                SceneManager.LoadScene(ScenesNames.M010Camp);
                 break;
 
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BagController : MonoBehaviour
+public class BagController : AbstractScreenReader
 {
     public GameObject spots, itemSpot, bag, ponteira;
 
@@ -95,9 +95,15 @@ public class BagController : MonoBehaviour
 
     public void OpenOrClose() {
         if(!opened)
+        {
+            ReadText("Inventário aberto");
             OpenBag();
+        }
         else
+        {
+            ReadText("Inventário fechado");
             CloseBag();
+        }
     }
 
     public void CloseBag() {
