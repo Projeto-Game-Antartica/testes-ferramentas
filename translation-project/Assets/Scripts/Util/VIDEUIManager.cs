@@ -353,6 +353,20 @@ public class VIDEUIManager : AbstractScreenReader
                 ticket_pt3.gameObject.SetActive(false);
             }
 
+            if(data.extraVars.ContainsKey("CheckItensVegetação")) {
+                if(PlayerPreferences.M010_Amostras && PlayerPreferences.M010_Tipos) {
+                    CallNext();
+                }
+                else {
+                    EndDialogue(data);
+
+                    warningInterface.SetActive(true);
+                    audioSource.PlayOneShot(avisoClip);
+                    warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = "Você ainda não está apto para realizar a coleta da vegetação. Para participar você ainda precisa conquistar alguns itens.";
+                    ReadText(warningInterface.GetComponentInChildren<TextMeshProUGUI>().text);
+                }
+            }
+
             if(data.extraVars.ContainsKey("CheckTicket"))
             {
                 if(PlayerPrefs.GetInt("M002_Ticketpt1") == 1 && PlayerPrefs.GetInt("M002_Ticketpt2") == 1)
