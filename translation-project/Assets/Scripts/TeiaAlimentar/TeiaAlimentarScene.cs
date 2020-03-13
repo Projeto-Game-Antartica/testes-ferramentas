@@ -57,7 +57,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // start counting time
         yield return new WaitForSeconds(0.5f);
 
-        initialMinutes = 0f;
+        initialMinutes = 29f;
         initialSeconds = 59f;
 
         timerCount = 0;

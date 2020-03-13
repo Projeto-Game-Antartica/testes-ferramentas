@@ -664,7 +664,7 @@ public class MemoryManager : AbstractScreenReader {
                 color = new Color(1, 1, 0, 1); // yellow
                 break;
             case (int)Operation.correct:
-                color = new Color(0, 1, 0, 1); // green
+                color = new Color(0, 0.3921569f, 0, 1); // green
                 //color = new Color(0, 0, 0, 0); // transparent
                 break;
             case (int)Operation.wrong:

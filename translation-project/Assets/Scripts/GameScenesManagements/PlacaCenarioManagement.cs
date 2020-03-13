@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlacaCenarioManagement : AbstractScreenReader {
 
     public GameObject placaHUD;
+    public AudioSource audioSource;
 
     void Start()
     {
+        audioSource.loop = true;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +17,8 @@ public class PlacaCenarioManagement : AbstractScreenReader {
         //Debug.Log(collision.name);
         if (collision.name.Equals("Turista"))
         {
+            audioSource.Play();
+            
             placaHUD.SetActive(true);
             Debug.Log("placa aberta");
             ReadText("placa aberta");
@@ -35,6 +39,7 @@ public class PlacaCenarioManagement : AbstractScreenReader {
     {
         if (collision.name.Equals("Turista"))
         {
+            audioSource.Stop();
             placaHUD.SetActive(false);
             Debug.Log("placa fechada");
             ReadText("placa fechada");
