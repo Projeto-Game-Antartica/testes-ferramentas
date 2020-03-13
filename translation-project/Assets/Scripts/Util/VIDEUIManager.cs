@@ -277,10 +277,6 @@ public class VIDEUIManager : AbstractScreenReader
                 //mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
             }
 
-            if(data.extraVars.ContainsKey("SetDoneBalloon")) {
-                mentor.gameObject.GetComponentInChildren<DialogMentorBalloon>().SetDone();
-            }
-
             if(data.extraVars.ContainsKey("OpenLista"))
             {
                 listaItem.SetActive(true);
