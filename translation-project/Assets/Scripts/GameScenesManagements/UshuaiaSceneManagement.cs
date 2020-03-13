@@ -46,8 +46,6 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
             chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
             Debug.Log(transform.position);
         }
-
-        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     private void Update()
