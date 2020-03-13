@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerPreferences : MonoBehaviour {
 
     public static string PlayerName = "";
+
+    public static Dictionary<string, bool> DoneDialogs = new Dictionary<string, bool>();
     
     // M004 - Puzzles
     public static bool M004_TeiaAlimentar = false;

@@ -7,40 +7,21 @@ using System;
 public class DialogMentorBalloon : MonoBehaviour
 {
     public string MentorName;
+    public SpriteRenderer DialogBalloon;
+
+    private string mentorId; //Unique ID per mission per mentor
 
     // Start is called before the first frame update
     void Start()
     {
-
-        switch(MentorName) {
-            case "Mentor0":
-                if(PlayerPreferences.M010_Mentor0_Talked)
-                    SetDone();
-                break;
-
-            case "Mentor3":
-                if(PlayerPreferences.M010_Mentor3_Talked)
-                    SetDone();
-                break;
-
-            default:
-                throw new NotImplementedException("Mentor name not implemented: " + MentorName);
-        }
+        mentorId = MentorName + "_" + SceneManager.GetActiveScene().name;
+        
+        if(PlayerPreferences.DoneDialogs.ContainsKey(mentorId) && PlayerPreferences.DoneDialogs[mentorId])
+            SetDialogDone();
     }
 
-    public void SetDone() {
-        switch(MentorName) {
-            case "Mentor0":
-                PlayerPreferences.M010_Mentor0_Talked = true;
-                break;
-
-            case "Mentor3":
-                PlayerPreferences.M010_Mentor3_Talked = true;
-                break;
-
-            default:
-                throw new NotImplementedException("Mentor name not implemented: " + MentorName);
-        }
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.4f, 1, 0.4f);
+    public void SetDialogDone() {
+        PlayerPreferences.DoneDialogs[mentorId] = true;
+        DialogBalloon.color = new Color(0.4f, 1, 0.4f);
     }
 }
