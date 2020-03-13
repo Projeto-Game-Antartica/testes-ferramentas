@@ -243,7 +243,6 @@ GameObject:
   - component: {fileID: 4567254536471706}
   - component: {fileID: 212167634912733922}
   - component: {fileID: 114263574083476532}
-  - component: {fileID: 8474977558741426566}
   m_Layer: 0
   m_Name: dialogue-balloon
   m_TagString: Untagged
@@ -329,19 +328,6 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 100
   runOnlyOnce: 0
---- !u!114 &8474977558741426566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623792934605382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MentorName: 
 --- !u!1 &1973283968652058
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +343,7 @@ GameObject:
   - component: {fileID: 82047441674896370}
   - component: {fileID: 114624176828991162}
   - component: {fileID: 70622754291877122}
+  - component: {fileID: 3901796685997342861}
   m_Layer: 0
   m_Name: Mentor3
   m_TagString: Mentor
@@ -612,6 +599,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 80, y: 0.0001}
   m_Direction: 0
+--- !u!114 &3901796685997342861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973283968652058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MentorName: Mentor3
+  DialogBalloon: {fileID: 212167634912733922}
 --- !u!1 &1860679025461451178
 GameObject:
   m_ObjectHideFlags: 0
