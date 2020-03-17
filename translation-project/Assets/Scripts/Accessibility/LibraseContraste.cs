@@ -13,26 +13,36 @@ public class LibraseContraste : AbstractScreenReader {
 
     public void PlayVideo()
     {
-        Debug.Log("PlayVideo");
-        Application.runInBackground = true;
-        moldura.SetActive(true);
-        StartCoroutine(StartVideo());
+        StartCoroutine(StartVideo(false, ""));
     }
 
-    IEnumerator StartVideo()
+    IEnumerator StartVideo(bool isUrl, string url)
     {
-        ReadText("Vídeo de libras aberto");
-        videoPlayer.Prepare();
-        
-        while(!videoPlayer.isPrepared)
+        moldura.SetActive(true);
+        Application.runInBackground = true;
+
+        if (!isUrl)
         {
+            videoPlayer.source = VideoSource.VideoClip;
+        }
+        else
+        {
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = url;
+        }
+
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+        {
+            Debug.Log("Preparing video...");
             yield return null;
         }
 
-        rawImage.texture = videoPlayer.texture;
+        Debug.Log("Prepared...");
+        videoPlayer.GetComponent<RawImage>().texture = videoPlayer.texture;
         videoPlayer.Play();
 
-        Debug.Log("Playing Video");
         while (videoPlayer.isPlaying)
         {
             Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
@@ -40,9 +50,6 @@ public class LibraseContraste : AbstractScreenReader {
         }
 
         Debug.Log("Done Playing Video");
-        moldura.SetActive(false);
-
-        ReadText("Vídeo de libras fechado");
     }
 
     public void SetHighContrastParameter(bool isOn)
@@ -53,5 +60,14 @@ public class LibraseContraste : AbstractScreenReader {
             ReadText("Alto contraste ativado");
         else
             ReadText("Alto contraste desativado");
+    }
+
+    public void PlayDialogueVideo()
+    {
+        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url + Parameters.MP4_TYPE;
+
+        Debug.Log("url >>> " + url);
+        if (url != string.Empty)
+            StartCoroutine(StartVideo(true, url));
     }
 }

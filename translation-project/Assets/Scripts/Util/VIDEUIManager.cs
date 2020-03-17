@@ -82,6 +82,8 @@ public class VIDEUIManager : AbstractScreenReader
     public Image ticket;
     public Button close;
 
+    public static string dialogue_video_url = string.Empty;
+
     #endregion
 
     #region MAIN
@@ -384,6 +386,19 @@ public class VIDEUIManager : AbstractScreenReader
             if(data.extraVars.ContainsKey("ReadAudioDescription"))
             {
                 ReadAudioDescription((string)data.extraVars["ReadAudioDescrpition"]);
+            }
+
+            if(data.extraVars.ContainsKey("SetLibrasURL"))
+            {
+                Debug.Log(VD.assigned.assignedDialogue);
+                Debug.Log(data.nodeID);
+
+                dialogue_video_url = VD.assigned.assignedDialogue + "_" + data.nodeID;
+            }
+
+            if(data.extraVars.ContainsKey("RemoveLibrasURL"))
+            {
+                dialogue_video_url = string.Empty;
             }
         }
 

@@ -57,4 +57,8 @@ public class Parameters {
     /* ## MEMORY GAME ## */
     public static int MEMORY_ROUNDINDEX = 0;
     /* #### */
+
+    /* ## URLs ## */
+    public const string DIALOGUE_PATH = "path_to_videos";
+    public const string MP4_TYPE = ".mp4";
 }

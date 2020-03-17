@@ -52,14 +52,11 @@ public class DictionaryController : AbstractScreenReader {
     private Dictionary<string, string> audio_ptbr; // hashmap contendo a palavra em portugues que o leva ao seu audio
     private Dictionary<string, string> audio_en; // hashmap com keys em ingles
 
-    private ReadableTexts readableTexts;
-
     void Start()
     {
         LoadDictionary();
-        readableTexts = GameObject.FindGameObjectWithTag("Accessibility").GetComponent<ReadableTexts>();
         buttonA = GameObject.Find("ButtonA").GetComponent<Button>();
-        ReadText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         m_buttons[m_index].Select();
         m_verticalPosition = 1f - ((float)m_index / (m_buttons.Count - 1));
     }
@@ -92,7 +89,7 @@ public class DictionaryController : AbstractScreenReader {
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            ReadContentText(readableTexts.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
+            ReadContentText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_glossary_instructions, LocalizationManager.instance.GetLozalization()));
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
@@ -256,10 +253,21 @@ public class DictionaryController : AbstractScreenReader {
         if (LocalizationManager.instance.GetLozalization().Equals("locales_ptbr.json"))
         {
             image = Resources.Load<Sprite>(description_ptbrimage[key]);
-            videoClip = Resources.Load<VideoClip>(description_ptbrvideo[key]);
+
+            // video from url
+            if (description_ptbrvideo[key].Contains("http"))
+            {
+                string url = description_ptbrvideo[key];
+                Debug.Log(url);
+                StartCoroutine(PlayVideo(descriptionContent.videoPlayer, true, url));
+            }
+            else // video from resources
+            {
+                videoClip = Resources.Load<VideoClip>(description_ptbrvideo[key]);
+                descriptionContent.videoPlayer.clip = videoClip;
+                StartCoroutine(PlayVideo(descriptionContent.videoPlayer, false, ""));
+            }
             
-            descriptionContent.videoPlayer.clip = videoClip;
-            StartCoroutine(PlayVideo(descriptionContent.videoPlayer));
         }
         else // descricao em ingles (nao ha videoplayer)
         {
@@ -284,20 +292,37 @@ public class DictionaryController : AbstractScreenReader {
         ReadText(content);
     }
 
-    public IEnumerator PlayVideo(VideoPlayer videoPlayer)
+    public IEnumerator PlayVideo(VideoPlayer videoPlayer, bool isUrl, string url)
     {
+        if (!isUrl)
+        {
+            videoPlayer.source = VideoSource.VideoClip;
+        }
+        else
+        {
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = url;
+        }
+
         videoPlayer.Prepare();
 
         while (!videoPlayer.isPrepared)
         {
-            Debug.Log("Not prepared");
+            Debug.Log("Preparing video...");
             yield return null;
         }
 
         Debug.Log("Prepared...");
         videoPlayer.GetComponent<RawImage>().texture = videoPlayer.texture;
         videoPlayer.Play();
-        Debug.Log(videoPlayer.isPlaying);
+
+        while (videoPlayer.isPlaying)
+        {
+            Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+            yield return null;
+        }
+
+        Debug.Log("Done Playing Video");
     }
 
     public void RemoveDescriptionComponent()
