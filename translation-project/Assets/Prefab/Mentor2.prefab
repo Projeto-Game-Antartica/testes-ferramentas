@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 82960690957786192}
   - component: {fileID: 114214754129747152}
   - component: {fileID: 70880331533113846}
+  - component: {fileID: 292459268671843849}
   m_Layer: 0
   m_Name: Mentor2
   m_TagString: Mentor
@@ -192,6 +193,11 @@ MonoBehaviour:
   - M009_Mentor4_Dialogue1
   - M009_Mentor4_Dialogue2
   - M009_Mentor5_Dialogue1
+  - M010_Mentor0_Dialogue1
+  - M010_Mentor1_Dialogue1
+  - M010_Mentor2_Dialogue1
+  - M010_Mentor3_Dialogue1
+  - M010_Mentor4_Dialogue1
   - MrCube
   - NPCOnly
   - Witch
@@ -381,6 +387,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 80, y: 0.0001}
   m_Direction: 0
+--- !u!114 &292459268671843849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315653984124172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MentorName: Mentor2
+  DialogBalloon: {fileID: 8914521601098967598}
 --- !u!1 &1451250402907156
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +624,7 @@ GameObject:
   - component: {fileID: 5374715120880585469}
   - component: {fileID: 8914521601098967598}
   - component: {fileID: 4391389486307211769}
+  - component: {fileID: 2052332066690706554}
   m_Layer: 0
   m_Name: dialogue-balloon
   m_TagString: Untagged
@@ -689,3 +710,17 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 100
   runOnlyOnce: 0
+--- !u!114 &2052332066690706554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143824368312551992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MentorName: 
+  DialogBalloon: {fileID: 0}

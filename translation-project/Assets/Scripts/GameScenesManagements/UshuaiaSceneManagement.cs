@@ -46,8 +46,6 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
             chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
             Debug.Log(transform.position);
         }
-
-        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     private void Update()
@@ -86,8 +84,20 @@ public class UshuaiaSceneManagement : AbstractScreenReader {
         {
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
-            warningText.text = "Pressione ENTER para entrar na casa.";
+            warningText.text = "Pressione ENTER para entrar na casinha de Ushuaia.";
             ReadText(warningText.text);
+        }
+        
+        if(collision.name.Equals("placa_casinha"))
+        {
+            Debug.Log("casinha de ushuaia");
+            ReadText("casinha de ushuaia");
+        }
+
+        if (collision.name.Equals("placa_centroinf"))
+        {
+            Debug.Log("Centro de informações");
+            ReadText("centro de informações");
         }
 
         isTrigger = true;

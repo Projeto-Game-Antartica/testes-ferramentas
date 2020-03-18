@@ -14,9 +14,13 @@ public class DesafioVeg : MonoBehaviour
 
     public TMPro.TMP_InputField HarvestTime, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestNumber, HarvestLocation;
 
+    public OkDialog OkDialogBox;
+
     Action okDialogCallback;
 
     public Button resetButton;
+
+    public GameObject instruction_interface;
 
     //Tools
     public GameObject[] Tools = new GameObject[6];
@@ -69,8 +73,6 @@ public class DesafioVeg : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         ResetHarvestScreen();
-
-        //HarvestNumber.text = "0";//, HarvesterName, HarvestLatitude, HarvestLongitude, HarvestLocation
     }
 
     // Update is called once per frame
@@ -79,6 +81,12 @@ public class DesafioVeg : MonoBehaviour
         if(selectedGridIndex > -1 && currentToolIndex > -1) {
             Tools[currentToolIndex].transform.SetParent(Grid[selectedGridIndex].transform, false);
         }
+
+        if (ActionInput.GetKeyDown(KeyCode.F1))
+            instruction_interface.SetActive(true);
+
+        if (ActionInput.GetKey(KeyCode.Escape))
+            instruction_interface.SetActive(false);
 
     }
 
@@ -91,10 +99,8 @@ public class DesafioVeg : MonoBehaviour
         
 
         selectedGridIndex = -1;
-        //plantIndex = 0; //Must start at random
-        //bowlIndex = -1;
         plantIndex = rnd.Next(16);
-        do
+        do //Find a place to the bowl different from the vegetation place
             bowlIndex = possibleBowlStartIndexes[rnd.Next(possibleBowlStartIndexes.Length)];
         while(bowlIndex == plantIndex);
 
@@ -136,23 +142,7 @@ public class DesafioVeg : MonoBehaviour
     }
 
     private void warningMessage(string message) {
-        //Debug.Log(message);
-        ShowOkDialog(message);
-    }
-
-    public void OnOkDialogClick() {
-        if(okDialogCallback != null)
-            okDialogCallback();
-    }
-
-    public void ShowOkDialog(string message) {
-         ShowOkDialog(message, null);
-    }
-
-    public void ShowOkDialog(string message, Action onOkClick) {
-        okDialogCallback = onOkClick;
-        OkDialog.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0].text = message;
-        OkDialog.SetActive(true);
+        OkDialogBox.Show(message);
     }
 
     private void takeAction(int gridIndex) {
@@ -220,7 +210,7 @@ public class DesafioVeg : MonoBehaviour
 
     private void finishHarvest() {
         doneHarvest++;
-        ShowOkDialog("Parabéns coleta realizada, agora você precisa classificá-la.", showAnalysisScreen);
+        OkDialogBox.Show("Parabéns coleta realizada, agora você precisa classificá-la.", showAnalysisScreen);
     }
 
     private void showAnalysisScreen() {

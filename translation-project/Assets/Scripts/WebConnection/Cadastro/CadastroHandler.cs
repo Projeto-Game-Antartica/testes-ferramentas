@@ -19,6 +19,19 @@ public class CadastroHandler : MonoBehaviour
     //[SerializeField]
     //private Toggle toggleTermos;
 
+    private void Start()
+    {
+        inputName.Select();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            // audiodescription
+        }
+    }
+
     public void TryToRegister()
     {
         if (!string.IsNullOrEmpty(inputName.text) && !string.IsNullOrEmpty(inputEmail.text))

@@ -47,6 +47,7 @@ public class MentorController : AbstractScreenReader {
 
     private void Update()
     {
+
         if (Parameters.ACCESSIBILITY && !VD.isActive)
             PlayAcessibilityAudio();
         else
@@ -149,7 +150,6 @@ public class MentorController : AbstractScreenReader {
 
             default:
                 throw new NotImplementedException(missionNumber + "-" + mentorName + " not implemented.");
-                break;
         }
     }
 
@@ -220,7 +220,6 @@ public class MentorController : AbstractScreenReader {
 
             default:
                 throw new NotImplementedException("Mission number not implemented: " + missionNumber);
-                break;
         }
     }
 

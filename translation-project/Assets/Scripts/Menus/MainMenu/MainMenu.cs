@@ -54,7 +54,7 @@ public class MainMenu : AbstractScreenReader
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1) && !helpMenu.activeSelf && !optionMenu.activeSelf)
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !helpMenu.activeSelf && !optionMenu.activeSelf)
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_menu, LocalizationManager.instance.GetLozalization()));
             //ReadText("Sob o fundo da tela de navegação principal no canto inferior direito botões de funcionalidades do jogo.");
@@ -117,8 +117,7 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
-        async = SceneManager.LoadSceneAsync(ScenesNames.M009Camp);
-        //async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
+        async = SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia);
 
         loadScreenObject.SetActive(true);
 

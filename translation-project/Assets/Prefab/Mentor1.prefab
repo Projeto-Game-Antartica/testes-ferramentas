@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 4392216461745182}
   - component: {fileID: 212916788148545008}
   - component: {fileID: 114037879663010356}
+  - component: {fileID: 5812287848638503097}
   m_Layer: 0
   m_Name: dialogue-balloon
   m_TagString: Untagged
@@ -212,6 +213,20 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 100
   runOnlyOnce: 1
+--- !u!114 &5812287848638503097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390245191950986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MentorName: 
+  DialogBalloon: {fileID: 0}
 --- !u!1 &1626088549069196
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +242,7 @@ GameObject:
   - component: {fileID: 82141035748820876}
   - component: {fileID: 114710294892915322}
   - component: {fileID: 70584645021223248}
+  - component: {fileID: 2152322447194356573}
   m_Layer: 0
   m_Name: Mentor1
   m_TagString: Mentor
@@ -288,6 +304,11 @@ MonoBehaviour:
   - M009_Mentor4_Dialogue1
   - M009_Mentor4_Dialogue2
   - M009_Mentor5_Dialogue1
+  - M010_Mentor0_Dialogue1
+  - M010_Mentor1_Dialogue1
+  - M010_Mentor2_Dialogue1
+  - M010_Mentor3_Dialogue1
+  - M010_Mentor4_Dialogue1
   - MrCube
   - NPCOnly
   - Witch
@@ -477,6 +498,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 80, y: 0.0001}
   m_Direction: 0
+--- !u!114 &2152322447194356573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626088549069196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2e0979d88cb76489b25addce2279b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MentorName: Mentor1
+  DialogBalloon: {fileID: 212916788148545008}
 --- !u!1 &1803895049500396
 GameObject:
   m_ObjectHideFlags: 0

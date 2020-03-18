@@ -513,7 +513,7 @@ public class Homeostase : AbstractCardManager
                     iconsController.AddPoints(-0.02f, 0.02f, -0.08f);
                 }
                 break;
-            case "suco laranja":
+            case "suco de laranja":
                 if (add)
                 {
                     alimentoKcal = 54.45f;

@@ -81,7 +81,7 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
         {
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
-            warningText.text = "Pressione ENTER para sair na casa.";
+            warningText.text = "Pressione ENTER para sair da casinha de Ushuaia.";
             ReadText(warningText.text);
         }
 

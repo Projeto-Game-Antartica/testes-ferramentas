@@ -43,7 +43,7 @@ public class OptionMenu : AbstractScreenReader {
         //hcsettings.ChangeHighContrast();
     }
     
-    public void ReadToggle(Toggle toggle)
+    new public void ReadToggle(Toggle toggle)
     {
         var tmp = "";
 
@@ -57,7 +57,7 @@ public class OptionMenu : AbstractScreenReader {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1) && !helpMenu.activeSelf)
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !helpMenu.activeSelf)
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_config, LocalizationManager.instance.GetLozalization()));
         }
