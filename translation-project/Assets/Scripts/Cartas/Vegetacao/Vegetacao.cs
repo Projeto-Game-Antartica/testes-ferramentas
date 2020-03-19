@@ -28,6 +28,10 @@ public class Vegetacao : AbstractCardManager
 
     public Button satisfeitoButton;
 
+    public Button LikeButton, DislikeButton;
+
+    public Button audioButton;
+    public Button librasButton;
     public Button resetButton;
     public Button backButton;
     public GameObject confirmQuit;
@@ -119,17 +123,38 @@ public class Vegetacao : AbstractCardManager
         return cardType;
     }
 
+    private bool isAnySelected(params Selectable[] selectables) {
+        foreach(Selectable s in selectables) {
+            if(s.gameObject == EventSystem.current.currentSelectedGameObject)
+                return true;
+        }
+        return false;
+    }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F1))
+
+    private void Update() {    
+
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
             instruction_interface.SetActive(true);
 
         if (Input.GetKey(KeyCode.Escape))
             instruction_interface.SetActive(false);
+
+        if (Input.GetKey(KeyCode.F5))
+            minijogosDicas.ShowHint();
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            if(isAnySelected(audioButton, librasButton, resetButton, backButton))
+                LikeButton.Select();
+            else
+                audioButton.Select();
+        }
+
+        
     }
 
-    // initialize after button click on instruction
-    public void Initialize() {
+    private void Start() {
         //PlayerPreferences.M010_Tipos = true;
         
         rand = new System.Random(); //Inits random number generator
@@ -152,6 +177,11 @@ public class Vegetacao : AbstractCardManager
 
         resetButton.interactable = true;
         backButton.interactable = true;
+    }
+
+    // initialize after button click on instruction
+    public void Initialize() {
+
     }
 
     override public void CheckLike()
