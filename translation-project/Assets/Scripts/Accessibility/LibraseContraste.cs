@@ -50,6 +50,7 @@ public class LibraseContraste : AbstractScreenReader {
         }
 
         Debug.Log("Done Playing Video");
+        moldura.SetActive(false);
     }
 
     public void SetHighContrastParameter(bool isOn)
