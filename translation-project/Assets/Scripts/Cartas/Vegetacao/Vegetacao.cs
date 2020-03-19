@@ -38,6 +38,8 @@ public class Vegetacao : AbstractCardManager
 
     public GameObject instruction_interface;
 
+    public HUDMJController hud;
+
     //Lucas code
     private System.Random rand;
     private enum Vegetais { Planta, Fungo, Alga };
@@ -137,10 +139,15 @@ public class Vegetacao : AbstractCardManager
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
             instruction_interface.SetActive(true);
 
-        if (Input.GetKey(KeyCode.Escape))
-            instruction_interface.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(instruction_interface.activeSelf)
+                instruction_interface.SetActive(false);
+            else
+                hud.TryQuit();
 
-        if (Input.GetKey(KeyCode.F5))
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
             minijogosDicas.ShowHint();
 
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))

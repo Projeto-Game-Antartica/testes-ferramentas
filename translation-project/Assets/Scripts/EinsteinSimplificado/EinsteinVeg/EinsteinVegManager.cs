@@ -92,15 +92,23 @@ public class EinsteinVegManager : AbstractScreenReader
     public String[] tokensText = new String[20];
     public TokensTypes[] tokensType = new TokensTypes[20];
 
+    public HUDMJController hud;
+
     private void Start()
     {
-        resetButton.interactable = false;
-
         init = false;
 
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
+
+        //PlayerPreferences.M010_Amostras = true;
+        
+        if (!init)
+            initializeCards();
+
+        backButton.interactable = true;
+        resetButton.interactable = true;
 
         //initializeGame();
     }
@@ -132,8 +140,11 @@ public class EinsteinVegManager : AbstractScreenReader
             instruction_interface.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape)) {
-            instruction_interface.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(instruction_interface.activeSelf)
+                instruction_interface.SetActive(false);
+            else
+                hud.TryQuit();
         }
 
         //Checks if all the options are already done. If so, end the game
@@ -149,13 +160,7 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
-        //PlayerPreferences.M010_Amostras = true;
-        
-        if (!init)
-            initializeCards();
 
-        backButton.interactable = true;
-        resetButton.interactable = true;
     }
 
     public void CallHintMethod() {

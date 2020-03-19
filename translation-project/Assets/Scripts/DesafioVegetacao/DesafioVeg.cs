@@ -22,6 +22,8 @@ public class DesafioVeg : MonoBehaviour
 
     public GameObject instruction_interface;
 
+    public HUDMJController hud;
+
     //Tools
     public GameObject[] Tools = new GameObject[6];
     private int currentToolIndex;
@@ -85,8 +87,12 @@ public class DesafioVeg : MonoBehaviour
         if (ActionInput.GetKeyDown(KeyCode.F1))
             instruction_interface.SetActive(true);
 
-        if (ActionInput.GetKey(KeyCode.Escape))
-            instruction_interface.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(instruction_interface.activeSelf)
+                instruction_interface.SetActive(false);
+            else
+                hud.TryQuit();
+        }
 
     }
 

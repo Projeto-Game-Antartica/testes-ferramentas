@@ -33,8 +33,6 @@ public class HUDMJController : AbstractScreenReader
         {
             if (acessoTeclado.activeSelf)
                 acessoTeclado.SetActive(false);
-            else
-                TryQuit();
         }
     }
 
