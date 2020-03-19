@@ -10,6 +10,11 @@ public class HUDMJController : AbstractScreenReader
 
     public TMPro.TextMeshProUGUI playerName;
 
+    public AudioSource audioSource;
+
+    public GameObject confirmQuit;
+    public AudioClip avisoClip;
+
     private void Start()
     {
         playerName.text = PlayerPreferences.PlayerName.ToUpper();
@@ -28,7 +33,28 @@ public class HUDMJController : AbstractScreenReader
         {
             if (acessoTeclado.activeSelf)
                 acessoTeclado.SetActive(false);
+            else
+                TryQuit();
         }
+    }
+
+    public void TryQuit()
+    {
+        confirmQuit.SetActive(true);
+
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        confirmQuit.GetComponentInChildren<Button>().Select();
+
+        audioSource.PlayOneShot(avisoClip);
+    }
+
+    public void Quit()
+    {
+        //if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+        if(ScenesNames.GoBackTo != "")
+            UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.GoBackTo);
+        else 
+            Debug.Log("ScenesNames.GoBackTo not set.");
     }
 
 }
