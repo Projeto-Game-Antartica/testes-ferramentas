@@ -126,6 +126,8 @@ public class VIDEUIManager : AbstractScreenReader
     //This begins the conversation
     void Begin(VIDE_Assign dialogue)
     {
+        ResetLibrasURL();
+
         flagEXP = true;
 
         //Let's reset the NPC text variables
@@ -143,6 +145,8 @@ public class VIDEUIManager : AbstractScreenReader
 
         VD.BeginDialogue(dialogue); //Begins dialogue, will call the first OnNodeChange
 
+        SetLibrasURL();
+
         dialogueContainer.SetActive(true); //Let's make our dialogue container visible
 
         // accessibility
@@ -159,6 +163,7 @@ public class VIDEUIManager : AbstractScreenReader
         if (!dialoguePaused) //Only if
         {
             VD.Next(); //We call the next node and populate nodeData with new data. Will fire OnNodeChange.
+            SetLibrasURL();
         }
         else
         {
@@ -280,11 +285,6 @@ public class VIDEUIManager : AbstractScreenReader
                 //mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
             }
 
-            if(data.extraVars.ContainsKey("OpenLista"))
-            {
-                listaItem.SetActive(true);
-            }
-
             if(data.extraVars.ContainsKey("Ticket"))
             {
                 close.gameObject.SetActive(true);
@@ -389,18 +389,15 @@ public class VIDEUIManager : AbstractScreenReader
                 ReadAudioDescription((string)data.extraVars["ReadAudioDescrpition"]);
             }
 
-            if(data.extraVars.ContainsKey("SetLibrasURL"))
-            {
-                Debug.Log(VD.assigned.assignedDialogue);
-                Debug.Log(data.nodeID);
+            //if(data.extraVars.ContainsKey("SetLibrasURL"))
+            //{
+            //    SetLibrasURL();
+            //}
 
-                dialogue_video_url = VD.assigned.assignedDialogue + "_" + data.nodeID;
-            }
-
-            if(data.extraVars.ContainsKey("RemoveLibrasURL"))
-            {
-                dialogue_video_url = string.Empty;
-            }
+            //if(data.extraVars.ContainsKey("RemoveLibrasURL"))
+            //{
+            //    ResetLibrasURL();
+            //}
         }
 
         //Note you could also use Unity's Navi system
@@ -417,6 +414,25 @@ public class VIDEUIManager : AbstractScreenReader
             flagRead = false;
         }
 
+    }
+
+    public void SetLibrasURL()
+    {
+        Debug.Log(VD.assigned.assignedDialogue);
+        Debug.Log(VD.nodeData.nodeID);
+
+        dialogue_video_url = VD.assigned.assignedDialogue + "_" + VD.nodeData.nodeID;
+    }
+
+    public void ResetLibrasURL()
+    {
+        dialogue_video_url = string.Empty;
+    }
+
+    public void OpenLista()
+    {
+        listaItem.SetActive(true);
+        listaItem.GetComponentInChildren<Selectable>().Select();
     }
 
     public void AddExperience()

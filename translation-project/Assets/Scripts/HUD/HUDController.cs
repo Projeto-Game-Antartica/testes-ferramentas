@@ -45,6 +45,8 @@ public class HUDController : AbstractScreenReader {
 
     public BagController bagController;
 
+    public LifeExpController lifeExpController;
+
     public string missionNumber;
     public string missionAudiodescriptionKey;
 
@@ -163,6 +165,11 @@ public class HUDController : AbstractScreenReader {
                 ShowMap(true);
             }
         }
+
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
+        }
     }
 
     public void InitializeGame()
@@ -176,6 +183,8 @@ public class HUDController : AbstractScreenReader {
 
         iniciarButton.gameObject.SetActive(false);
         fecharButton.gameObject.SetActive(true);
+
+        iniciarButton.Select();
     }
 
     public void ActivateInstructionInterface()
@@ -189,7 +198,10 @@ public class HUDController : AbstractScreenReader {
         Debug.Log(missionTitle.text);
         Debug.Log(missionDescription.text);
 
-        iniciarButton.Select();
+        if (iniciarButton.isActiveAndEnabled)
+            iniciarButton.Select();
+        else
+            fecharButton.Select();
     }
 
     void ReadInstructionAudiodescrition(string missionNumber)
@@ -208,6 +220,9 @@ public class HUDController : AbstractScreenReader {
                 Debug.Log("check mission number...");
                 break;
         }
+
+        ReadText(missionTitle.text);
+        ReadText(missionDescription.text);
     }
 
     public void ShowMap(bool op)

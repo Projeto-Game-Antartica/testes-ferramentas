@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class Card : AbstractScreenReader, ISelectHandler {
 
@@ -250,11 +251,24 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     public void ReadAndDebugCardText(string objectName)
     {
+        string animalDescription = string.Empty;
+        try
+        {
+            animalDescription = CardsDescription.GetCardAudioDescription(gameObject.name.Substring(gameObject.name.IndexOf(":") + 2).ToLower());
+        }
+        catch(System.Exception ex)
+        {
+            Debug.Log("its a text >>>> " + ex.StackTrace);
+        }
+
+        Debug.Log(animalDescription);
+
         // numero da carta + descrição ou numero da carta + nome do animal
         string resultText  = gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18" + ": " + objectName;
 
         // numero da carta
-        string resultImage = gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18" + gameObject.name.Substring(gameObject.name.IndexOf(":"));
+        string resultImage = gameObject.name.Substring(0, gameObject.name.IndexOf(":")) + " de 18" + gameObject.name.Substring(gameObject.name.IndexOf(":"))
+                            + objectName + ": " + animalDescription;
 
         Debug.Log(objectName != null ? resultText : resultImage);
         ReadText(objectName != null ? resultText : resultImage);

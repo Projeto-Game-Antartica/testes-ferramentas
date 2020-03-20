@@ -33,15 +33,13 @@ public class ShipSceneManagement : AbstractScreenReader {
     public AudioClip warningClip;
     public AudioClip closeClip;
 
-    private string missionNumber = "M004";
+    public BagController Bag;
 
-    //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
+    private string missionNumber = "M004";
 
     public void Start()
     {
         isTrigger = false;
-
-        //InitialInstruction();
 
         if (PlayerPrefs.GetInt("Saved_"+missionNumber) == 1)
         {
@@ -50,7 +48,13 @@ public class ShipSceneManagement : AbstractScreenReader {
             Debug.Log(transform.position);
         }
 
-        Debug.Log(SceneManager.GetActiveScene().name);
+
+        if (PlayerPreferences.M004_Memoria)
+            Bag.EnableItemByIndex(0); // camera fotografica
+
+        if (PlayerPreferences.M004_TeiaAlimentar)
+            Bag.EnableItemByIndex(1); // lente zoom
+
     }
 
     private void Update()
@@ -65,32 +69,10 @@ public class ShipSceneManagement : AbstractScreenReader {
             if (colliderControl.name.Equals("Figurante") && PlayerPreferences.finishedAllM004Games())
                 SceneManager.LoadScene(ScenesNames.M004TailMission);
         }
-
-        //if (Input.GetKeyDown(KeyCode.F2))
-        //{
-        //    if (!instructionInterface.activeSelf)
-        //    {
-        //        ReadSceneDescription();
-        //    }
-        //}
     }
-
-    //public void ReadSceneDescription()
-    //{
-    //    ReadText(sceneDescription);
-    //    Debug.Log(sceneDescription);
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("scene-trigger");
-        
-        //if (collision.name.Equals("cabine principal"))
-        //{
-        //    warningInterface.SetActive(true);
-        //    warningText.text = "Pressione E para entrar no passadiço do navio.";
-        //}
-        //else 
         if(collision.name.Equals("Figurante"))
         {
             if (PlayerPreferences.finishedAllM004Games())

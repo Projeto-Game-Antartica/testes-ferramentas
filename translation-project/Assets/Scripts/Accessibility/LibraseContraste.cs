@@ -50,6 +50,7 @@ public class LibraseContraste : AbstractScreenReader {
         }
 
         Debug.Log("Done Playing Video");
+
         moldura.SetActive(false);
     }
 
@@ -65,7 +66,7 @@ public class LibraseContraste : AbstractScreenReader {
 
     public void PlayDialogueVideo()
     {
-        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url + Parameters.MP4_TYPE;
+        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url + Parameters.VP8_TYPE;
 
         Debug.Log("url >>> " + url);
         if (url != string.Empty)

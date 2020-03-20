@@ -46,7 +46,7 @@ public class VideoPlayerTest : MonoBehaviour
         //videoPlayer.url = "http://acessivel.ufabc.edu.br/antartica/videos/aves.avi";
         //videoPlayer.url = "http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4";
         //videoPlayer.url = "https://drive.google.com/file/d/14x-B2rfRkMQvUOTGcMv_dP6yVs5oW6Dj/view?usp=sharing";
-        videoPlayer.url = "https://drive.google.com/file/d/1BX0POJf5bZXKz4guz2VdLc3saAZtif0j/view?usp=sharing";
+        videoPlayer.url = "http://acessivel.ufabc.edu.br/antartica/videos/videoteste.vp8";
 
 
         //Set Audio Output to AudioSource
