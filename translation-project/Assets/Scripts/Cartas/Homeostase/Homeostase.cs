@@ -60,6 +60,30 @@ public class Homeostase : AbstractCardManager
 
     private int nextCardIndex;
 
+    private Dictionary<string, string> cardsDescription = new Dictionary<string, string>
+    {
+        {"chocolate", "Imagem de uma barra de chocolate mordida com embalagem amarela, aberta pela metade." },
+        {"cenoura", "Imagem de uma cenoura e meia de tamanho médio, com talos e folhas." },
+        {"amêndoas", "Imagem de 2 amêndoas pequenas. Uma delas aberta com a casca quebrada pela metade, mostrando a semente de seu interior." },
+        {"sementes de abóbora", "Imagem de um pequeno pote amarelo com sementes de abóbora caindo de dentro dele. Ao fundo uma abóbora inteira. " },
+        {"ameixa seca", "Imagem de uma pequena tigela branco com ameixas secas e folhas verdes." },
+        {"barrinha de cereal", "Imagem de uma barra de cereal sem embalagem." },
+        {"batata doce", "Imagem de uma batata doce com casca, cortada ao meio." },
+        {"banana", "Imagem de um cacho de bananas." },
+        {"pão", "Imagem de um pão grande." },
+        {"figo", "Imagem de um figo cortado ao meio, com o interior à mostra." },
+        {"maçã", "Imagem de uma maçã vermelha com pequeno talho e folha." },
+        {"melancia", "Imagem de um pedaço de uma melancia com seu interior à mostra." },
+        {"abacate", "Imagem de um abacate cortado pela metade com a semente à mostra. " },
+        {"laranja", "Imagem de uma laranja cortada pela metade com seu interior à mostra." },
+        {"queijo mussarela", "Imagem de um pedaço quadrado de queijo mussarela." },
+        {"queijo cheddar", "Imagem de um pedaço triangular de queijo cheddar." },
+        {"garrafa de água", "Imagem de uma garrafa plástica com água." },
+        {"leite desnatado", "Imagem de caixa branca e azul de leite com detalhe e nome do produto em azul." },
+        {"suco de laranja", "Imagem de garrafa plástica com suco de laranja. Rótulo verde, escrito “Natural sem açúcar”." },
+        {"leite de soja", "Imagem de caixa branca e verde de leite com detalhe e nome do produto em verde." }
+    };
+
     private void Update()
     {
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
@@ -126,7 +150,7 @@ public class Homeostase : AbstractCardManager
 
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
         {
-            ReadCard(cardIndex);
+            ReadCard();
         }
     }
 
@@ -162,7 +186,7 @@ public class Homeostase : AbstractCardManager
             alimentosCesta[i].GetComponentInChildren<AlimentosInventarioController>().initialized = false;
         }
 
-        ReadCard(cardIndex);
+        ReadCard();
 
         // show first hint
         minijogosDicas.SetHintByIndex(cardIndex);
@@ -235,8 +259,7 @@ public class Homeostase : AbstractCardManager
             currentImage.name = sprites[cardIndex].name;
             cardName.text = currentImage.name;
 
-            Debug.Log(cardName.text);
-            ReadText(cardName.text);
+            ReadCard();
             
             if (cardIndex < sprites.Length - 1)
             {
@@ -309,7 +332,7 @@ public class Homeostase : AbstractCardManager
                     iconsController.AddPoints(-0.02f, 0.02f, +0.08f);
                 }
                 break;
-            case "amendoas":
+            case "amêndoas":
                 if (add)
                 {
                     alimentoKcal = 579;
@@ -501,7 +524,7 @@ public class Homeostase : AbstractCardManager
                     iconsController.AddPoints(-0.05f, 0.02f, 0.08f);
                 }
                 break;
-            case "semente de abobora":
+            case "sementes de abóbora":
                 if (add)
                 {
                     alimentoKcal = 559;
@@ -616,10 +639,10 @@ public class Homeostase : AbstractCardManager
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase_cesta, LocalizationManager.instance.GetLozalization()));
     }
 
-    public void ReadCard(int index)
+    public void ReadCard()
     {
-        Debug.Log(currentImage.name);
-        ReadText(currentImage.name);
+        Debug.Log(cardsDescription[currentImage.name.ToLower()]);
+        ReadText(cardsDescription[currentImage.name.ToLower()]);
     }
 
     //public void ShiftArray(int index)

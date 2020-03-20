@@ -167,12 +167,12 @@ public class EinsteinManager : AbstractScreenReader
             cancelButton.interactable = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             instruction_interface.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (instruction_interface.activeSelf)
             {

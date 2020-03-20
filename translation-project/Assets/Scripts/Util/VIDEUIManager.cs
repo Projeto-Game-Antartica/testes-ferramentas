@@ -284,11 +284,6 @@ public class VIDEUIManager : AbstractScreenReader
                 //mentor.gameObject.GetComponentsInChildren<SpriteRenderer>()[2].color = new Color(0.4f, 1, 0.4f);
             }
 
-            if(data.extraVars.ContainsKey("OpenLista"))
-            {
-                listaItem.SetActive(true);
-            }
-
             if(data.extraVars.ContainsKey("Ticket"))
             {
                 close.gameObject.SetActive(true);
@@ -393,15 +388,15 @@ public class VIDEUIManager : AbstractScreenReader
                 ReadAudioDescription((string)data.extraVars["ReadAudioDescrpition"]);
             }
 
-            if(data.extraVars.ContainsKey("SetLibrasURL"))
-            {
-                SetLibrasURL();
-            }
+            //if(data.extraVars.ContainsKey("SetLibrasURL"))
+            //{
+            //    SetLibrasURL();
+            //}
 
-            if(data.extraVars.ContainsKey("RemoveLibrasURL"))
-            {
-                ResetLibrasURL();
-            }
+            //if(data.extraVars.ContainsKey("RemoveLibrasURL"))
+            //{
+            //    ResetLibrasURL();
+            //}
         }
 
         //Note you could also use Unity's Navi system
@@ -431,6 +426,12 @@ public class VIDEUIManager : AbstractScreenReader
     public void ResetLibrasURL()
     {
         dialogue_video_url = string.Empty;
+    }
+
+    public void OpenLista()
+    {
+        listaItem.SetActive(true);
+        listaItem.GetComponentInChildren<Selectable>().Select();
     }
 
     public void AddExperience()

@@ -29,6 +29,8 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
     public AudioClip avisoClip;
     public AudioClip closeClip;
 
+    public BagController Bag;
+
     private string missionNumber = "M002_Casinha";
 
     // Use this for initialization
@@ -43,7 +45,38 @@ public class CasaUshuaiaSceneManagement : AbstractScreenReader {
             Debug.Log(transform.position);
         }
 
-        Debug.Log(SceneManager.GetActiveScene().name);
+        if (PlayerPrefs.GetInt("Saved_" + missionNumber) == 1)
+        {
+            transform.position = character.GetPosition(missionNumber);
+            chasingCamera.SetCameraPosition(character.GetPosition(missionNumber));
+            Debug.Log(transform.position);
+        }
+
+        if (PlayerPreferences.M002_Homeostase) // blusa fleece, camisa segunda pele e colete
+        {
+            Bag.EnableItemByIndex(0);
+            Bag.EnableItemByIndex(1);
+        }
+
+        if (PlayerPreferences.M002_Pinguim) // cachecol, luvas, touca e meias.
+        {
+            Bag.EnableItemByIndex(2);
+            Bag.EnableItemByIndex(6);
+            Bag.EnableItemByIndex(7);
+        }
+
+        if (PlayerPreferences.M002_ProcessoPesquisa) // galocha, calça de fleece, calça impermeável, jaqueta polar e calça segunda pele.
+        {
+            Bag.EnableItemByIndex(0);
+            Bag.EnableItemByIndex(3);
+            Bag.EnableItemByIndex(4);
+        }
+
+        if (PlayerPreferences.M002_Regras)  // óculos escuros, filtro solar e a mochila.
+        {
+            Bag.EnableItemByIndex(5);
+            Bag.EnableItemByIndex(8);
+        }
     }
 
     private void Update()
