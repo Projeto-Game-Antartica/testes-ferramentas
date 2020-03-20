@@ -41,6 +41,8 @@ public class ErasScene : AbstractScreenReader {
 
     public IEnumerator StartTimer()
     {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_eras, LocalizationManager.instance.GetLozalization()));
+
         yield return new WaitForSeconds(0.5f);
 
         started = true;
@@ -103,6 +105,11 @@ public class ErasScene : AbstractScreenReader {
                 paused = false;
             }
         }
+
+        if(Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_eras, LocalizationManager.instance.GetLozalization()));
+        }
     }
 
     public void ResetGameObjects()
@@ -119,7 +126,7 @@ public class ErasScene : AbstractScreenReader {
     {
         LoseImage.SetActive(true);
 
-        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_eras_derrota, LocalizationManager.instance.GetLozalization()));
 
         lifeExpController.AddEXP(0.0001f);
 
@@ -127,7 +134,7 @@ public class ErasScene : AbstractScreenReader {
 
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        //ReadText(LoseText);
+        ReadText(LoseText);
 
         StartCoroutine(ReturnToCampCoroutine()); // volta para o navio
     }
@@ -166,9 +173,9 @@ public class ErasScene : AbstractScreenReader {
 
         confirmQuit.SetActive(true);
 
-        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
-        //ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();
 
         audioSource.PlayOneShot(avisoClip);

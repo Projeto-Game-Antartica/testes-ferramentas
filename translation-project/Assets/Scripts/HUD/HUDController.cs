@@ -216,6 +216,9 @@ public class HUDController : AbstractScreenReader {
             case "M004":
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio_instrucao, LocalizationManager.instance.GetLozalization()));
                 break;
+            case "M009":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_missao_instrucao, LocalizationManager.instance.GetLozalization()));
+                break;
             default:
                 Debug.Log("check mission number...");
                 break;
@@ -344,6 +347,9 @@ public class HUDController : AbstractScreenReader {
                 break;
             case "M004":
                 ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_navio, LocalizationManager.instance.GetLozalization()));
+                break;
+            case "M009":
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_missao, LocalizationManager.instance.GetLozalization()));
                 break;
             default:
                 Debug.Log("check mission number...");

@@ -232,6 +232,7 @@ public class VIDEUIManager : AbstractScreenReader
             if (data.extraVars.ContainsKey("LoadScene"))
             {
                 //SceneManager.LoadScene((string)data.extraVars["LoadScene"], LoadSceneMode.Single);
+                ScenesNames.GoBackTo = SceneManager.GetActiveScene().name;
                 LoadSceneWithDelay((string)data.extraVars["LoadScene"], 3f);
             }
 

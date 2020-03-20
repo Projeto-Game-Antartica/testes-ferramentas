@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class EinsteinVegManager : AbstractScreenReader
 {
@@ -21,6 +22,7 @@ public class EinsteinVegManager : AbstractScreenReader
     public Button backButton;
     public Button resetButton;
     public Button audioButton;
+    public Button librasButton;
     public Button confirmarButton;
     public Button cancelButton;
 
@@ -92,15 +94,23 @@ public class EinsteinVegManager : AbstractScreenReader
     public String[] tokensText = new String[20];
     public TokensTypes[] tokensType = new TokensTypes[20];
 
+    public HUDMJController hud;
+
     private void Start()
     {
-        resetButton.interactable = false;
-
         init = false;
 
         ReadText(instructions);
 
         audioSource = GetComponent<AudioSource>();
+
+        //PlayerPreferences.M010_Amostras = true;
+        
+        if (!init)
+            initializeCards();
+
+        backButton.interactable = true;
+        resetButton.interactable = true;
 
         //initializeGame();
     }
@@ -132,8 +142,19 @@ public class EinsteinVegManager : AbstractScreenReader
             instruction_interface.SetActive(true);
         }
 
-        if (Input.GetKey(KeyCode.Escape)) {
-            instruction_interface.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(instruction_interface.activeSelf)
+                instruction_interface.SetActive(false);
+            else
+                hud.TryQuit();
+        }
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            if(isAnySelected(audioButton, librasButton, resetButton, backButton))
+                cards[0].GetComponent<Button>().Select();
+            else
+                audioButton.Select();
         }
 
         //Checks if all the options are already done. If so, end the game
@@ -148,14 +169,20 @@ public class EinsteinVegManager : AbstractScreenReader
             EndGame(true);
     }
 
-    public void initializeGame() {
-        //PlayerPreferences.M010_Amostras = true;
-        
-        if (!init)
-            initializeCards();
+    private bool isSelected(GameObject go) {
+        return go == EventSystem.current.currentSelectedGameObject;
+    }
 
-        backButton.interactable = true;
-        resetButton.interactable = true;
+    private bool isAnySelected(params Selectable[] selectables) {
+        foreach(Selectable s in selectables) {
+            if(s.gameObject == EventSystem.current.currentSelectedGameObject)
+                return true;
+        }
+        return false;
+    }
+
+    public void initializeGame() {
+
     }
 
     public void CallHintMethod() {

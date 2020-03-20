@@ -444,6 +444,8 @@ public class ClassificaManager : AbstractScreenReader
         lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
         lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_desafio_vitoria, LocalizationManager.instance.GetLozalization()));
+
         PlayerPreferences.M009_Desafio_Done = true;
  
         DoAfter(5, ReturnToCamp);

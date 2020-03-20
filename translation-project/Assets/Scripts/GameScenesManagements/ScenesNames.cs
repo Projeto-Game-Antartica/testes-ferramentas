@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScenesNames {
 
+    public static string GoBackTo = ""; //Scene to go back on quit minigame
+
     /* PRE JOGO */
     public const string Cadastro = "CadastroScene";
     public const string Glossary = "GlossaryScene";

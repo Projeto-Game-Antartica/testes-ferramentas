@@ -353,10 +353,16 @@ public class DesafioManagerPaleo : AbstractScreenReader {
             dicas.ShowHint();
         }
 
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
+        {
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_desafio, LocalizationManager.instance.GetLozalization()));
+        }
+
     }
 
     public void initializeGame()
     {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_desafio, LocalizationManager.instance.GetLozalization()));
 
         backButton.interactable = true;
         resetButton.interactable = true;
@@ -732,7 +738,7 @@ public class DesafioManagerPaleo : AbstractScreenReader {
     {
         confirmQuit.SetActive(true);
 
-        //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
         confirmQuit.GetComponentInChildren<Button>().Select();

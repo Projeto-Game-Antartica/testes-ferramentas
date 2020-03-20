@@ -166,7 +166,23 @@ public class MemoryManager : AbstractScreenReader {
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+            switch (missionName)
+                {
+                    case "baleias":
+                        
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+
+                    break;
+
+                    case "paleo":
+                        
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria, LocalizationManager.instance.GetLozalization()));
+
+                        break;
+                    default:
+                        
+                        break;
+                }    
         }
 
         if (Input.GetKeyDown(InputKeys.DICAS_KEY))
@@ -526,8 +542,6 @@ public class MemoryManager : AbstractScreenReader {
                     WinImage.SetActive(true);
                     //WinImage.GetComponentInChildren<Button>().Select();
 
-                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
-
                     if (!PlayerPreferences.M009_Memoria)
                     {
                         WinText.text = "Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.";
@@ -535,19 +549,18 @@ public class MemoryManager : AbstractScreenReader {
                         audioSource.PlayOneShot(victoryAudio);
                         yield return new WaitWhile(() => audioSource.isPlaying);
 
-                        //ReadText("Parabéns!! Você ganhou o kit de primeiros socorros, mas ainda falta conquistar outros itens.");
+                        ReadText(WinText.text);
                     }
                     else
                     {//MUDAARR
-                        WinText.text = "Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                            "contribuir com as pesquisas da Ciência Cidadã.";
+                        WinText.text = "Parabéns! Você ganhou o kit de primeiros socorros. Agora você que conquistar outros itens.";
 
                         audioSource.PlayOneShot(victoryAudio);
                         yield return new WaitWhile(() => audioSource.isPlaying);
 
-                        //ReadText("Parabéns! Você ganhou a câmera fotográfica. Agora você pode fotografar caudas de baleias jubarte e " +
-                            //"contribuir com as pesquisas da Ciência Cidadã.");
+                        ReadText(WinText.text);
                     }
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria_vitoria, LocalizationManager.instance.GetLozalization()));
 
                     lifeExpController.AddEXP(0.001f); // finalizou o minijogo
                     lifeExpController.AddEXP(0.0002f); // ganhou o item
@@ -556,15 +569,16 @@ public class MemoryManager : AbstractScreenReader {
                 {
                     LoseImage.SetActive(true);
                     //MUDAARR
-                    //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
 
                     audioSource.PlayOneShot(loseAudio);
 
                     yield return new WaitWhile(() => audioSource.isPlaying);
 
-                    //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+                    ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
                     resetButton.Select();
                     lifeExpController.AddEXP(0.0001f); // jogou um minijogo
+
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria_derrota, LocalizationManager.instance.GetLozalization()));
                 }
 
                 StartCoroutine(ReturnToShipCoroutine()); // volta para o navio perdendo ou ganhando o minijogo

@@ -13,7 +13,10 @@ public class OkDialog : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            OnOkDialogClick();
+            Hide();
+        }
     }
 
     public void Show(string message, UnityAction onOkClick) {
