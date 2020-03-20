@@ -176,7 +176,7 @@ public class MemoryManager : AbstractScreenReader {
 
                     case "paleo":
                         
-                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria, LocalizationManager.instance.GetLozalization()));
 
                         break;
                     default:

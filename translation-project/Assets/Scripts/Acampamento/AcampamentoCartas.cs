@@ -51,6 +51,49 @@ public class AcampamentoCartas : AbstractCardManager
 
     private bool isOnMJMenu = false;
 
+    private Dictionary<string, string> cardsDescription = new Dictionary<string, string>
+    {
+        {"abridor de latas", "Imagem de abridor de latas de alumínio." },
+        {"bandeira", "Imagem da bandeira do brasil hasteada sobre fundo de céu azul." },
+        {"barraca-depósito (material, banheiro)", "Imagem de barraca de acampamento preta, em poliester, utilizada como banheiro." },
+        {"barracas dormitórios(individual)", "Imagem de barraca de acampamento grande, na cor vermelha com detalhes em amarelo." },
+        {"benjamin", "Imagem de benjamin branco de três pontas." },
+        {"cadeiras de praia", "Imagem de cadeira de praia com estrutura em alumínio, encosto e assento azuis." },
+        {"caixas de suprimento", "Imagem de uma caixa plástica,  retangular, branca." },
+        {"capa para chuva", "Imagem de capa de chuva amarela." },
+        {"celular e carregador", "Imagem de celular branco com carregador preto." },
+        {"chinelo", "Imagem de par de chinelos brancos com as tiras azuis." },
+        {"detergente", "Imagem de detergente amarelo em embalagem plástica transparente, com rótulo azul." },
+        {"espelho", "Imagem de espelho dobravél com a parte de trás branca." },
+        {"espetos", "Imagem de três espetos de churrasco em alumínio com cabo de madeira." },
+        {"esponja", "Imagem de duas esponjas amarela com lã de aço verde em um dos lados." },
+        {"garrafa térmica", "Imagem de uma garrafa térmica de alumínio com tampa e bico dosador." },
+        {"gerador", "Imagem de um grande  gerador de energia elétrica." },
+        {"guardanapos", "Imagem com pilha de guardanapos de papel brancos." },
+        {"lanterna e pilhas", "Imagem de uma lanterna preta ao lado de duas pilhas amarelas." },
+        {"luminária", "Imagem de luminária de mesa preta." },
+        {"luvas de proteção", "Imagem de par de luvas de pano pigmentada." },
+        {"martelete", "Imagem de um martelete com detalhes azuis nas laterais." },
+        {"martelo", "Imagem de martelo marrom com cabo preto." },
+        {"óculos de proteção", "Imagem de óculos de proteção com lentes transparentes e armação preta." },
+        {"panela", "Imagem de panela pequena, com cabo e tampa pretos." },
+        {"papel alumínio", "Imagem de um rolo de papel alumínio." },
+        {"papel higiênico", "Imagem com três rolos de papel higiênico." },
+        {"pincel", "Imagem de um pincel chato com cabo preto." },
+        {"polar Harven", "Imagem de barraca de acampamento azul, uso de área comum, como cozinha, sala, entre outros." },
+        {"pratos", "Imagem de três pratos fundos de alumínio." },
+        {"protetor solar", "Imagem de protetor solar em embalagem laranja e roxa, com foto de um sol e rótulo vermelho." },
+        {"quadriciclo", "Imagem de um quadriciclo preto com detalhes laterais em laranja." },
+        {"repelente para mosquito", "Imagem de repelente com embalagem cinza, tampa verde e rótulo vermelho." },
+        {"saco de dormir", "Imagem de saco de dormir azul escuro e detalhe em azul claro na ponta superior." },
+        {"saco para lixo", "Imagem de um saco de lixo preto, com coisas dentro, amarrado nas pontas." },
+        {"saco plástico", "Imagem com três sacos plásticos transparentes amarrados nas extremidades." },
+        {"talhadeira", "Imagem de uma talhadeira cinza de ferro" },
+        {"talheres de alumínio", "Imagem de uma colher, um garfo e uma faca. Os talheres são dobráveis, de alumínio, e possuem uma sacola de tecido, na cor preta para serem carregados." },
+        {"travesseiros", "Imagem de dois travesseiros brancos,  um em cima do outro." },
+        {"ventilador pequeno", "Imagem de ventilador pequeno de mesa, preto." }
+    };
+
     private void Start()
     {
         //fill.fillAmount =  variavel / MAX_COR;
@@ -109,12 +152,11 @@ public class AcampamentoCartas : AbstractCardManager
 
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
-            // audiodescricao
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_acampamento, LocalizationManager.instance.GetLozalization()));
         }
-
         if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
         {
-            //ReadCard(cardIndex);
+            ReadCard();
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -138,6 +180,8 @@ public class AcampamentoCartas : AbstractCardManager
 
     public void InitializeGame()
     {
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_acampamento, LocalizationManager.instance.GetLozalization()));
+
         WinGame = false;
         cardIndex = 0;
 
@@ -155,6 +199,8 @@ public class AcampamentoCartas : AbstractCardManager
         nextImage.name = sprites[cardIndex + 1].name;
 
         initialPosition = currentImage.transform.parent.position;
+
+        ReadCard();
 
         resetButton.interactable = true;
         backButton.interactable = true;
@@ -789,6 +835,8 @@ public class AcampamentoCartas : AbstractCardManager
             Debug.Log("Novo item: " + cardName.text);
             ReadText("Novo item: " + cardName.text);
 
+            ReadCard();
+
             if (cardIndex < sprites.Length - 1)
             {
                 nextImage.sprite = sprites[cardIndex + 1];
@@ -843,20 +891,28 @@ public class AcampamentoCartas : AbstractCardManager
         {
             WinImage.SetActive(true);
 
+            PlayerPreferences.M009_Itens = true;
+
+            ReadText("Parabéns, você ganhou dois itens necessário para sua aventura na antártica: luvas de proteção e sacos plásticos.");
+
             likeButton.interactable = false;
             dislikeButton.interactable = false;
-
-            PlayerPreferences.M009_Itens = true;
 
             audioSource.PlayOneShot(victoryClip);
 
             yield return new WaitWhile(() => audioSource.isPlaying);
 
-            //audioSource.PlayOneShot(victoryAudio);
-            //yield return new WaitWhile(() => audioSource.isPlaying);
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_acampamento_vitoria, LocalizationManager.instance.GetLozalization()));
+
+            yield return new WaitForSeconds(5f);
 
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item    
+
+            // add the heart points in hp points
+            //lifeExpController.AddHP(PlayerPreferences.calculateMJExperiencePoints(heartImage.fillAmount));
+            // add the antartica and star points to xp points
+            //lifeExpController.AddEXP(PlayerPreferences.calculateMJExperiencePoints(starImage.fillAmount, antarticaImage.fillAmount));
 
             minijogosDicas.GetComponent<MinijogosDicas>().dicas.SetActive(false);
         }
@@ -864,15 +920,20 @@ public class AcampamentoCartas : AbstractCardManager
         {
               LoseImage.SetActive(true);
 
-              //ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria_derrota, LocalizationManager.instance.GetLozalization()));
+              ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
               audioSource.PlayOneShot(loseAudio);
 
               yield return new WaitWhile(() => audioSource.isPlaying);
 
-              //ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
+              ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_acampamento_derrota, LocalizationManager.instance.GetLozalization()));
+
               resetButton.Select();
+
+              yield return new WaitForSeconds(5f);
+
               lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+              
               Debug.Log("Zerou um marcador!");
 
               minijogosDicas.GetComponent<MinijogosDicas>().dicas.SetActive(false);
@@ -894,6 +955,12 @@ public class AcampamentoCartas : AbstractCardManager
 
         if (!PlayerPreferences.M009_Itens) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
             UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+    }
+
+    public void ReadCard()
+    {
+        Debug.Log(cardsDescription[currentImage.name.ToLower()]);
+        ReadText(cardsDescription[currentImage.name.ToLower()]);
     }
 
     public void ResetGameObjects()

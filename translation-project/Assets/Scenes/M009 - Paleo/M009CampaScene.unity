@@ -1472,6 +1472,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 206159057}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &206159059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5544036282795103332, guid: 3762c2b5f772f174cbe392aa905ccf0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 206159057}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &207735824
 GameObject:
   m_ObjectHideFlags: 0
@@ -3582,15 +3594,15 @@ MonoBehaviour:
   chasingCamera: {fileID: 952704472}
   mentorController: {fileID: 656502032}
   warningInterface: {fileID: 206159058}
-  warningText: {fileID: 0}
+  warningText: {fileID: 206159059}
   dialogueInterface: {fileID: 1282028800}
   dialogueInterfaceText: {fileID: 1849635679}
   dialogueInterfacePlayerName: {fileID: 318037119}
   instructionInterface: {fileID: 2049756389}
-  missionName: {fileID: 0}
+  missionName: {fileID: 2049756393}
   descriptionText: {fileID: 1902374564}
-  audioSource: {fileID: 0}
-  warningClip: {fileID: 0}
+  audioSource: {fileID: 1659455534}
+  warningClip: {fileID: 8300000, guid: 538e67db62c159342a01a9a96dfeb3cf, type: 3}
 --- !u!114 &380219416 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
@@ -11729,6 +11741,11 @@ PrefabInstance:
       propertyPath: map
       value: 
       objectReference: {fileID: 2017398713}
+    - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 3}
+      propertyPath: placaHUD
+      value: 
+      objectReference: {fileID: 2049756392}
     - target: {fileID: 4397208858643112, guid: 44698338defdf4545a2b8048f0fcbc70, type: 3}
       propertyPath: m_LocalPosition.x
       value: -149.3
@@ -11820,6 +11837,12 @@ PrefabInstance:
     - {fileID: 114332875366109432, guid: 44698338defdf4545a2b8048f0fcbc70, type: 3}
     - {fileID: 114720855412633032, guid: 44698338defdf4545a2b8048f0fcbc70, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 44698338defdf4545a2b8048f0fcbc70, type: 3}
+--- !u!82 &1659455534 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1659455533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1709735096
 GameObject:
   m_ObjectHideFlags: 0
@@ -12441,6 +12464,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114120502433010642, guid: ef4b33e94d7b94042b75fddb591f4516,
+        type: 3}
+      propertyPath: placaHUD
+      value: 
+      objectReference: {fileID: 2049756392}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef4b33e94d7b94042b75fddb591f4516, type: 3}
 --- !u!1 &1935997422
@@ -13660,56 +13688,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_text
-      value: Paleontologia Subzero
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_fontStyle
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_text
-      value: Paleontologia Subzero
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_fontStyle
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 1045706715485358, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13827,6 +13805,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_text
+      value: Paleontologia Subzero
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_text
+      value: Paleontologia Subzero
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423291404937610, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1898185719459980, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
       propertyPath: m_IsActive
@@ -14496,6 +14524,42 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6912742469252471020, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: ItemsSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f4007a98150a06547a0f0d60eff30fda,
+        type: 3}
+    - target: {fileID: 6912742469252471020, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: ItemsSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4d137c46b34b8cf43bfef40d3903ec00,
+        type: 3}
+    - target: {fileID: 6912742469252471020, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: ItemsSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: bb02e2b587a3f2a4694f3d191b95d4a3,
+        type: 3}
+    - target: {fileID: 6912742469252471020, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: ItemsSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0251efc032a27ee4196988c4744ecaa8,
+        type: 3}
+    - target: {fileID: 6912742469252471020, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: ItemsSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 294800f0801586a408c700b3c54c68cf,
+        type: 3}
+    - target: {fileID: 3078404321108824724, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f4007a98150a06547a0f0d60eff30fda,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4f9aefa266f084c9392f3ffc24f16b, type: 3}
 --- !u!1 &2049756389 stripped
@@ -14522,6 +14586,24 @@ AudioSource:
     type: 3}
   m_PrefabInstance: {fileID: 2049756388}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2049756392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000060505622246, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049756388}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049756393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114195973896555552, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049756388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2068783239
 GameObject:
   m_ObjectHideFlags: 0
