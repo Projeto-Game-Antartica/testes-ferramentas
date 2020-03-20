@@ -22,6 +22,28 @@ public class CardsDescription
     private const string pinguim_macaroni = "A população deste animal é cerca de 18 milhões de indivíduos.";
     private const string skua = "Esta ave alimenta-se de ovos, pinguins e de outras aves.";
 
+    private static Dictionary<string, string> cardsAudiodescription = new Dictionary<string, string>
+    {
+        {"orca","Imagem de animal mamífero  com coloração preta na maior parte do corpo e a mancha branca no ventre, ao redor dos olhos e próximo a barbatana." },
+        {"peixe gelo","Imagem de peixe mesclado nas cores azul e verde, com manchas amareladas e olho preto." },
+        {"baleia minke","Imagem de uma baleia de corpo fino, cabeça estreita e pontiaguda. Sua coloração é cinza-escura no dorso e branca na região da barriga. Possui uma nadadeira dorsal que fica no final do dorso, próximo as nadadeiras traseiras." },
+        {"baleia azul","Imagem de uma baleia com coloração azul acinzentada e manchas claras. Possui a cabeça larga, nadadeiras peitorais finas." },
+        {"baleia jubarte","Imagem de uma baleia com coloração  na cor marrom com as nadadeiras peitorais esbranquiçadas e nadadeira dorsal pequena, formando apenas uma pequena elevação em seu dorso. No peitoral possui manchas que lembram riscos, levemente esbranquiçados." },
+        {"baleia fin","Imagem de uma baleia de corpo longilíneo e aerodinâmico com coloração assimétrica, exibindo um gradiente cinza-claro a partir da região dorsal até as laterais do corpo, caracterizadas por tons mais escuros e amarronzados. A parte inferior de seu corpo, suas nadadeiras e os lóbulos inferiores da nadadeira caudal, são brancos." },
+        {"krill","Imagem um crustáceo semelhante ao camarão, possui exoesqueleto transparente, olhos pretos, duas antenas e vários pares de patas." },
+        {"algas","Imagem de um organismo semelhante a uma planta,  com coloração verde dentro da água." },
+        {"zooplâncton","Imagem de animal com corpo transparente, duas antenas e nadadeiras traseiras." },
+        {"foca caranguejeira","Imagem de uma foca com corpo delgado com cabeça e focinho largos,  pelagem coloração clara, com tons de cinza escuro a cinza prateado, com manchas de formatos variados nas laterais do corpo." },
+        {"lobo marinho","Imagem de um lobo de corpo delgado, coloração cinza, focinho fino e pontudo, orelhas visíveis." },
+        {"pinguim adelia","Imagem de um pinguim com a cabeça, a face, as costas e as nadadeiras pretas, peito e a parte da frente toda branca e bico e pés rosados." },
+        {"pinguim imperador","Imagem de um pinguim com plumagem multicolorida: cinza-azulado nas costas, branco no abdômen, preto na cabeça e barbatanas. Esta espécie apresenta também uma faixa alaranjada em torno dos ouvidos." },
+        {"pinguim antartico","Imagem de um pinguim com o dorso preto e o peito e abdômen brancos. Possui uma faixa preta em volta do seu queixo, sua íris tem um tom marrom-alaranjado." },
+        {"pinguim papua","Imagem de um pinguim com o dorso preto e o peito e abdômen brancos,  mancha branca que lhe percorre a cabeça e pelo bico e pés de um laranja vivo." },
+        {"pinguim rei","Imagem de um pinguim com dorso  predominantemente na cor cinza, cabeça preta, orelhas e bico na cor laranja e peito nas cores amarela e branca. " },
+        {"pinguim macaroni","Imagem de um pinguim com peito branco, cabeça,  pescoço e dorso pretos. As asas são pretas-azuladas na superfície superior, com uma risca branca na parte posterior, e brancas na superfície inferior. Possui uma crista amarela que cresce a partir da testa e prolonga-se horizontalmente até à nuca. O bico é grande e laranja-acastanhado, íris vermelha. As pernas e patas são cor-de-rosa." },
+        {"skua","Imagem de uma ave, de plumagem marrom-escura, peito claro e bico preto." }
+    };
+
 
     public static string GetCardText(string cardName)
     {
@@ -65,5 +87,10 @@ public class CardsDescription
             return skua;
         else
             return null;
+    }
+
+    public static string GetCardAudioDescription(string key)
+    {
+        return cardsAudiodescription[key];
     }
 }
