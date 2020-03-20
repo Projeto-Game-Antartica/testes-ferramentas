@@ -168,4 +168,10 @@ public class ReadableTexts : MonoBehaviour
     public static string key_foto_sceneDescription = "foto_sceneDescription";
     public static string key_foto_catalogDescription = "foto_catalogDescription";
     public static string key_quiz_instructions = "quiz_instructions";
+
+    // M009 - Paleo
+    public static string key_m009_memoria_instrucao = "m009_memoria_instrucao"; 
+    public static string key_m009_memoria = "m009_memoria"; 
+    public static string key_m009_memoria_derrota = "m009_memoria_derrota"; 
+    public static string key_m009_memoria_vitoria = "m009_memoria_vitoria"; 
 }
