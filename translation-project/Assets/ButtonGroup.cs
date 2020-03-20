@@ -24,7 +24,7 @@ public class ButtonGroup : MonoBehaviour
         SetButtonColor(buttonIndex, Color.yellow);
     }
 
-    private void onButtonClick(int i) {
+    public void OnButtonClick(int i) {
         selectButton(i);
     }
 
@@ -44,7 +44,7 @@ public class ButtonGroup : MonoBehaviour
         for(int i = 0; i < buttons.Length; i++) {
 
             int temp = i;
-            buttons[i].onClick.AddListener(()=>{onButtonClick(temp);});
+            buttons[i].onClick.AddListener(()=>{OnButtonClick(temp);});
         }
 
         ClearSelection();

@@ -23,6 +23,15 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
         iniciarButton.gameObject.SetActive(true);
         voltarButton.gameObject.SetActive(false);
 
+        //This is only set in 
+        if(LocalizationManager.instance == null)
+            (new LocalizationManager()).LoadLocalizedText("locales_ptbr.json");
+
+        if(ReadableTexts.instance == null) {
+            ReadableTexts.instance = new ReadableTexts();
+            ReadableTexts.instance.LoadReadableTexts();
+        }
+
         ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
         ReadInstructions();

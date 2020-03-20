@@ -203,6 +203,8 @@ public class Vegetacao : AbstractCardManager
         Transform cardImage = currentImage.GetComponentInChildren<Image>().transform;
 
         NextCard();
+
+        LikeButton.Select();
     }
 
     override public void CheckDislike()
@@ -213,6 +215,8 @@ public class Vegetacao : AbstractCardManager
         else
             Debug.Log("Resposta errada!");
         NextCard();
+
+        DislikeButton.Select();
     }
 
     private bool checkAnswer(bool answer) {
