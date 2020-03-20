@@ -168,4 +168,30 @@ public class ReadableTexts : MonoBehaviour
     public static string key_foto_sceneDescription = "foto_sceneDescription";
     public static string key_foto_catalogDescription = "foto_catalogDescription";
     public static string key_quiz_instructions = "quiz_instructions";
+
+    // M009 - Paleo
+    public static string key_m009_memoria_instrucao = "m009_memoria_instrucao"; 
+    public static string key_m009_memoria = "m009_memoria"; 
+    public static string key_m009_memoria_derrota = "m009_memoria_derrota"; 
+    public static string key_m009_memoria_vitoria = "m009_memoria_vitoria"; 
+
+    public static string key_m009_acampamento_instrucao = "m009_acampamento_instrucao"; 
+    public static string key_m009_acampamento = "m009_acampamento"; 
+    public static string key_m009_acampamento_derrota = "m009_acampamento_derrota"; 
+    public static string key_m009_acampamento_vitoria = "m009_acampamento_vitoria"; 
+
+    public static string key_m009_eras_instrucao = "m009_eras_instrucao"; 
+    public static string key_m009_eras = "m009_eras"; 
+    public static string key_m009_eras_derrota = "m009_eras_derrota"; 
+    public static string key_m009_eras_vitoria = "m009_eras_vitoria"; 
+
+    public static string key_m009_desafio_instrucao = "m009_desafio_instrucao"; 
+    public static string key_m009_desafio = "m009_desafio"; 
+    public static string key_m009_desafio_derrota = "m009_desafio_derrota"; 
+    public static string key_m009_desafio_vitoria = "m009_desafio_vitoria"; 
+    public static string key_m009_desafio_classificacao = "m009_desafio_classificacao"; 
+    public static string key_m009_missao_instrucao = "m009_missao_instrucao"; 
+    public static string key_m009_missao     = "m009_missao"; 
+
+
 }
