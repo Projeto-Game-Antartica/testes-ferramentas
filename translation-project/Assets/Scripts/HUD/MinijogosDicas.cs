@@ -106,6 +106,15 @@ public class MinijogosDicas : AbstractScreenReader {
             dicas.SetActive(false);
     }
 
+    public void ReadCurrentHint()
+    {
+        if (dicas.activeSelf)
+        {
+            ReadText(targetText.text);
+            Debug.Log(targetText.text);
+        }
+    }
+
     public string[] GetHints()
     {
         return hints;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartupManager : MonoBehaviour {
+public class StartupManager : AbstractScreenReader {
 
     // Use this for initialization
     private IEnumerator Start () {
@@ -16,7 +16,13 @@ public class StartupManager : MonoBehaviour {
         // change button color
         Parameters.BUTTONCONTRAST = true;
 
-        //TolkUtil.Load();
+        TolkUtil.Load();
+
+        ReadText("Jogo Expedição Antártica versão 1.0. O jogo está carregando...");
+        Debug.Log("Jogo Expedição Antártica versão 1.0. O jogo está carregando...");
+
+        // set resolution to one of "accepted" by the game
+        Screen.SetResolution(1024, 768, true);
 
         yield return new WaitForSeconds(2f);
 

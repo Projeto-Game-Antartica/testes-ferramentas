@@ -11,7 +11,8 @@ public class ResolutionQualityController : AbstractScreenReader
         switch (value)
         {
             case 0:
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                Screen.SetResolution(1024, 768, true); // default value
                 break;
             case 1: // 4:3
                 Debug.Log("1024x768");
@@ -26,7 +27,8 @@ public class ResolutionQualityController : AbstractScreenReader
                 Screen.SetResolution(1440, 900, true);
                 break;
             default:
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                Screen.SetResolution(1024, 768, true);
                 break;
         }
     }
