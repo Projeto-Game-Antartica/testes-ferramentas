@@ -47,6 +47,9 @@ public class HomeostaseVitoria : AbstractScreenReader {
     private bool isOnLikeButton;
     private bool isOnCard;
 
+    private string algodaoDescription = "Imagem de uma blusa azul, com mangas curtas.";
+    private string fleeceDescription = "Imagem de uma blusa preta, mangas longas, gola alta e zíper de fechamento no centro da parte da frente.";
+
     // Use this for initialization
     void Start ()
     {
@@ -119,9 +122,9 @@ public class HomeostaseVitoria : AbstractScreenReader {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
         }
 
-        if (Input.GetKeyDown(InputKeys.REPEAT_KEY))
+        if (Input.GetKeyDown(InputKeys.DICAS_KEY))
         {
-            //ReadCard(cardIndex);
+            minijogoDicas.ReadCurrentHint();
         }
     }
 
@@ -136,12 +139,14 @@ public class HomeostaseVitoria : AbstractScreenReader {
             titleText.text = "Blusa de algodão";
             minijogoDicas.ShowIsolatedHint(algodaoHint);
             ReadText(algodaoHint);
+            Debug.Log(algodaoHint);
         }
         else if (clickedCard.name.Equals(fleeceCard.name))
         {
             titleText.text = "Blusa de fleece";
             minijogoDicas.ShowIsolatedHint(fleeceHint);
             ReadText(fleeceHint);
+            Debug.Log(fleeceHint);
         }
 
         likeButton.Select();

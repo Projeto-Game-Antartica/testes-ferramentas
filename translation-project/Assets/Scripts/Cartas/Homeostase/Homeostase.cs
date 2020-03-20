@@ -47,7 +47,7 @@ public class Homeostase : AbstractCardManager
     public Button audioButton;
     public Button cestaButton;
 
-    private bool isOnLikeButton;
+    private int selectedArea = 0;
     private bool isOnMenu;
 
     public GameObject confirmQuit;
@@ -128,15 +128,20 @@ public class Homeostase : AbstractCardManager
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            if (!isOnLikeButton)
+            selectedArea = (selectedArea + 1) % 3;
+
+            if (selectedArea == 0)
             {
                 likeButton.Select();
-                isOnLikeButton = true;
+            }
+            else if (selectedArea == 1)
+            {
+                cestaButton.Select();
             }
             else
             {
-                cestaButton.Select();
-                isOnLikeButton = false;
+                if (satisfeitoButton.isActiveAndEnabled)
+                    satisfeitoButton.Select();
             }
         }
 
@@ -152,6 +157,11 @@ public class Homeostase : AbstractCardManager
         {
             ReadCard();
         }
+
+        if (Input.GetKeyDown(InputKeys.DICAS_KEY))
+        {
+            minijogosDicas.ReadCurrentHint();
+        }
     }
 
     // initialize after button click on instruction
@@ -159,7 +169,6 @@ public class Homeostase : AbstractCardManager
     {
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase, LocalizationManager.instance.GetLozalization()));
 
-        isOnLikeButton = true;
         isOnMenu = false;
 
         alimentosCestaList = new List<GameObject>();
@@ -231,10 +240,11 @@ public class Homeostase : AbstractCardManager
             }
         }
 
+        likeButton.Select();
+
         CheckCalories(currentImage.name, true);
         this.NextCard();
 
-        likeButton.Select();
     }
 
     new public void NextCard()
@@ -573,7 +583,7 @@ public class Homeostase : AbstractCardManager
         ReadText("Você está levando " + kcal + " kcal na cesta.");
 
         // cesta cheia, não pode colocar mais comida.
-        if (kcalBar.fillAmount == 1)
+        if (kcalBar.fillAmount >= 1)
         {
             isDone = true;
             //likeButton.interactable = false;

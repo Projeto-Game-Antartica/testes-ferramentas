@@ -3743,6 +3743,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8858768375005610055, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 223255672455455542, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Camera
@@ -4300,7 +4305,7 @@ PrefabInstance:
         incluindo a Passagem de embarque ao navio.\r\n\n1. Movimente o jogador pelo
         cen\xE1rio com as setas direcionais.\r\n2. Interaja com os personagens (naturalistas)
         do cen\xE1rio se aproximando deles.\r\n3.Tecle ENTER para passar o di\xE1logo\r\n4.
-        Durante o di\xE1logo do jogo voc\xEA poder\xE1 escolher entre dois caminhos.\r\n5.
+        Durante alguns di\xE1logos do jogo voc\xEA poder\xE1 escolher entre dois caminhos.\n5.
         Escolha op\xE7\xE3o de di\xE1logo atrav\xE9s das teclas direcionais (setas
         para cima/baixo)\r\n6. Monitore sua sa\xFAde e pontua\xE7\xE3o observando
         cora\xE7\xE3o e estrela, respectivamente. \r\n7. Complete os quatro minijogos
@@ -4314,7 +4319,7 @@ PrefabInstance:
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 969
+      value: 974
       objectReference: {fileID: 0}
     - target: {fileID: 114133758023063106, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -4351,15 +4356,30 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114801691609848058, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_padding
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 114008053196294442, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114008053196294442, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_padding
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114512177246375156, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114512177246375156, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: m_padding
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 1210589424688943546, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
@@ -4976,6 +4996,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5514231768199917411, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
+        type: 3}
+      propertyPath: m_padding
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8779601031429534438, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -5159,11 +5184,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: c3127c27d08271b49840b6ae480b6bd5,
         type: 3}
-    - target: {fileID: 8858768375005610055, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8811404040260574522, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
         type: 3}
       propertyPath: m_IsActive
@@ -10754,6 +10774,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1878824804526794, guid: 96feab5643c62a3449641dccf5a323bf, type: 3}
+      propertyPath: m_Name
+      value: Figurante
+      objectReference: {fileID: 0}
     - target: {fileID: 4221769215230198, guid: 96feab5643c62a3449641dccf5a323bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10833,10 +10857,6 @@ PrefabInstance:
     - target: {fileID: 4888902516909518, guid: 96feab5643c62a3449641dccf5a323bf, type: 3}
       propertyPath: m_LocalPosition.y
       value: 273
-      objectReference: {fileID: 0}
-    - target: {fileID: 1878824804526794, guid: 96feab5643c62a3449641dccf5a323bf, type: 3}
-      propertyPath: m_Name
-      value: Figurante
       objectReference: {fileID: 0}
     - target: {fileID: 212050707880199208, guid: 96feab5643c62a3449641dccf5a323bf,
         type: 3}
@@ -13083,40 +13103,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1163090403 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1622190658130262, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-    type: 3}
-  m_PrefabInstance: {fileID: 527157657}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1163090408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163090403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 527157664}
-          m_MethodName: ReadText
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 1727220764}
-            m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1188489381
 GameObject:
   m_ObjectHideFlags: 0
@@ -16360,17 +16346,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: fe187892825e7d3439a511fe519f7dc3, type: 3}
-    - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
-        type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
-        type: 2}
     - target: {fileID: 114111264331343048, guid: 44698338defdf4545a2b8048f0fcbc70,
         type: 3}
       propertyPath: soundsController
@@ -16476,6 +16451,17 @@ PrefabInstance:
       propertyPath: placaHUD
       value: 
       objectReference: {fileID: 1777197804}
+    - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fe187892825e7d3439a511fe519f7dc3, type: 3}
+    - target: {fileID: 82482835812246798, guid: 44698338defdf4545a2b8048f0fcbc70,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243094737655580190, guid: 94eacda85c22b414f9715d865713e33b,
+        type: 2}
     - target: {fileID: 4397208858643112, guid: 44698338defdf4545a2b8048f0fcbc70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 561
@@ -17013,18 +16999,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -1}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1727220764 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8752560555413549818, guid: 9d4f9aefa266f084c9392f3ffc24f16b,
-    type: 3}
-  m_PrefabInstance: {fileID: 527157657}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1748260126 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 302648100947795418, guid: 9d4f9aefa266f084c9392f3ffc24f16b,

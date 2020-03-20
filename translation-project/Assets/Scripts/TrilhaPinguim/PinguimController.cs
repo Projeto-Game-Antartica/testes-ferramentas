@@ -84,6 +84,8 @@ public class PinguimController : DragAndDropController {
 
     private bool mapping = true;
 
+    private bool started = false;
+
     private void Start()
     {
         SavePinguimPosition();
@@ -116,10 +118,6 @@ public class PinguimController : DragAndDropController {
         pinguim_antarticoAnimator.SetBool("isMoving", false);
         pinguim_papuaAnimator.SetBool("isMoving", false);
 
-        //timer.fillAmount = 1f;
-
-        //timeLeft = maxTime;
-
         countingTime = false;
         
         resetButton.interactable = true;
@@ -129,9 +127,16 @@ public class PinguimController : DragAndDropController {
         dicas.SetActive(true);
         ReadText(dicas.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
-        firstItem.Select();
-
         mapping = false;
+
+        StartCoroutine(WaitSeconds());
+    }
+
+    public IEnumerator WaitSeconds()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        firstItem.Select();
     }
 
     public void MapearTrilha()
@@ -207,6 +212,7 @@ public class PinguimController : DragAndDropController {
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                Debug.Log("psitioning");
                 if (!isPositioning)
                 {
                     try

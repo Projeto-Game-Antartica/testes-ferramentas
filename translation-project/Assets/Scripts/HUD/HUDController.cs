@@ -45,6 +45,8 @@ public class HUDController : AbstractScreenReader {
 
     public BagController bagController;
 
+    public LifeExpController lifeExpController;
+
     public string missionNumber;
     public string missionAudiodescriptionKey;
 
@@ -162,6 +164,11 @@ public class HUDController : AbstractScreenReader {
             {
                 ShowMap(true);
             }
+        }
+
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        {
+            lifeExpController.ReadHPandEXP();
         }
     }
 
