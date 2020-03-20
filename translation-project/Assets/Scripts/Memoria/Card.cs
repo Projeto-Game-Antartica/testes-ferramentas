@@ -254,7 +254,17 @@ public class Card : AbstractScreenReader, ISelectHandler {
         string animalDescription = string.Empty;
         try
         {
-            animalDescription = CardsDescription.GetCardAudioDescription(gameObject.name.Substring(gameObject.name.IndexOf(":") + 2).ToLower());
+            switch(missionName)
+            {
+                case "baleias":
+                    animalDescription = CardsDescription.GetCardAudioDescription(gameObject.name.Substring(gameObject.name.IndexOf(":") + 2).ToLower());
+                    break;
+                case "paleo":
+                    animalDescription = CardsDescriptionPaleo.GetCardAudioDescription(gameObject.name.Substring(gameObject.name.IndexOf(":") + 2).ToLower());
+                    break;
+                default:
+                    break;
+            }
         }
         catch(System.Exception ex)
         {

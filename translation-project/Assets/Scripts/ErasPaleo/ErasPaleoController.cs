@@ -358,6 +358,8 @@ public class ErasPaleoController : DragAndDropController
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
 
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_eras_vitoria, LocalizationManager.instance.GetLozalization()));
+
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // finalizou o minijogo
             lifeExpController.AddEXP(3*PlayerPreferences.XPwinItem); // ganhou o item  
 
@@ -367,6 +369,8 @@ public class ErasPaleoController : DragAndDropController
         else
         {
             LoseImage.SetActive(true);
+        
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_eras_derrota, LocalizationManager.instance.GetLozalization()));
 
             audioSource.PlayOneShot(loseAudio);
 
@@ -375,6 +379,8 @@ public class ErasPaleoController : DragAndDropController
             resetButton.Select();
 
             lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle); // jogou um minijogo
+
+            ReadText("Infelizmente você não conseguiu finalizar o minijogo com êxito. Tente novamente.");
 
             dicas.dicas.SetActive(false);
             

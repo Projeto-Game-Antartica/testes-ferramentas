@@ -83,9 +83,11 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
              {
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().LoseImage.SetActive(true);
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().resetButton.Select();
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_desafio_derrota, LocalizationManager.instance.GetLozalization()));
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().lifeExpController.AddEXP(0.0001f); // jogou um minijogo
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().LoseText.text = "Você zerou seus pontos de saúde. Aguarde uma pontuação mínima para retornar ao desafio.";
-			 }
+			    ReadText("Você zerou seus pontos de saúde. Aguarde uma pontuação mínima para retornar ao desafio.");
+             }
             }
 
         if(state == fim_fossil && (desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().Itens.Contains("martelo") || desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().Itens.Contains("talhadeira")))
@@ -96,6 +98,7 @@ public class CardDesafioPaleo : AbstractScreenReader, ISelectHandler {
             {
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().LoseImage.SetActive(true);
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().resetButton.Select();
+                ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_desafio_derrota, LocalizationManager.instance.GetLozalization()));
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().lifeExpController.AddEXP(0.0001f); // jogou um minijogo
 
                 desafioManagerPaleo.GetComponent<DesafioManagerPaleo>().LoseText.text = "Fóssil destruído, procure outro afloramento.";
