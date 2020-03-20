@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class DesafioVeg : MonoBehaviour
@@ -18,9 +19,16 @@ public class DesafioVeg : MonoBehaviour
 
     Action okDialogCallback;
 
-    public Button resetButton;
-
     public GameObject instruction_interface;
+
+    public HUDMJController hud;
+
+    public Selectable FirstTool, SecondTool, ThirdTool, ForthTool;
+
+    public Button audioButton;
+    public Button librasButton;
+    public Button resetButton;
+    public Button backButton;
 
     //Tools
     public GameObject[] Tools = new GameObject[6];
@@ -44,10 +52,11 @@ public class DesafioVeg : MonoBehaviour
     private int bowlIndex;
 
     private int[] possibleBowlStartIndexes = new int[] {
-        0, 1, 2, 3,
-        4, 7,
-        8, 11, 
-        12, 13, 14, 15
+        // 0, 1, 2, 3,
+        // 4, 7,
+        // 8, 11, 
+        // 12, 13, 14, 15
+        3
     };
 
     private int doneHarvest = 0;
@@ -72,7 +81,15 @@ public class DesafioVeg : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        ResetHarvestScreen();
+        ResetHarvestScreen();        
+    }
+
+    private bool isAnySelected(params Selectable[] selectables) {
+        foreach(Selectable s in selectables) {
+            if(s.gameObject == EventSystem.current.currentSelectedGameObject)
+                return true;
+        }
+        return false;
     }
 
     // Update is called once per frame
@@ -85,20 +102,35 @@ public class DesafioVeg : MonoBehaviour
         if (ActionInput.GetKeyDown(KeyCode.F1))
             instruction_interface.SetActive(true);
 
-        if (ActionInput.GetKey(KeyCode.Escape))
-            instruction_interface.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(instruction_interface.activeSelf)
+                instruction_interface.SetActive(false);
+            else
+                hud.TryQuit();
+        }
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            if(isAnySelected(audioButton, librasButton, resetButton, backButton))
+                FirstTool.Select();
+            else if(isAnySelected(FirstTool, SecondTool, ThirdTool, ForthTool))
+                Grid[selectedGridIndex].GetComponent<Button>().Select();
+            else
+                audioButton.Select();
+        }
 
     }
 
     public void StartGame() {
+        FirstTool.Select();
         resetButton.interactable = true;
+        
         //PlayerPreferences.M010_Desafio_Done = true;
     }
 
     public void ResetHarvestScreen() {
         
-
-        selectedGridIndex = -1;
+        selectedGridIndex = 0;
         plantIndex = rnd.Next(16);
         do //Find a place to the bowl different from the vegetation place
             bowlIndex = possibleBowlStartIndexes[rnd.Next(possibleBowlStartIndexes.Length)];
@@ -107,6 +139,8 @@ public class DesafioVeg : MonoBehaviour
         currentToolIndex = -1;
 
         changeGameState(GameState.PlantFixed);
+
+        FirstTool.Select();
     }
 
     private void changeTool(int toolIndex) {
@@ -118,6 +152,8 @@ public class DesafioVeg : MonoBehaviour
         if(toolIndex > -1) {
             //Tools[toolIndex].transform.SetParent(Grid[selectedGridIndex].transform, false);
             Tools[toolIndex].SetActive(true);
+
+            Grid[selectedGridIndex].GetComponent<Button>().Select();
         }
     }
 

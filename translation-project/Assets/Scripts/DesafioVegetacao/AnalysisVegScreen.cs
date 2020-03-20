@@ -19,6 +19,8 @@ public class AnalysisVegScreen : MonoBehaviour
 
     public Button ConfirmButton;
 
+    public Button stdButton;
+
     enum VegType {
         Angiosperma,
         Briofita,
@@ -113,6 +115,7 @@ public class AnalysisVegScreen : MonoBehaviour
     void Start()
     {
         ResetScreen();
+        stdButton.Select();
     }
 
     // // Update is called once per frame
