@@ -33,7 +33,15 @@ public class ButtonGroup : MonoBehaviour
     }
 
     public void SetButtonColor(Button button, Color color) {
-        button.GetComponent<Image>().color = color;
+
+
+        
+        if(color == Color.white)
+            color.a = 0f;
+        //button.GetComponent<Image>().color = color; 
+        var colors = button.GetComponent<Button>().colors;
+        colors.normalColor = color;
+        button.GetComponent<Button>().colors = colors;
     }
 
     // Start is called before the first frame update

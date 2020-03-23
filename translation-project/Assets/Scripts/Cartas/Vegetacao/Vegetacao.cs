@@ -188,7 +188,7 @@ public class Vegetacao : AbstractCardManager
 
     // initialize after button click on instruction
     public void Initialize() {
-
+        LikeButton.Select();
     }
 
     override public void CheckLike()
