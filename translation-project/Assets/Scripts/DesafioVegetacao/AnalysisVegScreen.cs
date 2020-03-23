@@ -27,6 +27,12 @@ public class AnalysisVegScreen : MonoBehaviour
         Liquen
     }
 
+    public TMPro.TMP_Text GameCommandsText;
+
+    string gameCommands = @"1- Para acessar as duas áreas da tela (imagem da vegetação e opções de resposta): tecla F6 
+2- Navegação nas opções de resposta: teclas direcionais (direita e esquerda)
+3- Selecionar opção: tecla enter";
+
     private List<int> doneVegs = new List<int>();
     private int harvNumber = 1;
 
@@ -82,6 +88,7 @@ public class AnalysisVegScreen : MonoBehaviour
     }
 
     public void ResetScreen() {
+        GameCommandsText.text = gameCommands;
         HarvestNumber.text = harvNumber.ToString();
         Options.ClearSelection();
 
