@@ -79,7 +79,9 @@ public static class SecurePasswordHasher
         // Check hash
         if (!IsHashSupported(hashedPassword))
         {
-            throw new NotSupportedException("The hashtype is not supported");
+            Debug.LogError("The hashtype is not supported.");
+            return false;
+            //throw new NotSupportedException("The hashtype is not supported");
         }
 
         // Extract iteration and Base64 string

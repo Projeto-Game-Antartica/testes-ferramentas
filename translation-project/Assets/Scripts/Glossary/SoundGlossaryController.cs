@@ -111,10 +111,10 @@ public class SoundGlossaryController : AbstractScreenReader {
         //    buttonA.Select();
         //}
 
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    backButton.Select();
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            backButton.Select();
+        }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {

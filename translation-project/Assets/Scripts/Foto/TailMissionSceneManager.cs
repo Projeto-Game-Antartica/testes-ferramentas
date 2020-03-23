@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TailMissionSceneManager : AbstractScreenReader
 {
 
-    public GameObject instructionInterface;
+    public MJInstructionInterfaceController instructionInterface;
     public Button audioButton;
     public LifeExpController lifeExpController;
 
@@ -26,9 +26,9 @@ public class TailMissionSceneManager : AbstractScreenReader
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (instructionInterface.activeSelf)
+            if (instructionInterface.gameObject.activeSelf)
             {
-                instructionInterface.SetActive(false);
+                instructionInterface.gameObject.SetActive(false);
                 audioSource.PlayOneShot(closeClip);
             }
             else
@@ -61,9 +61,10 @@ public class TailMissionSceneManager : AbstractScreenReader
 
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
-            if (!instructionInterface.activeSelf)
+            if (!instructionInterface.gameObject.activeSelf)
             {
-                instructionInterface.SetActive(true);
+                instructionInterface.gameObject.SetActive(true);
+                instructionInterface.ReadInstructions();
                 instructionInterface.GetComponentInChildren<Button>().Select();
             }
         }

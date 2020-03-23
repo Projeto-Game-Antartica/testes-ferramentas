@@ -190,7 +190,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
         // do something
         LoseImage.SetActive(true);
 
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
+        ReadText(LoseText);
 
         lifeExpController.AddEXP(PlayerPreferences.XPlosePuzzle);
 
@@ -198,7 +198,7 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        ReadText(LoseText);
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_derrota, LocalizationManager.instance.GetLozalization()));
 
         StartCoroutine(ReturnToShipCoroutine()); // volta para o navio
     }

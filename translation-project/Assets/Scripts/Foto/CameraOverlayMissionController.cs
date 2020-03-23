@@ -146,6 +146,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             StartCoroutine(GetWhaleInfo());
             // positive feedback
             ReadText(POSITIVE_FB);
+
+            saveButton.Select();
         }
         else
         {
@@ -156,10 +158,6 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
 
-            warningInterface.GetComponentInChildren<Button>().Select();
-
-            //Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
-
             audioSource.PlayOneShot(avisoClip);
 
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_aviso, LocalizationManager.instance.GetLozalization()));
@@ -169,9 +167,9 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
             // negative feedback
             ReadText(NEGATIVE_FB);
-        }
 
-        saveButton.Select();
+            warningInterface.GetComponentInChildren<Button>().Select();
+        }
     }
 
     private void HandleCameraZoom()
