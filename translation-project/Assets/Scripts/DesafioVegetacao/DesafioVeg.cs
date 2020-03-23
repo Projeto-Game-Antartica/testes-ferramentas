@@ -34,6 +34,16 @@ public class DesafioVeg : MonoBehaviour
     public GameObject[] Tools = new GameObject[6];
     private int currentToolIndex;
 
+    public TMPro.TMP_Text GameCommandsText;
+
+    string gameCommands = @"1- Para acessar as duas áreas da tela (área do solo da vegetação; área dos itens): tecla F6
+2- Quando iniciar o desafio, o foco estará na área dos itens. 
+3- Navegação na área dos itens: teclas direcionais (direita e esquerda)
+4- Navegação na área do solo da vegetação: teclas direcionais (direita, esquerda, cima e baixo)
+5- Realizar coleta: tecla espaço ou tecla enter 
+6- Navegar pontuação (HP/XP): tecla A
+7- Pausar o jogo e redirecionar para menu: tecla P";
+
     private enum Tool {
         Frame,
         Knife,
@@ -77,7 +87,7 @@ public class DesafioVeg : MonoBehaviour
         BowlInBag
     }
 
-
+    // must implement sounds of warnings and button press
 
     // Start is called before the first frame update
     void Start() {
@@ -129,6 +139,7 @@ public class DesafioVeg : MonoBehaviour
     }
 
     public void ResetHarvestScreen() {
+        GameCommandsText.text = gameCommands;
         
         selectedGridIndex = 0;
         plantIndex = rnd.Next(16);
