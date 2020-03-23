@@ -14,13 +14,12 @@ public class OptionMenu : AbstractScreenReader {
     public Toggle HighContrastToggle;
     public HighContrastSettings hcsettings;
 
+    public GameObject acessoTeclado;
+    public TextMeshProUGUI descriptionText;
+
     void Start()
     {
-        //TolkUtil.Instructions();
-
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_config, LocalizationManager.instance.GetLozalization()));
-        
-        //TolkUtil.Load();
 
         slider.Select();
         
@@ -31,16 +30,6 @@ public class OptionMenu : AbstractScreenReader {
         HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
 
         Debug.Log("HC: " + Parameters.HIGH_CONTRAST);
-    }
-
-    private void OnEnable()
-    {
-        //GameObject[] newTexts = GameObject.FindGameObjectsWithTag("text-hc");
-        //fontSizeText.SetNewTexts(newTexts);
-
-        //HighContrastToggle.isOn = Parameters.HIGH_CONTRAST;
-
-        //hcsettings.ChangeHighContrast();
     }
     
     new public void ReadToggle(Toggle toggle)
@@ -60,6 +49,13 @@ public class OptionMenu : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY) && !helpMenu.activeSelf)
         {
             ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_prejogo_config, LocalizationManager.instance.GetLozalization()));
+        }
+
+        if (Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
+        {
+            acessoTeclado.SetActive(true);
+            ReadText(descriptionText);
+            acessoTeclado.GetComponentInChildren<Button>().Select();
         }
     }
 
