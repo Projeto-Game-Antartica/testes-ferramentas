@@ -59,6 +59,6 @@ public class Parameters {
     /* #### */
 
     /* ## URLs ## */
-    public const string DIALOGUE_PATH = "path_to_videos";
+    public const string DIALOGUE_PATH = "path_to_videos"; // not ready yet
     public const string VP8_TYPE = ".vp8";
 }

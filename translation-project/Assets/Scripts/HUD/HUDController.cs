@@ -152,6 +152,7 @@ public class HUDController : AbstractScreenReader {
         {
             acessoTeclado.SetActive(true);
             ReadText(descricaoText.text);
+            acessoTeclado.GetComponentInChildren<Button>().Select();
         }
 
         if (Input.GetKeyDown(InputKeys.MAP_KEY))

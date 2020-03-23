@@ -219,9 +219,9 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
         audioSource.PlayOneShot(victoryClip);
 
-        yield return new WaitWhile(() => audioSource.isPlaying);
-
         ReadText("Parabéns, você concluiu esta missão e colaborou com a Ciência Cidadã. Siga agora para mais um desafio, escolhendo uma nova missão.");
+        
+        yield return new WaitWhile(() => audioSource.isPlaying);
 
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_desafio_sucesso, LocalizationManager.instance.GetLozalization()));
 
