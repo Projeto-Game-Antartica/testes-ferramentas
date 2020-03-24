@@ -110,10 +110,11 @@ public class EinsteinVegManager : AbstractScreenReader
             initializeCards();
 
         backButton.interactable = true;
-        resetButton.interactable = true;
 
-        //initializeGame();
+        initializeGame();
     }
+
+    //solve hand walkiing in the minigame
 
     // Update is called once per frame
     void Update()
@@ -130,12 +131,17 @@ public class EinsteinVegManager : AbstractScreenReader
         // }
 
         //Check keys press
-        if (Input.GetKeyDown(KeyCode.P)) {
+        if (Input.GetKeyDown(InputKeys.MJMENU_KEY)) {
             audioButton.Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F6)) {
-            cards[0].GetComponent<Button>().Select();
+            if(isAnySelected(confirmarButton, cancelButton))
+                processDropDown.Select();
+            else if(isAnySelected(processDropDown))
+                cards[0].GetComponent<Button>().Select();
+            else
+                cancelButton.Select();
         }
 
         if (Input.GetKeyDown(KeyCode.F1)) {
@@ -149,13 +155,13 @@ public class EinsteinVegManager : AbstractScreenReader
                 hud.TryQuit();
         }
 
-        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
-        {
-            if(isAnySelected(audioButton, librasButton, resetButton, backButton))
-                cards[0].GetComponent<Button>().Select();
-            else
-                audioButton.Select();
-        }
+        // if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        // {
+        //     if(isAnySelected(audioButton, librasButton, resetButton, backButton))
+        //         cards[0].GetComponent<Button>().Select();
+        //     else
+        //         audioButton.Select();
+        // }
 
         //Checks if all the options are already done. If so, end the game
         bool allDone = true;
@@ -173,6 +179,14 @@ public class EinsteinVegManager : AbstractScreenReader
         return go == EventSystem.current.currentSelectedGameObject;
     }
 
+    private bool isAnySelected(params Component[] components) {
+        foreach(Component c in components) {
+            if(c.gameObject == EventSystem.current.currentSelectedGameObject)
+                return true;
+        }
+        return false;
+    }
+
     private bool isAnySelected(params Selectable[] selectables) {
         foreach(Selectable s in selectables) {
             if(s.gameObject == EventSystem.current.currentSelectedGameObject)
@@ -182,7 +196,8 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
-
+        resetButton.interactable = true;
+        processDropDown.Select();
     }
 
     public void CallHintMethod() {
@@ -229,6 +244,10 @@ public class EinsteinVegManager : AbstractScreenReader
 
         tokensToCompare.Add(token);
         token.BGImage.color = GetColor(GetDropDownValue());
+
+        //Select confirm button after last card is selected
+        if(tokensToCompare.Count == GetRemainingOptions(GetDropDownValue()))
+            confirmarButton.Select();
     }
 
     // void checkCards() {

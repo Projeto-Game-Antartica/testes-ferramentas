@@ -119,13 +119,21 @@ public class DesafioVeg : MonoBehaviour
                 hud.TryQuit();
         }
 
-        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
-        {
-            if(isAnySelected(audioButton, librasButton, resetButton, backButton))
-                FirstTool.Select();
-            else if(isAnySelected(FirstTool, SecondTool, ThirdTool, ForthTool))
+        if (ActionInput.GetKeyDown(KeyCode.F6)) {
+            if(isAnySelected(FirstTool, SecondTool, ThirdTool, ForthTool))
                 Grid[selectedGridIndex].GetComponent<Button>().Select();
             else
+                FirstTool.Select();
+        }
+
+
+        if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
+        {
+            // if(isAnySelected(audioButton, librasButton, resetButton, backButton))
+            //     FirstTool.Select();
+            // else if(isAnySelected(FirstTool, SecondTool, ThirdTool, ForthTool))
+            //     Grid[selectedGridIndex].GetComponent<Button>().Select();
+            // else
                 audioButton.Select();
         }
 
