@@ -47,11 +47,11 @@ public class VegCampSceneManagement : AbstractScreenReader {
         if(PlayerPreferences.M010_Tipos) {
             Bag.EnableItemByIndex(0);
             Bag.EnableItemByIndex(1);
-            Bag.EnableItemByIndex(2);
+            Bag.EnableItemByIndex(3);
         }
 
         if(PlayerPreferences.M010_Amostras) {
-            Bag.EnableItemByIndex(3);
+            Bag.EnableItemByIndex(2);
             Bag.EnableItemByIndex(4);
         }
 
@@ -70,6 +70,8 @@ public class VegCampSceneManagement : AbstractScreenReader {
 
     private void Update()
     {
+        // if (Input.GetKeyDown(KeyCode.L)) //for debug
+        //     SceneManager.LoadScene(ScenesNames.M010Desafio);
         // if (isTrigger && Input.GetKeyDown(KeyCode.Return))
         // {
         //     positionSceneChange = new Vector3(transform.position.x, transform.position.y);
