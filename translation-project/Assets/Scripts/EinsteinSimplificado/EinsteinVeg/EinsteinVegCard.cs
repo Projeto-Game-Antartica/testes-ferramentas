@@ -72,12 +72,12 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
 
         if (state == VIRADA_BAIXO) {
             state = VIRADA_CIMA;
-            GetComponent<Image>().sprite = cardBack;
+            //GetComponent<Image>().sprite = cardBack;
 
         } else if (state == VIRADA_CIMA) {
             state = VIRADA_BAIXO;
 
-            GetComponent<Image>().sprite = cardFace;
+            //GetComponent<Image>().sprite = cardFace;
 
             if (_init){
                string objectName = CardsDescription.GetCardText(gameObject.name);
