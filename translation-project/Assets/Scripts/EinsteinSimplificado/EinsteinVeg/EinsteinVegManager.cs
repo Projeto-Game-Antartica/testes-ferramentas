@@ -12,6 +12,8 @@ public class EinsteinVegManager : AbstractScreenReader
 {
     private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
+    private string currentDescription = null;
+
     // round 0
     public Sprite[] cardFace;
 
@@ -155,6 +157,10 @@ public class EinsteinVegManager : AbstractScreenReader
                 hud.TryQuit();
         }
 
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY) && currentDescription != null) {
+            ReadText(currentDescription);
+        }
+
         // if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         // {
         //     if(isAnySelected(audioButton, librasButton, resetButton, backButton))
@@ -196,8 +202,11 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
         resetButton.interactable = true;
         processDropDown.Select();
+
+        ReadText(currentDescription);
     }
 
     public void CallHintMethod() {
@@ -348,6 +357,7 @@ public class EinsteinVegManager : AbstractScreenReader
     {
         if (win)
         {
+            currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_win", LocalizationManager.instance.GetLozalization());
             PlayerPreferences.M010_Amostras = true;
             WinImage.SetActive(true);
             //WinImage.GetComponentInChildren<Button>().Select();
@@ -357,9 +367,12 @@ public class EinsteinVegManager : AbstractScreenReader
         }
         else
         {
+            currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_lose", LocalizationManager.instance.GetLozalization());
             LoseImage.SetActive(true);
             //lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
+
+        ReadText(currentDescription);
 
         DoAfter(3, ReturnToCamp);
     }

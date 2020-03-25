@@ -261,6 +261,15 @@ public class HUDController : AbstractScreenReader {
                 
                     }
                     break;
+
+                case "M010":
+                    if (PlayerPrefs.GetInt("VegMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText(ReadableTexts.instance.GetReadableText("m010_full_scene", LocalizationManager.instance.GetLozalization()));
+                
+                    }
+                    break;
             }
         }
         else
@@ -279,6 +288,9 @@ public class HUDController : AbstractScreenReader {
                     break;
                 case "M004":
                     PlayerPrefs.SetInt("NavioMap", 1);
+                    break;
+                case "M010":
+                    PlayerPrefs.SetInt("VegMap", 1);
                     break;
             }
         }

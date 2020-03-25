@@ -7,8 +7,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class DesafioVeg : MonoBehaviour
+public class DesafioVeg : AbstractScreenReader
 {
+
+    private string currentDescription;
 
     //Scenario
     public GameObject Plant, PlantDetached, PlantToolBox, BowlFull, BagFull, FramePlaced, BowlPlaced, OkDialog, AnalysisScreen, GameScreen;
@@ -126,6 +128,10 @@ public class DesafioVeg : MonoBehaviour
                 FirstTool.Select();
         }
 
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY) && currentDescription != null) {
+            ReadText(currentDescription);
+        }
+
 
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
@@ -144,9 +150,14 @@ public class DesafioVeg : MonoBehaviour
         resetButton.interactable = true;
         
         //PlayerPreferences.M010_Desafio_Done = true;
+
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_desafio_screen", LocalizationManager.instance.GetLozalization());
+        ReadText(currentDescription);
     }
 
     public void ResetHarvestScreen() {
+        
+
         GameCommandsText.text = gameCommands;
         
         selectedGridIndex = 0;
