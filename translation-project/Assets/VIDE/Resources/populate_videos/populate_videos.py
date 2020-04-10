@@ -71,6 +71,7 @@ def add_dialogue_extravar(dialogue_json, dialogue_id, extravars):
         new_dialogue_json['pd_varKey_{}_{}'.format(dialogue_id, var_pos)] = k
         new_dialogue_json['pd_var_{}_{}'.format(dialogue_id, var_pos)] = v
         new_dialogue_json['pd_vars{}'.format(dialogue_id)] += 1
+        new_dialogue_json['pd_expand_{}'.format(dialogue_id)] = True
     return new_dialogue_json
 
 def populate_dialogue_with_videos(dialog_path):
