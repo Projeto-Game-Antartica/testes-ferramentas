@@ -4,6 +4,8 @@ import pandas as pd
 
 from sklearn.feature_extraction.text import CountVectorizer
 
+from collections import defaultdict
+
 mentor_dict = {
     '0': 'Bia',
     '1': 'Arthur',
@@ -100,10 +102,16 @@ def populate_dialogue_with_videos(dialog_path):
     dialogue_location = get_dialogue_location(table_dict, dialogue_texts)
     
     video_paths = list()
+    vars_to_be_added = defaultdict(list) #get information to be added to the dialogs
     for d_id, coord in zip(dialogue_ids, dialogue_location):
         video_path = "/".join([mission_name, mentor_name, "{}.vp8".format(coord)])
         video_paths.append(video_path)
-        dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath': video_path})
+        vars_to_be_added[d_id].append(video_path)
+        #dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath': video_path})
+
+    for d_id, paths in vars_to_be_added.items():
+        for i, v_path in enumerate(paths):
+            dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath{}'.format(i): v_path})
     
     debug_table = pd.DataFrame()
     debug_table['DialogId'] = dialogue_ids
