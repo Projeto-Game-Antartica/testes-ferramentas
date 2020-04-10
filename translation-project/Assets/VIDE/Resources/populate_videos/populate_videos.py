@@ -27,12 +27,14 @@ def get_dialogue_json(vide_location):
 def get_vide_dialogues(dialogue_json):
     dialogues_texts = list()
     dialogues_ids = list()
+    dialogue_positions = list()
     for key, value in dialogue_json.items():
-        match = re.match("pd_([\d]+)_com_[\d]+text", key)
+        match = re.match("pd_([\d]+)_com_([\d]+)text", key)
         if match: #If there were a match
             dialogues_ids.append(match.group(1))
+            dialogue_positions.append(match.group(2))
             dialogues_texts.append(value)
-    return dialogues_ids, dialogues_texts
+    return dialogues_ids, dialogue_positions, dialogues_texts
 
 def colnum_string(n):
     string = ""
@@ -94,7 +96,7 @@ def populate_dialogue_with_videos(dialog_path):
     mission_name = mission_dict[mission_id]
 
     dialogue_json = get_dialogue_json(dialog_path)
-    dialogue_ids, dialogue_texts = get_vide_dialogues(dialogue_json)
+    dialogue_ids, dialogue_positions, dialogue_texts = get_vide_dialogues(dialogue_json)
     
     table_location = "./planilhas/{}.xlsx".format(mission_name)
     table_dict = get_table_dict(table_location)
@@ -102,19 +104,14 @@ def populate_dialogue_with_videos(dialog_path):
     dialogue_location = get_dialogue_location(table_dict, dialogue_texts)
     
     video_paths = list()
-    vars_to_be_added = defaultdict(list) #get information to be added to the dialogs
-    for d_id, coord in zip(dialogue_ids, dialogue_location):
+    for d_id, pos, coord in zip(dialogue_ids, dialogue_positions, dialogue_location):
         video_path = "/".join([mission_name, mentor_name, "{}.vp8".format(coord)])
         video_paths.append(video_path)
-        vars_to_be_added[d_id].append(video_path)
-        #dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath': video_path})
-
-    for d_id, paths in vars_to_be_added.items():
-        for i, v_path in enumerate(paths):
-            dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath{}'.format(i): v_path})
+        dialogue_json = add_dialogue_extravar(dialogue_json, d_id, {'LibrasVideoPath{}'.format(pos): video_path})
     
     debug_table = pd.DataFrame()
     debug_table['DialogId'] = dialogue_ids
+    debug_table['DialogPosition'] = dialogue_positions
     debug_table['Dialogs'] = dialogue_texts
     debug_table['ClosestDialog'] = [table_dict[k] for k in dialogue_location]
     debug_table['ClosestDialogCoord'] = dialogue_location
