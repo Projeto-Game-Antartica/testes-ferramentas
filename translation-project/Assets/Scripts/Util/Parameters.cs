@@ -62,6 +62,6 @@ public class Parameters {
     /* #### */
 
     /* ## URLs ## */
-    public const string DIALOGUE_PATH = "path_to_videos"; // not ready yet
+    public const string DIALOGUE_PATH = @"http://acessivel.ufabc.edu.br/antartica/videos_antartica/";
     public const string VP8_TYPE = ".vp8";
 }
