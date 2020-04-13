@@ -82,9 +82,6 @@ public class MemoryManager : AbstractScreenReader {
 
     private void Start()
     {
-        resetButton.interactable = false;
-        backButton.interactable = false;
-
         init = false;
         _first = true;
         isOnMenu = false;

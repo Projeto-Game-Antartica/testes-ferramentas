@@ -63,6 +63,8 @@ public class PlayerPreferences : MonoBehaviour {
             // set the parameter to show the instruction interface when loading the game
             PlayerPrefs.SetInt("InstructionInterface", 0);
 
+            PlayerPrefs.SetInt("ScreenReaderWarning", 0);
+
             PlayerPrefs.SetInt("UshuaiaMap", 0);
             PlayerPrefs.SetInt("CasaUshuaiaMap", 0);
             PlayerPrefs.SetInt("NavioMap", 0);

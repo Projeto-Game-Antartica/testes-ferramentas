@@ -20,10 +20,36 @@ public class LoginScene : AbstractScreenReader {
     [SerializeField]
     private GameObject response;
 
+    [SerializeField]
+    private GameObject screenReaderWarning;
+
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip avisoClip;
+
+    [SerializeField]
+    private TextMeshProUGUI warningText;
+
+    [SerializeField]
+    private TextMeshProUGUI version;
+
 
     private void Start()
     {
-        criarContaButton.Select();
+        version.text = Parameters.VERSION;
+
+        if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
+        {
+            PlayerPrefs.SetInt("ScreenReaderWarning", 1);
+
+            screenReaderWarning.SetActive(true);
+            audioSource.PlayOneShot(avisoClip);
+            ReadText(warningText);
+
+            screenReaderWarning.GetComponentInChildren<Button>().Select();
+        }
     }
 
     private void Update()
@@ -48,7 +74,20 @@ public class LoginScene : AbstractScreenReader {
     public void LoginEmail()
     {
         emailLoginHolder.SetActive(true);
+        ReadText("Entre com seu email e senha");
+        emailLoginHolder.GetComponentInChildren<TMP_InputField>().Select();
         //SetButtonsInteractable(false);
+    }
+
+    public void onYesClick()
+    {
+        Parameters.ACCESSIBILITY = false;
+
+        TolkUtil.Unload();
+
+        screenReaderWarning.SetActive(false);
+
+        criarContaButton.Select();
     }
 
     public void TryLoginEmail()
@@ -64,6 +103,8 @@ public class LoginScene : AbstractScreenReader {
             Debug.Log("Wrong Credentials");
             response.SetActive(true);
             response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
+
+            ReadText(response.GetComponentInChildren<TextMeshProUGUI>().text);
         }
     }
 
@@ -72,6 +113,7 @@ public class LoginScene : AbstractScreenReader {
         if (success)
         {
             Debug.Log("Log in successful");
+            ReadText("Login bem sucedido.");
             SceneManager.LoadScene(ScenesNames.Menu);
         }
         else
@@ -79,6 +121,7 @@ public class LoginScene : AbstractScreenReader {
             Debug.Log("Wrong Credentials");
             response.SetActive(true);
             response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
+            ReadText(response.GetComponentInChildren<TextMeshProUGUI>().text);
         }
     }
 
