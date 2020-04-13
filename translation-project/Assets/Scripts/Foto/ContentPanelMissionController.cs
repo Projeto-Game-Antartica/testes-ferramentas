@@ -12,9 +12,8 @@ public class ContentPanelMissionController : AbstractScreenReader {
     public Button saveButton;
     public TMP_InputField whaleNameInput;
     public WhaleController whaleController;
-    public GameObject confirmFoto;
+    public GameObject warningInterface;
 
-    public TextMeshProUGUI confirmText;
     public TextMeshProUGUI whaleCountText;
     public TextMeshProUGUI dateText;
 
@@ -140,6 +139,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
             ReadText("O nome não pode ser vazio!");
 
             ReadText("Insira um nome para a baleia fotografada");
+
             whaleNameInput.Select();
         }
         else
@@ -148,7 +148,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
 
             audioSource.PlayOneShot(avisoClip);
 
-            confirmFoto.SetActive(true);
+            warningInterface.SetActive(true);
 
             count++;
 
@@ -157,20 +157,22 @@ public class ContentPanelMissionController : AbstractScreenReader {
             if (count < 4)
             {
                 if (!whaleController.getWhaleById(Parameters.WHALE_ID).whale_name.Equals(""))
-                    confirmText.text = "Parabéns, baleia identificada. Realize uma nova foto.";
+                    warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = "Parabéns, baleia identificada. Realize uma nova foto.";
                 else
-                    confirmText.text = "Parabéns, baleia cadastrada. Realize uma nova foto.";
+                    warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = "Parabéns, baleia cadastrada. Realize uma nova foto.";
 
                 ReadText("Nome da baleia: " + whaleNameInput.text);
-                ReadText(confirmText.text);
+                ReadText(warningInterface.GetComponentInChildren<TextMeshProUGUI>().text);
 
-                StartCoroutine(BackToPhotoCoroutine());
+                //StartCoroutine(BackToPhotoCoroutine());
             }
-            else 
-            {
-                StartCoroutine(FinishMissionCoroutine());
-            }
+            //else 
+            //{
+            //    StartCoroutine(FinishMissionCoroutine());
+            //}
             //gameObject.SetActive(false);
+
+            warningInterface.GetComponentInChildren<Button>().Select();
         }
     }
 
@@ -206,7 +208,7 @@ public class ContentPanelMissionController : AbstractScreenReader {
     {
         yield return new WaitForSeconds(4);
 
-        confirmFoto.SetActive(false);
+        warningInterface.SetActive(false);
         gameObject.SetActive(false);
     }
 

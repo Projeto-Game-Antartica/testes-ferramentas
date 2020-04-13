@@ -66,7 +66,7 @@ public class LibraseContraste : AbstractScreenReader {
 
     public void PlayDialogueVideo()
     {
-        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url + Parameters.VP8_TYPE;
+        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url;
 
         Debug.Log("url >>> " + url);
         if (url != string.Empty)

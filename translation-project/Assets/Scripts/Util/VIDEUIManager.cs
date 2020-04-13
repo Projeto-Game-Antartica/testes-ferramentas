@@ -145,7 +145,7 @@ public class VIDEUIManager : AbstractScreenReader
 
         VD.BeginDialogue(dialogue); //Begins dialogue, will call the first OnNodeChange
 
-        SetLibrasURL();
+        //SetLibrasURL();
 
         dialogueContainer.SetActive(true); //Let's make our dialogue container visible
 
@@ -163,7 +163,7 @@ public class VIDEUIManager : AbstractScreenReader
         if (!dialoguePaused) //Only if
         {
             VD.Next(); //We call the next node and populate nodeData with new data. Will fire OnNodeChange.
-            SetLibrasURL();
+            //SetLibrasURL();
         }
         else
         {
@@ -389,10 +389,10 @@ public class VIDEUIManager : AbstractScreenReader
                 ReadAudioDescription((string)data.extraVars["ReadAudioDescrpition"]);
             }
 
-            //if(data.extraVars.ContainsKey("SetLibrasURL"))
-            //{
-            //    SetLibrasURL();
-            //}
+            if(data.extraVars.ContainsKey("LibrasVideoPath0"))
+            {
+                SetLibrasURL((string)data.extraVars["LibrasVideoPath0"]);
+            }
 
             //if(data.extraVars.ContainsKey("RemoveLibrasURL"))
             //{
@@ -416,12 +416,9 @@ public class VIDEUIManager : AbstractScreenReader
 
     }
 
-    public void SetLibrasURL()
+    public void SetLibrasURL(string url)
     {
-        Debug.Log(VD.assigned.assignedDialogue);
-        Debug.Log(VD.nodeData.nodeID);
-
-        dialogue_video_url = VD.assigned.assignedDialogue + "_" + VD.nodeData.nodeID;
+        dialogue_video_url = url;
     }
 
     public void ResetLibrasURL()
