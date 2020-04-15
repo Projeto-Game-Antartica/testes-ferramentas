@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using System;
 
 public class LibraseContraste : AbstractScreenReader {
 
@@ -27,11 +29,16 @@ public class LibraseContraste : AbstractScreenReader {
             PlayVideo();
     }
 
-    public void Update() {
+    private void Update() {
         //Fire event in case video path changes
         if(librasVideoPathChanged) {
             librasVideoPathChanged = false;
             onLibrasVideoPathChanged();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if(moldura.activeSelf) moldura.SetActive(false);
         }
 
     }
@@ -94,11 +101,29 @@ public class LibraseContraste : AbstractScreenReader {
             ReadText("Alto contraste desativado");
     }
 
-    public void PlayDialogueVideo()
+    public void PlayLibrasVideo(GameObject parentName)
     {
-        string url = Parameters.DIALOGUE_PATH + VIDEUIManager.dialogue_video_url;
+        string url = Parameters.DIALOGUE_PATH;
+
+        // get the number of gameobject name to combine with path
+        int choiceNumber = int.Parse(Regex.Match(parentName.name, @"(\d+)").Value);
+
+        url += VIDEUIManager.dialogue_path[choiceNumber];
 
         Debug.Log("url >>> " + url);
+
+        if (url != string.Empty)
+            StartCoroutine(StartVideo(true, url));
+    }
+
+    public void PlayLibrasVideo(int index)
+    {
+        string url = Parameters.DIALOGUE_PATH;
+
+        url += VIDEUIManager.dialogue_path[index];
+
+        Debug.Log("url >>> " + url);
+
         if (url != string.Empty)
             StartCoroutine(StartVideo(true, url));
     }
