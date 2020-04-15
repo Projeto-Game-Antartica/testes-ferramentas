@@ -15,6 +15,9 @@ using UnityEngine.UI;
 using VIDE_Data; //<--- Import to use easily call VD class
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System;
 
 public class VIDEUIManager : AbstractScreenReader
 {
@@ -82,7 +85,7 @@ public class VIDEUIManager : AbstractScreenReader
     public Image ticket;
     public Button close;
 
-    public static string dialogue_video_url = string.Empty;
+    public static Dictionary<int, string> dialogue_path;
 
     #endregion
 
@@ -95,6 +98,8 @@ public class VIDEUIManager : AbstractScreenReader
 
         //Loads the saved state of VIDE_Assigns and dialogues.
         VD.LoadState("VIDEDEMOScene1", true);
+
+        dialogue_path = new Dictionary<int, string>();
     }
 
     //This begins the dialogue and progresses through it (Called by VIDEDemoPlayer.cs)
@@ -126,7 +131,7 @@ public class VIDEUIManager : AbstractScreenReader
     //This begins the conversation
     void Begin(VIDE_Assign dialogue)
     {
-        ResetLibrasURL();
+        dialogue_path.Clear();
 
         flagEXP = true;
 
@@ -164,6 +169,8 @@ public class VIDEUIManager : AbstractScreenReader
         {
             VD.Next(); //We call the next node and populate nodeData with new data. Will fire OnNodeChange.
             //SetLibrasURL();
+
+            dialogue_path.Clear(); // clear dialogue list, for error prevention
         }
         else
         {
@@ -374,12 +381,12 @@ public class VIDEUIManager : AbstractScreenReader
                 }
                 else
                 {
-                    Debug.Log("Você não está apto...");
                     EndDialogue(data);
 
                     warningInterface.SetActive(true);
                     audioSource.PlayOneShot(avisoClip);
                     warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = "Você ainda não está apto para viajar à Antártica.";
+                    Debug.Log(warningInterface.GetComponentInChildren<TextMeshProUGUI>().text);
                     ReadText(warningInterface.GetComponentInChildren<TextMeshProUGUI>().text);
                 }
             }
@@ -391,13 +398,19 @@ public class VIDEUIManager : AbstractScreenReader
 
             if(data.extraVars.ContainsKey("LibrasVideoPath0"))
             {
-                SetLibrasURL((string)data.extraVars["LibrasVideoPath0"]);
-            }
+                // get all the path of extra variables
+                var keys = data.extraVars.Keys.ToList();
+                var list = data.extraVars.Values.ToList();
 
-            //if(data.extraVars.ContainsKey("RemoveLibrasURL"))
-            //{
-            //    ResetLibrasURL();
-            //}
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if(!dialogue_path.ContainsKey(int.Parse(Regex.Match(keys[i], @"(\d+)").Value)))
+                    {
+                        // add the path to a dictionary with your key value
+                        dialogue_path.Add(int.Parse(Regex.Match(keys[i], @"(\d+)").Value), list[i].ToString()); 
+                    }
+                }
+            }
         }
 
         //Note you could also use Unity's Navi system
@@ -414,16 +427,6 @@ public class VIDEUIManager : AbstractScreenReader
             flagRead = false;
         }
 
-    }
-
-    public void SetLibrasURL(string url)
-    {
-        dialogue_video_url = url;
-    }
-
-    public void ResetLibrasURL()
-    {
-        dialogue_video_url = string.Empty;
     }
 
     public void OpenLista()
@@ -595,6 +598,8 @@ public class VIDEUIManager : AbstractScreenReader
 
             // esse texto serve para gerar o tamanho do gameobject para que ele se adeque ao layout
             newOp.GetComponent<TMPro.TextMeshProUGUI>().text = choices[i];
+
+            newOp.name = "ChoicePrefab" + i;
 
             NPC_Text2.text = NPC_Text.text;
 
