@@ -15,6 +15,7 @@ mentor_dict = {
 }
 
 mission_dict = {
+    'M002': 'itens_viagem',
     'M004': 'baleia',
     'M009': 'paleo',
     'M010': 'vegetacao'
