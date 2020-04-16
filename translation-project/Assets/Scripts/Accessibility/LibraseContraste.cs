@@ -13,13 +13,41 @@ public class LibraseContraste : AbstractScreenReader {
     public GameObject moldura;
     public HighContrastSettings hcsettings;
 
-    private void Update()
-    {
+    //Global Variables to Store video to be played data
+    private static string librasVideoPath = "";
+    private static bool librasVideoPathChanged = false;
+    public static void SetLibrasVideoPath(string videoPath) {
+        librasVideoPath = videoPath;
+        librasVideoPathChanged = true;
+    }
+
+    private void onLibrasVideoPathChanged() {
+        //Debug.Log("Video path changed!");
+        if(librasVideoPath == "")
+            StopVideo();
+        else
+            PlayVideo();
+    }
+
+    private void Update() {
+        //Fire event in case video path changes
+        if(librasVideoPathChanged) {
+            librasVideoPathChanged = false;
+            onLibrasVideoPathChanged();
+        }
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
             if(moldura.activeSelf) moldura.SetActive(false);
         }
+
     }
+
+    public void StopVideo() {
+        videoPlayer.Stop();
+        moldura.SetActive(false);
+    }
+
     public void PlayVideo()
     {
         StartCoroutine(StartVideo(false, ""));
