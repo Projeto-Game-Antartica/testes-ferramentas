@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 
-public class CadastroHandler : MonoBehaviour
+public class CadastroHandler : AbstractScreenReader
 {
     [SerializeField]
     private TMP_InputField inputName;
@@ -18,6 +18,13 @@ public class CadastroHandler : MonoBehaviour
     private TMP_InputField inputConfirm_passw;
     //[SerializeField]
     //private Toggle toggleTermos;
+
+    [SerializeField]
+    private GameObject CadastroMsg;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip avisoClip;
 
     private void Start()
     {
@@ -34,6 +41,7 @@ public class CadastroHandler : MonoBehaviour
 
     public void TryToRegister()
     {
+        string result = "";
         if (!string.IsNullOrEmpty(inputName.text) && !string.IsNullOrEmpty(inputEmail.text))
         {
             if (!string.IsNullOrEmpty(inputPassw.text) && inputPassw.text.Equals(inputConfirm_passw.text))
@@ -48,12 +56,12 @@ public class CadastroHandler : MonoBehaviour
             }
             else
             {
-                Debug.Log("As senhas digitadas não combinam");
+                SetWarningMsg("As senhas digitadas não combinam");
             }
         }
         else
         {
-            Debug.Log("Preencha todos os campos.");
+            SetWarningMsg("Preencha todos os campos");
         }
     }
 
@@ -62,11 +70,12 @@ public class CadastroHandler : MonoBehaviour
         if (success)
         {
             Debug.Log("Registration successfull");
+            ReadText("Registrado com sucesso");
             SceneManager.LoadScene(ScenesNames.Menu);
         }
         else
         {
-            Debug.Log("Registration failed");
+            SetWarningMsg("Erro ao registrar");
             SceneManager.LoadScene(ScenesNames.Cadastro);
         }
     }
@@ -74,5 +83,14 @@ public class CadastroHandler : MonoBehaviour
     public void Back()
     {
         SceneManager.LoadScene(ScenesNames.Login);
+    }
+
+    public void SetWarningMsg(string result)
+    {
+        CadastroMsg.SetActive(true);
+        audioSource.PlayOneShot(avisoClip);
+
+        CadastroMsg.GetComponentInChildren<TextMeshProUGUI>().text = result;
+        ReadText(result);
     }
 }

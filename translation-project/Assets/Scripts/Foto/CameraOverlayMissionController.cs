@@ -54,7 +54,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
     private int index;
 
     // feedback texts
-    private const string NEGATIVE_FB = "A fotografia não ficou muito legal. Tente novamente.";
+    private const string NEGATIVE_FB = "A fotografia não ficou muito boa. Tente novamente.";
     private const string POSITIVE_FB = "A fotografia ficou ótima!";
     
     private void Start()
@@ -146,6 +146,8 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             StartCoroutine(GetWhaleInfo());
             // positive feedback
             ReadText(POSITIVE_FB);
+
+            saveButton.Select();
         }
         else
         {
@@ -156,9 +158,7 @@ public class CameraOverlayMissionController : AbstractScreenReader {
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
 
-            warningInterface.GetComponentInChildren<Button>().Select();
-
-            //Debug.Log(warningInterface.GetComponentInChildren<Button>().name);
+            warningInterface.GetComponentInChildren<TextMeshProUGUI>().text = NEGATIVE_FB;
 
             audioSource.PlayOneShot(avisoClip);
 
@@ -169,9 +169,9 @@ public class CameraOverlayMissionController : AbstractScreenReader {
 
             // negative feedback
             ReadText(NEGATIVE_FB);
-        }
 
-        saveButton.Select();
+            warningInterface.GetComponentInChildren<Button>().Select();
+        }
     }
 
     private void HandleCameraZoom()

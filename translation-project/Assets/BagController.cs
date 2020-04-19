@@ -75,15 +75,15 @@ public class BagController : AbstractScreenReader
         GameObject newItem = Instantiate(itemSpot, spots.transform); //Make copy of standard object
         newItem.name = sprite.name;
         newItem.GetComponent<Image>().sprite = sprite;
-        newItem.GetComponent<Image>().color = new Color32(255,255,255,50); //Leave image translucide (disabled)
+        newItem.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f); //Leave image translucide
         return newItem;
     }
 
     public void EnableItemByIndex(int index) {
-        if(bagItems == null)
+        if (bagItems == null)
             activatedItems[index] = true;
         else
-            bagItems[index].GetComponent<Image>().color = new Color32(255,255,255,255);
+            bagItems[index].GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 
     public void OpenBag() {

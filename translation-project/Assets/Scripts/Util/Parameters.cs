@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Parameters {
 
+    // GAME VERSION
+    public static string VERSION = "v 1.0";
+    
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;
     public static bool HIGH_CONTRAST;
@@ -59,6 +62,6 @@ public class Parameters {
     /* #### */
 
     /* ## URLs ## */
-    public const string DIALOGUE_PATH = "path_to_videos";
+    public const string DIALOGUE_PATH = @"http://acessivel.ufabc.edu.br/antartica/videos_antartica/";
     public const string VP8_TYPE = ".vp8";
 }

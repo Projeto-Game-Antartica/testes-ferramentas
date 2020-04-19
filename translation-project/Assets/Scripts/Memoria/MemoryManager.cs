@@ -68,7 +68,7 @@ public class MemoryManager : AbstractScreenReader {
     public LifeExpController lifeExpController;
 
 
-    public GameObject instructionInterface;
+    public MJInstructionInterfaceController instructionInterface;
     public GameObject confirmQuit;
 
     private bool _first;
@@ -82,9 +82,6 @@ public class MemoryManager : AbstractScreenReader {
 
     private void Start()
     {
-        resetButton.interactable = false;
-        backButton.interactable = false;
-
         init = false;
         _first = true;
         isOnMenu = false;
@@ -95,7 +92,7 @@ public class MemoryManager : AbstractScreenReader {
 
         audioSource = GetComponent<AudioSource>();
 
-        if (instructionInterface.activeSelf)
+        if (instructionInterface.gameObject.activeSelf)
             instructionInterface.GetComponentInChildren<Button>().Select();
     }
 
@@ -110,9 +107,9 @@ public class MemoryManager : AbstractScreenReader {
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (instructionInterface.activeSelf)
+            if (instructionInterface.gameObject.activeSelf)
             {
-                instructionInterface.SetActive(false);
+                instructionInterface.gameObject.SetActive(false);
                 audioSource.PlayOneShot(closeClip);
             }
             else
@@ -157,10 +154,11 @@ public class MemoryManager : AbstractScreenReader {
 
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
-            if (!instructionInterface.activeSelf)
+            if (!instructionInterface.gameObject.activeSelf)
             {
-                instructionInterface.SetActive(true);
-                instructionInterface.GetComponentInChildren<Button>().Select();
+                instructionInterface.gameObject.SetActive(true);
+                instructionInterface.ReadInstructions();
+                instructionInterface.gameObject.GetComponentInChildren<Button>().Select();
             }
         }
 

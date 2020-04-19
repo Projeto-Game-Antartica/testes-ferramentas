@@ -295,9 +295,6 @@ public class TeiaAlimentarController : DragAndDropController
             Debug.Log("Wrong answers count: " + wrongAnswer);
             WinImage.SetActive(true);
 
-            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_vitoria, LocalizationManager.instance.GetLozalization()));
-
-
             if (!PlayerPreferences.M004_Memoria)
             {
                 WinText.text = "Parabéns, você ganhou a lente zoom para realizar a missão, mas ainda falta um item.";
@@ -309,17 +306,18 @@ public class TeiaAlimentarController : DragAndDropController
             }
             else
             {
-                WinText.text = "Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.";
+                WinText.text = "Parabéns! Você ganhou a lente zoom para colaborar com as pesquisas da Ciência Cidadã.";
 
                 audioSource.PlayOneShot(victoryClip);
                 yield return new WaitWhile(() => audioSource.isPlaying);
 
-                ReadText("Parabéns, você ganhou a lente zoom. Agora você já tem os itens necessários para realizar a missão.");
+                ReadText("Parabéns! Você ganhou a lente zoom para colaborar com as pesquisas da Ciência Cidadã.");
 
             }
 
-            PlayerPreferences.M004_TeiaAlimentar = true;
+            ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_teia_vitoria, LocalizationManager.instance.GetLozalization()));
 
+            PlayerPreferences.M004_TeiaAlimentar = true;
 
             StartCoroutine(ReturnToShipCoroutine());
         }

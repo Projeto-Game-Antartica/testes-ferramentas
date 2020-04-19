@@ -82,4 +82,9 @@ public abstract class AbstractScreenReader : MonoBehaviour {
 
         return tmp;
     }
+
+    public void TolkUnload()
+    {
+        TolkUtil.Unload();
+    }
 }

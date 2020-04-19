@@ -9,17 +9,17 @@ public class StartupManager : AbstractScreenReader {
     private IEnumerator Start () {
         
         // accessibility parameters start disabled
-        Parameters.ACCESSIBILITY = false;
+        Parameters.ACCESSIBILITY = true;
         Parameters.HIGH_CONTRAST = false;
         Parameters.BOLD = false;
 
         // change button color
         Parameters.BUTTONCONTRAST = true;
 
-        //TolkUtil.Load();
+        TolkUtil.Load();
 
-        //ReadText("Jogo Expedição Antártica versão 1.0. O jogo está carregando...");
-        //Debug.Log("Jogo Expedição Antártica versão 1.0. O jogo está carregando...");
+        ReadText("Jogo Expedição Antártica versão " + Parameters.VERSION + ". O jogo está carregando...");
+        Debug.Log("Jogo Expedição Antártica versão " + Parameters.VERSION + ". O jogo está carregando...");
 
         // set resolution to one of "accepted" by the game
         Screen.SetResolution(1024, 768, true);

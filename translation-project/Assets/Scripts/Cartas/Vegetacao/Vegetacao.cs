@@ -12,6 +12,12 @@ public class Vegetacao : AbstractCardManager
 {
     //public Image kcalBar;
 
+    private Sprite[] cardSprites;
+    private string[] cardDescriptions;
+
+    private string currentDescription = null;
+    private string screenDescription = null;
+
     public Transform alimentos;
 
     private float kcal;
@@ -20,11 +26,11 @@ public class Vegetacao : AbstractCardManager
 
     public Image[] alimentosCesta;
 
-    private int alimentosCestaIndex = 20;
+    //private int alimentosCestaIndex = 20;
 
-    public GameObject alimentoCestaPrefab;
+    //public GameObject alimentoCestaPrefab;
 
-    private List<GameObject> alimentosCestaList;
+    //private List<GameObject> alimentosCestaList;
 
     public Button satisfeitoButton;
 
@@ -43,6 +49,7 @@ public class Vegetacao : AbstractCardManager
     //Lucas code
     private System.Random rand;
     private enum Vegetais { Planta, Fungo, Alga };
+    private Vegetais[] correctAnswer;
 
     private readonly String[] questions = new String[] {
         "É uma planta?",
@@ -61,18 +68,25 @@ public class Vegetacao : AbstractCardManager
 
     private void updateCurrentCard(int cardIndex) {
         //Updates current showing card
-        currentImage.sprite = sprites[cardIndex];
-        currentImage.name = sprites[cardIndex].name;
-        //cardName.text = currentImage.name;
-        //updateRandomQuestion();
-        updateQuestion();
+        //currentImage.sprite = sprites[cardIndex];
+        //currentImage.name = sprites[cardIndex].name;
+
+        currentImage.sprite = cardSprites[cardIndex];
+        currentImage.name = cardSprites[cardIndex].name;
+        currentDescription = cardDescriptions[cardIndex];
+
+        //updateQuestion();
+        updateRandomQuestion();
+
+        ReadText(cardName.text);
+        ReadText(currentDescription);
     }
 
     private void updateNextCard(int cardIndex){
         //Updates the next showing card
         if(cardIndex < sprites.Length) {
-            nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex];
-            nextImage.name = sprites[cardIndex].name;
+            nextImage.GetComponentInChildren<Image>().sprite = cardSprites[cardIndex];
+            nextImage.name = cardSprites[cardIndex].name;
         } else {
             nextImage.transform.parent.gameObject.SetActive(false); //Get hid of the last card
             nextImage.name = "";
@@ -104,23 +118,23 @@ public class Vegetacao : AbstractCardManager
         clearQuestion();
     }
 
-    // private void updateRandomQuestion() {
-    //     //Write random question in the board and returning the right answer
-    //     questionId = rand.Next(questions.Length);
-    //     cardName.text = questions[questionId];
-    // }
+    private void updateRandomQuestion() {
+        //Write random question in the board and returning the right answer
+        questionId = rand.Next(questions.Length);
+        cardName.text = questions[questionId];
+    }
 
     private Vegetais getCardType(int cardIndex) {
         //Function to return card type according to its index
-        Vegetais cardType;
-        if(sprites[cardIndex].name.StartsWith("A")) 
-            cardType = Vegetais.Alga;
-        else if(sprites[cardIndex].name.StartsWith("F"))
-            cardType = Vegetais.Fungo;
-        else if(sprites[cardIndex].name.StartsWith("P"))
-            cardType = Vegetais.Planta;
-        else
-            throw new NotImplementedException("Type not implemented for " + sprites[cardIndex].name);
+        Vegetais cardType = correctAnswer[cardIndex];
+        // if(sprites[cardIndex].name.StartsWith("A")) 
+        //     cardType = Vegetais.Alga;
+        // else if(sprites[cardIndex].name.StartsWith("F"))
+        //     cardType = Vegetais.Fungo;
+        // else if(sprites[cardIndex].name.StartsWith("P"))
+        //     cardType = Vegetais.Planta;
+        // else
+        //     throw new NotImplementedException("Type not implemented for " + sprites[cardIndex].name);
 
         return cardType;
     }
@@ -150,6 +164,12 @@ public class Vegetacao : AbstractCardManager
         if (Input.GetKeyDown(KeyCode.F5))
             minijogosDicas.ShowHint();
 
+        if (Input.GetKeyDown(InputKeys.REPEAT_KEY) && currentDescription != null) {
+            ReadText(screenDescription);
+            ReadText(cardName.text);
+            ReadText(currentDescription);
+        }
+
         if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         {
             if(isAnySelected(audioButton, librasButton, resetButton, backButton))
@@ -163,12 +183,38 @@ public class Vegetacao : AbstractCardManager
 
     private void Start() {
         //PlayerPreferences.M010_Tipos = true;
+
+        //Load sprites
+        UnityEngine.Object[] cardSpriteAssets = Resources.LoadAll("tipos_veg", typeof(Sprite));
+        cardSprites = new Sprite[cardSpriteAssets.Length];
+        foreach(UnityEngine.Object c in cardSpriteAssets) {
+            int index = Int32.Parse(c.name);
+            cardSprites[index] = c as Sprite;
+        }
+
+        //Load card descriptions and correct answers
+        UnityEngine.Object[] descTexts = Resources.LoadAll("tipos_veg", typeof(TextAsset));
+        cardDescriptions = new string[descTexts.Length];
+        correctAnswer = new Vegetais[descTexts.Length];
+        foreach(UnityEngine.Object desc in descTexts) {
+            int index = Int32.Parse(desc.name);
+            string[] descSplit = (desc as TextAsset).text.Split('\t');
+            cardDescriptions[index] = descSplit[1];
+            if(descSplit[0] == "alga")
+                correctAnswer[index] = Vegetais.Alga;
+            else if(descSplit[0] == "planta")
+                correctAnswer[index] = Vegetais.Planta;
+            else if(descSplit[0] == "fungo")
+                correctAnswer[index] = Vegetais.Fungo;
+            else
+                throw new NotImplementedException("Unknown vegetable: " + descSplit[0]);      
+        }
         
         rand = new System.Random(); //Inits random number generator
 
         sprites = Shuffle<Sprite>(sprites);
 
-        alimentosCestaList = new List<GameObject>();
+        //alimentosCestaList = new List<GameObject>();
 
         algaImg.fillAmount = 1;
         plantaImg.fillAmount = 1;
@@ -177,6 +223,9 @@ public class Vegetacao : AbstractCardManager
         cardIndex = 0;
         //isDone = false;
 
+        screenDescription = ReadableTexts.instance.GetReadableText("m010_tipos_screen", LocalizationManager.instance.GetLozalization());
+        ReadText(screenDescription);
+
         updateCurrentCard(cardIndex);
         updateNextCard(cardIndex + 1);
 
@@ -184,11 +233,13 @@ public class Vegetacao : AbstractCardManager
 
         resetButton.interactable = true;
         backButton.interactable = true;
+
+        
     }
 
     // initialize after button click on instruction
     public void Initialize() {
-
+        LikeButton.Select();
     }
 
     override public void CheckLike()
@@ -261,18 +312,26 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void doWin() { //Routine to happen once the user wins
+        screenDescription = null;
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_tipos_win", LocalizationManager.instance.GetLozalization());
         PlayerPreferences.M010_Tipos = true;
         minijogosDicas.SupressDicas();
         winImg.SetActive(true);
         Debug.Log("Você ganhou!");
 
+        ReadText(currentDescription);
+
         DoAfter(5, ReturnToCamp);
     }
 
     private void doLose() { //Routine to happen once the user wins
+        screenDescription = null;
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_tipos_lose", LocalizationManager.instance.GetLozalization());
         minijogosDicas.SupressDicas();
         loseImg.SetActive(true);
         Debug.Log("Você perdeu!");
+
+        ReadText(currentDescription);
 
         DoAfter(5, ReturnToCamp);
     }

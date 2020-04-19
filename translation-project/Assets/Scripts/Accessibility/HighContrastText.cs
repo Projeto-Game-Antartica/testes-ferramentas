@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class HighContrastText : AbstractScreenReader {
@@ -25,6 +26,8 @@ public class HighContrastText : AbstractScreenReader {
     private TMP_FontAsset originalFont;
     private Image bgImage;
 
+    public bool HasVideo;
+
     private void Start()
     {
         arialFont = Resources.Load<TMP_FontAsset>("Fonts/ARIAL SDF");
@@ -34,6 +37,24 @@ public class HighContrastText : AbstractScreenReader {
         originalFont = text.font;
         bgImage = GetComponent<Image>();
         //Debug.Log(bgImage.name);
+
+
+        //Events for Libra Videos
+        if(HasVideo) {
+            EventTrigger trigger = gameObject.AddComponent<EventTrigger>() as EventTrigger;
+            
+            //Mouse Enter Event
+            EventTrigger.Entry pEnter = new EventTrigger.Entry();
+            pEnter.eventID = EventTriggerType.PointerEnter;
+            pEnter.callback.AddListener( (eventData) => { setVideo(); } );
+            trigger.triggers.Add(pEnter);
+
+            //Mouse Exit Event            
+            EventTrigger.Entry pExit = new EventTrigger.Entry();
+            pExit.eventID = EventTriggerType.PointerExit;
+            pExit.callback.AddListener( (eventData) => { clearVideo(); } );
+            trigger.triggers.Add(pExit);
+        }
     }
 
     // need to find a better way to do that. Its not efficient
@@ -100,5 +121,17 @@ public class HighContrastText : AbstractScreenReader {
             }
 
         }
+    }
+
+    private void setVideo() {
+        Debug.Log("Set Video!");
+        //LibraseContraste.SetLibrasVideoPath("path");
+        //openSpreadsheetData(SceneManager.GetActiveScene() + ".xlsx");
+        string videoPath = VideoPathFinder.FindPath(text.text);
+    }
+
+    private void clearVideo() {
+        //LibraseContraste.SetLibrasVideoPath("");
+        Debug.Log("Clear Video!");
     }
 }
