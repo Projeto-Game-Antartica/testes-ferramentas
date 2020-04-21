@@ -54,6 +54,17 @@ public class HighContrastText : AbstractScreenReader {
             pExit.eventID = EventTriggerType.PointerExit;
             pExit.callback.AddListener( (eventData) => { clearVideo(); } );
             trigger.triggers.Add(pExit);
+
+            //Mouse Click Event 
+            //Solution to keep propagating events as per https://forum.unity.com/threads/how-does-ui-event-bubbles.514319/           
+            EventTrigger.Entry pClick = new EventTrigger.Entry();
+            pClick.eventID = EventTriggerType.PointerClick;
+            pClick.callback.AddListener( (eventData) => { 
+                //return;
+                ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler); 
+                
+                } );
+            trigger.triggers.Add(pClick);
         }
     }
 
@@ -124,14 +135,14 @@ public class HighContrastText : AbstractScreenReader {
     }
 
     private void setVideo() {
-        Debug.Log("Set Video!");
-        //LibraseContraste.SetLibrasVideoPath("path");
-        //openSpreadsheetData(SceneManager.GetActiveScene() + ".xlsx");
+        //Debug.Log("Set Video!");
         string videoPath = VideoPathFinder.FindPath(text.text);
+        LibraseContraste.SetLibrasVideoPath(videoPath);
+        
     }
 
     private void clearVideo() {
-        //LibraseContraste.SetLibrasVideoPath("");
-        Debug.Log("Clear Video!");
+        //Debug.Log("Clear Video!");
+        LibraseContraste.SetLibrasVideoPath("");
     }
 }
