@@ -18,4 +18,9 @@ public class SelectionAudio : AbstractScreenReader {
 
         PlaySelectAudio(GetComponent<AudioSource>(), selectClip);
     }
+
+    public void DebugMessage()
+    {
+        Debug.Log("pointer enter....");
+    }
 }

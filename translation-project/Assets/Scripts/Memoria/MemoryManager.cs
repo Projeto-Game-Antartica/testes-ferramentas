@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class MemoryManager : AbstractScreenReader {
 
-    //private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
-    
     // round 0
     public Sprite[] cardFace0;
     public Sprite[] cardText0;
@@ -86,10 +84,6 @@ public class MemoryManager : AbstractScreenReader {
         _first = true;
         isOnMenu = false;
 
-        //Debug.Log(Parameters.MEMORY_ROUNDINDEX);
-
-        //ReadText(instructions);
-
         audioSource = GetComponent<AudioSource>();
 
         if (instructionInterface.gameObject.activeSelf)
@@ -149,7 +143,6 @@ public class MemoryManager : AbstractScreenReader {
             Card.DO_NOT = true;
             cancelarButton.interactable = true;
             confirmarButton.interactable = true;
-            //Debug.Log(c.Count);
         }
 
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
@@ -165,37 +158,22 @@ public class MemoryManager : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY))
         {
             switch (missionName)
-                {
-                    case "baleias":
-                        
-                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
-
+            {
+                case "baleias":
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_memoria, LocalizationManager.instance.GetLozalization()));
+                break;
+                case "paleo":
+                    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria, LocalizationManager.instance.GetLozalization()));
                     break;
-
-                    case "paleo":
-                        
-                        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m009_memoria, LocalizationManager.instance.GetLozalization()));
-
-                        break;
-                    default:
-                        
-                        break;
-                }    
+                default:
+                    break;
+            }    
         }
 
         if (Input.GetKeyDown(InputKeys.DICAS_KEY))
         {
             dicas.ShowHint();
         }
-
-        //else
-        //{
-        //    confirmarButton.interactable = false;
-        //    cancelarButton.interactable = false;
-
-        //}
-
-        //Debug.Log(Card.DO_NOT);
     }
 
     public void initializeGame()
@@ -232,9 +210,6 @@ public class MemoryManager : AbstractScreenReader {
 
             cards[choice].GetComponent<Card>().cardValue = i;
             cards[choice].GetComponent<Card>().initialized = true;
-
-
-            //Debug.Log(choice);
             
             cards[choice].GetComponent<Card>().setupGraphics(CARDFACE);
 
@@ -253,10 +228,6 @@ public class MemoryManager : AbstractScreenReader {
 
             cards[choice].GetComponent<Card>().cardValue = i;
             cards[choice].GetComponent<Card>().initialized = true;
-
-            //cards[choice].gameObject.name = getCardText(choice).name;
-
-            //Debug.Log(choice);
 
             cards[choice].GetComponent<Card>().setupGraphics(CARDTEXT);
         }
@@ -601,42 +572,35 @@ public class MemoryManager : AbstractScreenReader {
     public void ReturnToShip()
     {
         switch (missionName)
-                {
-                    case "baleias":
-                        confirmQuit.SetActive(false);
-
-                        if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
-
-                    break;
-
-                    case "paleo":
-                        //confirmQuit.SetActive(false);
-                        if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
-                        break;
-                    default:
-                        
-                        break;
-                }        
+        {
+            case "baleias":
+                confirmQuit.SetActive(false);
+                if (!PlayerPreferences.M004_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+            break;
+            case "paleo":
+                //confirmQuit.SetActive(false);
+                if (!PlayerPreferences.M009_Memoria) lifeExpController.RemoveEXP(0.0001f); // saiu sem concluir o minijogo
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+                break;
+            default:    
+                break;
+        }        
     }
 
     public void ResetScene()
     {
         switch (missionName)
-                {
-                    case "baleias":
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004MemoryGame);
-                        break;
-
-                    case "paleo":
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009MemoryGame);
-                        break;
-                    default:
-                        
-                        break;
-                } 
+        {
+            case "baleias":
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004MemoryGame);
+                break;
+            case "paleo":
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009MemoryGame);
+                break;
+            default:
+                break;
+        } 
         
     }
 
@@ -748,21 +712,17 @@ public class MemoryManager : AbstractScreenReader {
     public IEnumerator ReturnToShipCoroutine()
     {
         switch (missionName)
-                {
-                    case "baleias":
-                        yield return new WaitForSeconds(4f);
-
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
-                        break;
-
-                    case "paleo":
-                        yield return new WaitForSeconds(4f);
-
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
-                        break;
-                    default:
-                        
-                        break;
-                } 
+        {
+            case "baleias":
+                yield return new WaitForSeconds(4f);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M004Ship);
+                break;
+            case "paleo":
+                yield return new WaitForSeconds(4f);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M009Camp);
+                break;
+            default:
+                break;
+        } 
     }
 }
