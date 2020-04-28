@@ -13,7 +13,13 @@ public class VideoPathFinder : MonoBehaviour
 {
     private static VideoPathFinder instance;
 
-    private Dictionary<string, string> cellTexts = new Dictionary<string, string>();
+    //private Dictionary<string, string> cellTexts = new Dictionary<string, string>();
+    private static List<string> locationList = new List<string>();
+    private static List<string> cellTextList = new List<string>();
+
+    private static Matrix<double> corpusMatrix;
+
+    private static Vocabulary vocabulary;
 
     // Start is called before the first frame update
     void Start()
@@ -24,31 +30,36 @@ public class VideoPathFinder : MonoBehaviour
         TextAsset csvFile = Resources.Load<TextAsset>("VideoLibras/" + SceneManager.GetActiveScene().name);
         if(csvFile == null) {
             Debug.Log("Resource for VideoLibras/" + SceneManager.GetActiveScene().name + " does not exists.");
-        } else {
-            string[,] csvGrid = getCSVGrid(csvFile.text);
-            for(int i = 0; i <= csvGrid.GetUpperBound(0); i++) {
-                for(int j = 0; j <= csvGrid.GetUpperBound(1); j++) {
-                    string cellText = csvGrid[i,j];
-                    if(cellText != null && cellText != "") {
-                        string location = getColumnLettersByIndex(i) + (j+1);
-                        cellTexts.Add(location, cellText);
-                        Debug.Log(location + " " + cellText);
-                    }
+            return;
+        }
+
+        string[,] csvGrid = getCSVGrid(csvFile.text);
+        for(int i = 0; i <= csvGrid.GetUpperBound(0); i++) {
+            for(int j = 0; j <= csvGrid.GetUpperBound(1); j++) {
+                string cellText = csvGrid[i,j];
+                if(cellText != null && cellText != "") {
+                    string location = getColumnLettersByIndex(i) + (j+1);
+                    //cellTexts.Add(location, cellText);
+                    locationList.Add(location);
+                    cellTextList.Add(cellText);
+                    //Debug.Log(location + " " + cellText);
                 }
             }
         }
+        
+        //Get corpus, vocabulary and corpus matrix
+        string corpus = string.Join(" ", cellTextList);
 
-        //https://numerics.mathdotnet.com/
-        //Create set to store vocabulary then create object to transform vocabulary in vectors and methods to compare and return the closest
+        vocabulary = new Vocabulary(corpus);
 
+        List<Vector<double>> textVectors = new List<Vector<double>>();
 
-        // Debug.Log(getColumnLettersByIndex(0));
-        // Debug.Log(getColumnLettersByIndex(10));
-        // Debug.Log(getColumnLettersByIndex(24));
-        // Debug.Log(getColumnLettersByIndex(25));
-        // Debug.Log(getColumnLettersByIndex(26));
-        // Debug.Log(getColumnLettersByIndex(27));
-        // Debug.Log(getColumnLettersByIndex(55));
+        foreach(string text in cellTextList)
+            textVectors.Add(vocabulary.Vectorize(text));
+
+        corpusMatrix = DenseMatrix.OfRowVectors(textVectors);
+
+        //Must create debug interface
     }
 
     string getColumnLettersByIndex(int columnIndex) {
@@ -66,26 +77,9 @@ public class VideoPathFinder : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    // static string RemoveDiacritics(string text) 
+    // void Update()
     // {
-    //     var normalizedString = text.Normalize(NormalizationForm.FormD);
-    //     var stringBuilder = new StringBuilder();
-
-    //     foreach (var c in normalizedString)
-    //     {
-    //         var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-    //         if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-    //         {
-    //             stringBuilder.Append(c);
-    //         }
-    //     }
-
-    //     return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        
     // }
 
     static string[,] getCSVGrid(string csvText) {
@@ -114,32 +108,66 @@ public class VideoPathFinder : MonoBehaviour
         return outputGrid;
     }
 
-    private void openSpreadsheetData(string spreadsheetPath) {
-        //Debug.Log(spreadsheetPath);
-
-
-        // Excel.Workbook excelWorkbook = excelApp.Workbooks.Open(workbookPath, 0, false, 5, "", "", false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-        // Excel.Sheets excelSheets = excelWorkbook.Worksheets;
-        // string currentSheet = "Sheet1";
-        // Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelSheets.get_Item(currentSheet);
-        // var cell = (Excel.Range)excelWorksheet.Cells[10, 2];
-
-        //Vector2 vect = Vector2();
-        //Debug.Log(vect);
-
-        Matrix<double> A = DenseMatrix.OfArray(new double[,] {
-        {1,1,1,1},
-        {1,2,3,4},
-        {4,3,2,1}});
-        Vector<double>[] nullspace = A.Kernel();
-
-        // verify: the following should be approximately (0,0,0)
-        Debug.Log((A * (2*nullspace[0] - 3*nullspace[1])));
+    //Find the closest text by computing its dot product with a matrix of sentence vectors
+    public static string FindPath(string text) {
+        Vector<double> textVector = vocabulary.Vectorize(text);
+        Vector<double> similarities = corpusMatrix.Multiply(textVector);
+        int argMax = similarities.MaximumIndex();
+        Debug.Log("CHOSEN TEXT: " + locationList[argMax] + " - " + cellTextList[argMax]);
+        return locationList[argMax];
     }
 
-    public static string FindPath(string text) {
+    private static string vect2str(Vector<double> vect) {
+        string textVectorString = "";
+        foreach(double v in vect)
+            textVectorString += v;
+        return textVectorString;
+    }
+}
 
-        Debug.Log(text);
-        return "";
+class Vocabulary {
+
+    Dictionary<string, int> wordToInt;
+
+    Vector<double> clearVector;
+
+    public Vocabulary(string corpus) {
+        wordToInt = new Dictionary<string, int>();
+
+        HashSet<string> vocabularySet = new HashSet<string>();
+
+        foreach(string token in tokenize(corpus))
+            vocabularySet.Add(token);
+
+        List<string> vocabulary = new List<string>(vocabularySet);
+
+        clearVector = DenseVector.Create(vocabulary.Count, 0);
+
+        for(int i = 0; i < vocabulary.Count; i++) {
+            wordToInt[vocabulary[i]] = i;
+            //Debug.Log(vocabulary[i] + " -> " + i);
+            //clearVector[i] = -1.0;
+        }
+    }
+
+    private string[] tokenize(string text) {
+        //Remove punctuation from the chracteres and them split
+        string textWoPunct = "";
+        foreach(char c in text)
+            if(!char.IsPunctuation(c))
+               textWoPunct += c; 
+        // = new string(text.ToCharArray().Where(c => !char.IsPunctuation(c)).ToArray());
+        return textWoPunct.ToLower().Split(new char [] {' '});
+    }
+
+    public Vector<double> Vectorize(string text) {
+        Vector<double> textVector = clearVector.Clone();
+        foreach(string token in tokenize(text)) {
+            if(wordToInt.ContainsKey(token))
+                textVector.At(wordToInt[token], 1.0); 
+            //else
+                //Debug.Log("Token doesn't exist: " + token);
+        }
+        return textVector;
     }
 }
