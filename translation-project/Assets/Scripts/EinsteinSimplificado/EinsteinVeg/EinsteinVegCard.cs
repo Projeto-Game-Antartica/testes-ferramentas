@@ -20,6 +20,14 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
     public string cardText {get; set;}
     public bool initialized { get; set; }
 
+    public string cardDescription {
+        get {
+            // numero da carta + descrição ou numero da carta + nome do animal
+            string cardName = gameObject.name.Substring(0, gameObject.name.IndexOf(":"));
+            return cardName + " " + cardText;
+        }
+    }
+
     public Sprite cardBack;
     public Sprite cardFace;
 
@@ -121,8 +129,7 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
 
         if (state == VIRADA_BAIXO || state == VIRADA_CIMA)
         {
-            //Debug.Log(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
-            ReadText(gameObject.name.Substring(0, gameObject.name.IndexOf(":")));
+            ReadText(cardDescription);
         }
         //else
         //{

@@ -153,6 +153,14 @@ public class EinsteinVegManager : AbstractScreenReader
             ReadText(currentDescription);
         }
 
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY)) {
+            foreach(GameObject go in cards) {
+                if (isSelected(go)) {
+                    ReadText(go.GetComponent<EinsteinVegCard>().cardDescription);
+                }
+            }
+        }
+
         // if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         // {
         //     if(isAnySelected(audioButton, librasButton, resetButton, backButton))
