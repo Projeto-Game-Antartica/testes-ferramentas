@@ -30,7 +30,7 @@ public class EinsteinVegManager : AbstractScreenReader
 
     //public int[] index;
 
-    private bool init;
+    private bool initialized = false;
 
     private AudioSource audioSource;
 
@@ -100,20 +100,12 @@ public class EinsteinVegManager : AbstractScreenReader
 
     private void Start()
     {
-        init = false;
-
-        ReadText(instructions);
-
-        audioSource = GetComponent<AudioSource>();
-
+        //Inventory debug flag
         //PlayerPreferences.M010_Amostras = true;
         
-        if (!init)
-            initializeCards();
+        audioSource = GetComponent<AudioSource>();
 
-        backButton.interactable = true;
-
-        initializeGame();
+        ReadText(instructions); //Read the instructions of the minigame
     }
 
     //solve hand walkiing in the minigame
@@ -202,9 +194,18 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
-        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
-        resetButton.interactable = true;
+        
+        if(!initialized){
+            initializeCards();
+            cards[0].GetComponent<Button>().Select();
+            StartCoroutine(ReadCards());
+            initialized = true;
+            resetButton.interactable = true;
+        }
+
         processDropDown.Select();
+
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
 
         ReadText(currentDescription);
     }
@@ -222,6 +223,7 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeCards() {
+        
         //For initialize random, we need to setup a random list of indexes
         int[] randomIndexes = randomIntArray(cards.Length);
 
@@ -233,10 +235,7 @@ public class EinsteinVegManager : AbstractScreenReader
             cards[randId].GetComponent<EinsteinVegCard>().cardFace = cardFace[i];
             cards[randId].GetComponent<EinsteinVegCard>().setupGraphics();
         }
-
-        init = true;
-        cards[0].GetComponent<Button>().Select();
-        StartCoroutine(ReadCards());      
+   
     }
 
 
