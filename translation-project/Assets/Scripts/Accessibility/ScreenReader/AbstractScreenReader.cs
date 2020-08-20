@@ -44,6 +44,7 @@ public abstract class AbstractScreenReader : MonoBehaviour {
     // verify if the acessibility parameter is TRUE, is so read the text, if not do nothing.
     public void ReadText(string text)
     {
+        if (Parameters.READ_TEXT_DEBUG_MODE) Debug.Log("READ_TEXT_DEBUG_MODE: " + text);
         if (Parameters.ACCESSIBILITY) TolkUtil.Speak(text);
     }
 
