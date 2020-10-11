@@ -18,57 +18,57 @@ public class Card : AbstractScreenReader, ISelectHandler {
     public bool isText { get; set; }
    
     private Sprite cardBack;
-    public Sprite cardFace;
-    public Sprite cardText;
-
+    private Sprite cardFace;
+    private Sprite cardText; 
+    private GameObject cardImage;
+    private GameObject hct;
     private GameObject memoryManager;
-
-    public Image BGImage;
-
     private bool _init = false;
 
+    public Sprite cardBg;
+    public Image BGImage;
     public GameObject memoryCardBackImage;
-    public GameObject memoryCardBackText;
-
-    public GameObject cardImage;
-
+    public GameObject highContrastText;
     public string missionName;
-    
+
     private void Start()
     {
+        Parameters.HIGH_CONTRAST = true;
         state = VIRADA_BAIXO;
         initialized = false;
         memoryManager = GameObject.FindGameObjectWithTag("GameController");
-
-        //StartCoroutine(showCards());
     }
-
-    //public IEnumerator showCards()
-    //{
-    //    yield return new WaitForSeconds(9);
-    //    if (!isText) state = 0;
-    //    turnCardDown();
-    //}
 
     public void setupGraphics(int choice)
     {
         cardBack = memoryManager.GetComponent<MemoryManager>().getCardBack();
 
+        hct = Instantiate(highContrastText, BGImage.transform, false);
+
+        hct.GetComponent<HighContrastText>().HasVideo = true;
+
+        // set image cards
         if (choice == MemoryManager.CARDFACE)
         {
             Debug.Log("card face");
             Debug.Log("card value: " +cardValue);
+
             cardFace = memoryManager.GetComponent<MemoryManager>().getCardFace(cardValue);
             cardText = null;
+
             gameObject.name += ": " + cardFace.name;
             isText = false;
 
-            //GetComponent<Image>().color = new Color(1, 1, 1, 0);
-
+            // instantiate cardImage prefab
             cardImage = Instantiate(memoryCardBackImage, transform, false);
+            cardImage.GetComponent<Image>().sprite = cardFace;
+            hct.GetComponentInChildren<TextMeshProUGUI>().text = cardFace.name;
 
-            cardImage.GetComponentsInChildren<Image>()[1].sprite = cardFace;
-            cardImage.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cardFace.name;
+            // seted by analysing prefab on scene
+            hct.GetComponent<RectTransform>().offsetMin = new Vector2(18, 15); // new Vector2(left, bottom); 
+            hct.GetComponent<RectTransform>().offsetMax = new Vector2(-17.5f, -120); // new Vector2(-right, -top);
+
+            hct.SetActive(false);
         }
         else if (choice == MemoryManager.CARDTEXT)
         {
@@ -76,43 +76,55 @@ public class Card : AbstractScreenReader, ISelectHandler {
             cardFace = null;
             gameObject.name += ": " + cardText.name;
             isText = true;
+            GetComponent<Image>().sprite = cardBg;
 
-            //GameObject obj = Instantiate(memoryCardBackText, transform, false);
-            // create prefab
-            GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            GameObject obj = Instantiate(memoryCardBackText, BGImage.transform, false);
-            // set the card to prefab's child due the selectable
-            transform.SetParent(obj.transform, true);
-            // add the corresponding text
+            // seted by analysing prefab on scene
+            hct.GetComponent<RectTransform>().offsetMin = new Vector2(17.5f, 17.5f); // new Vector2(left, bottom); 
+            hct.GetComponent<RectTransform>().offsetMax = new Vector2(-17.5f, -17.5f); // new Vector2(-right, -top);
 
-            switch(missionName)
+            Button b = hct.AddComponent<Button>() as Button;
+
+            // add button event from card
+            b.onClick.AddListener(flipCard);
+
+            // change navigation mode
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.None;
+            b.navigation = nav;
+
+            // change colors
+            var colors = GetComponent<Button>().colors;
+            b.colors = colors;
+
+            // add the corresponding text to compare with images
+            switch (missionName)
             {
                 case "baleias":
-                    obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescription.GetCardText(cardText.name);
+                    hct.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescription.GetCardText(cardText.name);
                     break;
                 case "paleo":
-                    obj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescriptionPaleo.GetCardDescriptionPaleo(cardText.name);
+                    hct.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = CardsDescriptionPaleo.GetCardDescriptionPaleo(cardText.name);
                     break;
                 default:
                     Debug.Log("check mission name");
                     break;
             }
         }
-        //state = 1;
 
-        //flipCard();
+        // add text to last component on hierarchy
+        hct.transform.SetAsLastSibling();
+
+        // adjust text components
+        hct.GetComponentInChildren<TextMeshProUGUI>().enableAutoSizing = true;
+        hct.GetComponentInChildren<TextMeshProUGUI>().fontSizeMin = 10;
+        hct.GetComponentInChildren<TextMeshProUGUI>().fontSizeMax = 24;
+        hct.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
 
         _init = true;
     }
 
     public void flipCard()
     {
-        //if (isText)
-        //{
-        //    state = 1;
-        //    GetComponent<Image>().sprite = cardText;
-        //}
-
         // change the state of card
         if (state == VIRADA_BAIXO && !DO_NOT)
             state = VIRADA_CIMA;
@@ -122,25 +134,22 @@ public class Card : AbstractScreenReader, ISelectHandler {
         // set the sprites according to state
         if (state == VIRADA_BAIXO && !DO_NOT)
         {
-            if (isText)
-                GetComponent<Image>().sprite = cardText;
-            else
-            { 
+            // close the card
+            if (!isText)
+            {
                 GetComponent<Image>().sprite = cardBack;
-                GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 cardImage.SetActive(false);
+                hct.SetActive(false);
             }
         }
         else if (state == VIRADA_CIMA && !DO_NOT)
         {
             if (cardText == null)
             {
-                GetComponent<Image>().sprite = cardFace;
-                GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                GetComponent<Image>().sprite = cardBg;
                 cardImage.SetActive(true);
+                hct.SetActive(true);
             }
-            else
-                GetComponent<Image>().sprite = cardText;
 
             if (_init)
             {
@@ -178,6 +187,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
             GetComponent<Image>().sprite = cardBack;
             GetComponent<Image>().color = new Color(1, 1, 1, 1);
             cardImage.SetActive(false);
+            hct.SetActive(false);
         }
 
         state = VIRADA_BAIXO;
@@ -192,12 +202,13 @@ public class Card : AbstractScreenReader, ISelectHandler {
         if (state == VIRADA_BAIXO)
         {
             if (isText)
-                GetComponent<Image>().sprite = cardText;
+                GetComponent<Image>().sprite = cardBg;
             else
             {
                 GetComponent<Image>().sprite = cardBack;
                 GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 cardImage.SetActive(false);
+                hct.SetActive(false);
             }
         }
         else if (state == VIRADA_CIMA)
@@ -205,7 +216,7 @@ public class Card : AbstractScreenReader, ISelectHandler {
             if (cardText == null)
                 GetComponent<Image>().sprite = cardFace;
             else
-                GetComponent<Image>().sprite = cardText;
+                GetComponent<Image>().sprite = cardBg;
         }
 
         DO_NOT = false;

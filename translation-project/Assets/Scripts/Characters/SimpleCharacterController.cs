@@ -123,16 +123,6 @@ public class SimpleCharacterController : AbstractScreenReader {
         {
             TryInteract();
         }
-
-        if (VD.isActive)
-        {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                //Debug.Log("SimpleCharacter");
-                //diagUI.EndDialogue(VD.nodeData);
-                //inGameOption.SetActive(false);
-            }
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
