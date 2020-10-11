@@ -26,6 +26,8 @@ public class Vegetacao : AbstractCardManager
 
     public Image[] alimentosCesta;
 
+    private bool initialized = false;
+
     //private int alimentosCestaIndex = 20;
 
     //public GameObject alimentoCestaPrefab;
@@ -182,6 +184,7 @@ public class Vegetacao : AbstractCardManager
     }
 
     private void Start() {
+
         //PlayerPreferences.M010_Tipos = true;
 
         //Load sprites
@@ -216,10 +219,6 @@ public class Vegetacao : AbstractCardManager
 
         //alimentosCestaList = new List<GameObject>();
 
-        algaImg.fillAmount = 1;
-        plantaImg.fillAmount = 1;
-        fungoImg.fillAmount = 1;
-
         cardIndex = 0;
         //isDone = false;
 
@@ -239,6 +238,13 @@ public class Vegetacao : AbstractCardManager
 
     // initialize after button click on instruction
     public void Initialize() {
+        if(!initialized) {
+            algaImg.fillAmount = 1.0f;
+            plantaImg.fillAmount = 1.0f;
+            fungoImg.fillAmount = 1.0f;
+
+            initialized = true;
+        }
         LikeButton.Select();
     }
 
@@ -387,6 +393,6 @@ public class Vegetacao : AbstractCardManager
 
     public void ResetScene()
     {
-        SceneManager.LoadScene(ScenesNames.M010TiposVegetacao);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M010TiposVegetacao);
     }
 }

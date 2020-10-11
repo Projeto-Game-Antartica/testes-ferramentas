@@ -53,6 +53,7 @@ public class VegCampSceneManagement : AbstractScreenReader {
         if(PlayerPreferences.M010_Amostras) {
             Bag.EnableItemByIndex(2);
             Bag.EnableItemByIndex(4);
+            Bag.EnableItemByIndex(5);
         }
 
         //InitialInstruction();

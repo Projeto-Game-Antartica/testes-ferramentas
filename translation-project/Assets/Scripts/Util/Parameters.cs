@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Parameters {
 
+    public const bool READ_TEXT_DEBUG_MODE = true;
+
     // GAME VERSION
     public static string VERSION = "v 1.0";
     

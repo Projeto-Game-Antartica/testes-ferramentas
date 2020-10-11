@@ -30,7 +30,7 @@ public class EinsteinVegManager : AbstractScreenReader
 
     //public int[] index;
 
-    private bool init;
+    private bool initialized = false;
 
     private AudioSource audioSource;
 
@@ -100,20 +100,12 @@ public class EinsteinVegManager : AbstractScreenReader
 
     private void Start()
     {
-        init = false;
-
-        ReadText(instructions);
-
-        audioSource = GetComponent<AudioSource>();
-
+        //Inventory debug flag
         //PlayerPreferences.M010_Amostras = true;
         
-        if (!init)
-            initializeCards();
+        audioSource = GetComponent<AudioSource>();
 
-        backButton.interactable = true;
-
-        initializeGame();
+        ReadText(instructions); //Read the instructions of the minigame
     }
 
     //solve hand walkiing in the minigame
@@ -161,6 +153,14 @@ public class EinsteinVegManager : AbstractScreenReader
             ReadText(currentDescription);
         }
 
+        if (Input.GetKeyDown(InputKeys.AUDIODESCRICAO_KEY)) {
+            foreach(GameObject go in cards) {
+                if (isSelected(go)) {
+                    ReadText(go.GetComponent<EinsteinVegCard>().cardDescription);
+                }
+            }
+        }
+
         // if(Input.GetKeyDown(InputKeys.MJMENU_KEY))
         // {
         //     if(isAnySelected(audioButton, librasButton, resetButton, backButton))
@@ -169,16 +169,6 @@ public class EinsteinVegManager : AbstractScreenReader
         //         audioButton.Select();
         // }
 
-        //Checks if all the options are already done. If so, end the game
-        bool allDone = true;
-        foreach(int option in remainingOptionsCounter) {
-            if(option > 0) {
-                allDone = false;
-                break;
-            }
-        }
-        if(allDone)
-            EndGame(true);
     }
 
     private bool isSelected(GameObject go) {
@@ -202,9 +192,18 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
-        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
-        resetButton.interactable = true;
+        
+        if(!initialized){
+            initializeCards();
+            cards[0].GetComponent<Button>().Select();
+            StartCoroutine(ReadCards());
+            initialized = true;
+            resetButton.interactable = true;
+        }
+
         processDropDown.Select();
+
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
 
         ReadText(currentDescription);
     }
@@ -222,6 +221,7 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeCards() {
+        
         //For initialize random, we need to setup a random list of indexes
         int[] randomIndexes = randomIntArray(cards.Length);
 
@@ -233,10 +233,7 @@ public class EinsteinVegManager : AbstractScreenReader
             cards[randId].GetComponent<EinsteinVegCard>().cardFace = cardFace[i];
             cards[randId].GetComponent<EinsteinVegCard>().setupGraphics();
         }
-
-        init = true;
-        cards[0].GetComponent<Button>().Select();
-        StartCoroutine(ReadCards());      
+   
     }
 
 
@@ -274,6 +271,7 @@ public class EinsteinVegManager : AbstractScreenReader
     // }
 
     public void CompareCards() {
+
         Card.DO_NOT = true;
 
         
@@ -285,15 +283,17 @@ public class EinsteinVegManager : AbstractScreenReader
             correct = 0;
         else
             correct = CheckCombination(dropDownValue, colorNames[dropDownValue]);
-        
+               
         foreach(EinsteinVegCard token in tokensToCompare)
             token.falseCheck();
 
-
-
+        tokensToCompare.Clear();
+         
         Debug.Log("correct answers >> " + correct);
         // subtract 1 from remaining option
-        SetRemainingOptions(dropDownValue, GetRemainingOptions(dropDownValue) - correct);
+
+        remainingOptionsCounter[dropDownValue] = GetRemainingOptions(dropDownValue) - correct;
+
         Debug.Log(GetRemainingOptions(dropDownValue));
 
         //tokensToCompare.Clear();
@@ -303,6 +303,24 @@ public class EinsteinVegManager : AbstractScreenReader
         if (GetRemainingOptions(dropDownValue) == 0) {
             processDropDown.options[GetDropDownValue()].text += " (Finalizado)";
         }
+
+
+        //If the allowed tries exausted, lose the game
+        if (tries > attempts) {
+            EndGame(false);
+        } else {
+            //Checks if all the options are already done. If so, end the game
+            bool allDone = true;
+            foreach(int option in remainingOptionsCounter) {
+                if(option > 0) {
+                    allDone = false;
+                    break;
+                }
+            }
+            if(allDone)
+                EndGame(true);
+        }
+
     }
 
     public void Cancel()
@@ -322,41 +340,73 @@ public class EinsteinVegManager : AbstractScreenReader
 
         foreach(EinsteinVegCard card in tokensToCompare) {
             x = 0;
+            //If the card is correct
             if(tokensType[card.cardValue] == (TokensTypes)dropDownValue) {
                 doneTokens.Add(card);
-                Debug.Log("correct >> " + card);
-                StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.correct));
+                //Debug.Log("correct >> " + card);
+                StartCoroutine(ChangeCardColor(card.BGImage, (int)Operation.correct));
                 x = 2;
                 correct++;
-            } else {
-                Debug.Log("wrong >> " + card);
-                StartCoroutine(CheckAnswer(card.BGImage, (int)Operation.wrong));
+            } else { //If the card is wrong
+                //Debug.Log("wrong >> " + card);
+                StartCoroutine(ChangeCardColor(card.BGImage, (int)Operation.wrong));
                 wrong = true;
             }
             
             card.state = x;
         }
 
-
         if (wrong) {
             tries++;
             attemptsText.text = "Tentativas: " + tries + "/" + attempts;
         }
 
-        // loses the game
-        if (tries > attempts) {
-            EndGame(false);
+        return correct;
+    }
+
+    public IEnumerator ChangeCardColor(Image image, int op) {
+        Color color;
+        //Debug.Log("Checking answer...");
+
+        switch (op)
+        {
+            case (int)Operation.correct:
+                color = new Color(0, 1, 0, 1); // green
+                break;
+            case (int)Operation.wrong:
+                color = new Color(1, 0, 0, 1); // red
+                break;
+            default:
+                color = new Color(0, 0, 0, 0);
+                break;
         }
 
-        return correct;
+        image.color = color;
 
+        // wait seconds
+        yield return new WaitForSeconds(2f);
 
-    }
+        if (op == (int)Operation.wrong)
+        {
+            // back to normal!!
+            image.color = new Color(1, 1, 1, 1);
+        }
+        else
+        {
+            // set the color to dropdown color
+            image.sprite = GetBackground(GetDropDownValue());
+            image.color = Color.white;
+        }
+
+    }    
 
     public void EndGame(bool win)
     {
+        string endGameMsg = "";
+
         if (win)
         {
+            endGameMsg = "Parabéns, você ganhou os itens: potinho de plástico, saco de papel e caderno de campo para sua aventura na Antártica!";
             currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_win", LocalizationManager.instance.GetLozalization());
             PlayerPreferences.M010_Amostras = true;
             WinImage.SetActive(true);
@@ -367,11 +417,13 @@ public class EinsteinVegManager : AbstractScreenReader
         }
         else
         {
+            endGameMsg = "Infelizmente você não concluiu o minijogo com êxito. Tente novamente!";
             currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_lose", LocalizationManager.instance.GetLozalization());
             LoseImage.SetActive(true);
             //lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
 
+        ReadText(endGameMsg);
         ReadText(currentDescription);
 
         DoAfter(3, ReturnToCamp);
@@ -455,46 +507,7 @@ public class EinsteinVegManager : AbstractScreenReader
         return remainingOptionsCounter[dropDownValue];
     }
 
-    public void  SetRemainingOptions(int dropDownValue, int value) {
-        remainingOptionsCounter[dropDownValue] = value;
-    }
 
-    public IEnumerator CheckAnswer(Image image, int op) {
-        Color color;
-        //Debug.Log("Checking answer...");
-
-        switch (op)
-        {
-            case (int)Operation.correct:
-                color = new Color(0, 1, 0, 1); // green
-                break;
-            case (int)Operation.wrong:
-                color = new Color(1, 0, 0, 1); // red
-                break;
-            default:
-                color = new Color(0, 0, 0, 0);
-                break;
-        }
-
-        image.color = color;
-
-        // wait seconds
-        yield return new WaitForSeconds(2f);
-
-        if (op == (int)Operation.wrong)
-        {
-            // back to normal!!
-            image.color = new Color(1, 1, 1, 1);
-        }
-        else
-        {
-            // set the color to dropdown color
-            image.sprite = GetBackground(GetDropDownValue());
-            image.color = Color.white;
-        }
-
-        tokensToCompare.Clear();
-    }
     
     public int GetDropDownValue()
     {
