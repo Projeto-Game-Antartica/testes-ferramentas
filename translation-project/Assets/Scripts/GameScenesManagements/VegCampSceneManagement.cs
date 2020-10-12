@@ -43,6 +43,14 @@ public class VegCampSceneManagement : AbstractScreenReader {
     public void Start()
     {
         isTrigger = false;
+
+        //Flag to set itens to true for debug
+        bool debugItens = true;
+        if(debugItens) {
+            PlayerPreferences.M010_Tipos = true;
+            PlayerPreferences.M010_Amostras = true;
+        }
+        
         
         if(PlayerPreferences.M010_Tipos) {
             Bag.EnableItemByIndex(0);

@@ -77,7 +77,7 @@ public class LibraseContraste : AbstractScreenReader {
 
         while (!videoPlayer.isPrepared)
         {
-            Debug.Log("Preparing video...");
+            Debug.Log("Preparing video: " + url);
             yield return null;
         }
 

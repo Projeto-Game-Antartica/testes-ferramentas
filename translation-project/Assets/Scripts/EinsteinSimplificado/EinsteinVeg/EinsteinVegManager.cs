@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 
 public class EinsteinVegManager : AbstractScreenReader
 {
-    private readonly string instructions = "Início do jogo. Mini jogo de memória. Descrição..";
 
     private string currentDescription = null;
 
@@ -104,8 +103,6 @@ public class EinsteinVegManager : AbstractScreenReader
         //PlayerPreferences.M010_Amostras = true;
         
         audioSource = GetComponent<AudioSource>();
-
-        ReadText(instructions); //Read the instructions of the minigame
     }
 
     //solve hand walkiing in the minigame
@@ -192,6 +189,10 @@ public class EinsteinVegManager : AbstractScreenReader
     }
 
     public void initializeGame() {
+
+        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
+
+        ReadText(currentDescription);
         
         if(!initialized){
             initializeCards();
@@ -202,10 +203,6 @@ public class EinsteinVegManager : AbstractScreenReader
         }
 
         processDropDown.Select();
-
-        currentDescription = ReadableTexts.instance.GetReadableText("m010_amostra_screen", LocalizationManager.instance.GetLozalization());
-
-        ReadText(currentDescription);
     }
 
     public void CallHintMethod() {
@@ -423,9 +420,9 @@ public class EinsteinVegManager : AbstractScreenReader
             //lifeExpController.AddEXP(0.0001f); // jogou um minijogo
         }
 
-        ReadText(endGameMsg);
         ReadText(currentDescription);
-
+        ReadText(endGameMsg);
+        
         DoAfter(3, ReturnToCamp);
     }
 
@@ -516,6 +513,7 @@ public class EinsteinVegManager : AbstractScreenReader
 
     public void UpdateDropDownColor() {
         ChangeDropDownColor(GetDropDownValue());
+        ReadText(processDropDown.captionText.text);
     }
 
     public void ChangeDropDownColor(int dropdownValue)
