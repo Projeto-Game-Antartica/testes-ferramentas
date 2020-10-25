@@ -111,7 +111,6 @@ public class MinijogosDicas : AbstractScreenReader {
         if (dicas.activeSelf)
         {
             ReadText(targetText.text);
-            Debug.Log(targetText.text);
         }
     }
 

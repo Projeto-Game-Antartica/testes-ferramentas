@@ -61,10 +61,9 @@ public class HomeostaseVitoria : AbstractScreenReader {
         isOnCard = true;
         minijogoDicas.ShowIsolatedHint(initialHint);
 
-        Debug.Log(initialHint);
-        ReadText(initialHint);
-
         ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m002_homeostase2, LocalizationManager.instance.GetLozalization()));
+
+        ReadText(initialHint);
     }
 	
 	// Update is called once per frame
@@ -137,16 +136,14 @@ public class HomeostaseVitoria : AbstractScreenReader {
         if (clickedCard.name.Equals(algodaoCard.name))
         {
             titleText.text = "Blusa de algodão";
-            minijogoDicas.ShowIsolatedHint(algodaoHint);
-            ReadText(algodaoHint);
-            Debug.Log(algodaoHint);
+            minijogoDicas.ShowIsolatedHint(algodaoHint); 
+            //ReadText(algodaoHint); Nao faz sentido dizer a dica quando seleciona a carta
         }
         else if (clickedCard.name.Equals(fleeceCard.name))
         {
             titleText.text = "Blusa de fleece";
             minijogoDicas.ShowIsolatedHint(fleeceHint);
-            ReadText(fleeceHint);
-            Debug.Log(fleeceHint);
+            //ReadText(fleeceHint); Nao faz sentido dizer a dica quando seleciona a carta
         }
 
         likeButton.Select();
