@@ -23,7 +23,8 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
         iniciarButton.gameObject.SetActive(true);
         voltarButton.gameObject.SetActive(false);
 
-        //This is only set in 
+        //This is only set in
+        //This is set in case Location Manager has not yet been instantied to avoid crash 
         if(LocalizationManager.instance == null)
             (new LocalizationManager()).LoadLocalizedText("locales_ptbr.json");
 

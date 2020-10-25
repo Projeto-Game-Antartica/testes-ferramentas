@@ -33,6 +33,7 @@ public class PlantScheme : AbstractScreenReader
             if(allowHide) Hide();
         }
 
+        //Math.Clamp is used to clip the position values to constrained inside the screen limits.
         if(canvasGo.activeSelf) {
 
             if (Input.GetKeyDown(KeyCode.UpArrow)) {
