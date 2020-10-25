@@ -8,8 +8,9 @@ public class StartupManager : AbstractScreenReader {
     // Use this for initialization
     private IEnumerator Start () {
         
-        // accessibility parameters start disabled
+        // accessibility parameter start enabled
         Parameters.ACCESSIBILITY = true;
+
         Parameters.HIGH_CONTRAST = false;
         Parameters.BOLD = false;
 
