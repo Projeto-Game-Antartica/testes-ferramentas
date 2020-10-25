@@ -264,6 +264,7 @@ public class VIDEUIManager : AbstractScreenReader
             if(data.extraVars.ContainsKey("OpenURL"))
             {
                 AlertDialog.SetActive(true);
+                AlertDialog.GetComponentInChildren<Button>().Select();
                 url = (string)data.extraVars["OpenURL"];
                 //Debug.Log(url);
             }
@@ -432,6 +433,9 @@ public class VIDEUIManager : AbstractScreenReader
     public void OpenLista()
     {
         listaItem.SetActive(true);
+
+        ReadText("Lista de Itens aberta");
+
         listaItem.GetComponentInChildren<Selectable>().Select();
     }
 

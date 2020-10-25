@@ -7,7 +7,7 @@ public class Parameters {
     public const bool READ_TEXT_DEBUG_MODE = true;
 
     // GAME VERSION
-    public static string VERSION = "v 1.0";
+    public static string VERSION = "1.0";
     
     // bool for enabling/disabling accessibility functions
     public static bool ACCESSIBILITY;

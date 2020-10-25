@@ -35,13 +35,20 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
 
         ReadText(ReadableTexts.instance.GetReadableText(audiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
-        ReadInstructions();
+        //ReadInstructions();
 
         iniciarButton.Select();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnEnable()
+    {
+        ReadInstructions();
+        if (iniciarButton.gameObject.activeSelf == true) iniciarButton.Select();
+        else voltarButton.Select();
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
             ReadInstructions();
