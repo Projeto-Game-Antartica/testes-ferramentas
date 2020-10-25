@@ -74,6 +74,7 @@ public class PlantScheme : AbstractScreenReader
         StartCoroutine(allowHideAfterDelay(0.1f));   
     }
 
+    //This delay is necessary otherwise this window will open and close imediatelly due to two key captures.
     IEnumerator allowHideAfterDelay(float secs) {
         yield return new WaitForSeconds(secs);
         allowHide = true;
