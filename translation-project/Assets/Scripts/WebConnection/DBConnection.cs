@@ -7,10 +7,10 @@ using UnityEngine.Networking;
 public class DBConnection : MonoBehaviour
 {
     // local path
-    private readonly string connection_url = "http://acessivel.ufabc.edu.br/antartica/php/index.php";
-    private readonly string register_url = "http://acessivel.ufabc.edu.br/antartica/php/registeruser.php";
-    private readonly string password_url = "http://acessivel.ufabc.edu.br/antartica/php/password.php";
-    private readonly string username_url = "http://acessivel.ufabc.edu.br/antartica/php/username.php";
+    private readonly string connection_url = "http://acessivel.ufabc.edu.br/antartica/scripts/index.php";
+    private readonly string register_url = "http://acessivel.ufabc.edu.br/antartica/scripts/registeruser.php";
+    private readonly string password_url = "http://acessivel.ufabc.edu.br/antartica/scripts/password.php";
+    private readonly string username_url = "http://acessivel.ufabc.edu.br/antartica/scripts/username.php";
 
     public static DBConnection instance;
 
