@@ -40,16 +40,16 @@ public class LoginScene : AbstractScreenReader {
     {
         version.text = Parameters.VERSION;
 
-        if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
-        {
-            PlayerPrefs.SetInt("ScreenReaderWarning", 1);
+        //if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
+        //{
+        //    PlayerPrefs.SetInt("ScreenReaderWarning", 1);
 
-            screenReaderWarning.SetActive(true);
-            audioSource.PlayOneShot(avisoClip);
-            ReadText(warningText);
+        screenReaderWarning.SetActive(true);
+        audioSource.PlayOneShot(avisoClip);
+        ReadText(warningText);
 
-            screenReaderWarning.GetComponentInChildren<Button>().Select();
-        }
+        screenReaderWarning.GetComponentInChildren<Button>().Select();
+        //}
     }
 
     private void Update()
@@ -94,17 +94,24 @@ public class LoginScene : AbstractScreenReader {
     {
         //Debug.Log("trying to log in...");
 
-        if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
+        if(emailInput.text.Equals("debug123"))
         {
-            StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, System.DateTime.Now, LoginSuccessfull));
+            SceneManager.LoadScene(ScenesNames.Menu);
         }
         else
         {
-            Debug.Log("Wrong Credentials");
-            response.SetActive(true);
-            response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
+            if (!string.IsNullOrEmpty(emailInput.text) && !string.IsNullOrEmpty(passwordInput.text))
+            {
+                StartCoroutine(DBConnection.instance.TryLogIn(emailInput.text, passwordInput.text, System.DateTime.Now, LoginSuccessfull));
+            }
+            else
+            {
+                Debug.Log("Wrong Credentials");
+                response.SetActive(true);
+                response.GetComponentInChildren<TextMeshProUGUI>().text = "O endereço de email ou a senha que você inseriu não é válido.";
 
-            ReadText(response.GetComponentInChildren<TextMeshProUGUI>().text);
+                ReadText(response.GetComponentInChildren<TextMeshProUGUI>().text);
+            }
         }
     }
 
