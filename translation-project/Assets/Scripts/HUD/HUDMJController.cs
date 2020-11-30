@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HUDMJController : AbstractScreenReader
 {
     public GameObject acessoTeclado;
+
     public TMPro.TextMeshProUGUI descricaoText;
 
     public TMPro.TextMeshProUGUI playerName;
@@ -25,6 +26,7 @@ public class HUDMJController : AbstractScreenReader
         if(Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
         {
             acessoTeclado.SetActive(true);
+            ReadText("Navegação via teclado: ");
             ReadText(descricaoText.text);
             acessoTeclado.GetComponentInChildren<Button>().Select();
         }

@@ -151,6 +151,7 @@ public class HUDController : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
         {
             acessoTeclado.SetActive(true);
+            ReadText("Navegação via teclado");
             ReadText(descricaoText.text);
             acessoTeclado.GetComponentInChildren<Button>().Select();
         }

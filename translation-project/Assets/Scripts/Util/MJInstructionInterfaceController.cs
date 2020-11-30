@@ -36,7 +36,7 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
 
         ReadInstructions();
 
-        iniciarButton.Select();
+        //iniciarButton.Select();
 	}
 	
 	// Update is called once per frame
