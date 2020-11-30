@@ -33,7 +33,6 @@ public class Card : AbstractScreenReader, ISelectHandler {
 
     private void Start()
     {
-        Parameters.HIGH_CONTRAST = true;
         state = VIRADA_BAIXO;
         initialized = false;
         memoryManager = GameObject.FindGameObjectWithTag("GameController");

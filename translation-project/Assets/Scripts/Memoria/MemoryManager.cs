@@ -57,14 +57,12 @@ public class MemoryManager : AbstractScreenReader {
     public TMPro.TextMeshProUGUI WinText;
     public GameObject LoseImage;
 
-    public GameObject BigImage1;
-    public GameObject BigImage2;
+    public GameObject acessoTeclado;
 
     // hint settings
     public MinijogosDicas dicas;
 
     public LifeExpController lifeExpController;
-
 
     public MJInstructionInterfaceController instructionInterface;
     public GameObject confirmQuit;
@@ -105,6 +103,10 @@ public class MemoryManager : AbstractScreenReader {
             {
                 instructionInterface.gameObject.SetActive(false);
                 audioSource.PlayOneShot(closeClip);
+            }
+            else if(acessoTeclado.gameObject.activeSelf)
+            {
+                SelectLastCard(); // select last selected card when close acessoteclado
             }
             else
             {
@@ -373,10 +375,7 @@ public class MemoryManager : AbstractScreenReader {
         cancelarButton.interactable = false;
         confirmarButton.interactable = false;
 
-        if (lastCardSelected != null)
-            lastCardSelected.GetComponent<Button>().Select();
-        else
-            cards[FindIndexNextCard()].GetComponent<Button>().Select();
+        SelectLastCard();
     }
 
     void cardComparison(List<int> c)
@@ -443,10 +442,7 @@ public class MemoryManager : AbstractScreenReader {
 
         if (matches != 0)
         {
-            if (lastCardSelected != null)
-                lastCardSelected.GetComponent<Button>().Select();
-            else
-                cards[FindIndexNextCard()].GetComponent<Button>().Select();
+            SelectLastCard();
         }
     }
 
@@ -678,6 +674,14 @@ public class MemoryManager : AbstractScreenReader {
         }
 
         return true;
+    }
+
+    public void SelectLastCard()
+    {
+        if (lastCardSelected != null) 
+            lastCardSelected.GetComponent<Button>().Select();
+        else
+            cards[FindIndexNextCard()].GetComponent<Button>().Select();
     }
 
     // find the index of next card that does not have a match

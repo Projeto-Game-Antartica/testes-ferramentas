@@ -216,34 +216,34 @@ public class Vegetacao : AbstractCardManager
         rand = new System.Random(); //Inits random number generator
 
         sprites = Shuffle<Sprite>(sprites);
-
-        //alimentosCestaList = new List<GameObject>();
-
-        cardIndex = 0;
+        
         //isDone = false;
-
-        screenDescription = ReadableTexts.instance.GetReadableText("m010_tipos_screen", LocalizationManager.instance.GetLozalization());
-        ReadText(screenDescription);
-
-        updateCurrentCard(cardIndex);
-        updateNextCard(cardIndex + 1);
 
         initialPosition = currentImage.transform.parent.position;
 
-        resetButton.interactable = true;
+        //resetButton.interactable = true;
         backButton.interactable = true;
 
-        
     }
 
     // initialize after button click on instruction
     public void Initialize() {
+        resetButton.interactable = true;
+        
         if(!initialized) {
+            initialized = true;
+
             algaImg.fillAmount = 1.0f;
             plantaImg.fillAmount = 1.0f;
             fungoImg.fillAmount = 1.0f;
 
-            initialized = true;
+            screenDescription = ReadableTexts.instance.GetReadableText("m010_tipos_screen", LocalizationManager.instance.GetLozalization());
+            ReadText(screenDescription);
+
+            cardIndex = 0;
+            updateCurrentCard(cardIndex);
+            updateNextCard(cardIndex + 1);
+            
         }
         LikeButton.Select();
     }

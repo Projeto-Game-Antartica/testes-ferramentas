@@ -25,7 +25,7 @@ public class ButtonTextColor : MonoBehaviour, ISelectHandler, IPointerEnterHandl
         color = new Color(0, 0.3607843f, 0.6235294f, 1);
 
         //Debug.Log(text.name);
-	}
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

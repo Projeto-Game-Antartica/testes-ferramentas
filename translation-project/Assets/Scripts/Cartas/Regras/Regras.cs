@@ -41,6 +41,7 @@ public class Regras : AbstractCardManager {
 
     public GameObject textPrefab;
     public GameObject confirmQuit;
+    public GameObject acessoTeclado;
 
     public LifeExpController lifeExpController;
 
@@ -53,23 +54,24 @@ public class Regras : AbstractCardManager {
     {
         if (Input.GetKeyDown(InputKeys.INSTRUCTIONS_KEY))
         {
+            ReadText("Painel de instruções aberto");
             instruction_interface.SetActive(true);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (instruction_interface.activeSelf)
             {
                 audioSource.PlayOneShot(closeClip);
                 instruction_interface.SetActive(false);
             }
-            else
-            {
-                TryReturnToUshuaia();
-            }
+            //else if (!acessoTeclado.activeSelf)
+            //{
+            //    TryReturnToUshuaia();
+            //}
         }
 
-        if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
+        if (Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
             ReadText("Você já escolheu " + likeCount + " regras e restam " + (cardsNumber - cardCount) + " regras para escolher");
@@ -412,10 +414,10 @@ public class Regras : AbstractCardManager {
         StartCoroutine(ReturnToUshuaiaCoroutine());
     }
 
-    public void ReturnToUshuaia()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
-    }
+    //public void ReturnToUshuaia()
+    //{
+    //    UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+    //}
 
     public void ResetScene()
     {
@@ -429,16 +431,16 @@ public class Regras : AbstractCardManager {
         UnityEngine.SceneManagement.SceneManager.LoadScene(ScenesNames.M002Ushuaia);
     }
 
-    public void TryReturnToUshuaia()
-    {
-        audioSource.PlayOneShot(avisoClip);
+    //public void TryReturnToUshuaia()
+    //{
+    //    audioSource.PlayOneShot(avisoClip);
 
-        confirmQuit.SetActive(true);
+    //    confirmQuit.SetActive(true);
 
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+    //    ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
 
-        ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+    //    ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
 
-        confirmQuit.GetComponentInChildren<Button>().Select();
-    }
+    //    confirmQuit.GetComponentInChildren<Button>().Select();
+    //}
 }

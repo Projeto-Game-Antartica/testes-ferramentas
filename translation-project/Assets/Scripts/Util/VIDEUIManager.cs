@@ -230,7 +230,7 @@ public class VIDEUIManager : AbstractScreenReader
                         //currentChoices[i].color = Color.yellow;
                         // habilita a imagem do fundo do texto que foi selecionado
                         currentChoices[i].gameObject.GetComponentInParent<Image>().enabled = true;
-                        Debug.Log(playerLabel.text + ": Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
+                        
                         ReadText(playerLabel.text + ": Opção " + (data.commentIndex+1) + " de " + (currentChoices.Count).ToString() + " " + data.comments[data.commentIndex]);
                     }
                 }
@@ -264,6 +264,7 @@ public class VIDEUIManager : AbstractScreenReader
             if(data.extraVars.ContainsKey("OpenURL"))
             {
                 AlertDialog.SetActive(true);
+                AlertDialog.GetComponentInChildren<Button>().Select();
                 url = (string)data.extraVars["OpenURL"];
                 //Debug.Log(url);
             }
@@ -432,6 +433,9 @@ public class VIDEUIManager : AbstractScreenReader
     public void OpenLista()
     {
         listaItem.SetActive(true);
+
+        ReadText("Lista de Itens aberta");
+
         listaItem.GetComponentInChildren<Selectable>().Select();
     }
 
@@ -628,7 +632,6 @@ public class VIDEUIManager : AbstractScreenReader
 
         // accessibility
         ReadText("Fim do diálogo");
-        Debug.Log("Fim do diálogo");
     }
 
     void OnDisable()
