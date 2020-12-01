@@ -100,8 +100,8 @@ public class AcampamentoCartas : AbstractCardManager
         //fills.fillAmount = variavel / MAX_EST;
         //fillm.fillAmount = variavel / MAX_MAP;
 
-        resetButton.interactable = false;
-        backButton.interactable = false;
+        resetButton.interactable = true;
+        backButton.interactable = true;
 
         if (instruction_interface.activeSelf)
             instruction_interface.GetComponentInChildren<Button>().Select();
