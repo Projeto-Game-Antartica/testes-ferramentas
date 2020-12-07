@@ -157,6 +157,8 @@ public class VIDEUIManager : AbstractScreenReader
         // accessibility
         ReadText("Início do diálogo.");
         Debug.Log("Início do diálogo.");
+
+        warningInterface.SetActive(false);
     }
 
     //Calls next node in the dialogue
