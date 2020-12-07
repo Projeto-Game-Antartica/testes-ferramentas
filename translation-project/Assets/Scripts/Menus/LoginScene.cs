@@ -40,16 +40,16 @@ public class LoginScene : AbstractScreenReader {
     {
         version.text = Parameters.VERSION;
 
-        //if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
-        //{
-        //    PlayerPrefs.SetInt("ScreenReaderWarning", 1);
+        if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
+        {
+            PlayerPrefs.SetInt("ScreenReaderWarning", 1);
 
-        screenReaderWarning.SetActive(true);
-        audioSource.PlayOneShot(avisoClip);
-        ReadText(warningText);
+            screenReaderWarning.SetActive(true);
+            audioSource.PlayOneShot(avisoClip);
+            ReadText(warningText);
 
-        screenReaderWarning.GetComponentInChildren<Button>().Select();
-        //}
+            screenReaderWarning.GetComponentInChildren<Button>().Select();
+        }
     }
 
     private void Update()
