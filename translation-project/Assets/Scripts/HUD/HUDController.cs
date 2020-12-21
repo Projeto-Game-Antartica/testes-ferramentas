@@ -196,8 +196,8 @@ public class HUDController : AbstractScreenReader {
         ReadText(missionTitle.text);
         ReadText(missionDescription.text);
 
-        Debug.Log(missionTitle.text);
-        Debug.Log(missionDescription.text);
+        //Debug.Log(missionTitle.text);
+        //Debug.Log(missionDescription.text);
 
         if (iniciarButton.isActiveAndEnabled)
             iniciarButton.Select();

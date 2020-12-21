@@ -17,6 +17,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Text.RegularExpressions;
 using System.Linq;
+using UnityEngine.Video;
 using System;
 
 public class VIDEUIManager : AbstractScreenReader
@@ -86,6 +87,8 @@ public class VIDEUIManager : AbstractScreenReader
     public Button close;
 
     public static Dictionary<int, string> dialogue_path;
+
+    public GameObject YTVideo;
 
     #endregion
 
@@ -166,6 +169,12 @@ public class VIDEUIManager : AbstractScreenReader
     {
         //Let's not go forward if text is currently being animated, but let's speed it up.
         if (animatingText) { CutTextAnim(); return; }
+
+        if (YTVideo.activeSelf)
+        {
+            YTVideo.GetComponentInChildren<VideoPlayer>().Stop();
+            YTVideo.SetActive(false);
+        }
 
         if (!dialoguePaused) //Only if
         {
@@ -453,6 +462,11 @@ public class VIDEUIManager : AbstractScreenReader
             Debug.Log("exp gained");
             flagEXP = false;
         }
+    }
+    
+    public void playYoutubevideo(string path)
+    {
+        StartCoroutine(StartVideo(path));
     }
 
     public void LoadSceneWithDelay(string sceneName, float delay) {
@@ -766,6 +780,39 @@ public class VIDEUIManager : AbstractScreenReader
 
         if (data.comments[data.commentIndex].Contains("[WEAPON]"))
             data.comments[data.commentIndex] = data.comments[data.commentIndex].Replace("[WEAPON]", player.demo_ItemInventory[0].ToLower());
+    }
+
+    IEnumerator StartVideo(string url)
+    {
+        YTVideo.SetActive(true);
+        Application.runInBackground = true;
+
+        VideoPlayer videoPlayer = YTVideo.GetComponentInChildren<VideoPlayer>();
+
+        videoPlayer.url = Parameters.DIALOGUE_PATH + url;
+
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+        {
+            Debug.Log("Preparing video: " + url);
+            yield return null;
+        }
+
+        Debug.Log("Prepared...");
+        videoPlayer.GetComponent<RawImage>().texture = videoPlayer.texture;
+        videoPlayer.Play();
+
+        
+        while (videoPlayer.isPlaying)
+        {
+            //Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+            yield return null;
+        }
+
+        Debug.Log("Done Playing Video");
+
+        YTVideo.SetActive(false);
     }
 
     #endregion
