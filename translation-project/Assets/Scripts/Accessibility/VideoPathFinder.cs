@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 using MathNet.Numerics.LinearAlgebra;
@@ -11,6 +14,13 @@ using UnityEngine.SceneManagement;
 
 public class VideoPathFinder : MonoBehaviour
 {
+    /*
+    * nome do arquivo JSON
+    */
+    private const string dataFilename = "videos_libras.json";
+    private static List<HashSet<string>> videosTextsTokens = new List<HashSet<string>>();
+    private static List<string> videosPaths = new List<string>();
+
     private static VideoPathFinder instance;
 
     //private Dictionary<string, string> cellTexts = new Dictionary<string, string>();
@@ -21,11 +31,47 @@ public class VideoPathFinder : MonoBehaviour
 
     private static Vocabulary vocabulary;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        instance = this;
+    private void loadJsonFile() {
+        //This method loads a json file with video texts and paths and 
+        //calculate text similarity using jaccard indexes over set of tokens
 
+        string filePath = Path.Combine(Application.streamingAssetsPath, dataFilename);
+        
+        if (File.Exists(filePath)) {
+            // leitura do JSON
+            string dataAsJson = File.ReadAllText(filePath);
+            LibrasVideoDataArray loadedData = JsonUtility.FromJson<LibrasVideoDataArray>(dataAsJson);
+
+            foreach(LibrasVideoData video in loadedData.videos) {
+                videosPaths.Add(loadedData.abs_path + video.rel_path);
+                HashSet<string> textTokens = new HashSet<string>(tokenize(video.text));
+                videosTextsTokens.Add(textTokens);
+            }
+
+            //Debug.Log(get_jaccard_index(videosTextsTokens[0], videosTextsTokens[0]));
+
+        } else {
+            Debug.LogError("ERROR: videos_libras.json NOT FOUND.");
+        }
+    }
+
+    private static float get_jaccard_index(IEnumerable<string> set1, IEnumerable<string> set2) {
+        int intersection_size = set1.Intersect(set2).Count();
+        int union_size = set1.Union(set2).Count();
+        return (float)intersection_size / (float)union_size;
+    }
+
+    private static string[] tokenize(string text) {
+        //Remove punctuation from the chracteres and them split
+        string textWoPunct = "";
+        foreach(char c in text)
+            if(!char.IsPunctuation(c))
+               textWoPunct += c; 
+        // = new string(text.ToCharArray().Where(c => !char.IsPunctuation(c)).ToArray());
+        return textWoPunct.ToLower().Split(new char [] {' '});
+    }
+
+    private void loadDotProductMethod() {
         //Populate spreadsheet texts into the dictionary if the resource exists
         TextAsset csvFile = Resources.Load<TextAsset>("VideoLibras/" + SceneManager.GetActiveScene().name);
         if(csvFile == null) {
@@ -46,7 +92,7 @@ public class VideoPathFinder : MonoBehaviour
                 }
             }
         }
-        
+
         //Get corpus, vocabulary and corpus matrix
         string corpus = string.Join(" ", cellTextList);
 
@@ -58,9 +104,26 @@ public class VideoPathFinder : MonoBehaviour
             textVectors.Add(vocabulary.Vectorize(text));
 
         corpusMatrix = DenseMatrix.OfRowVectors(textVectors);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        instance = this;
+
+        loadJsonFile();
+
+        //loadDotProductMethod() //Deprecated
 
         //Must create debug interface
     }
+
+    // Update is called once per frame
+    // void Update()
+    // {
+        
+    // }
+
 
     string getColumnLettersByIndex(int columnIndex) {
         //Absolute: 24 -> B  27 -> E  55 -> a  Relative to 65: 0->A e 25->Z
@@ -76,11 +139,6 @@ public class VideoPathFinder : MonoBehaviour
         return columnLetters;
     }
 
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 
     static string[,] getCSVGrid(string csvText) {
         //split the data on split line character
@@ -109,12 +167,45 @@ public class VideoPathFinder : MonoBehaviour
     }
 
     //Find the closest text by computing its dot product with a matrix of sentence vectors
+    //DEPRECTED: Although more efficient, this method is too complex for maintenance
+    // public static string FindPath(string text) {
+    //     Vector<double> textVector = vocabulary.Vectorize(text);
+    //     Vector<double> similarities = corpusMatrix.Multiply(textVector);
+    //     int argMax = similarities.MaximumIndex();
+    //     Debug.Log("CHOSEN TEXT: " + locationList[argMax] + " - " + cellTextList[argMax]);
+    //     return locationList[argMax];
+    // }
+
+    //This version uses a much more simple method just getting similarity score by set operations
     public static string FindPath(string text) {
-        Vector<double> textVector = vocabulary.Vectorize(text);
-        Vector<double> similarities = corpusMatrix.Multiply(textVector);
-        int argMax = similarities.MaximumIndex();
-        Debug.Log("CHOSEN TEXT: " + locationList[argMax] + " - " + cellTextList[argMax]);
-        return locationList[argMax];
+        HashSet<string> text_tokens_set = new HashSet<string>(tokenize(text));
+        float max_similarity = -1;
+        int max_similarity_index = -1;
+        for(int i = 0; i < videosTextsTokens.Count; i++) {
+            //Calculate similarity between the text and all the texts attached to some video
+            float sim = get_jaccard_index(videosTextsTokens[i], text_tokens_set);
+            if(sim > max_similarity) {
+                max_similarity = sim;
+                max_similarity_index = i;
+            }
+        }
+
+        //Print Debug
+        // string debugStr = "PATH: " + videosPaths[max_similarity_index] + 
+        //     "\nTOKENS_SIM: " + printSet(videosTextsTokens[max_similarity_index]) + 
+        //     "\nTEXT: " + text;
+        // Debug.Log(debugStr);
+        
+        return videosPaths[max_similarity_index];
+    }
+
+    private static string printSet(HashSet<string> ss) {
+        string printStr = "[";
+        foreach(string s in ss) {
+            printStr += s + ", ";
+        }
+        printStr += "]";
+        return printStr;
     }
 
     private static string vect2str(Vector<double> vect) {
