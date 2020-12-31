@@ -18,8 +18,11 @@ public class VideoPathFinder : MonoBehaviour
     * nome do arquivo JSON
     */
     private const string dataFilename = "videos_libras.json";
-    private static List<HashSet<string>> videosTextsTokens = new List<HashSet<string>>();
-    private static List<string> videosPaths = new List<string>();
+    private static Dictionary<string, List<HashSet<string>>> scenevideosTextsTokens = new Dictionary<string, List<HashSet<string>>>();
+    private static Dictionary<string, List<string>> scenevideosPaths = new Dictionary<string, List<string>>();
+
+    //private static List<HashSet<string>> videosTextsTokens = new List<HashSet<string>>();
+    //private static List<string> videosPaths = new List<string>();
 
     private static VideoPathFinder instance;
 
@@ -40,12 +43,19 @@ public class VideoPathFinder : MonoBehaviour
         if (File.Exists(filePath)) {
             // leitura do JSON
             string dataAsJson = File.ReadAllText(filePath);
-            LibrasVideoDataArray loadedData = JsonUtility.FromJson<LibrasVideoDataArray>(dataAsJson);
+            VideosLibras loadedData = JsonUtility.FromJson<VideosLibras>(dataAsJson);
 
-            foreach(LibrasVideoData video in loadedData.videos) {
-                videosPaths.Add(loadedData.abs_path + video.rel_path);
-                HashSet<string> textTokens = new HashSet<string>(tokenize(video.text));
-                videosTextsTokens.Add(textTokens);
+            foreach(SceneVideos scene in loadedData.scenes) {
+                string sceneName = scene.scene_name;
+                
+                scenevideosTextsTokens[sceneName] = new List<HashSet<string>>();
+                scenevideosPaths[sceneName] = new List<string>();
+
+                foreach(VideoData video in scene.videos) {
+                    scenevideosPaths[sceneName].Add(loadedData.abs_path + video.rel_path);
+                    HashSet<string> textTokens = new HashSet<string>(tokenize(video.text));
+                    scenevideosTextsTokens[sceneName].Add(textTokens);
+                }
             }
 
             //Debug.Log(get_jaccard_index(videosTextsTokens[0], videosTextsTokens[0]));
@@ -177,13 +187,13 @@ public class VideoPathFinder : MonoBehaviour
     // }
 
     //This version uses a much more simple method just getting similarity score by set operations
-    public static string FindPath(string text) {
+    public static string FindPath(string text, string sceneName) {
         HashSet<string> text_tokens_set = new HashSet<string>(tokenize(text));
         float max_similarity = -1;
         int max_similarity_index = -1;
-        for(int i = 0; i < videosTextsTokens.Count; i++) {
+        for(int i = 0; i < scenevideosTextsTokens[sceneName].Count; i++) {
             //Calculate similarity between the text and all the texts attached to some video
-            float sim = get_jaccard_index(videosTextsTokens[i], text_tokens_set);
+            float sim = get_jaccard_index(scenevideosTextsTokens[sceneName][i], text_tokens_set);
             if(sim > max_similarity) {
                 max_similarity = sim;
                 max_similarity_index = i;
@@ -196,7 +206,7 @@ public class VideoPathFinder : MonoBehaviour
         //     "\nTEXT: " + text;
         // Debug.Log(debugStr);
         
-        return videosPaths[max_similarity_index];
+        return scenevideosPaths[sceneName][max_similarity_index];
     }
 
     private static string printSet(HashSet<string> ss) {

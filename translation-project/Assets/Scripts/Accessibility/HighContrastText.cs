@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HighContrastText : AbstractScreenReader {
 
@@ -136,7 +137,7 @@ public class HighContrastText : AbstractScreenReader {
 
     private void setVideo() {
         //Debug.Log("Set Video!");
-        string videoPath = VideoPathFinder.FindPath(text.text);
+        string videoPath = VideoPathFinder.FindPath(text.text, SceneManager.GetActiveScene().name);
         LibraseContraste.SetLibrasVideoPath(videoPath);
         
     }
