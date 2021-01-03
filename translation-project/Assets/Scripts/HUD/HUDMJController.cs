@@ -35,18 +35,29 @@ public class HUDMJController : AbstractScreenReader
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if (acessoTeclado.activeSelf)
+            {
                 acessoTeclado.SetActive(false);
+                ReadText("Paniel de acesso via teclado fechado.");
+            } 
+            else
+            {
+                TryQuit();
+            }
         }
     }
 
     public void TryQuit()
     {
+        audioSource.PlayOneShot(avisoClip);
+
         confirmQuit.SetActive(true);
 
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_gameplay_aviso_botoes, LocalizationManager.instance.GetLozalization()));
+
         ReadText(confirmQuit.GetComponentInChildren<TMPro.TextMeshProUGUI>().text);
+
         confirmQuit.GetComponentInChildren<Button>().Select();
 
-        audioSource.PlayOneShot(avisoClip);
     }
 
     public void Quit()
@@ -57,5 +68,4 @@ public class HUDMJController : AbstractScreenReader
         else 
             Debug.Log("ScenesNames.GoBackTo not set.");
     }
-
 }

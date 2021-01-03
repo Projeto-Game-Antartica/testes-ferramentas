@@ -24,8 +24,6 @@ public class CofreAnimation : AbstractScreenReader
     public AudioClip avisoClip;
 
     private bool opened;
-
-    int i = 0;
     
     // Start is called before the first frame update
     void Start()

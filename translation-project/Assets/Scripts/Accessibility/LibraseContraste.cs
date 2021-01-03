@@ -38,9 +38,14 @@ public class LibraseContraste : AbstractScreenReader {
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if(moldura.activeSelf) moldura.SetActive(false);
+            if(moldura.activeSelf) StopVideo();
         }
 
+    }
+
+    private void OnEnable()
+    {
+        StopVideo();
     }
 
     public void StopVideo() {

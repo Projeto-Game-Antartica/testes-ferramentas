@@ -92,6 +92,5 @@ public class ButtonCatalogMissionController : AbstractScreenReader, ISelectHandl
         int id = int.Parse(result);
 
         ReadText(whaleController.getWhaleById(id).description);
-        Debug.Log(whaleController.getWhaleById(id).description);
     }
 }

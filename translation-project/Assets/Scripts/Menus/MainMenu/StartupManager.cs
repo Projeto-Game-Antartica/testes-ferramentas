@@ -7,8 +7,10 @@ public class StartupManager : AbstractScreenReader {
 
     // Use this for initialization
     private IEnumerator Start () {
-        
-        // accessibility parameters start disabled
+
+        // to always show the screen reader warning
+        PlayerPrefs.SetInt("ScreenReaderWarning", 0);
+
         Parameters.ACCESSIBILITY = true;
         Parameters.HIGH_CONTRAST = false;
         Parameters.BOLD = false;
@@ -19,12 +21,11 @@ public class StartupManager : AbstractScreenReader {
         TolkUtil.Load();
 
         ReadText("Jogo Expedição Antártica versão " + Parameters.VERSION + ". O jogo está carregando...");
-        Debug.Log("Jogo Expedição Antártica versão " + Parameters.VERSION + ". O jogo está carregando...");
 
         // set resolution to one of "accepted" by the game
         Screen.SetResolution(1024, 768, true);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         while (!LocalizationManager.instance.GetIsReady())
         {

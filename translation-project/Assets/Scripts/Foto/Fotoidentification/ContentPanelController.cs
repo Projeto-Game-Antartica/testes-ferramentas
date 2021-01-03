@@ -270,7 +270,7 @@ public class ContentPanelController : AbstractScreenReader {
         PlayerPreferences.M004_FotoIdentificacao = true;
         WinImage.SetActive(true);
 
-        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_vitoria, LocalizationManager.instance.GetLozalization()));
+        ReadText(winText);
 
         lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle);
 
@@ -278,7 +278,7 @@ public class ContentPanelController : AbstractScreenReader {
         
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        ReadText(winText);
+        ReadText(ReadableTexts.instance.GetReadableText(ReadableTexts.key_m004_fotoidentificacao_vitoria, LocalizationManager.instance.GetLozalization()));
 
         // return to ship after 3 seconds
         StartCoroutine(sceneManager.ReturnToShipCoroutine());

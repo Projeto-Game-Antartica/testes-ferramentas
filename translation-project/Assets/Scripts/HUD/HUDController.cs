@@ -106,6 +106,7 @@ public class HUDController : AbstractScreenReader {
                 else if (placaHUD.activeSelf)
                 {
                     placaHUD.SetActive(false);
+                    ReadText("Placa fechada");
                 }
                 else if (!inGameOption.activeSelf && !instructionInterface.activeSelf)
                 {
@@ -179,7 +180,6 @@ public class HUDController : AbstractScreenReader {
 
         ShowMap(true);
 
-        Debug.Log(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
         ReadText(ReadableTexts.instance.GetReadableText(missionAudiodescriptionKey, LocalizationManager.instance.GetLozalization()));
 
         iniciarButton.gameObject.SetActive(false);

@@ -17,18 +17,38 @@ public class TailMissionSceneManager : AbstractScreenReader
     public AudioClip avisoClip;
     public AudioClip closeClip;
 
+    public GameObject panelContent;
     public GameObject confirmQuit;
+    public GameObject panelBorderAumentado;
+    public ButtonSelectionHorizontalController buttonSelectionHorizontalController;
 
     private bool isOnMenu = false;
 
     // Update is called once per frame
     void Update()
     {
+        if (panelContent.activeSelf && !confirmQuit.gameObject.activeSelf)
+        {
+            // allow catalog navigation
+            buttonSelectionHorizontalController.enabled = true;
+            ReadText("Catálogo de fotos");
+        }
+        else
+        {
+            // menu's navigation
+            buttonSelectionHorizontalController.enabled = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (instructionInterface.gameObject.activeSelf)
             {
                 instructionInterface.gameObject.SetActive(false);
+                audioSource.PlayOneShot(closeClip);
+            }
+            else if (panelBorderAumentado.activeSelf)
+            {
+                panelBorderAumentado.SetActive(false);
                 audioSource.PlayOneShot(closeClip);
             }
             else
