@@ -50,7 +50,8 @@ public class LibraseContraste : AbstractScreenReader {
 
     public void PlayVideo()
     {
-        StartCoroutine(StartVideo(false, ""));
+        //StartCoroutine(StartVideo(false, ""));
+        StartCoroutine(StartVideo(true, librasVideoPath));
     }
 
     IEnumerator StartVideo(bool isUrl, string url)
@@ -89,6 +90,10 @@ public class LibraseContraste : AbstractScreenReader {
         Debug.Log("Done Playing Video");
 
         moldura.SetActive(false);
+    }
+
+    public void ToggleLibrasParameter(Toggle t) {
+        Parameters.LIBRAS_ENABLED = t.isOn;
     }
 
     public void SetHighContrastParameter(bool isOn)

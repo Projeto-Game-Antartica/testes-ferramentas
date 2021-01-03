@@ -137,13 +137,15 @@ public class HighContrastText : AbstractScreenReader {
 
     private void setVideo() {
         //Debug.Log("Set Video!");
-        string videoPath = VideoPathFinder.FindPath(text.text, SceneManager.GetActiveScene().name);
-        LibraseContraste.SetLibrasVideoPath(videoPath);
-        
+        if(Parameters.LIBRAS_ENABLED && text.text != "") {
+            string videoPath = VideoPathFinder.FindPath(text.text, SceneManager.GetActiveScene().name);
+            LibraseContraste.SetLibrasVideoPath(videoPath);
+        }
     }
 
     private void clearVideo() {
         //Debug.Log("Clear Video!");
-        LibraseContraste.SetLibrasVideoPath("");
+        if(Parameters.LIBRAS_ENABLED)   
+            LibraseContraste.SetLibrasVideoPath("");
     }
 }

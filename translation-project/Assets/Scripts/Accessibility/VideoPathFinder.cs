@@ -201,10 +201,14 @@ public class VideoPathFinder : MonoBehaviour
         }
 
         //Print Debug
-        // string debugStr = "PATH: " + videosPaths[max_similarity_index] + 
-        //     "\nTOKENS_SIM: " + printSet(videosTextsTokens[max_similarity_index]) + 
-        //     "\nTEXT: " + text;
-        // Debug.Log(debugStr);
+        if(Parameters.LIBRAS_VIDEO_DEBUG_MODE) {
+            string debugStr = "PATH: " + scenevideosPaths[sceneName][max_similarity_index] + 
+                "\nTOKENS_SIM: " + printSet(scenevideosTextsTokens[sceneName][max_similarity_index]) + 
+                "\nSIMILARITY: " + max_similarity +
+                "\nTEXT: " + text;
+            Debug.Log(debugStr);
+        }
+
         
         return scenevideosPaths[sceneName][max_similarity_index];
     }
