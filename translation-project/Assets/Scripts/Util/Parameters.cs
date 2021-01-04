@@ -5,13 +5,15 @@ using UnityEngine;
 public class Parameters {
 
     public const bool READ_TEXT_DEBUG_MODE = true;
+    public const bool LIBRAS_VIDEO_DEBUG_MODE = true;
 
     // GAME VERSION
     public static string VERSION = "1.0";
     
     // bool for enabling/disabling accessibility functions
+    public static bool LIBRAS_ENABLED = false;
     public static bool ACCESSIBILITY;
-    public static bool HIGH_CONTRAST;
+    public static bool HIGH_CONTRAST = false;
     public static bool BOLD;
     public static bool BUTTONCONTRAST;
 

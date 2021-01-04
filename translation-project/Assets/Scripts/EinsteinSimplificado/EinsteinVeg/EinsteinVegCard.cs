@@ -62,6 +62,7 @@ public class EinsteinVegCard : AbstractScreenReader, ISelectHandler
         GameObject text = Instantiate(proccessTextPrefab);
         text.transform.SetParent(transform, false);
         text.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cardText;
+        text.GetComponent<HighContrastText>().HasVideo = true;
 
 
         GetComponent<Image>().color = new Color(1, 1, 1, 0);
