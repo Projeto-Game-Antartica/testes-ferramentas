@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HighContrastText : AbstractScreenReader {
 
@@ -135,14 +136,16 @@ public class HighContrastText : AbstractScreenReader {
     }
 
     private void setVideo() {
-        Debug.Log("Set Video!");
-        string videoPath = VideoPathFinder.FindPath(text.text);
-        LibraseContraste.SetLibrasVideoPath(videoPath);
-        
+        //Debug.Log("Set Video!");
+        if(Parameters.LIBRAS_ENABLED && text.text != "") {
+            string videoPath = VideoPathFinder.FindPath(text.text, SceneManager.GetActiveScene().name);
+            LibraseContraste.SetLibrasVideoPath(videoPath);
+        }
     }
 
     private void clearVideo() {
-        Debug.Log("Clear Video!");
-        LibraseContraste.SetLibrasVideoPath("");
+        //Debug.Log("Clear Video!");
+        if(Parameters.LIBRAS_ENABLED)   
+            LibraseContraste.SetLibrasVideoPath("");
     }
 }
