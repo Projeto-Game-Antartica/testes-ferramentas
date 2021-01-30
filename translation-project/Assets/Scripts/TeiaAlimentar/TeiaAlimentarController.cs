@@ -290,6 +290,8 @@ public class TeiaAlimentarController : DragAndDropController
     {
         if (WIN)
         {
+            dicas.SupressDicas();
+
             lifeExpController.AddEXP(PlayerPreferences.XPwinPuzzle); // concluiu o minijogo
             lifeExpController.AddEXP(PlayerPreferences.XPwinItem); // ganhou um item
             Debug.Log("Wrong answers count: " + wrongAnswer);

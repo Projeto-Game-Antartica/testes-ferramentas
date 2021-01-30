@@ -16,9 +16,12 @@ public class HUDMJController : AbstractScreenReader
     public GameObject confirmQuit;
     public AudioClip avisoClip;
 
+    public Toggle LibrasButton;
+
     private void Start()
     {
         playerName.text = PlayerPreferences.PlayerName.ToUpper();
+        LibrasButton.isOn = Parameters.LIBRAS_ENABLED;
     }
 
     private void Update()

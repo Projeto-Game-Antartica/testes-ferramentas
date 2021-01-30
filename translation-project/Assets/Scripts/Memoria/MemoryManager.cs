@@ -38,8 +38,7 @@ public class MemoryManager : AbstractScreenReader {
     public static int CARDFACE = 1;
     public static int CARDTEXT = 2;
 
-    public TMPro.TextMeshProUGUI missText;
-    public TMPro.TextMeshProUGUI matchesText;
+    public TMPro.TextMeshProUGUI attempts;
 
     private AudioSource audioSource;
 
@@ -131,8 +130,8 @@ public class MemoryManager : AbstractScreenReader {
         if(Input.GetKeyDown(InputKeys.PARAMETERS_KEY))
         {
             lifeExpController.ReadHPandEXP();
-            ReadText("Faltam " + matches + " pares. E você tem mais " + (tries - miss) + " tentativas restantes");
-            Debug.Log("Faltam " + matches + " pares. E você tem mais " + (tries - miss) + " tentativas restantes");
+            //ReadText("Faltam " + matches + " pares. E você tem mais " + (tries - miss) + " tentativas restantes");
+            ReadText("Tentativas " + attempts + " de 3");
         }
 
         if(Input.GetKeyDown(KeyCode.F6))
@@ -393,7 +392,7 @@ public class MemoryManager : AbstractScreenReader {
 
             x = 2;
             matches--;
-            matchesText.text = "Pares restantes: " + matches;
+            //matchesText.text = "Pares restantes: " + matches;
             if (matches == 0)
             {
                 switch (missionName)
@@ -418,8 +417,9 @@ public class MemoryManager : AbstractScreenReader {
             StartCoroutine(ChangeBGColor(cards[c[1]].GetComponent<Card>().BGImage, (int)Operation.wrong));
 
             miss++;
-            missText.text = "Tentativas incorretas: " + miss;
-            ReadText(missText.text);
+            //missText.text = "Tentativas incorretas: " + miss;
+            attempts.text = "Tentativas " + miss + "/3";
+            ReadText(attempts.text);
 
             if(miss >= tries)
             {
@@ -451,6 +451,7 @@ public class MemoryManager : AbstractScreenReader {
         switch (missionName)
         {
             case "baleias":
+                dicas.SupressDicas();
                 if (win)
                 {
                     WinImage.SetActive(true);

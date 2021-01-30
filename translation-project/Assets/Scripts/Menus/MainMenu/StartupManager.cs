@@ -8,13 +8,10 @@ public class StartupManager : AbstractScreenReader {
     // Use this for initialization
     private IEnumerator Start () {
 
-        // First time opeing the game
-        //if (PlayerPrefs.GetInt("ScreenReaderWarning", 0) <= 0)
-        //{
-            // accessibility parameter start enabled
-        Parameters.ACCESSIBILITY = true;
-        //}
+        // to always show the screen reader warning
+        PlayerPrefs.SetInt("ScreenReaderWarning", 0);
 
+        Parameters.ACCESSIBILITY = true;
         Parameters.HIGH_CONTRAST = false;
         Parameters.BOLD = false;
 

@@ -197,8 +197,8 @@ public class HUDController : AbstractScreenReader {
         ReadText(missionTitle.text);
         ReadText(missionDescription.text);
 
-        Debug.Log(missionTitle.text);
-        Debug.Log(missionDescription.text);
+        //Debug.Log(missionTitle.text);
+        //Debug.Log(missionDescription.text);
 
         if (iniciarButton.isActiveAndEnabled)
             iniciarButton.Select();
@@ -395,15 +395,20 @@ public class HUDController : AbstractScreenReader {
         {
             case "baleias":
                 SceneManager.LoadScene(ScenesNames.M004Ship);
+                // set last loaded scene
+                PlayerPrefs.SetString("LastScene", ScenesNames.M004Ship);
                 break;
             case "itens":
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M002Ushuaia);
                 break;
             case "paleontologia":
                 SceneManager.LoadScene(ScenesNames.M009Camp);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M009Camp);
                 break;
             case "vegetação":
                 SceneManager.LoadScene(ScenesNames.M010Camp);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M010Camp);
                 break;
 
         }
