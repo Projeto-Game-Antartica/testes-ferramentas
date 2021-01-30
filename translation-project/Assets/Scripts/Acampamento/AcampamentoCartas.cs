@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
+using System.Linq;
 
 public class AcampamentoCartas : AbstractCardManager
 {
@@ -51,6 +53,8 @@ public class AcampamentoCartas : AbstractCardManager
 
     private bool isOnMJMenu = false;
 
+    public List<int> itens_sorteio = new List<int> ();
+
     private Dictionary<string, string> cardsDescription = new Dictionary<string, string>
     {
         {"abridor de latas", "Imagem de abridor de latas de alumínio." },
@@ -80,7 +84,7 @@ public class AcampamentoCartas : AbstractCardManager
         {"papel alumínio", "Imagem de um rolo de papel alumínio." },
         {"papel higiênico", "Imagem com três rolos de papel higiênico." },
         {"pincel", "Imagem de um pincel chato com cabo preto." },
-        {"polar Harven", "Imagem de barraca de acampamento azul, uso de área comum, como cozinha, sala, entre outros." },
+        {"polar harven", "Imagem de barraca de acampamento azul, uso de área comum, como cozinha, sala, entre outros." },
         {"pratos", "Imagem de três pratos fundos de alumínio." },
         {"protetor solar", "Imagem de protetor solar em embalagem laranja e roxa, com foto de um sol e rótulo vermelho." },
         {"quadriciclo", "Imagem de um quadriciclo preto com detalhes laterais em laranja." },
@@ -98,7 +102,10 @@ public class AcampamentoCartas : AbstractCardManager
     {
         //fill.fillAmount =  variavel / MAX_COR;
         //fills.fillAmount = variavel / MAX_EST;
-        //fillm.fillAmount = variavel / MAX_MAP;
+        //fillm.fillAmount = variavel / MAX_MAP;        
+        //Debug.Log("O numero sorteado foi:" + sorteio);
+
+        Sorte();
 
         resetButton.interactable = true;
         backButton.interactable = true;
@@ -189,14 +196,14 @@ public class AcampamentoCartas : AbstractCardManager
         fills.fillAmount = 0.5f;
         fillm.fillAmount = 0.5f;
 
-        currentImage.sprite = sprites[cardIndex];
-        currentImage.name = sprites[cardIndex].name;
+        currentImage.sprite = sprites[itens_sorteio[0]];
+        currentImage.name = sprites[itens_sorteio[0]].name;
         cardName.text = currentImage.name;
 
         Debug.Log(cardName.text);
 
-        nextImage.GetComponentInChildren<Image>().sprite = sprites[cardIndex + 1];
-        nextImage.name = sprites[cardIndex + 1].name;
+        nextImage.GetComponentInChildren<Image>().sprite = sprites[itens_sorteio[0 + 1]];
+        nextImage.name = sprites[itens_sorteio[0 + 1]].name;
 
         initialPosition = currentImage.transform.parent.position;
 
@@ -822,14 +829,41 @@ public class AcampamentoCartas : AbstractCardManager
         likeButton.Select();
     }
 
+    public void Sorte()
+    {
+         //new int[39]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38};
+        List<int> todos_numeros = new List<int> ();
+        int sorte; 
+
+        for(int i = 0; i<=38; i++)
+        {
+            todos_numeros.Add(i);
+            Debug.Log(todos_numeros[i]);
+
+        }
+
+        for(int i = 0; i<=38; i++)
+        {
+            int indice = Random.Range(0,todos_numeros.Count);
+            sorte = todos_numeros[indice];
+            itens_sorteio.Add(sorte);
+            todos_numeros.Remove(todos_numeros[indice]);
+            
+        }
+
+        Debug.Log("NUUUMM: " + itens_sorteio[0]);
+
+	}
+
     public void NextCard()
     {
         cardIndex++;
+
         
         if (cardIndex < sprites.Length)
         {
             currentImage.sprite = nextImage.sprite;
-            currentImage.name = sprites[cardIndex].name;
+            currentImage.name = sprites[itens_sorteio [cardIndex]].name;
             cardName.text = currentImage.name;
 
             Debug.Log("Novo item: " + cardName.text);
@@ -839,10 +873,10 @@ public class AcampamentoCartas : AbstractCardManager
 
             if (cardIndex < sprites.Length - 1)
             {
-                nextImage.sprite = sprites[cardIndex + 1];
-                nextImage.name = sprites[cardIndex + 1].name;
+                nextImage.sprite = sprites[itens_sorteio [cardIndex + 1]];
+                nextImage.name = sprites[itens_sorteio [cardIndex + 1]].name;
 
-                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame && cardIndex == 38)
                 {
                     StartCoroutine(EndGame(true));                              
 	            }
@@ -854,7 +888,7 @@ public class AcampamentoCartas : AbstractCardManager
             }
             else
             {
-                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame)
+                if(fill.fillAmount != 0 && fills.fillAmount != 0 && fillm.fillAmount != 0 && WinGame && cardIndex == 38)
                 {
                     StartCoroutine(EndGame(true));                              
 	            }
@@ -866,8 +900,8 @@ public class AcampamentoCartas : AbstractCardManager
 
                 Debug.Log("fim das cartas... Começando de novo");
                 cardIndex = -1;
-                nextImage.sprite = sprites[cardIndex+1];
-                nextImage.name = sprites[cardIndex+1].name;
+                nextImage.sprite = sprites[itens_sorteio [cardIndex+1]];
+                nextImage.name = sprites[itens_sorteio [cardIndex+1]].name;
             }
         }
         ResetPosition();

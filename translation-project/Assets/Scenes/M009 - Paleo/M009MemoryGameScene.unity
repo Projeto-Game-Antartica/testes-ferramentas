@@ -413,12 +413,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114882035423374774, guid: d3b8673fc4c77c347800008d4b9e54fc,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: f907eff15e97f7947bd7675b479d0bd0,
-        type: 3}
     - target: {fileID: 1323487328530182195, guid: d3b8673fc4c77c347800008d4b9e54fc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -474,6 +468,12 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.1492524
       objectReference: {fileID: 0}
+    - target: {fileID: 114882035423374774, guid: d3b8673fc4c77c347800008d4b9e54fc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f907eff15e97f7947bd7675b479d0bd0,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 114903370637569962, guid: d3b8673fc4c77c347800008d4b9e54fc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d3b8673fc4c77c347800008d4b9e54fc, type: 3}
@@ -482,12 +482,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224117820506368316, guid: d3b8673fc4c77c347800008d4b9e54fc,
     type: 3}
   m_PrefabInstance: {fileID: 70350502}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &96278892 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1473931804187390, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
-    type: 3}
-  m_PrefabInstance: {fileID: 129507057}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &96789704 stripped
 GameObject:
@@ -880,6 +874,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 129507057}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &129507059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114446926877446320, guid: c1541f1f7ff7e0e4a9dba4d198db7620,
+    type: 3}
+  m_PrefabInstance: {fileID: 129507057}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16945d40577f4f4487da2d1cb8f2d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &150783534 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114868318713983886, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
@@ -1277,31 +1283,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta2
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 320467569}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1886129333}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 2114860393}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1643935679}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1407,11 +1393,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 320467569}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1886129333}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 2114860393}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1643935679}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &320467567 stripped
@@ -1507,36 +1513,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta15
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1294671196}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 803189374}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 2047073934}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1619511539}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1642,11 +1623,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1294671196}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 803189374}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 2047073934}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1619511539}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &358189629 stripped
@@ -1682,36 +1688,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2094372974}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 214003677}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 767182026}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 352782581}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1817,11 +1798,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2094372974}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 214003677}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 767182026}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 352782581}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!224 &419926578 stripped
@@ -2055,31 +2061,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta4
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 214003676}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 2114860393}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 2094372975}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 765418381}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2185,11 +2171,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 214003676}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 2114860393}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 2094372975}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 765418381}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &552777957
@@ -2566,36 +2572,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta16
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 96789709}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1609128886}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 358189629}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 765418381}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2701,11 +2682,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 96789709}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1609128886}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 358189629}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 765418381}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &803189374 stripped
@@ -2769,6 +2775,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1402584794}
     m_Modifications:
+    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1982138195}
+    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableSlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Slider, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 114868318713983886, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2909,6 +2940,130 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[17]
+      value: "Este pequeno animal similar ao camar\xE3o."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[18]
+      value: "A baleia fin possui peso m\xE9dio de 45 toneladas e pode de viver mais
+        de 100 anos. "
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[19]
+      value: "A baleia jubarte \xE9 encontrada em  praticamente todo o Hemisf\xE9rio
+        Sul."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[20]
+      value: "A popula\xE7\xE3o do pinguim ad\xE9lia tem diminu\xEDdo muito nos \xFAltimos
+        30 anos devido ao aquecimento global."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[0]
+      value: "Cer\xE2mica e artefatos s\xE3o da hist\xF3ria humana."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[1]
+      value: "Um f\xF3ssil precisa ser uma marca de ser vivo de milhares de anos."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[2]
+      value: "O Pterossauro n\xE3o \xE9 um dinossauro."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[3]
+      value: "Os Amon\xF3ides s\xE3o moluscos marinhos bem conhecidos na Ant\xE1rtica."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[4]
+      value: "A baleia azul ant\xE1rtica \xE9 o maior animal existente no planeta."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[5]
+      value: A baleia fin possui dorso negro ou cinza escuro e o ventre mais claro.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[6]
+      value: A baleia jubarte costuma ser vista no litoral baiano.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[7]
+      value: "Em \xE9pocas de acasalamento a baleia jubarte costuma emitir uma variedade
+        de sons."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[8]
+      value: O dorso de uma baleia-jubarte costuma ser escuro e o seu ventre branco.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[9]
+      value: "O krill possui um exosqueleto de quitina, dividido em cabe\xE7a, t\xF3rax
+        e abd\xF3men."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[10]
+      value: "A Jubarte tamb\xE9m \xE9 conhecida como baleia cantora, devido a uma
+        grande variedade de sons que produze."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[11]
+      value: "Misticetos possuem cerdas em vez de dentes as cerdas s\xE3o utilizadas
+        para filtrar a \xE1gua do alimento."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[12]
+      value: "As algas s\xE3o praticamente os \xFAnicos seres autotr\xF3ficos na Ant\xE1rtida."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[13]
+      value: "Os misticetos ficam na Ant\xE1rtica durante o ver\xE3o para alimentar-se
+        do krill, e migram durante o inverno para as \xE1reas de acasalamento nas
+        regi\xF5es tropicais."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[14]
+      value: "Misticetos s\xE3o animais que em vez de dentes, possuem cerdas bucais. "
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[15]
+      value: "H\xE1 seis esp\xE9cies de pinguim na Ant\xE1rtica."
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: hints.Array.data[16]
+      value: "Algumas estimativas indicam haver 75 milh\xF5es dessas focas."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413962696999242991, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2927,7 +3082,7 @@ PrefabInstance:
     - target: {fileID: 114322925163342484, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114478789991196272, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
@@ -2968,7 +3123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1412044903}
     - target: {fileID: 114523973858571306, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -3198,6 +3353,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 978504875, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -43.199997
+      objectReference: {fileID: 0}
+    - target: {fileID: 978504875, guid: 89c1fcf78316ccb448a9ea0c25f9ea18, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 17.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 5978462478565732696, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
       propertyPath: m_text
@@ -3222,155 +3385,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.spaceCount
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[17]
-      value: "Este pequeno animal similar ao camar\xE3o."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[18]
-      value: "A baleia fin possui peso m\xE9dio de 45 toneladas e pode de viver mais
-        de 100 anos. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[19]
-      value: "A baleia jubarte \xE9 encontrada em  praticamente todo o Hemisf\xE9rio
-        Sul."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[20]
-      value: "A popula\xE7\xE3o do pinguim ad\xE9lia tem diminu\xEDdo muito nos \xFAltimos
-        30 anos devido ao aquecimento global."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[0]
-      value: "Cer\xE2mica e artefatos s\xE3o da hist\xF3ria humana."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[1]
-      value: "Um f\xF3ssil precisa ser uma marca de ser vivo de milhares de anos."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[2]
-      value: "O Pterossauro n\xE3o \xE9 um dinossauro."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[3]
-      value: "Os Amon\xF3ides s\xE3o moluscos marinhos bem conhecidos na Ant\xE1rtica."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[4]
-      value: "A baleia azul ant\xE1rtica \xE9 o maior animal existente no planeta."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[5]
-      value: A baleia fin possui dorso negro ou cinza escuro e o ventre mais claro.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[6]
-      value: A baleia jubarte costuma ser vista no litoral baiano.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[7]
-      value: "Em \xE9pocas de acasalamento a baleia jubarte costuma emitir uma variedade
-        de sons."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[8]
-      value: O dorso de uma baleia-jubarte costuma ser escuro e o seu ventre branco.
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[9]
-      value: "O krill possui um exosqueleto de quitina, dividido em cabe\xE7a, t\xF3rax
-        e abd\xF3men."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[10]
-      value: "A Jubarte tamb\xE9m \xE9 conhecida como baleia cantora, devido a uma
-        grande variedade de sons que produze."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[11]
-      value: "Misticetos possuem cerdas em vez de dentes as cerdas s\xE3o utilizadas
-        para filtrar a \xE1gua do alimento."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[12]
-      value: "As algas s\xE3o praticamente os \xFAnicos seres autotr\xF3ficos na Ant\xE1rtida."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[13]
-      value: "Os misticetos ficam na Ant\xE1rtica durante o ver\xE3o para alimentar-se
-        do krill, e migram durante o inverno para as \xE1reas de acasalamento nas
-        regi\xF5es tropicais."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[14]
-      value: "Misticetos s\xE3o animais que em vez de dentes, possuem cerdas bucais. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[15]
-      value: "H\xE1 seis esp\xE9cies de pinguim na Ant\xE1rtica."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: hints.Array.data[16]
-      value: "Algumas estimativas indicam haver 75 milh\xF5es dessas focas."
-      objectReference: {fileID: 0}
-    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1982138195}
-    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EnableSlider
-      objectReference: {fileID: 0}
-    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Slider, UnityEngine.UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 114456532450050986, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2413962696999242991, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224232459965145198, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
         type: 3}
@@ -3663,6 +3677,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &900311676 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8682590078505743472, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    type: 3}
+  m_PrefabInstance: {fileID: 900311670}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &900311677 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114398278011278342, guid: 89c1fcf78316ccb448a9ea0c25f9ea18,
+    type: 3}
+  m_PrefabInstance: {fileID: 900311670}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69244332604eef844855bad5da3a77b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &934029341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3684,41 +3716,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta8
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1643935678}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1825033941}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1619511539}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 320467570}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 2047073934}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3824,11 +3826,41 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1643935678}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1825033941}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1619511539}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 320467570}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 2047073934}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &977949288 stripped
@@ -4307,31 +4339,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta3
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2114860392}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 320467570}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 214003677}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1619511539}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4437,11 +4449,31 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2114860392}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 320467570}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 214003677}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1619511539}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!224 &1183383737 stripped
@@ -4471,36 +4503,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta6
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 767182025}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 2094372975}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1825033941}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 701360363}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4606,11 +4613,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 767182025}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 2094372975}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1825033941}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 701360363}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &1294671191 stripped
@@ -4795,36 +4827,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta9
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1619511538}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1643935679}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 2114860393}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 765418381}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 358189629}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4930,11 +4937,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1619511538}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1643935679}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 2114860393}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 765418381}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 358189629}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!224 &1411169855 stripped
@@ -5162,11 +5194,10 @@ MonoBehaviour:
   WinImage: {fileID: 977949288}
   WinText: {fileID: 500950901}
   LoseImage: {fileID: 1596455380}
-  BigImage1: {fileID: 982297315}
-  BigImage2: {fileID: 552777957}
-  dicas: {fileID: 0}
+  acessoTeclado: {fileID: 900311676}
+  dicas: {fileID: 900311677}
   lifeExpController: {fileID: 900311671}
-  instructionInterface: {fileID: 96278892}
+  instructionInterface: {fileID: 129507059}
   confirmQuit: {fileID: 2035035532}
   missionName: paleo
 --- !u!224 &1464114750 stripped
@@ -5297,36 +5328,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta12
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 701360362}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 352782581}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 767182026}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1645425986}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1627607570}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5432,11 +5438,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 701360362}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 352782581}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 767182026}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1645425986}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1627607570}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1001 &1557707554
@@ -5460,36 +5491,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta7
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1825033940}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 767182026}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1643935679}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1886129333}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1627607570}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5595,11 +5601,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1825033940}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 767182026}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1643935679}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1886129333}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1627607570}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &1596455380 stripped
@@ -5629,36 +5660,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta17
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1726526687}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 1645425986}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 803189374}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 352782581}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5764,11 +5770,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1726526687}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1645425986}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 803189374}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 352782581}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &1609128886 stripped
@@ -5834,36 +5865,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta13
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 813882342}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 2047073934}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1825033941}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 701360363}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5969,11 +5975,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 813882342}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 2047073934}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1825033941}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 701360363}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &1627607570 stripped
@@ -6039,36 +6070,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta18
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1006673383}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 701360363}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1609128886}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6174,11 +6180,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1006673383}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 701360363}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1609128886}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &1645425986 stripped
@@ -6456,26 +6487,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta1
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1886129332}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 320467570}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1825033941}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6581,11 +6597,26 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1886129332}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 320467570}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1825033941}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &1852190823
@@ -6741,36 +6772,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta11
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 352782580}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 765418381}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 701360363}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 2094372975}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1609128886}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6876,11 +6882,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 352782580}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 765418381}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 701360363}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 2094372975}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 1609128886}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &2035035532 stripped
@@ -6910,36 +6941,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta14
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1387584267}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 358189629}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1627607570}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1643935679}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7045,11 +7051,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1387584267}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 358189629}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1627607570}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1643935679}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!114 &2047073934 stripped
@@ -7248,36 +7279,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carta10
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 765418380}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: flipCard
+      propertyPath: missionName
+      value: paleo
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 1619511539}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 352782581}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 214003677}
-    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 803189374}
     - target: {fileID: 7871924360769356720, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7383,11 +7389,36 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7871924360912552266, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
         type: 3}
-      propertyPath: missionName
-      value: paleo
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 765418380}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: flipCard
       objectReference: {fileID: 0}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1619511539}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 352782581}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 214003677}
+    - target: {fileID: 7871924360912552261, guid: a6d0dee4db0ebc94ab294bb3e2e93a24,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 803189374}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6d0dee4db0ebc94ab294bb3e2e93a24, type: 3}
 --- !u!1 &2094372972 stripped
