@@ -39,6 +39,7 @@ public class CofreAnimation : AbstractScreenReader
         // condition to open the locker
         if (PlayerPreferences.M002_Homeostase && !opened)
         {
+            ReadText("Cofre aberto");
             audioSource.PlayOneShot(avisoClip);
             warningInterface.SetActive(true);
             warningText.text = "Você ganhou parte do ticket para sua viagem. Ele se encontra no cofre.";

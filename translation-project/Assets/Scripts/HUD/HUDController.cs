@@ -152,6 +152,7 @@ public class HUDController : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
         {
             acessoTeclado.SetActive(true);
+            ReadText("Navegação via teclado");
             ReadText(descricaoText.text);
             acessoTeclado.GetComponentInChildren<Button>().Select();
         }
@@ -262,6 +263,14 @@ public class HUDController : AbstractScreenReader {
                     }
                     break;
 
+                case "M009":
+                    if (PlayerPrefs.GetInt("CampMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText(ReadableTexts.instance.GetReadableText("m009_missao", LocalizationManager.instance.GetLozalization()));
+                    }
+                    break;
+
                 case "M010":
                     if (PlayerPrefs.GetInt("VegMap", 0) <= 0)
                     {
@@ -288,6 +297,9 @@ public class HUDController : AbstractScreenReader {
                     break;
                 case "M004":
                     PlayerPrefs.SetInt("NavioMap", 1);
+                    break;
+                case "M009":
+                    PlayerPrefs.SetInt("CampMap", 1);
                     break;
                 case "M010":
                     PlayerPrefs.SetInt("VegMap", 1);

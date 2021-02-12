@@ -24,6 +24,7 @@ public class PlayerPreferences : MonoBehaviour {
     public static bool M009_Eras = false;
     public static bool M009_Itens = false;
     public static bool M009_Desafio_Done = false;
+    public static bool M009_Initialized = false;
 
 
     // M010
