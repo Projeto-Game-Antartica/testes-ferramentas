@@ -643,6 +643,8 @@ public class VIDEUIManager : AbstractScreenReader
         dialogueContainer.SetActive(false);
         VD.EndDialogue();
 
+        YTVideo.SetActive(false);
+
         //VD.SaveState("VIDEDEMOScene1", true); //Saves VIDE stuff related to EVs and override start nodes
         //QuestChartDemo.SaveProgress(); //saves OUR custom game data
 
@@ -784,6 +786,8 @@ public class VIDEUIManager : AbstractScreenReader
 
     IEnumerator StartVideo(string url)
     {
+        bool hasFinished = false;
+
         YTVideo.SetActive(true);
         Application.runInBackground = true;
 
@@ -804,9 +808,17 @@ public class VIDEUIManager : AbstractScreenReader
         videoPlayer.Play();
 
         
-        while (videoPlayer.isPlaying)
+        //while (videoPlayer.isPlaying)
+        //{
+        //    //Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+        //    yield return null;
+        //}
+
+        while(!hasFinished)
         {
-            //Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+            if ((ulong)videoPlayer.frame == videoPlayer.frameCount)
+                hasFinished = true;
+
             yield return null;
         }
 
