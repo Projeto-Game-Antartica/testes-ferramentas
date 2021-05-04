@@ -34,6 +34,8 @@ public class CampSceneManagement : AbstractScreenReader {
     public AudioSource audioSource;
     public AudioClip warningClip;
 
+    public BagController Bag;
+
     private string missionNumber = "M009";
 
     //private string initialInstruction = "Conheça o navio e converse com os pesquisadores para novos desafios.";
@@ -42,7 +44,29 @@ public class CampSceneManagement : AbstractScreenReader {
     {
         isTrigger = false;
 
-        //InitialInstruction();
+        //Flag to set itens to true for debug
+        bool debugItens = true;
+        if(debugItens) {
+            PlayerPreferences.M009_Memoria = true;
+            PlayerPreferences.M009_Eras = true;
+            PlayerPreferences.M009_Itens = true;
+        }
+        
+        
+        if(PlayerPreferences.M009_Memoria) {
+            Bag.EnableItemByIndex(4);
+        }
+
+        if(PlayerPreferences.M009_Eras) {
+            Bag.EnableItemByIndex(0);
+            Bag.EnableItemByIndex(2);
+            Bag.EnableItemByIndex(1);
+        }
+
+        if(PlayerPreferences.M009_Itens) {
+            Bag.EnableItemByIndex(3);
+            Bag.EnableItemByIndex(5);
+        }
 
         if (PlayerPrefs.GetInt("Saved_"+missionNumber) == 1)
         {
@@ -51,7 +75,9 @@ public class CampSceneManagement : AbstractScreenReader {
             Debug.Log(transform.position);
         }
 
-        Debug.Log(SceneManager.GetActiveScene().name);
+        //Show instructions in case game has not yet been initialized
+        instructionInterface.SetActive(!PlayerPreferences.M009_Initialized);
+
     }
 
     private void Update()
@@ -74,6 +100,11 @@ public class CampSceneManagement : AbstractScreenReader {
         //        ReadSceneDescription();
         //    }
         //}
+    }
+
+    public void InitMission() {
+        PlayerPreferences.M009_Initialized = true;
+        instructionInterface.SetActive(false);
     }
 
     //public void ReadSceneDescription()

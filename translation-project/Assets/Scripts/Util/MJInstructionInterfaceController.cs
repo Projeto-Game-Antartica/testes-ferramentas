@@ -37,7 +37,7 @@ public class MJInstructionInterfaceController : AbstractScreenReader {
 
         //ReadInstructions();
 
-        iniciarButton.Select();
+        //iniciarButton.Select();
 	}
 
     private void OnEnable()

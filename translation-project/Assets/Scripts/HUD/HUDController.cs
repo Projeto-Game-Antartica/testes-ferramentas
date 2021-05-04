@@ -152,6 +152,7 @@ public class HUDController : AbstractScreenReader {
         if (Input.GetKeyDown(InputKeys.ACESSOTECLADO_KEY))
         {
             acessoTeclado.SetActive(true);
+            ReadText("Navegação via teclado");
             ReadText(descricaoText.text);
             acessoTeclado.GetComponentInChildren<Button>().Select();
         }
@@ -196,8 +197,8 @@ public class HUDController : AbstractScreenReader {
         ReadText(missionTitle.text);
         ReadText(missionDescription.text);
 
-        Debug.Log(missionTitle.text);
-        Debug.Log(missionDescription.text);
+        //Debug.Log(missionTitle.text);
+        //Debug.Log(missionDescription.text);
 
         if (iniciarButton.isActiveAndEnabled)
             iniciarButton.Select();
@@ -262,6 +263,14 @@ public class HUDController : AbstractScreenReader {
                     }
                     break;
 
+                case "M009":
+                    if (PlayerPrefs.GetInt("CampMap", 0) <= 0)
+                    {
+                        ReadText(mapText.text);
+                        ReadText(ReadableTexts.instance.GetReadableText("m009_missao", LocalizationManager.instance.GetLozalization()));
+                    }
+                    break;
+
                 case "M010":
                     if (PlayerPrefs.GetInt("VegMap", 0) <= 0)
                     {
@@ -288,6 +297,9 @@ public class HUDController : AbstractScreenReader {
                     break;
                 case "M004":
                     PlayerPrefs.SetInt("NavioMap", 1);
+                    break;
+                case "M009":
+                    PlayerPrefs.SetInt("CampMap", 1);
                     break;
                 case "M010":
                     PlayerPrefs.SetInt("VegMap", 1);
@@ -383,15 +395,20 @@ public class HUDController : AbstractScreenReader {
         {
             case "baleias":
                 SceneManager.LoadScene(ScenesNames.M004Ship);
+                // set last loaded scene
+                PlayerPrefs.SetString("LastScene", ScenesNames.M004Ship);
                 break;
             case "itens":
                 SceneManager.LoadScene(ScenesNames.M002Ushuaia);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M002Ushuaia);
                 break;
             case "paleontologia":
                 SceneManager.LoadScene(ScenesNames.M009Camp);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M009Camp);
                 break;
             case "vegetação":
                 SceneManager.LoadScene(ScenesNames.M010Camp);
+                PlayerPrefs.SetString("LastScene", ScenesNames.M010Camp);
                 break;
 
         }

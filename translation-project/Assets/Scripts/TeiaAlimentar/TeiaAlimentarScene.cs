@@ -152,10 +152,11 @@ public class TeiaAlimentarScene : AbstractScreenReader {
 
     public void RestartTimer()
     {
-        initialMinutes = 8f;
+        timer.text = "30:00";
+
+        initialMinutes = 29f;
         initialSeconds = 59f;
 
-        timer.text = "9:00";
     }
 
     //public void CallHintMethod()
