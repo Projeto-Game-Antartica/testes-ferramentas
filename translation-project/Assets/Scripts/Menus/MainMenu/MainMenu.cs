@@ -117,6 +117,8 @@ public class MainMenu : AbstractScreenReader
 
     public IEnumerator LoadingScreen()
     {
+        //async = SceneManager.LoadSceneAsync(ScenesNames.M004Ship);
+
         // check if last scene exists, if not load ushuaia, if so load the last loaded scene
         async = PlayerPrefs.GetString("LastScene", "") == "" ? SceneManager.LoadSceneAsync(ScenesNames.M002Ushuaia) : SceneManager.LoadSceneAsync(PlayerPrefs.GetString("LastScene"));
         
