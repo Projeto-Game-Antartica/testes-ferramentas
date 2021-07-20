@@ -160,7 +160,7 @@ public class ClassificaManager : AbstractScreenReader
         classificacao = fossilData.classificacao;
         era = fossilData.era;
 
-        Debug.Log("asd asd asd");
+        Debug.Log("asd asd asd " + caracteristica);
 
         fossilImages.SetPhotographedWhaleImage(fossilData.image_path);
     }
